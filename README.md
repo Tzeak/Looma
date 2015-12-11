@@ -1,4 +1,4 @@
-# Looma
+# Looma hi hi hi
 Lesson Planning Software for Looma by VillageTech Solutions
 
 ### Instructions:
