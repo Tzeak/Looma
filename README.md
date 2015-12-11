@@ -1,23 +1,61 @@
 # Looma
 Lesson Planning Software for Looma by VillageTech Solutions
 
-## Modules:
+### Instructions:
+
+Pick your favorite module, and sign your name next to it.
+Try and get it working by the end of Winter Break.
+The most important things is making sure the functionality is established. 
+*This means basic HTML and Javascript ONLY right now.* 
+HAVE FUN.
+
+### Modules:
 * Filter
   * Input: Number (switch case/radio buttons/literal number)
-  * Actions: Select Objects
-  * Output: Number and type of module
+  * Actions: Submit Filter
+  * Output 1: Number
+  * Output 2: Type of module ("Filter")
 
 * Timeline
-  * Input: Text file from filter
+  * Input: Text file from results
   * Action: Display objects from text file in timeline
   * Output: Save timeline as html doc
 
 * Search
-  * Input: String (tag), and name of module
-  * Output: Text File with selected object data
+  * Input: String (tag)
+  * Action: Submit Search
+  * Output 1: String tag
+  * Output 2: Type of module ("Search")
 
 * Results
-  * Input:  tag (string from search) or number(from filter)
-  * 2nd input: search or filter
-  * Output:  Text File with selected object data
-  * Action: List object data
+  * Input: tag or number 
+  * 2nd input: type of module ("Filter" or "Search")
+  * Action: List and select object data (JSON Object)
+  * Output:  Text File with selected object data (send to Timeline)
+
+### Stretch Goals
+
+* Preview (Extension of Timeline or Results)
+  * Input:  (Timeline/Results)
+  * Output: Visual image of the selected data 
+
+* MongoDB Query (Extension of Results)
+  * Input: Results input
+  * Action: Querying the MongoDB database
+  * Output: JSON object of relevant data
+
+* Website Design (Mockups)
+  * Input: creativity. brainpower. sex appeal.
+  * Compare and contrast different website architectures/design models
+    * e.g responsive web design, single page application vs alternatives
+  * Output: badass website design
+
+* Website Structure (HTML/Javascript)
+  * Input: Each of the modules.
+  * Output: Full functioning prototype
+
+* Website Design (CSS)
+  * Input: Badass website design from above
+  * Output: Semi-nice looking Prototype
+
+
