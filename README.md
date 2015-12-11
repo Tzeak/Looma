@@ -1,4 +1,4 @@
-# Looma hi hi hi
+# Looma
 Lesson Planning Software for Looma by VillageTech Solutions
 
 ### Instructions:
@@ -7,7 +7,9 @@ Pick your favorite module, and sign your name next to it.
 Try and get it working by the end of Winter Break.
 The most important things is making sure the functionality is established. 
 *This means basic HTML and Javascript ONLY right now.* 
+For database stuff just use a JSON object. 
 HAVE FUN.
+xoxo gossip girl
 
 ### Modules:
 * Filter
@@ -15,40 +17,47 @@ HAVE FUN.
   * Actions: Submit Filter
   * Output 1: Number
   * Output 2: Type of module ("Filter")
+  * Person: Roshaawwwwwnnnn
 
 * Timeline
-  * Input: Text file from results
+  * Input: Text file from result
   * Action: Display objects from text file in timeline
   * Output: Save timeline as html doc
+  * Person: Kate da gr8 108 eat some bate but dont hate or i will potate o potato
 
 * Search
   * Input: String (tag)
   * Action: Submit Search
   * Output 1: String tag
   * Output 2: Type of module ("Search")
+  * Person: 
 
 * Results
   * Input: tag or number 
   * 2nd input: type of module ("Filter" or "Search")
   * Action: List and select object data (JSON Object)
   * Output:  Text File with selected object data (send to Timeline)
+  * Person:
 
 ### Stretch Goals
 
 * Preview (Extension of Timeline or Results)
   * Input:  (Timeline/Results)
   * Output: Visual image of the selected data 
+  * Person: 
 
 * MongoDB Query (Extension of Results)
   * Input: Results input
   * Action: Querying the MongoDB database
   * Output: JSON object of relevant data
+  * Person:
 
 * Website Design (Mockups)
   * Input: creativity. brainpower. sex appeal.
   * Compare and contrast different website architectures/design models
     * e.g responsive web design, single page application vs alternatives
   * Output: badass website design
+  * Person: 
 
 * Website Structure (HTML/Javascript)
   * Input: Each of the modules.
