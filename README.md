@@ -30,7 +30,7 @@ xoxo gossip girl
   * Action: Submit Search
   * Output 1: String tag
   * Output 2: Type of module ("Search")
-  * Person: 
+  * Person: Minestrone Soupy
 
 * Results
   * Input: tag or number 
