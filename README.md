@@ -18,6 +18,7 @@ xoxo gossip girl
   * Output 1: Number
   * Output 2: Type of module ("Filter")
   * Person: Roshaawwwwwnnnn
+  * *Note- may make more sense for Search and Filter to edit a common Results JSON Object*
 
 * Timeline
   * Input: Text file from result
@@ -28,13 +29,18 @@ xoxo gossip girl
 * Search
   * Input: String (tag)
   * Action: Submit Search
-  * Output 1: String tag
-  * Output 2: Type of module ("Search")
+  * Output: Results JSON Object
+    * '''
+var results = new Object();	//Construct results Javascript Object
+	results.tag = "<search string goes here>";	//
+	results.module = "search"
+processResults(results);
+'''
+  
   * Person: Minestrone Soupy
 
 * Results
-  * Input: tag or number 
-  * 2nd input: type of module ("Filter" or "Search")
+  * Input: Results JSON Object
   * Action: List and select object data (JSON Object)
   * Output:  Text File with selected object data (send to Timeline)
   * Person:
