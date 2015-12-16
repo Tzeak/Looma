@@ -30,13 +30,13 @@ xoxo gossip girl
   * Input: String (tag)
   * Action: Submit Search
   * Output: Results JSON Object
-    * '''
+
+'''
 var results = new Object();	//Construct results Javascript Object
 	results.tag = "<search string goes here>";	//
 	results.module = "search"
 processResults(results);
 '''
-  
   * Person: Minestrone Soupy
 
 * Results
