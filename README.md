@@ -33,8 +33,8 @@ xoxo gossip girl
 
 ```
 var results = new Object();	//Construct results Javascript Object
-	results.tag = "<search string goes here>";	//
-	results.module = "search"
+	results.tag = "<search string goes here>";
+	results.module = "search";
 processResults(results);
 ```
   * Person: Minestrone Soupy
