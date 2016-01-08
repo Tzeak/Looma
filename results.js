@@ -1,4 +1,6 @@
 //temporary variable
+<script language = "javascript" >
+
 var content = {"library":[
     {"format":"textbook", "tag":"Geometry Through the Ages: Chapter 7"},
     {"format":"quiz", "tag":"Grade 6 Math Quiz - Algebra"},
@@ -11,17 +13,17 @@ var searchResults = new Object();
 	results.module = 'search';
 	results.string = searchString;
 
-var filterResults = new Object();
+var filterResults = new Object(); //APPLY BUTTON FOR FILTER????
 	results.module = 'filter';
-	results.bbooks = books.checked;
-	results.bquiz = quiz.checked;
-	results.bvideos = videos.checked;
-	results.bgames = games.checked;
+	results.bbooks = true;
+	results.bquiz = true;
+	results.bvideos = true;
+	results.bgames = true;
 
 var constructResults = function(content) {
 	
 	//results from search
-	if(results.module  === 'search' && searchResults.searchString != null) {
+	if(results.module  === 'search' && searchResults.string != null) {
 		var i;
 		var j;
 		var resultArray = [];
@@ -36,7 +38,7 @@ var constructResults = function(content) {
 			}
 		}	
 		for(j=0; j < searchArray.length; j++) {
-			if(searchArray[j].content.library[j].format == "textbook" && results.bbooks == true) {
+			if(searchArray[j].format == "textbook" && results.bbooks == true) {
 				consule.log(content.library[j].tag);
 			}
 			if(content.library[j].format == "quiz" && results.bquiz == true) {
@@ -65,4 +67,6 @@ var constructResults = function(content) {
 			//list results
 		}
 	}
+
+	</script>
 }
