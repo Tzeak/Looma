@@ -15,7 +15,7 @@ var content = JSON.parse(lib);
 
 var searchResults = new Object();
 	searchResults.module = 'search';
-	searchResults.string = "";
+	searchResults.string = "Elise";
 
 
 var filterResults = new Object(); //APPLY BUTTON FOR FILTER????
@@ -81,7 +81,7 @@ var filterResults = new Object(); //APPLY BUTTON FOR FILTER????
 		console.log(resultArray);
 
 
-		document.getElementById("results").innerHTML="dog";
+		//document.getElementById("results").innerHTML="dog";
 
 
 	}
