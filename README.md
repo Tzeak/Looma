@@ -15,8 +15,7 @@ xoxo gossip girl
 * Filter
   * Input: Number (switch case/radio buttons/literal number)
   * Actions: Submit Filter
-  * Output 1: Number
-  * Output 2: Type of module ("Filter")
+  * Output: Results JSON Object
   * Person: Roshaawwwwwnnnn
   * *Note- may make more sense for Search and Filter to edit a common Results JSON Object*
 
