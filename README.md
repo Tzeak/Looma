@@ -28,21 +28,17 @@ xoxo gossip girl
 * Search
   * Input: String (tag)
   * Action: Submit Search
+  * Output 1: String tag
+  * Output 2: Type of module ("Search")
+=======
   * Output: Results JSON Object
-
-```
-var results = new Object();	//Construct results Javascript Object
-	results.tag = "<search string goes here>";
-	results.module = "search";
-processResults(results);
-```
   * Person: Minestrone Soupy
 
 * Results
   * Input: Results JSON Object
   * Action: List and select object data (JSON Object)
   * Output:  Text File with selected object data (send to Timeline)
-  * Person:
+  * Person: Elise was hurrr ;)
 
 ### Stretch Goals
 
