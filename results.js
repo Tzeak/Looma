@@ -15,7 +15,7 @@ var content = JSON.parse(lib);
 
 var searchResults = new Object();
 	searchResults.module = 'search';
-	searchResults.string = "Elise";
+	searchResults.string = "G";
 
 
 var filterResults = new Object(); //APPLY BUTTON FOR FILTER????

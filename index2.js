@@ -1,44 +1,3 @@
-
-/*
-//filter
-var queryFilter = function() {	//Query filter every time a filter option is pressed
-	console.log('Running filter');
-
-	//Read all checkboxes in filter
-	var books = document.getElementById('Books');
-	var quiz = document.getElementById('Quiz');
-	var videos = document.getElementById('Videos');
-	var games = document.getElementById('Games');
-
-	//Construct Results object
-	var results = new Object();
-		results.module = 'filter';
-		results.bbooks = books.checked;
-		results.bquiz = quiz.checked;
-		results.bvideos = videos.checked;
-		results.bgames = games.checked;
-
-	//Pass results to results module
-	console.log(results);
-	//constructResults(results);
-	
-}
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-//console.log(content.library[0].tag);
-//console.log(content.library[0].format);
-
 var lib = '{"library":[' +
     '{"format":"textbook", "tag":"Geometry Through the Ages: Chapter 7"},' +
     '{"format":"quiz", "tag":"Grade 6 Math Quiz - Algebra"},' +
@@ -48,38 +7,43 @@ var lib = '{"library":[' +
 
 var content = JSON.parse(lib);
 
- //console.log(content.library[0].format);
+var querySearch = function() {	//Query filter every time a filter option is pressed
+	console.log('Running filter');
 
-
-/* search */
-
-var searchString = document.getElementById("string").value;
-
-
-
-//construct Results JSON object
-var searchResults = new Object();
-	searchResults.module = 'search';
-	searchResults.string = searchString;
-
-console.log(searchResults);
+	var searchString = document.getElementById("string").value;
 
 
 
-var filterResults = new Object(); //APPLY BUTTON FOR FILTER????
-	filterResults.module = 'filter';
-	filterResults.bbooks = false;
-	filterResults.bquiz = true;
-	filterResults.bvideos = true;
-	filterResults.bgames = true;
+	//construct Results JSON object
+	var searchResults = new Object();
+		searchResults.module = 'search';
+		searchResults.string = searchString;
 
+	//Read all checkboxes in filter
+	var books = document.getElementById('Books');
+	var quiz = document.getElementById('Quiz');
+	var videos = document.getElementById('Videos');
+	var games = document.getElementById('Games');
 
-	//results from search
+	//Construct Results object
+	var filterResults = new Object();
+		filterResults.module = 'filter';
+		filterResults.bbooks = books.checked;
+		filterResults.bquiz = quiz.checked;
+		filterResults.bvideos = videos.checked;
+		filterResults.bgames = games.checked;
+
+		console.log(filterResults);
+
+		//Pass results to results module
+		console.log(searchResults);
+		//constructResults(results);
+
 	if(searchResults.module  == 'search' ) {
 		var i;
 		var j;
 
-		console.log(searchResults.module);
+		//console.log(searchResults.module);
 		//loop through content
 
 		var searchArray = [];
@@ -127,11 +91,8 @@ var filterResults = new Object(); //APPLY BUTTON FOR FILTER????
 			}
 		}
 		console.log(resultArray);
-
-
-		//document.getElementById("results").innerHTML="dog";
-
-	}
 	
-
+}
+}
+	
 
