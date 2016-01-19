@@ -1,5 +1,7 @@
 var querySearch = function() {
 
+console.log('Running search');
+
 var searchString = document.getElementById("string").value;
 
 

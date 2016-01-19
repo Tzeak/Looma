@@ -72,10 +72,22 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 				}*/
 
 			}
-			document.getElementById("results").innerHTML = searchArray[0];
+			//console.log(searchArray[0].tag);
+		}
+
+		/*document.getElementById("results0").innerHTML = searchArray[0].tag;
+		document.getElementById("results1").innerHTML = searchArray[1].tag;
+		document.getElementById("results2").innerHTML = searchArray[2].tag;
+		document.getElementById("results3").innerHTML = searchArray[3].tag; */
+
+		/*var idCount=0;
+		for(k=0; k < searchArray.length; k++) {
 
 
-		}	
+			document.getElementById("results0").innerHTML = searchArray[0].tag;
+
+			idCount++;
+		}*/
 
 		//console.log(searchArray);
 		//console.log(searchArray[1]);
@@ -100,6 +112,11 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 				resultArray.push(searchArray[j]);
 			}
 		}
+
+		document.getElementById("results0").innerHTML = resultArray[0].tag;
+		document.getElementById("results1").innerHTML = resultArray[1].tag;
+		document.getElementById("results2").innerHTML = resultArray[2].tag;
+		document.getElementById("results3").innerHTML = resultArray[3].tag;
 		//console.log(resultArray);
 
 
