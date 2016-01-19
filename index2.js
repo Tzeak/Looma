@@ -48,7 +48,7 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 
 		var searchArray = [];
 
-		for(i = 0; i < content.library.length; i++) { //how to get length of content array?
+		for(i = 0; i < content.library.length; i++) {
 			var str = content.library[i].tag;
 			var find = str.search(searchResults.string);
 			//create array
@@ -58,6 +58,13 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 				//console.log(content.library[i]);
 				searchArray.push(content.library[i]); //how to get content??
 
+
+
+				console.log(content.library[i].tag);
+				console.log(content.library[i].format);
+
+
+				//searchArray.push(content.library[i].tag); 
 				/*for(j=0;j<2;j++) {
 					if(find > 0) {
 						searchArray[j] = "bananer";
@@ -65,6 +72,9 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 				}*/
 
 			}
+			document.getElementById("results").innerHTML = searchArray[0];
+
+
 		}	
 
 		//console.log(searchArray);
@@ -90,7 +100,9 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 				resultArray.push(searchArray[j]);
 			}
 		}
-		console.log(resultArray);
+		//console.log(resultArray);
+
+
 	
 }
 }
