@@ -1,12 +1,27 @@
 <html>
 	<head>
 		<script type="text/javascript" src="index2.js"></script>
+		<style>
+			.boxdiv {
+			  border: 1px solid #000;
+			  min-height:50px; min-width:100px;
+			  display:inline-block;
+			  margin:5px;
+			}
+			#button {
+				color:white;
+				background:gray;
+				padding: 10px;
+				border-radius:5px;
+			}
+			button {display:inline;}
+		</style>
 	</head>
 
 	<body>
 		<form>
 			Search: <input type="text" name="search" id="string">
-			<p onclick="querySearch()"> Submit </p>
+			<p id="button" onclick="querySearch()"> Submit </p>
 			<!--<input type="submit" value="Submit" onclick="querySearch()"> -->
 			<br>
 			<br>
@@ -25,6 +40,27 @@
 	<hr>
 	<div id="results3">  </div>
 	<hr>
+
+	<div class="boxdiv" id="resultsdiv">
+	    <p><b>Results</b></p>
+	    <ul id="resultsDivUL">
+	    </ul>
+   	</div>
+    <br/><br/><br/>
+
+    <div class="boxdiv" id="timelineWhole">
+	    <div class="boxdiv timelinediv"></div>
+	    <div class="boxdiv timelinediv"></div>
+	    <div class="boxdiv timelinediv"></div>
+	    <div class="boxdiv timelinediv"></div>
+	    <div class="boxdiv timelinediv"></div>
+	    <div class="boxdiv timelinediv"></div>
+    </div>
+
+    <br/>
+    <br><br>
+
+
 	</body>
 </html>
 
