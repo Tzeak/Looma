@@ -1,3 +1,9 @@
+/*var lib2 = new Object();
+	lib2.textbook = [{'title':'Geometry Through the Ages: Chapter 7'}];
+	lib2.quiz = [{'title':'Grade 6 Math Quiz - Algebra'}];
+	lib2.video = [{'title':'Chemistry Safety with Bill Nye'; 'title':'Naplise with Elise'}];
+	lib2.game = [{'title':'Is this letter a vowel?'}];*/
+
 var lib = '{"library":[' +
     '{"format":"textbook", "tag":"Geometry Through the Ages: Chapter 7"},' +
     '{"format":"quiz", "tag":"Grade 6 Math Quiz - Algebra"},' +
@@ -10,9 +16,20 @@ var content = JSON.parse(lib);
 var querySearch = function() {	//Query filter every time a filter option is pressed
 	console.log('Running filter');
 
+	//clear results div
+	if(document.getElementById("results0") != null)
+		document.getElementById("results0").innerHTML = " ";
+	if(document.getElementById("results1") != null)
+		document.getElementById("results1").innerHTML = " ";
+	if(document.getElementById("results2") != null)
+		document.getElementById("results2").innerHTML = " ";
+	if(document.getElementById("results3") != null)
+		document.getElementById("results3").innerHTML = " ";
+
+
+//SEARCH
+
 	var searchString = document.getElementById("string").value;
-
-
 
 	//construct Results JSON object
 	var searchResults = new Object();
@@ -39,6 +56,9 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		console.log(searchResults);
 		//constructResults(results);
 
+	
+
+
 	if(searchResults.module  == 'search' ) {
 		var i;
 		var j;
@@ -46,6 +66,7 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		//console.log(searchResults.module);
 		//loop through content
 
+		
 		var searchArray = [];
 
 		for(i = 0; i < content.library.length; i++) {
@@ -125,8 +146,10 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		var results = new Object();
 			results.team1 = resultArray[0].tag;
 			results.team2 = resultArray[1].tag;
-			results.team3 = resultArray[2].tag;;
-		 	results.team4 = resultArray[3].tag;;
+			results.team3 = resultArray[2].tag;
+		 	results.team4 = resultArray[3].tag;
+
+
 
 		console.log("results display");
 		var resultsWhole = document.querySelector("div#resultsdiv");
