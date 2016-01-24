@@ -27,6 +27,16 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		document.getElementById("results3").innerHTML = " ";
 
 
+	
+	var ul = document.getElementById("resultsDivUL");
+	if(ul.children != null) {
+		for(var i=0; i<ul.children.length; i++) {
+			var remove = ul.removeChild(ul.children[i]);
+		}
+	}
+	
+
+
 //SEARCH
 
 	var searchString = document.getElementById("string").value;
@@ -81,8 +91,8 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 
 
 
-				console.log(content.library[i].tag);
-				console.log(content.library[i].format);
+				//console.log(content.library[i].tag);
+				//console.log(content.library[i].format);
 
 
 				//searchArray.push(content.library[i].tag); 
