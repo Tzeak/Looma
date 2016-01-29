@@ -180,7 +180,7 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		 	for(i=0;i<resultArray.length; i++) {
 				var team = "team" + i;
 				results.team= resultArray[i].tag;
-				console.log(results.i);
+				console.log(results.team);
 				console.log(resultArray[i]);
 		 	}
 
