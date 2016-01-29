@@ -161,10 +161,10 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 			}
 		}
 
-		document.getElementById("results0").innerHTML = resultArray[0].tag;
+		/*document.getElementById("results0").innerHTML = resultArray[0].tag;
 		document.getElementById("results1").innerHTML = resultArray[1].tag;
 		document.getElementById("results2").innerHTML = resultArray[2].tag;
-		document.getElementById("results3").innerHTML = resultArray[3].tag;
+		document.getElementById("results3").innerHTML = resultArray[3].tag;*/
 		//console.log(resultArray);
 
 
@@ -178,9 +178,9 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		 	results.team5 = resultArray[4].tag;*/
 
 		 	for(i=0;i<resultArray.length; i++) {
-				var team = "team" + i;
-				results.team= resultArray[i].tag;
-				console.log(results.team);
+				results["team" + i]=resultArray[i].tag;
+				//results.i = resultArray[i].tag;
+				console.log(results.team0);
 				console.log(resultArray[i]);
 		 	}
 
