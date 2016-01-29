@@ -28,12 +28,29 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 
 
 	
-	var ul = document.getElementById("resultsDivUL");
+	/*var ul = document.getElementById("resultsDivUL");
 	if(ul.children != null) {
-		for(var i=0; i<ul.children.length; i++) {
+		var numChild = ul.children.length;
+		for(var i=0; i<numChild; i++) {
+			console.log("children length: " + ul.children.length);
+			console.log("NumChild: " + numChild);
 			var remove = ul.removeChild(ul.children[i]);
 		}
 	}
+	*/
+
+	var ul = document.getElementById("resultsDivUL");
+	if(ul.children != null) {
+		var children = ul.querySelectorAll("li");
+		console.log(children);
+	}
+
+	Array.prototype.forEach.call(children,function(node) {
+		node.parentNode.removeChild (node);
+	});
+
+
+
 	
 
 
@@ -154,10 +171,19 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		//Timeline
 		//Results JSON object
 		var results = new Object();
-			results.team1 = resultArray[0].tag;
+			/*results.team1 = resultArray[0].tag;
 			results.team2 = resultArray[1].tag;
 			results.team3 = resultArray[2].tag;
 		 	results.team4 = resultArray[3].tag;
+		 	results.team5 = resultArray[4].tag;*/
+
+		 	for(i=0;i<resultArray.length; i++) {
+				var team = "team" + i;
+				results.team= resultArray[i].tag;
+				console.log(results.i);
+				console.log(resultArray[i]);
+		 	}
+
 
 
 
@@ -274,7 +300,8 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		for (var i = 0; i < timelineWhole.children.length; i++) {  // for each timeline div
 		  var removeButton = timelineWhole.querySelector("li button.remove");
 		  // var removeButton = timelineWhole.children[i].querySelector("li button.remove");
-		  removeButton.addEventListener("click", removeJSON);   // bind removeJSON to remove button
+		  if(removeButton!=null)
+		  	removeButton.addEventListener("click", removeJSON);   // bind removeJSON to remove button
 		  console.log("Giving remove buttons actions...");
 		}
 
