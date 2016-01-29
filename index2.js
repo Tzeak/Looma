@@ -1,43 +1,15 @@
-/*var lib2 = new Object();
-	lib2.textbook = [{'title':'Geometry Through the Ages: Chapter 7'}];
-	lib2.quiz = [{'title':'Grade 6 Math Quiz - Algebra'}];
-	lib2.video = [{'title':'Chemistry Safety with Bill Nye'; 'title':'Naplise with Elise'}];
-	lib2.game = [{'title':'Is this letter a vowel?'}];*/
-
 var lib = '{"library":[' +
     '{"format":"textbook", "tag":"Geometry Through the Ages: Chapter 7"},' +
     '{"format":"quiz", "tag":"Grade 6 Math Quiz - Algebra"},' +
     '{"format":"video", "tag":"Chemistry Safety with Bill Nye"},' +
     '{"format":"game", "tag":"Is this letter a vowel?"},' +
+    '{"format":"textbook", "tag":"This is a new book and ITS HEREEE"},' +
     '{"format":"video", "tag":"Napalise with Elise: Chapter 3"} ]}';
 
 var content = JSON.parse(lib);
 
 var querySearch = function() {	//Query filter every time a filter option is pressed
 	console.log('Running filter');
-
-	//clear results div
-	if(document.getElementById("results0") != null)
-		document.getElementById("results0").innerHTML = " ";
-	if(document.getElementById("results1") != null)
-		document.getElementById("results1").innerHTML = " ";
-	if(document.getElementById("results2") != null)
-		document.getElementById("results2").innerHTML = " ";
-	if(document.getElementById("results3") != null)
-		document.getElementById("results3").innerHTML = " ";
-
-
-	
-	/*var ul = document.getElementById("resultsDivUL");
-	if(ul.children != null) {
-		var numChild = ul.children.length;
-		for(var i=0; i<numChild; i++) {
-			console.log("children length: " + ul.children.length);
-			console.log("NumChild: " + numChild);
-			var remove = ul.removeChild(ul.children[i]);
-		}
-	}
-	*/
 
 	var ul = document.getElementById("resultsDivUL");
 	if(ul.children != null) {
@@ -48,11 +20,6 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 	Array.prototype.forEach.call(children,function(node) {
 		node.parentNode.removeChild (node);
 	});
-
-
-
-	
-
 
 //SEARCH
 
@@ -69,6 +36,13 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 	var videos = document.getElementById('Videos');
 	var games = document.getElementById('Games');
 
+	var grade = document.getElementById('grade');
+	var gradeValue= grade.options[grade.selectedIndex].value;
+
+	var subject = document.getElementById('subject');
+	var subjectValue= subject.options[subject.selectedIndex].value;
+
+
 	//Construct Results object
 	var filterResults = new Object();
 		filterResults.module = 'filter';
@@ -76,6 +50,8 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		filterResults.bquiz = quiz.checked;
 		filterResults.bvideos = videos.checked;
 		filterResults.bgames = games.checked;
+		filterResults.grade = gradeValue;
+		filterResults.subject = subjectValue;
 
 		console.log(filterResults);
 
@@ -90,8 +66,6 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		var i;
 		var j;
 
-		//console.log(searchResults.module);
-		//loop through content
 
 		
 		var searchArray = [];
@@ -104,41 +78,10 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		
 			if(find >= 0) { //match was found
 				//console.log(content.library[i]);
-				searchArray.push(content.library[i]); //how to get content??
-
-
-
-				//console.log(content.library[i].tag);
-				//console.log(content.library[i].format);
-
-
-				//searchArray.push(content.library[i].tag); 
-				/*for(j=0;j<2;j++) {
-					if(find > 0) {
-						searchArray[j] = "bananer";
-					}
-				}*/
+				searchArray.push(content.library[i]); //how to get content?
 
 			}
-			//console.log(searchArray[0].tag);
 		}
-
-		/*document.getElementById("results0").innerHTML = searchArray[0].tag;
-		document.getElementById("results1").innerHTML = searchArray[1].tag;
-		document.getElementById("results2").innerHTML = searchArray[2].tag;
-		document.getElementById("results3").innerHTML = searchArray[3].tag; */
-
-		/*var idCount=0;
-		for(k=0; k < searchArray.length; k++) {
-
-
-			document.getElementById("results0").innerHTML = searchArray[0].tag;
-
-			idCount++;
-		}*/
-
-		//console.log(searchArray);
-		//console.log(searchArray[1]);
 
 		var resultArray = [];
 

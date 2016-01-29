@@ -2,11 +2,33 @@
 	<head>
 
 		<style>
+
+			#container {
+				width: 100%;
+			}
 			.boxdiv {
 			  border: 1px solid #000;
+			  min-height:50px; min-width:90px;
+			  display:inline-block;
+			  margin:5px;
+			  padding: 15px;
+			}
+
+			#results {
+				width: 80%;
+				height: 300px;
+			}
+			.timeline {
+				border: 1px solid #000;
 			  min-height:50px; min-width:100px;
 			  display:inline-block;
 			  margin:5px;
+			  padding: 15px;
+			  position: relative;
+			  float: right;
+			  width: 58%;
+			  margin-right: 25px;
+			  margin-top: 25px;
 			}
 			#button {
 				color:white;
@@ -16,11 +38,12 @@
 				width: 70px;
 			}
 			button {display:inline;}
-			form {
+			#sidebar {
 				float:left;
 				background: lightgray;
 				padding: 20px;
 				margin: 30px;
+				width: 30%;
 			}
 			body {
 				font-family: Arial;
@@ -38,7 +61,6 @@
 			}
 			#resultsdiv {
 				background:gray;
-				padding:20px;
 				color:white;
 				border:none;
 			}
@@ -50,43 +72,71 @@
 				background: gray;
 		
 			}
+
+			#displaybox {
+				width: 60%;
+				height: 665px;
+				background: gray;
+				position: relative;
+				float: right;
+				margin-top: 28px;
+				margin-right: 25px;
+			}
 			button {display:inline;}
 		</style>
 	</head>
 
 	<body>
+		<div id="container">
+		<div id="sidebar">
 		<form>
 			Search: <input type="text" name="search" id="string">
 			<p id="button" onclick="querySearch()"> Submit </p>
 			<!--<input type="submit" value="Submit" onclick="querySearch()"> -->
 			<br>
-			<br>
+			
+			<select name="grade" id="grade">
+				<option value="1"> 1 </option>
+				<option value="2"> 2 </option>
+				<option value="3"> 3 </option>
+				<option value="4"> 4 </option>
+				<option value="5"> 5 </option>
+				<option value="6"> 6 </option>
+				<option value="7"> 7 </option>
+				<option value="8"> 8 </option>
+			</select>
+
+			<select name="subject" id="subject">
+				<option value="Math"> Math </option>
+				<option value="Science"> Science </option>
+				<option value="English"> English </option>
+				<option value="History"> History </option>
+				<option value="Geography"> Geography </option>
+			</select>
 
 			<input type="checkbox" style="zoom:4" id="Books" name="Books" checked>Books<br/>
 			<input type="checkbox" style="zoom:4" id="Quiz"name="Quiz" checked>Quiz<br/>
 			<input type="checkbox" style="zoom:4" id="Videos"name="Videos" checked>Videos<br/>
 			<input type="checkbox" style="zoom:4" id="Games"name="Games" checked>Games<br/>
+
 		</form>
 
-	<div id="results0">  </div>
-	<hr>
-	<div id="results1">  </div>
-	<hr>
-	<div id="results2">  </div>
-	<hr>
-	<div id="results3">  </div>
-	<hr>
+			<div class="boxdiv" id="results">
+				    <p><b>Results</b></p>
+			<div id="resultsdiv">
+			    <ul id="resultsDivUL">
+			    </ul>
+		   	</div>
+		   </div>
+	</div>
 
-	<div class="boxdiv">
-		    <p><b>Results</b></p>
-	<div id="resultsdiv">
-	    <ul id="resultsDivUL">
-	    </ul>
-   	</div>
-   </div>
+	<div id= "displaybox"> </div>
+
+
+
     <br/><br/><br/>
 
-    <div class="boxdiv" id="timelineWhole">
+    <div class="timeline" id="timelineWhole">
 	    <div class="boxdiv timelinediv"></div>
 	    <div class="boxdiv timelinediv"></div>
 	    <div class="boxdiv timelinediv"></div>
@@ -97,6 +147,8 @@
 
     <br/>
     <br><br>
+
+</div>
 
 
 	</body>
