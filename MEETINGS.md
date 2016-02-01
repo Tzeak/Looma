@@ -1,6 +1,10 @@
 #Meetings/Agenda
 Here's our agenda!!!!!!!
 
+### Meeting Week 5 Sunday
+* Go over structure of their stuff, tie into our structure
+* split up and **~GSD~**
+
 ### Skip David Week 3 Friday
 * Show them what we have
 * Ask for links for Mongo data
