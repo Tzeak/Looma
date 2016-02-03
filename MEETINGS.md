@@ -1,6 +1,10 @@
 #Meetings/Agenda
 Here's our agenda!!!!!!!
 
+### Meeting Week 5 Weds
+* Spec out Open module / "timeline browse"
+* Go over front end thingies / can you do it in your meeting times
+
 ### Meeting Week 5 Sunday
 * Go over structure of their stuff, tie into our structure
 * split up and **~GSD~**
