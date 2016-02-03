@@ -36,11 +36,27 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 	var videos = document.getElementById('Videos');
 	var games = document.getElementById('Games');
 
-	var grade = document.getElementById('grade');
-	var gradeValue= grade.options[grade.selectedIndex].value;
+	var grade1 = document.getElementById('1');
+	var grade2 = document.getElementById('2');
+	var grade3 = document.getElementById('3');
+	var grade4 = document.getElementById('4');
+	var grade5 = document.getElementById('5');
+	var grade6 = document.getElementById('6');
+	var grade7 = document.getElementById('7');
+	var grade8 = document.getElementById('8');
 
-	var subject = document.getElementById('subject');
-	var subjectValue= subject.options[subject.selectedIndex].value;
+	var math = document.getElementById('Math');
+	var science = document.getElementById('Science');
+	var english = document.getElementById('English');
+	var history = document.getElementById('History');
+	var geography = document.getElementById('Geography');
+
+
+	//var grade = document.getElementById('grade');
+	//var gradeValue= grade.options[grade.selectedIndex].value;
+
+	//var subject = document.getElementById('subject');
+	//var subjectValue= subject.options[subject.selectedIndex].value;
 
 
 	//Construct Results object
@@ -50,8 +66,25 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		filterResults.bquiz = quiz.checked;
 		filterResults.bvideos = videos.checked;
 		filterResults.bgames = games.checked;
-		filterResults.grade = gradeValue;
-		filterResults.subject = subjectValue;
+
+		filterResults.grade1 = grade1.checked;
+		filterResults.grade2 = grade2.checked;
+		filterResults.grade3 = grade3.checked;
+		filterResults.grade4 = grade4.checked;
+		filterResults.grade5 = grade5.checked;
+		filterResults.grade6 = grade6.checked;
+		filterResults.grade7 = grade7.checked;
+		filterResults.grade8 = grade8.checked;
+
+		filterResults.math = math.checked;
+		filterResults.science = science.checked;
+		filterResults.english = english.checked;
+		filterResults.history1 = history.checked;
+		filterResults.geography = geography.checked;
+		
+
+		//filterResults.grade = gradeValue.checked
+		//filterResults.subject = subjectValue;
 
 		console.log(filterResults);
 
