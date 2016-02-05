@@ -1,6 +1,9 @@
 #Meetings/Agenda
 Here's our agenda!!!!!!!
 
+### Meeting Week 5 Sunday
+* Help Elise and Supi get started with MongoDB (we installed but need help connecting to the Looma database)
+
 ### Meeting Week 5 Weds
 * Spec out Open module / "timeline browse"
 * Go over front end thingies / can you do it in your meeting times
