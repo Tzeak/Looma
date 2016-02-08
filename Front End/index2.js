@@ -1,4 +1,38 @@
-var lib = '{"library":[' +
+var library = [
+    {
+    	"_id":"ObjectId(5549)", 
+    	"chapter_id":"2EN02",
+    	"filetype":"EP",
+    	"filepath":"resources/epaath/activities/",
+    	"displayname":"Geometry Through the Ages: Chapter 7"
+    },
+    {
+    	"_id":"ObjectId(5551)", 
+    	"chapter_id":"3EN02",
+    	"filetype":"EP",
+    	"filepath":"resources/pictures/",
+    	"format":"video", 
+    	"displayname":"Chemistry Safety with Bill Nye"
+    },
+    {
+    	"_id":"ObjectId(5552)", 
+    	"chapter_id":"4EN02",
+    	"filetype":"EP",
+    	"filepath":"resources/videos/",
+    	"format":"game", 
+    	"displayname":"Is this letter a vowel?"
+    },
+    {
+    	"_id":"ObjectId(5549)", 
+    	"chapter_id":"5EN02",
+    	"filetype":"EP",
+    	"filepath":"resources/audio/",
+    	"format":"video", 
+    	"displayname":"The Chronicles of Narnia: The Lion, the Witch, and the Wardrobe, and Supilise"
+    },
+];
+
+/*var lib = '{"library":[' +
     '{"format":"textbook", "tag":"Geometry Through the Ages: Chapter 7"},' +
     '{"format":"quiz", "tag":"Grade 6 Math Quiz - Algebra"},' +
     '{"format":"video", "tag":"Chemistry Safety with Bill Nye"},' +
@@ -6,7 +40,7 @@ var lib = '{"library":[' +
     '{"format":"textbook", "tag":"This is a new book and ITS HEREEE"},' +
     '{"format":"video", "tag":"Napalise with Elise: Chapter 3"} ]}';
 
-var content = JSON.parse(lib);
+var content = JSON.parse(lib);*/
 
 var querySearch = function() {	//Query filter every time a filter option is pressed
 	console.log('Running filter');
@@ -32,9 +66,10 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 
 	//Read all checkboxes in filter
 	var books = document.getElementById('Books');
-	var quiz = document.getElementById('Quiz');
+	var audio = document.getElementById('Audio');
 	var videos = document.getElementById('Videos');
-	var games = document.getElementById('Games');
+	var activities = document.getElementById('Activities');
+	var pictures = document.getElementById('Pictures');
 
 	var grade1 = document.getElementById('1');
 	var grade2 = document.getElementById('2');
@@ -63,9 +98,10 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 	var filterResults = new Object();
 		filterResults.module = 'filter';
 		filterResults.bbooks = books.checked;
-		filterResults.bquiz = quiz.checked;
+		filterResults.baudio = audio.checked;
 		filterResults.bvideos = videos.checked;
-		filterResults.bgames = games.checked;
+		filterResults.bactivities = activities.checked;
+		filterResults.bpictures = pictures.checked;
 
 		filterResults.grade1 = grade1.checked;
 		filterResults.grade2 = grade2.checked;
@@ -103,39 +139,56 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		
 		var searchArray = [];
 
-		for(i = 0; i < content.library.length; i++) {
-			var str = content.library[i].tag;
+		for(i = 0; i < library.length; i++) {
+			var str = library[i].displayname;
 			var find = str.search(searchResults.string);
 			//create array
 			//console.log(str);
 		
 			if(find >= 0) { //match was found
 				//console.log(content.library[i]);
-				searchArray.push(content.library[i]); //how to get content?
+				searchArray.push(library[i]); //how to get content?
 
 			}
 		}
 
 		var resultArray = [];
+		var filterArray1 = [];
 
 		for(j=0; j < searchArray.length; j++) {
-			if(searchArray[j].format == "textbook" && filterResults.bbooks == true) {
+			if(searchArray[j].filepath == "resources/textbook/" && filterResults.bbooks == true) {
 				//console.log(searchArray[j].tag);
-				resultArray.push(searchArray[j]);
+				filterArray1.push(searchArray[j]);
 			}
-			if(searchArray[j].format == "quiz" && filterResults.bquiz == true) {
+			if(searchArray[j].filepath == "resources/audio/" && filterResults.baudio == true) {
 				//console.log(searchArray[j].tag);
-				resultArray.push(searchArray[j]);
+				filterArray1.push(searchArray[j]);
 			}
-			if(searchArray[j].format == "video" && filterResults.bvideos == true) {
+			if(searchArray[j].filepath == "resources/videos/" && filterResults.bvideos == true) {
 				//console.log(searchArray[j].tag);
-				resultArray.push(searchArray[j]);
+				filterArray1.push(searchArray[j]);
 			}
-			if(searchArray[j].format == "game" && filterResults.bgames == true) {
+			if(searchArray[j].filepath == "resources/epaath/activities/" && filterResults.bactivities == true) {
 				//console.log(searchArray[j].tag);
-				resultArray.push(searchArray[j]);
+				filterArray1.push(searchArray[j]);
+			}
+			if(searchArray[j].filepath == "resources/pictures/" && filterResults.bpictures == true) {
+				//console.log(searchArray[j].tag);
+				filterArray1.push(searchArray[j]);
+			}
+
+
+		}
+
+		for(i=0;i<filterArray1.length;i++) {
+			for (j=1;j<9;j++) {
+				console.log(filterArray1[i].chapter_id[0]);
+				if((filterArray1[i].chapter_id[0]) == j && filterResults['grade' + j] == true)
+					resultArray.push(filterArray1[i]);
 			}
 		}
+
+
 
 		/*document.getElementById("results0").innerHTML = resultArray[0].tag;
 		document.getElementById("results1").innerHTML = resultArray[1].tag;
@@ -154,7 +207,7 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		 	results.team5 = resultArray[4].tag;*/
 
 		 	for(i=0;i<resultArray.length; i++) {
-				results["team" + i]=resultArray[i].tag;
+				results["team" + i]=resultArray[i].displayname + ", Grade " + resultArray[i].chapter_id[0];
 				//results.i = resultArray[i].tag;
 				console.log(results.team0);
 				console.log(resultArray[i]);
