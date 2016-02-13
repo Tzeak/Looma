@@ -9,8 +9,10 @@ var timeline = function() {
 	var response;
 
 
-	request.onreadystatechange = function() {
-	/* This is a callback function. It is called after the connection is opened, request.send().
+	request.onreadystatechange = function() {//Step 3: Collect Server's Response
+
+	/* This is a callback function. It is defined here but is 
+	 * only called after the connection is opened, request.send().
 	 *
 	 * Everytime the request changes, this function is called due to "onreadystatechange".
 	 *
@@ -22,8 +24,9 @@ var timeline = function() {
 			json = JSON.parse(response);	//converts string into an Object
 
 	};
-	request.open("GET", "function.php");	//Define the type of request (GET vs POST)
-	request.send(); //Connect to Server
+	request.open("GET", "function.php");	// Step 1: Define the type of request (GET vs POST)
+	request.send();							// Step 2: Connect to Server
+                                            // Step 3: Collect Server's Response -  Look @ Callback Function on Line 12
 };
 
 
