@@ -1,6 +1,8 @@
 /*
  * File: Ajax.js
  * Description: This will connect the views to the actual data stored on Looma
+ * This section is focused on how to construct an Ajax Object and organize its response
+ * without jQuery. The recommendation is to use jQuery over vanilla Javascript
  * 
  */
 
