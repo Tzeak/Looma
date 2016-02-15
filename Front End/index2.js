@@ -3,8 +3,9 @@ var library = [
     	"_id":"ObjectId(5549)", 
     	"chapter_id":"2EN02",
     	"filetype":"EP",
-    	"filepath":"resources/epaath/activities/",
-    	"displayname":"Geometry Through the Ages: Chapter 7"
+    	"thumbnail":"Front End/images/kitten.jpg/",
+    	"filepath": "resources/textbook/",
+    	"displayname":"KITTY"
     },
     {
     	"_id":"ObjectId(5551)", 
@@ -230,9 +231,9 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		  //Load JSON objects into Results div
 		  console.log("Loading JSON objects into Results div...");
 
-		  for (var key in results) 
+		  for(i=0;i<resultArray.length; i++)
 		  {
-		    var rElement = createNewListElement(results[key]);
+		    var rElement = createNewListElement(resultArray[i]);
 		    resultsUL.appendChild(rElement);
 		  }
 		}
@@ -243,13 +244,18 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 
 		  var listItem = document.createElement("li");
 		  var listLabel = document.createElement("label");
+		  var thumbnail = document.createElement("img");
 		  var addButton = document.createElement("button");
 		  addButton.innerText = "Add";
 		  addButton.className = "add";
-		  listLabel.innerText = itemString;
+		  var att = document.createAttribute("source");        // Create a "href" attribute
+		att.value = resultArray[i].thumbnail;            // Set the value of the href attribute
+		thumbnail.setAttributeNode(att);                      // Add the href attribute to <a>
+		  listLabel.innerText = itemString.displayname + ", Grade " + resultArray[i].chapter_id[0];
 		  // addButton.onclick = addJSON;
 		  listItem.appendChild(listLabel);
 		  listItem.appendChild(addButton);
+		  listItem.appendChild(thumbnail);
 
 		  return listItem;
 
