@@ -3,7 +3,7 @@ var library = [
     	"_id":"ObjectId(5549)", 
     	"chapter_id":"2EN02",
     	"filetype":"EP",
-    	"thumbnail":"Front End/images/kitten.jpg/",
+    	"thumbnail":"images/kitty.jpg",
     	"filepath": "resources/textbook/",
     	"displayname":"KITTY"
     },
@@ -13,6 +13,7 @@ var library = [
     	"filetype":"EP",
     	"filepath":"resources/pictures/",
     	"format":"video", 
+    	"thumbnail":"images/pup.jpg",
     	"displayname":"Chemistry Safety with Bill Nye"
     },
     {
@@ -21,6 +22,7 @@ var library = [
     	"filetype":"EP",
     	"filepath":"resources/videos/",
     	"format":"game", 
+    	"thumbnail":"images/pup2.jpg",
     	"displayname":"Is this letter a vowel?"
     },
     {
@@ -29,6 +31,7 @@ var library = [
     	"filetype":"EP",
     	"filepath":"resources/audio/",
     	"format":"video", 
+    	"thumbnail":"images/pup4.jpg",
     	"displayname":"The Chronicles of Narnia: The Lion, the Witch, and the Wardrobe, and Supilise"
     },
 ];
@@ -243,19 +246,38 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		  // Create new list items
 
 		  var listItem = document.createElement("li");
+		  	
+		  	var LiAtt = document.createAttribute("draggable");        // Create a "href" attribute
+			LiAtt.value = "true";            // Set the value of the href attribute
+			listItem.setAttributeNode(LiAtt);   
+
+			var LiAtt2 = document.createAttribute("ondragstart");        // Create a "href" attribute
+			LiAtt2.value = "drag(event)";            // Set the value of the href attribute
+			listItem.setAttributeNode(LiAtt2);   
+
+			var id = document.createAttribute("id");        // Create a "href" attribute
+			id.value = "item";            // Set the value of the href attribute
+			listItem.setAttributeNode(id);
+
+			var remove = document.createAttribute("ondrag");        // Create a "href" attribute
+			remove.value = "addJSON(event)";            // Set the value of the href attribute
+			listItem.setAttributeNode(remove);
+
 		  var listLabel = document.createElement("label");
 		  var thumbnail = document.createElement("img");
 		  var addButton = document.createElement("button");
 		  addButton.innerText = "Add";
 		  addButton.className = "add";
-		  var att = document.createAttribute("source");        // Create a "href" attribute
+		  
+		var att = document.createAttribute("src");        // Create a "href" attribute
 		att.value = resultArray[i].thumbnail;            // Set the value of the href attribute
 		thumbnail.setAttributeNode(att);                      // Add the href attribute to <a>
+		
 		  listLabel.innerText = itemString.displayname + ", Grade " + resultArray[i].chapter_id[0];
 		  // addButton.onclick = addJSON;
+		  listItem.appendChild(thumbnail);
 		  listItem.appendChild(listLabel);
 		  listItem.appendChild(addButton);
-		  listItem.appendChild(thumbnail);
 
 		  return listItem;
 
@@ -268,7 +290,7 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		  console.log("Checking for first empty timeline div...");
 
 		  // Gather all timeline divs so we can traverse through them
-		  var timelineDivs = document.getElementsByClassName("timelinediv");
+		  var timelineDivs = document.getElementsByClassName("drop");
 
 		  // Traverse through timeline divs and check for first empty div
 		  for (var i = 0; i < timelineDivs.length; i++) {
