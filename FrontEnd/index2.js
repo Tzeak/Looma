@@ -271,6 +271,8 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		  
 		var att = document.createAttribute("src");        // Create a "href" attribute
 		att.value = resultArray[i].thumbnail;            // Set the value of the href attribute
+		console.log("i = " + i);
+		console.log("resultArray[i] = " + resultArray[i]);
 		thumbnail.setAttributeNode(att);                      // Add the href attribute to <a>
 		
 		  listLabel.innerText = itemString.displayname + ", Grade " + resultArray[i].chapter_id[0];
