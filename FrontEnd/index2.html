@@ -15,6 +15,15 @@
 			  padding: 15px;
 			}
 
+			.timelinediv {
+			  border: 1px solid #000;
+			  min-height:120px;
+			  width:90px;
+			  display:inline-block;
+			  margin:5px;
+			  padding: 15px;
+			}
+
 			.drop {
 			  min-height:120px;
 			  width:90px;
@@ -168,21 +177,23 @@
 
     <br/><br/><br/>
 
-    <div class="timeline" id="timelineWhole">
+    <!--<div class="timeline" id="timelineWhole">
 	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
 	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
 	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
 	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
 	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
 	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
+    </div>-->
 
-	    <!--<div class="boxdiv timelinediv" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-	    <div class="boxdiv timelinediv" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-	    <div class="boxdiv timelinediv" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-	    <div class="boxdiv timelinediv" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-	    <div class="boxdiv timelinediv" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-	    <div class="boxdiv timelinediv" ondrop="drop(event)" ondragover="allowDrop(event)"></div>-->
-    </div>
+    <div class="timeline" id="timelineWhole">
+	    <div class="timelinediv"></div>
+	    <div class="timelinediv"></div>
+	    <div class="timelinediv"></div>
+	    <div class="timelinediv"></div>
+	    <div class="timelinediv"></div>
+	    <div class="timelinediv"></div>
+	</div>
 
     <br/>
     <br><br>
@@ -191,7 +202,7 @@
 
 
 	</body>
-	<script>
+<!--	<script>
 function allowDrop(ev) {
     ev.preventDefault();
 }
@@ -204,9 +215,25 @@ function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
-}
-</script>
+} -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="jquery-1.12.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#btnSave').hide();
+            $("#timelineWhole").sortable({
+                opacity: 0.7,
+                revert: true,   //Animates
+                scroll: true,   //Allows page to scroll when dragging. Good for tall pages.
+                handle: $(".timelinediv"),
+                update: function () {  $('#btnSave').show() }
+            });
+        })
+	</script>
 	<script type="text/javascript" src="index2.js"></script>
+
 	
 </html>
 

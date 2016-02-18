@@ -292,7 +292,7 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		  console.log("Checking for first empty timeline div...");
 
 		  // Gather all timeline divs so we can traverse through them
-		  var timelineDivs = document.getElementsByClassName("drop");
+		  var timelineDivs = document.getElementsByClassName("timelinediv");
 
 		  // Traverse through timeline divs and check for first empty div
 		  for (var i = 0; i < timelineDivs.length; i++) {
