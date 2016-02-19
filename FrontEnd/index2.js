@@ -299,7 +299,7 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 			listItem.setAttributeNode(remove);*/
 
 
-		  var listLabel = document.createElement("label");
+		  var listLabel = document.createElement("data-id");
 		  var thumbnail = document.createElement("img");
 		  var addButton = document.createElement("button");
 		  addButton.innerText = "Add";
@@ -407,5 +407,44 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 	
 }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+var timelineDivs = document.getElementsByClassName("timelinediv");
+
+		  // Traverse through timeline divs and check for first empty div
+		  for (var i = 0; i < timelineDivs.length; i++) {
+		    if (timelineDivs[i].innerHTML === "") {
+		      return timelineDivs[i];
+		    } 
+		  }
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 

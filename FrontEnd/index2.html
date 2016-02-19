@@ -229,6 +229,7 @@
 
 </div>
 
+<button type="button" id="saveButton">Save</button>
 
 	</body>
 <!--	<script>
@@ -251,14 +252,40 @@ function drop(ev) {
 
     <script>
         $(document).ready(function () {
-            $('#btnSave').hide();
             $("#timelineWhole").sortable({
+            //$('#btnSave').hide();
                 opacity: 0.7,
                 revert: true,   //Animates
                 scroll: true,   //Allows page to scroll when dragging. Good for tall pages.
                 handle: $(".timelinediv"),
-                update: function () {  $('#btnSave').show() }
+                update: function () {  
+                	$('#btnSave').show() 
+            	}
             });
+
+        	$('#saveButton').on('click', function() {
+        		//var timelineDivs = document.getElementsByClassName("timelinediv");
+				    // Traverse through timeline divs and check for first empty div
+				    var items = $(".timelinediv");
+				    var itemIds = [];
+				    for (var i = 0; i < items.length; i++) {
+				    	//var x = getAttribute("label-id");
+				    	var label = $('#data-id');
+				    	itemIds.push(label);
+
+				  		//itemIds.push(items.eq(i).data('id'));
+				  		//console.log(items.eq(i).data('id'));
+				    }
+				    console.log(itemIds);
+				    /*
+				    var timelineDivs = document.getElementsByClassName("timelinediv");
+				    for (var i = 0; i < timelineDivs.length; i++) {
+				    	//var x = document.getElementById("item").getAttribute("data-id");
+				    	//item
+
+				    console.log(itemIds);
+					*/
+				});
         })
 	</script>
 	<script type="text/javascript" src="index2.js"></script>
