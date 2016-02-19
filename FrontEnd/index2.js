@@ -34,6 +34,41 @@ var library = [
     	"thumbnail":"images/pup4.jpg",
     	"displayname":"The Chronicles of Narnia: The Lion, the Witch, and the Wardrobe, and Supilise"
     },
+        {
+    	"_id":"ObjectId(5549)", 
+    	"chapter_id":"2EN02",
+    	"filetype":"EP",
+    	"thumbnail":"images/kitty.jpg",
+    	"filepath": "resources/textbook/",
+    	"displayname":"KITTY"
+    },
+    {
+    	"_id":"ObjectId(5551)", 
+    	"chapter_id":"3EN02",
+    	"filetype":"EP",
+    	"filepath":"resources/pictures/",
+    	"format":"video", 
+    	"thumbnail":"images/pup.jpg",
+    	"displayname":"Chemistry Safety with Bill Nye"
+    },
+    {
+    	"_id":"ObjectId(5552)", 
+    	"chapter_id":"4EN02",
+    	"filetype":"EP",
+    	"filepath":"resources/videos/",
+    	"format":"game", 
+    	"thumbnail":"images/pup2.jpg",
+    	"displayname":"Is this letter a vowel?"
+    },
+    {
+    	"_id":"ObjectId(5549)", 
+    	"chapter_id":"5EN02",
+    	"filetype":"EP",
+    	"filepath":"resources/audio/",
+    	"format":"video", 
+    	"thumbnail":"images/pup4.jpg",
+    	"displayname":"The Chronicles of Narnia: The Lion, the Witch, and the Wardrobe, and Supilise"
+    },
 ];
 
 /*var lib = '{"library":[' +
@@ -247,27 +282,29 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 
 		  var listItem = document.createElement("li");
 		  	
-		  	var LiAtt = document.createAttribute("draggable");        // Create a "href" attribute
+		  	/*var LiAtt = document.createAttribute("draggable");        // Create a "href" attribute
 			LiAtt.value = "true";            // Set the value of the href attribute
 			listItem.setAttributeNode(LiAtt);   
 
 			var LiAtt2 = document.createAttribute("ondragstart");        // Create a "href" attribute
 			LiAtt2.value = "drag(event)";            // Set the value of the href attribute
-			listItem.setAttributeNode(LiAtt2);   
+			listItem.setAttributeNode(LiAtt2);*/   
 
 			var id = document.createAttribute("id");        // Create a "href" attribute
 			id.value = "item";            // Set the value of the href attribute
 			listItem.setAttributeNode(id);
 
-			var remove = document.createAttribute("ondrag");        // Create a "href" attribute
+			/*var remove = document.createAttribute("ondrag");        // Create a "href" attribute
 			remove.value = "addJSON(event)";            // Set the value of the href attribute
-			listItem.setAttributeNode(remove);
+			listItem.setAttributeNode(remove);*/
+
 
 		  var listLabel = document.createElement("label");
 		  var thumbnail = document.createElement("img");
 		  var addButton = document.createElement("button");
 		  addButton.innerText = "Add";
 		  addButton.className = "add";
+
 		  
 		var att = document.createAttribute("src");        // Create a "href" attribute
 		att.value = resultArray[i].thumbnail;            // Set the value of the href attribute
