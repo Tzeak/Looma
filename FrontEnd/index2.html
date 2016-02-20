@@ -28,6 +28,10 @@
 			  
 		     
 			}
+			.button {
+				position: relative;
+				float: right;
+			}
 
 			.timeline{
 				width: 1500px;
@@ -222,14 +226,16 @@
 		    <div class="timelinediv"></div>
 		    <div class="timelinediv"></div>
 		</div>
+
 	</div>
 
     <br/>
     <br><br>
+    <button type="button" id="btnSave" onclick="save()">Save</button>
 
 </div>
 
-<button type="button" id="saveButton">Save</button>
+
 
 	</body>
 <!--	<script>
@@ -263,30 +269,53 @@ function drop(ev) {
             	}
             });
 
-        	$('#saveButton').on('click', function() {
+        })
+      
+
+        	/*$('#btnSave').on('click', function(){
         		//var timelineDivs = document.getElementsByClassName("timelinediv");
 				    // Traverse through timeline divs and check for first empty div
 				    var items = $(".timelinediv");
+				    console.log("saving...");
 				    var itemIds = [];
 				    for (var i = 0; i < items.length; i++) {
+				    	var x = $("#item");
+				    	var y = $("#name").value;
 				    	//var x = getAttribute("label-id");
-				    	var label = $('#data-id');
-				    	itemIds.push(label);
+				    	//var label = $('#data-id');
+				    	itemIds.push(y);
+				    	console.log("name: "+ y);
 
 				  		//itemIds.push(items.eq(i).data('id'));
 				  		//console.log(items.eq(i).data('id'));
 				    }
-				    console.log(itemIds);
-				    /*
+				    console.log(itemIds);*/
+
+				    
+				    
+				var save = function(){    
+				    console.log("saving...");
+				    var itemIds = [];
 				    var timelineDivs = document.getElementsByClassName("timelinediv");
 				    for (var i = 0; i < timelineDivs.length; i++) {
-				    	//var x = document.getElementById("item").getAttribute("data-id");
-				    	//item
+				    	var x = timelineDivs[i].document.getElementById("item");
+				    	var y = timelineDivs[i].document.getElementById("name").outerText;
+				    	console.log("item: " + y);
+				    	itemIds.push(y);
+				   	}
 
-				    console.log(itemIds);
-					*/
-				});
-        })
+				 console.log(itemIds);
+				}
+				    	
+
+				
+				
+						
+				
+			//});
+
+		//})
+		
 	</script>
 	<script type="text/javascript" src="index2.js"></script>
 

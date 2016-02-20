@@ -299,7 +299,13 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 			listItem.setAttributeNode(remove);*/
 
 
-		  var listLabel = document.createElement("data-id");
+		  var listLabel = document.createElement("label");
+
+		  var id = document.createAttribute("id");        // Create a "href" attribute
+			id.value = "name";            // Set the value of the href attribute
+			listLabel.setAttributeNode(id);
+
+
 		  var thumbnail = document.createElement("img");
 		  var addButton = document.createElement("button");
 		  addButton.innerText = "Add";
