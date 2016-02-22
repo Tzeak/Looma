@@ -24,10 +24,8 @@
 			  padding: 15px;
 			  float: left;
 			  font-size: 15px;
-
-			  
-		     
 			}
+
 			.button {
 				position: relative;
 				float: right;
@@ -296,15 +294,20 @@ function drop(ev) {
 				var save = function(){    
 				    console.log("saving...");
 				    var itemIds = [];
-				    var timelineDivs = document.getElementsByClassName("timelinediv");
-				    for (var i = 0; i < timelineDivs.length; i++) {
-				    	var x = timelineDivs[i].document.getElementById("item");
-				    	var y = timelineDivs[i].document.getElementById("name").outerText;
-				    	console.log("item: " + y);
-				    	itemIds.push(y);
+				    //var timelineDivs = document.getElementsByClassName("timelinediv");
+				    for (var i = 0; i < 10; i++) {
+				    	var targetDiv = document.getElementsByClassName("timelinediv")[i].outerText;
+
+				   
+
+
+				    	//var x = timelineDivs[i].document.getElementById("item");
+				    	//var y = timelineDivs.document.getElementById("name").outerText;
+				    	console.log("item: " + targetDiv);
+				    	itemIds.push(targetDiv);
 				   	}
 
-				 console.log(itemIds);
+				console.log(itemIds);
 				}
 				    	
 

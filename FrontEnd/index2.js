@@ -406,12 +406,33 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		  	removeButton.addEventListener("click", removeJSON);   // bind removeJSON to remove button
 		  console.log("Giving remove buttons actions...");
 		}
+	}
+
+		var save = function(){    
+				    console.log("saving...");
+				    var itemIds = [];
+				    //var timelineDivs = document.getElementsByClassName("timelinediv");
+				    for (var i = 0; i < 10; i++) {
+				    	var targetDiv = document.getElementsByClassName("timelinediv")[i];
+				    	targetDiv.title="object_id";
+
+				   
+
+
+				    	//var x = timelineDivs[i].document.getElementById("item");
+				    	//var y = timelineDivs.document.getElementById("name").outerText;
+				    	console.log("item: " + targetDiv);
+				    	itemIds.push(targetDiv);
+				   	}
+
+				console.log(itemIds);
+		}
 
 
 
 
 	
-}
+
 }
 
 
