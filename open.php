@@ -1,4 +1,19 @@
 <?php
+
+/*
+
+File:			open.php
+Description:	This file runs upon opening a timeline from the main web application. 
+				Receives:
+				- One _GET request containing the ID of the requested timeline
+					from the "Open" module
+				Returns: 
+				- One array (the "timeline" being opened) of JSON objects 
+					(each media element in the timeline).
+
+*/	
+
+
 //Might be good to split the mongo connection  up from the application logic.
 try
 {
@@ -60,4 +75,14 @@ catch(MongoConnectionException $e)
 		$hi = $col->findOne(array('_id' => new MongoId($objectIdArray[$i])));
 		echo json_encode($hi);
 	}
+
+
+	/* 
+
+	OPEN TIMELINE
+	1. Get object ID from results box
+	2. Use object ID to access document with information
+	3. Load all information from document into a JSON
+
+	 */
 ?>
