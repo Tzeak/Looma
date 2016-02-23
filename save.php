@@ -30,5 +30,4 @@ catch(MongoConnectionException $e)
 	/*Insert array into Timeline*/
 	$info = array("name" => $_POST["name"], "line" => $_POST["line"]);
 	$timelines->insert($info);
-	print("made it!");
 ?>
