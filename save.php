@@ -10,8 +10,9 @@
  *				- Array of MongoId's for relevant media
  */
 
-
+require_once 'mongoSetup.php';
 //Might be good to split the mongo connection  up from the application logic.
+/*
 try
 {
 	$m			= new MongoClient(); 
@@ -27,6 +28,8 @@ catch(MongoConnectionException $e)
 	echo "Error connecting to MongoDB. Make sure you have run the command mongod --dbpath data/";
 	exit();
 }
+*/
+
 	/*Insert array into Timeline*/
 	$info = array("name" => $_POST["name"], "line" => $_POST["line"]);
 	$timelines->insert($info);
