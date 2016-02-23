@@ -1,7 +1,16 @@
 <html>
 	<head>
 		<title>PHP Test</title>
-		<script></script> <!--Put ajax in here-->
+		<style>
+			#opendiv {
+				border: 1px solid black;
+				margin: 50px;
+			}
+			#savediv {
+				border: 1px solid black;
+				margin: 50px;
+			}
+		</style>
 	</head>
 	<body>
 		<button>Open a file!</button>
@@ -10,4 +19,18 @@
 		<button>Save the following timeline!</button>
 		<div id="savediv"></div>
 		<br/>
+	</body>
+	<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script>
+		var json = {
+			name : "Fred",
+			line : [{ "_id" : "568dcdf19324a6f91e74131d", "class" : "class1", "subject" : "english", "prefix" : "1EN", "fn" : "English-1.pdf", "fp" : "textbooks/Class1/English/", "dn" : "Class 1 English"}, { "_id" : "568dcdf19324a6f91e74131e", "class" : "class1", "subject" : "english", "prefix" : "1EN", "fn" : "English-1.pdf", "fp" : "textbooks/Class1/English/", "dn" : "Class 1 English"}]
+		};
+
+		document.getElementById("savediv").innerHTML = json.line.toString();
+		
+
+	
+	</script> <!--Put ajax in here-->
 </html>
