@@ -16,21 +16,23 @@
 		<button>Open a file!</button>
 		<br/>
 		<div id="opendiv"></div>
-		<button>Save the following timeline!</button>
+		<button onclick="sendData()">Save the following timeline!</button>
 		<div id="savediv"></div>
 		<br/>
 	</body>
 	<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script>
-		var json = {
+	function sendData() {
+		var data = {
 			name : "Fred",
 			line : [{ "_id" : "568dcdf19324a6f91e74131d", "class" : "class1", "subject" : "english", "prefix" : "1EN", "fn" : "English-1.pdf", "fp" : "textbooks/Class1/English/", "dn" : "Class 1 English"}, { "_id" : "568dcdf19324a6f91e74131e", "class" : "class1", "subject" : "english", "prefix" : "1EN", "fn" : "English-1.pdf", "fp" : "textbooks/Class1/English/", "dn" : "Class 1 English"}]
 		};
 
-		document.getElementById("savediv").innerHTML = json.line.toString();
-		
+		document.getElementById("savediv").innerHTML = data.name + "<br/>" + data.line.toString();
+		$.post("save.php", data); //Send data to server via post request
 
+	}
 	
 	</script> <!--Put ajax in here-->
 </html>
