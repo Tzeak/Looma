@@ -27,9 +27,10 @@
 			document.getElementById("opendiv").innerText = "lololololol kate smells like nice butts";
 		}
 		function sendData() {
+			//How data is spec'd to be sent to the save function
 			var data = {
 				name : "Fred",
-				line : [{ "_id" : "568dcdf19324a6f91e74131d", "class" : "class1", "subject" : "english", "prefix" : "1EN", "fn" : "English-1.pdf", "fp" : "textbooks/Class1/English/", "dn" : "Class 1 English"}, { "_id" : "568dcdf19324a6f91e74131e", "class" : "class1", "subject" : "english", "prefix" : "1EN", "fn" : "English-1.pdf", "fp" : "textbooks/Class1/English/", "dn" : "Class 1 English"}]
+				line : [{ "_id" : "568dcdf19324a6f91e74131d"}, { "_id" : "568dcdf19324a6f91e74131e"}]
 			};
 
 			document.getElementById("savediv").innerHTML = data.name + "<br/>" + data.line.toString();
