@@ -26,7 +26,7 @@ var library = [
     	"displayname":"Is this letter a vowel?"
     },
     {
-    	"_id":"ObjectId(5549)", 
+    	"_id":"ObjectId(5548)", 
     	"chapter_id":"5EN02",
     	"filetype":"EP",
     	"filepath":"resources/audio/",
@@ -35,7 +35,7 @@ var library = [
     	"displayname":"The Chronicles of Narnia: The Lion, the Witch, and the Wardrobe, and Supilise"
     },
         {
-    	"_id":"ObjectId(5549)", 
+    	"_id":"ObjectId(5547)", 
     	"chapter_id":"2EN02",
     	"filetype":"EP",
     	"thumbnail":"images/kitty.jpg",
@@ -43,7 +43,7 @@ var library = [
     	"displayname":"KITTY"
     },
     {
-    	"_id":"ObjectId(5551)", 
+    	"_id":"ObjectId(5559)", 
     	"chapter_id":"3EN02",
     	"filetype":"EP",
     	"filepath":"resources/pictures/",
@@ -61,7 +61,7 @@ var library = [
     	"displayname":"Is this letter a vowel?"
     },
     {
-    	"_id":"ObjectId(5549)", 
+    	"_id":"ObjectId(5557)", 
     	"chapter_id":"5EN02",
     	"filetype":"EP",
     	"filepath":"resources/audio/",
@@ -80,6 +80,8 @@ var library = [
     '{"format":"video", "tag":"Napalise with Elise: Chapter 3"} ]}';
 
 var content = JSON.parse(lib);*/
+
+var resultArray = [];
 
 var querySearch = function() {	//Query filter every time a filter option is pressed
 	console.log('Running filter');
@@ -191,7 +193,7 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 			}
 		}
 
-		var resultArray = [];
+		//var resultArray = [];
 		var filterArray1 = [];
 
 		for(j=0; j < searchArray.length; j++) {
@@ -293,6 +295,10 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 			var id = document.createAttribute("id");        // Create a "href" attribute
 			id.value = "item";            // Set the value of the href attribute
 			listItem.setAttributeNode(id);
+
+			var num = document.createAttribute("index");        // Create a "href" attribute
+			num.value = i;            // Set the value of the href attribute
+			listItem.setAttributeNode(num);
 
 			/*var remove = document.createAttribute("ondrag");        // Create a "href" attribute
 			remove.value = "addJSON(event)";            // Set the value of the href attribute
@@ -429,11 +435,32 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		}
 
 
-
-
 	
 
 }
+
+var save = function(){    
+    console.log("saving...");
+    var itemIds = [];
+    var timelineDivs = document.getElementsByClassName("timelinediv");
+    for (var i = 0; i < timelineDivs.length; i++) {
+
+    	if((document.getElementsByClassName("timelinediv")[i].lastElementChild)!=null) {
+	    	var x = document.getElementsByClassName("timelinediv")[i].lastElementChild;
+	    	var index = x.getAttribute("index");
+	    	console.log("index : " + index);
+	    	objectId=resultArray[index]._id;
+	    	//var y = timelineDivs[i].document.getElementById("name").outerText;
+	    	console.log("item: " + objectId);
+	    	itemIds.push(objectId);
+    	}
+   	}
+
+ console.log(itemIds);
+}
+
+
+
 
 
 
