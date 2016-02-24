@@ -10,27 +10,10 @@
  *				- Array of MongoId's for relevant media
  */
 
+/*Connect to MongoDB*/
 require_once 'mongoSetup.php';
-//Might be good to split the mongo connection  up from the application logic.
-/*
-try
-{
-	$m			= new MongoClient(); 
-	$db			= $m->selectDB("looma");
-	$activities	= $db->activities;
-	$textbooks	= $db->textbooks;
-	$dictionary = $db->dictionary;
-	$chapters	= $db->chapters;
-	$timelines	= $db->timelines; //If no timelines exist, a new timeline will be created
-}
-catch(MongoConnectionException $e)
-{
-	echo "Error connecting to MongoDB. Make sure you have run the command mongod --dbpath data/";
-	exit();
-}
-*/
 
-	/*Insert array into Timeline*/
-	$info = array("name" => $_POST["name"], "line" => $_POST["line"]);
-	$timelines->insert($info);
+/*Insert array into Timeline*/
+$info = array("name" => $_POST["name"], "line" => $_POST["line"]);
+$timelines->insert($info);
 ?>
