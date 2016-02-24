@@ -26,7 +26,7 @@ var library = [
     	"displayname":"Is this letter a vowel?"
     },
     {
-    	"_id":"ObjectId(5549)", 
+    	"_id":"ObjectId(5548)", 
     	"chapter_id":"5EN02",
     	"filetype":"EP",
     	"filepath":"resources/audio/",
@@ -35,7 +35,7 @@ var library = [
     	"displayname":"The Chronicles of Narnia: The Lion, the Witch, and the Wardrobe, and Supilise"
     },
         {
-    	"_id":"ObjectId(5549)", 
+    	"_id":"ObjectId(5547)", 
     	"chapter_id":"2EN02",
     	"filetype":"EP",
     	"thumbnail":"images/kitty.jpg",
@@ -43,7 +43,7 @@ var library = [
     	"displayname":"KITTY"
     },
     {
-    	"_id":"ObjectId(5551)", 
+    	"_id":"ObjectId(5559)", 
     	"chapter_id":"3EN02",
     	"filetype":"EP",
     	"filepath":"resources/pictures/",
@@ -61,7 +61,7 @@ var library = [
     	"displayname":"Is this letter a vowel?"
     },
     {
-    	"_id":"ObjectId(5549)", 
+    	"_id":"ObjectId(5557)", 
     	"chapter_id":"5EN02",
     	"filetype":"EP",
     	"filepath":"resources/audio/",
