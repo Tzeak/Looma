@@ -1,56 +1,42 @@
 <?php
+ require_once 'mongoSetup.php';
 
-// foreach ($_POST as $entry => $lala) {
-// 	echo $entry . $lala;
-// }
+//try
+//{
+//	$m			= new MongoClient(); 
+//	$db			= $m->selectDB("looma");
+//	$activities	= $db->activities;
+//	$textbooks	= $db->textbooks;
+//	$dictionary = $db->dictionary;
+//	$chapters	= $db->chapters;
+//	$timelines	= $db->timelines; 
+//}
+//catch(MongoConnectionException $e)
+//{
+//	echo "Error connecting to MongoDB. Make sure you have run the command mongod --dbpath data/";
+//	exit();
+//}
+//
 
-// require_once 'mongoSetup.php';
-
-try
-{
-	$m			= new MongoClient(); 
-	$db			= $m->selectDB("looma");
-	$activities	= $db->activities;
-	$textbooks	= $db->textbooks;
-	$dictionary = $db->dictionary;
-	$chapters	= $db->chapters;
-	$timelines	= $db->timelines; 
-}
-catch(MongoConnectionException $e)
-{
-	echo "Error connecting to MongoDB. Make sure you have run the command mongod --dbpath data/";
-	exit();
-}
-
-
+	echo "hi";
 	// make variable for the timeline ID
 	$thisID = $_POST['id'];
 
-	// Find a specific document using the Mongo ID
-	$document = $timelines->findOne(array('_id' => new MongoId($thisID)));
-	echo json_encode($document) . "<br/><br/>";
+	// Find a specific timeline using the Mongo ID
+	$line = $timelines->findOne(array('_id' => new MongoId($thisID)));
+	echo json_encode($line) . "<br/><br/>";
 	
 	// Create array to hold the timeline element JSONs
 	$timelineArray = array();
-	$cntelements = count($document['elements']);
-	for ($i=0; $i<$cntelements; $i++) {
-		$mongoID = $document['elements'][$i];	// placeholder for the mongoID we're searching for
+	$cntelements = count($line['elements']);
+	for ($i=0; $i<$cntelements; $i++) 
+	{
+		$mongoID = $line['elements'][$i];	// placeholder for the mongoID we're searching for
+		$document = searchMongo($mongoID);		// searchMongo() searches the collection for the right 
 
+		var_dump ($document);
 
-		// $collection = searchMongo($mongoID);		// searchMongo() searches the collection for the right 
-
-		$collectionarray = array($activities, $textbooks, $dictionary, $chapters);
-
-		for ($i=0; $i<count($collectionarray); $i++) {
-			$thisdocument = $collectionarray[$i]->findOne(array('_id' => new MongoId($thisID)));
-			if ($thisdocument != null) {
-				break;
-			} 
-		}
-
-
-
-		if ($thisdocument == null) {
+		if ($document == null) {
 			error_log("There is no document with this ID!", 0);
 			// We should make a real error log .......
 			// error_log("You messed up!", 3, "/var/tmp/my-errors.log");
