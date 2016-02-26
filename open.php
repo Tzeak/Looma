@@ -1,12 +1,23 @@
-<style>
-	.timeline {
-		margin:10px;
-		border: 1px solid #000;
-	}
-</style>
-
-
 <?php
+
+foreach ($_POST as $entry => $lala) {
+	echo $entry . $lala;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
 
 try
 {
@@ -25,28 +36,26 @@ catch(MongoConnectionException $e)
 	exit();
 }
 
-	$timelines->drop();
-	//these are in dictionary!!
-	$info = array(
-		"name" => "Timeline 1",
-		"elements" => array(
-			"5690154a9324a6f91e74299f",
-			"5690154a9324a6f91e7429a0",
-			"5690154a9324a6f91e7429a1"
-			)
-	);
-	$timelines->insert($info);
-	$info = array(
-		"name" => "Timeline 2",
-		"elements" => array(
-			"5690154a9324a6f91e74299c",
-			"5690154a9324a6f91e74299d",
-			"5690154a9324a6f91e74299e"
-			)
-	);
-	$timelines->insert($info);
-
-
+	// $timelines->drop();
+	// //these are in dictionary!!
+	// $info = array(
+	// 	"name" => "Timeline 1",
+	// 	"elements" => array(
+	// 		"5690154a9324a6f91e74299f",
+	// 		"5690154a9324a6f91e7429a0",
+	// 		"5690154a9324a6f91e7429a1"
+	// 		)
+	// );
+	// $timelines->insert($info);
+	// $info = array(
+	// 	"name" => "Timeline 2",
+	// 	"elements" => array(
+	// 		"5690154a9324a6f91e74299c",
+	// 		"5690154a9324a6f91e74299d",
+	// 		"5690154a9324a6f91e74299e"
+	// 		)
+	// );
+	// $timelines->insert($info);
 
 
 	echo "<hr>";
@@ -69,11 +78,34 @@ catch(MongoConnectionException $e)
 			echo "IT EXISTS! <br/>";
 			echo json_encode($document) . "<br/>";
 		} else {echo "it's null!!! <br/>";}
-		// echo $collectionarray[$i]->findOne(array('_id') => new MongoId('568dcdf19324a6f91e74132d'));
-		// if ($collectionarray[$i]->findOne(array('_id') => new MongoId('568dcdf19324a6f91e74132d')) != null) {
-		// 	echo "it's NOT null!!!";
-		// } else echo "it's null!!"
 	}
+
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	// $document = $dictionary->findOne(array('_id' => new MongoId('568dcdf19324a6f91e74132d')));
 	// echo json_encode($document) . "<br/><br/>";
@@ -143,7 +175,7 @@ catch(MongoConnectionException $e)
 	File:			open.php
 	Description:	This file runs upon opening a timeline from the main web application. 
 					Receives:
-					- One _GET request containing the ID of the requested timeline
+					- One _POST request containing the ID of the requested timeline
 						from the "Open" module dialogue
 					Returns: 
 					- One array (the "timeline" being opened) of JSON objects 
