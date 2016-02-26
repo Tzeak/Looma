@@ -293,19 +293,23 @@ function drop(ev) {
 
 				    
 				    
-				var save = function(){    
+				/*var save = function(resultArray){    
 				    console.log("saving...");
 				    var itemIds = [];
 				    var timelineDivs = document.getElementsByClassName("timelinediv");
 				    for (var i = 0; i < timelineDivs.length; i++) {
-				    	var x = timelineDivs[i].document.getElementById("item");
-				    	var y = timelineDivs[i].document.getElementById("name").outerText;
-				    	console.log("item: " + y);
-				    	itemIds.push(y);
+
+				    	var x = document.getElementsByClassName("timelinediv")[i].lastElementChild;
+				    	var index = x.getAttribute("index");
+				    	console.log("index : " + index);
+				    	objectId=resultArray[index]._id;
+				    	//var y = timelineDivs[i].document.getElementById("name").outerText;
+				    	console.log("item: " + index);
+				    	itemIds.push(index);
 				   	}
 
 				 console.log(itemIds);
-				}
+				}*/
 				    	
 
 				
