@@ -1,23 +1,10 @@
 <?php
 
-foreach ($_POST as $entry => $lala) {
-	echo $entry . $lala;
-}
+// foreach ($_POST as $entry => $lala) {
+// 	echo $entry . $lala;
+// }
 
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
+// require_once 'mongoSetup.php';
 
 try
 {
@@ -27,62 +14,53 @@ try
 	$textbooks	= $db->textbooks;
 	$dictionary = $db->dictionary;
 	$chapters	= $db->chapters;
-	$timelines	= $db->timelines; //If no timelines exist, a new timeline will be created	
+	$timelines	= $db->timelines; 
 }
-
 catch(MongoConnectionException $e)
 {
 	echo "Error connecting to MongoDB. Make sure you have run the command mongod --dbpath data/";
 	exit();
 }
 
-	// $timelines->drop();
-	// //these are in dictionary!!
-	// $info = array(
-	// 	"name" => "Timeline 1",
-	// 	"elements" => array(
-	// 		"5690154a9324a6f91e74299f",
-	// 		"5690154a9324a6f91e7429a0",
-	// 		"5690154a9324a6f91e7429a1"
-	// 		)
-	// );
-	// $timelines->insert($info);
-	// $info = array(
-	// 	"name" => "Timeline 2",
-	// 	"elements" => array(
-	// 		"5690154a9324a6f91e74299c",
-	// 		"5690154a9324a6f91e74299d",
-	// 		"5690154a9324a6f91e74299e"
-	// 		)
-	// );
-	// $timelines->insert($info);
 
-
-	echo "<hr>";
-	//READ DATA
-	$cursor = $textbooks->find();
+	// make variable for the timeline ID
+	$thisID = $_POST['id'];
 
 	// Find a specific document using the Mongo ID
-	$document = $textbooks->findOne(array('_id' => new MongoId('568dcdf19324a6f91e74132d')));
+	$document = $timelines->findOne(array('_id' => new MongoId($thisID)));
 	echo json_encode($document) . "<br/><br/>";
-	$document2 = $dictionary->findOne(array('_id' => new MongoId('5690154a9324a6f91e7429a0')));
-	echo json_encode($document2) . "<br/><br/><br/><br/>";
+	
+	// Create array to hold the timeline element JSONs
+	$timelineArray = array();
+	$cntelements = count($document['elements']);
+	for ($i=0; $i<$cntelements; $i++) {
+		$mongoID = $document['elements'][$i];	// placeholder for the mongoID we're searching for
 
 
-	// Look through all collections for that document with the Mongo ID
-	$collectionarray = array($activities, $textbooks, $dictionary, $chapters);
+		// $collection = searchMongo($mongoID);		// searchMongo() searches the collection for the right 
 
-	for ($i=0; $i<count($collectionarray); $i++) {
-		$document = $collectionarray[$i]->findOne(array('_id' => new MongoId('568dcdf19324a6f91e74132d')));
-		if ($document != null) {
-			echo "IT EXISTS! <br/>";
-			echo json_encode($document) . "<br/>";
-		} else {echo "it's null!!! <br/>";}
+		$collectionarray = array($activities, $textbooks, $dictionary, $chapters);
+
+		for ($i=0; $i<count($collectionarray); $i++) {
+			$thisdocument = $collectionarray[$i]->findOne(array('_id' => new MongoId($thisID)));
+			if ($thisdocument != null) {
+				break;
+			} 
+		}
+
+
+
+		if ($thisdocument == null) {
+			error_log("There is no document with this ID!", 0);
+			// We should make a real error log .......
+			// error_log("You messed up!", 3, "/var/tmp/my-errors.log");
+			break;
+		}
+		$timelineArray[$i] = $thisdocument;		// find the document! yay!
 	}
+	var_dump($timelineArray);
 
 
-
-*/
 
 
 

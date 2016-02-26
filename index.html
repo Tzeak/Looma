@@ -27,8 +27,7 @@
 			var data = {
 				'id' : '56cd03970bfaa7be7f6c8345'
 			};
-			$("#opendiv").html(data['id']);
-			$.post("open.php", function(data) {
+			$.post("open.php", data, function(data) {
 				$("#opendiv").html(data);
 			}); //Send data to server via post request
 			// document.getElementById("opendiv").innerText = data;
