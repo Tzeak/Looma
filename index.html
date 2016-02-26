@@ -25,7 +25,7 @@
 	<script>
 		function katesFunction() {
 			var data = {
-				'id' : '56cff84ace85a045030041ac'
+				'id' : '56d00301fd78b701310041ad'
 			};
 			$.post("open.php", data, function(data) {
 				$("#opendiv").html(data);
@@ -37,7 +37,7 @@
 			//How data is spec'd to be sent to the save function
 			var data = {
 				name : "Fred",
-				line : [{ "_id" : "568dcdf19324a6f91e74131d"}, { "_id" : "568dcdf19324a6f91e74131e"}]
+				line : ["568dcdf19324a6f91e74131d", "568dcdf19324a6f91e74131e"]
 			};
 
 			document.getElementById("savediv").innerHTML = data.name + "<br/>" + data.line.toString();

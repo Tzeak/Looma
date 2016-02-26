@@ -16,16 +16,15 @@
 		$mongoID = $line['line'][$i];	// placeholder for the mongoID we're searching for
 		$document = searchMongo($mongoID);		// searchMongo() searches the collection for the right 
 
-		var_dump ($document);
-
 		if ($document == null) {
 			error_log("There is no document with this ID!", 0);
 			// We should make a real error log .......
 			// error_log("You messed up!", 3, "/var/tmp/my-errors.log");
 			break;
 		}
-		$timelineArray[$i] = $thisdocument;		// find the document! yay!
+		$timelineArray[$i] = $document;		// find the document! yay!
 	}
+
 	var_dump($timelineArray);
 
 
