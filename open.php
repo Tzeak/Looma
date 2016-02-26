@@ -1,24 +1,6 @@
 <?php
  require_once 'mongoSetup.php';
 
-//try
-//{
-//	$m			= new MongoClient(); 
-//	$db			= $m->selectDB("looma");
-//	$activities	= $db->activities;
-//	$textbooks	= $db->textbooks;
-//	$dictionary = $db->dictionary;
-//	$chapters	= $db->chapters;
-//	$timelines	= $db->timelines; 
-//}
-//catch(MongoConnectionException $e)
-//{
-//	echo "Error connecting to MongoDB. Make sure you have run the command mongod --dbpath data/";
-//	exit();
-//}
-//
-
-	echo "hi";
 	// make variable for the timeline ID
 	$thisID = $_POST['id'];
 
@@ -28,10 +10,10 @@
 	
 	// Create array to hold the timeline element JSONs
 	$timelineArray = array();
-	$cntelements = count($line['elements']);
+	$cntelements = count($line['line']);
 	for ($i=0; $i<$cntelements; $i++) 
 	{
-		$mongoID = $line['elements'][$i];	// placeholder for the mongoID we're searching for
+		$mongoID = $line['line'][$i];	// placeholder for the mongoID we're searching for
 		$document = searchMongo($mongoID);		// searchMongo() searches the collection for the right 
 
 		var_dump ($document);

@@ -31,6 +31,7 @@ catch(MongoConnectionException $e)
 function searchMongo($id)
 {
 
+	global $activities, $textbooks, $dictionary, $chapters, $timelines;
 	// Look through all collections for that document with the Mongo ID
 	$collectionarray = array($activities, $textbooks, $dictionary, $chapters);
 
