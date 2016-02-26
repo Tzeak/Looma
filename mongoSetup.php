@@ -21,6 +21,13 @@ catch(MongoConnectionException $e)
 	exit();
 }
 
+/* Function:	searchMongo($id)
+ * Description:	This function takes in a MongoId and searches for it through each of the collections
+ *				in the database. 
+ *				- If the document exists, return $document to the calling function.
+ *				- If the document does not exist, return null to the calling function
+ */
+
 function searchMongo($id)
 {
 
@@ -36,8 +43,8 @@ function searchMongo($id)
 		{
 			return $document; // it's in this collection!
 		} 
-		
-
 	}
+	
+	return null;
 }
 ?>
