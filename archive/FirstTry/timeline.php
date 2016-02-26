@@ -1,1 +1,0 @@
-<?php echo '{"_id":{"$id":"56c776bdfd78b7bd070041a7"},"title":"Thing 1","author":"Author 1"}{"_id":{"$id":"56c776bdfd78b7bd070041a8"},"title":"Thing 2","author":"Author 2"}{"_id":{"$id":"56c776bdfd78b7bd070041a9"},"title":"Thing 3","author":"Author 3"}{"_id":{"$id":"56c776bdfd78b7bd070041aa"},"title":"Thing 4","author":"Author 4"}'' ?>
