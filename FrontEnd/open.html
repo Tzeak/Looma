@@ -10,7 +10,7 @@
 				position: relative;
 				float: right;
 			}
-			#lessons {
+			#lessonDiv {
 				background-color:gray;
 				color:white;
 				padding:2px;
@@ -64,7 +64,7 @@
 		</style>
 	</head>
 
-	<body>
+	<body onload="loadJSON()">
 		<div id="container">
 		<div id="sidebar">
 			    <button type="button" id="btnSave" onclick="save()">Present</button>
@@ -82,9 +82,9 @@
 
 
 	<div id = "wrapper">
-    	<div class="lessons" id="lessons">
+    	<div class="lessonDiv" id="lessonDiv">
 		  
-		    <div class="lesson_id"> Learning Math with Tim the Tiger  </div>
+		    <!--<div class="lesson_id"> Learning Math with Tim the Tiger  </div>
 		    <div class="lesson_id"> Algebra for Ants  </div>
 		    <div class="lesson_id"> Games for Reading Fridays  </div>
 		    <div class="lesson_id"> Ranger Rabbit and the Royal Vowels  </div>
@@ -95,7 +95,7 @@
 		    <div class="lesson_id"> Games for Reading Fridays  </div>
 		    <div class="lesson_id"> Ranger Rabbit and the Royal Vowels  </div>
 		    <div class="lesson_id"> How to eat an apple  </div>
-		    <div class="lesson_id"> Science for Losers  </div>
+		    <div class="lesson_id"> Science for Losers  </div> -->
 			
 		</div>
 	</div>
@@ -115,17 +115,58 @@
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
     <script>
+
+	    var lessons = [
+	    {
+	    	"_id":"ObjectId(5549)", 
+	    	"lesson_title":"Learning with Tim the Tiger"
+	    },
+	    {
+	    	"_id":"ObjectId(5549)", 
+	    	"lesson_title":"Algebra for Ants"
+	    },
+	    {
+	    	"_id":"ObjectId(5549)", 
+	    	"lesson_title":"Games for Readings"
+	    }]
+
+
+	    var loadJSON = function() {
+		    for(i = 0; i < lessons.length; i++) {
+				var rElement = createNewListElement(lessons[i].lesson_title);
+			    lessonDiv.appendChild(rElement);
+			}
+		}
+
+		var createNewListElement = function(itemString) {
+				//searchArray.push(lessons[i]);
+		    var listItem = document.createElement("li"); 
+
+			var id = document.createAttribute("id");        // Create a "href" attribute
+			id.value = "title";            // Set the value of the href attribute
+			listItem.setAttributeNode(id);
+
+			var listLabel = document.createElement("label");
+			listLabel.innerText=itemString;
+
+			listItem.appendChild(listLabel);
+
+			return listItem;
+		}
+
         //var searchArray = ["Learning Math with Tim the Tiger","Algebra for Ants","Games for Reading Fridays","Ranger Rabbit and the Royal Vowels","How to eat an apple","Science for Losers",""];
-    	console.log("hi");
-        $(document).ready(function () {
+
+        
+
+       	$(document).ready(function () {
          
-	       $(".lesson_id").mouseover(function(){
+	       $(".lessonDiv#title").mouseover(function(){
 			    $(this).css("background-color", "lightgray");
-			    $(this).css("color", "blue");
+			    $(this).css("color", "black");
 			    $(this).css("border-radius", "5px");
 			    $(this).css("padding", "0px");
 			});
-	        $(".lesson_id").mouseout(function(){
+	        $(".lessonDiv#title").mouseout(function(){
 	        	$(this).css("background-color", "gray");
 			    $(this).css("color", "white");
 			    $(this).css("border-radius", "5px");
@@ -135,33 +176,6 @@
         })
     </script>
 
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  
-    <script src="jquery-1.12.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
-    <script>
-
-    	var searchArray = ["Learning Math with Tim the Tiger","Algebra for Ants","Games for Reading Fridays","Ranger Rabbit and the Royal Vowels","How to eat an apple","Science for Losers",""];
-    	console.log("hi");
-        $(document).ready(function () {
-         
-	       $(".lesson_id").mouseover(function(){
-			    $(this).css("background-color", "lightgray");
-			    $(this).css("color", "black");
-			    $(this).css("border-radius", "5px");
-			    $(this).css("padding", "0px");
-			});
-	        $(".lesson_id").mouseout(function(){
-	        	$(this).css("background-color", "gray");
-			    $(this).css("color", "white");
-			    $(this).css("border-radius", "5px");
-			    $(this).css("padding", "0px");
-			});
-
-
-        })
-	</script>-->
 
 	<!--
 	<script type="text/javascript" src="index2.js"></script>
