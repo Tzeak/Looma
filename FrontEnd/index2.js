@@ -26,7 +26,7 @@ var library = [
     	"displayname":"Is this letter a vowel?"
     },
     {
-    	"_id":"ObjectId(5548)", 
+    	"_id":"ObjectId(5549)", 
     	"chapter_id":"5EN02",
     	"filetype":"EP",
     	"filepath":"resources/audio/",
@@ -35,7 +35,7 @@ var library = [
     	"displayname":"The Chronicles of Narnia: The Lion, the Witch, and the Wardrobe, and Supilise"
     },
         {
-    	"_id":"ObjectId(5547)", 
+    	"_id":"ObjectId(5549)", 
     	"chapter_id":"2EN02",
     	"filetype":"EP",
     	"thumbnail":"images/kitty.jpg",
@@ -43,7 +43,7 @@ var library = [
     	"displayname":"KITTY"
     },
     {
-    	"_id":"ObjectId(5559)", 
+    	"_id":"ObjectId(5551)", 
     	"chapter_id":"3EN02",
     	"filetype":"EP",
     	"filepath":"resources/pictures/",
@@ -61,7 +61,7 @@ var library = [
     	"displayname":"Is this letter a vowel?"
     },
     {
-    	"_id":"ObjectId(5557)", 
+    	"_id":"ObjectId(5549)", 
     	"chapter_id":"5EN02",
     	"filetype":"EP",
     	"filepath":"resources/audio/",
@@ -80,8 +80,6 @@ var library = [
     '{"format":"video", "tag":"Napalise with Elise: Chapter 3"} ]}';
 
 var content = JSON.parse(lib);*/
-
-var resultArray = [];
 
 var querySearch = function() {	//Query filter every time a filter option is pressed
 	console.log('Running filter');
@@ -193,7 +191,7 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 			}
 		}
 
-		//var resultArray = [];
+		var resultArray = [];
 		var filterArray1 = [];
 
 		for(j=0; j < searchArray.length; j++) {
@@ -282,7 +280,7 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		var createNewListElement = function(itemString) {
 		  // Create new list items
 
-		  var listItem = document.createElement("li");
+		  
 		  	
 		  	/*var LiAtt = document.createAttribute("draggable");        // Create a "href" attribute
 			LiAtt.value = "true";            // Set the value of the href attribute
@@ -290,15 +288,13 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 
 			var LiAtt2 = document.createAttribute("ondragstart");        // Create a "href" attribute
 			LiAtt2.value = "drag(event)";            // Set the value of the href attribute
-			listItem.setAttributeNode(LiAtt2);*/   
+			listItem.setAttributeNode(LiAtt2);*/  
+
+			var listItem = document.createElement("li"); 
 
 			var id = document.createAttribute("id");        // Create a "href" attribute
 			id.value = "item";            // Set the value of the href attribute
 			listItem.setAttributeNode(id);
-
-			var num = document.createAttribute("index");        // Create a "href" attribute
-			num.value = i;            // Set the value of the href attribute
-			listItem.setAttributeNode(num);
 
 			/*var remove = document.createAttribute("ondrag");        // Create a "href" attribute
 			remove.value = "addJSON(event)";            // Set the value of the href attribute
@@ -311,6 +307,20 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 			id.value = "name";            // Set the value of the href attribute
 			listLabel.setAttributeNode(id);
 
+		////////////elise doing shit
+
+		var list_id = document.createElement("title"); 
+
+		var id = document.createAttribute("id");        // Create a "href" attribute
+			id.value = resultArray[i]._id;            // Set the value of the href attribute
+			list_id.setAttributeNode(id);
+
+
+
+
+
+		//end of elise doing shit
+
 
 		  var thumbnail = document.createElement("img");
 		  var addButton = document.createElement("button");
@@ -319,16 +329,25 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 
 		  
 		var att = document.createAttribute("src");        // Create a "href" attribute
-		att.value = resultArray[i].thumbnail;            // Set the value of the href attribute
+		att.value = resultArray[i].thumbnail; // Set the value of the href attribute
+
+		//var title = document.createAttribute("title");
+		//title.value = resultArray[i]._id;
+		
 		console.log("i = " + i);
 		console.log("resultArray[i] = " + resultArray[i]);
 		thumbnail.setAttributeNode(att);                      // Add the href attribute to <a>
 		
 		  listLabel.innerText = itemString.displayname + ", Grade " + resultArray[i].chapter_id[0];
 		  // addButton.onclick = addJSON;
+		  //list_id.title = resultArray[i]._id;
+		  
+		  //list_id.title = resultArray[i]._id;
 		  listItem.appendChild(thumbnail);
 		  listItem.appendChild(listLabel);
 		  listItem.appendChild(addButton);
+		  listItem.appendChild(list_id);
+
 
 		  return listItem;
 
@@ -413,92 +432,4 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		  console.log("Giving remove buttons actions...");
 		}
 	}
-
-		var save = function(){    
-				    console.log("saving...");
-				    var itemIds = [];
-				    //var timelineDivs = document.getElementsByClassName("timelinediv");
-				    for (var i = 0; i < 10; i++) {
-				    	var targetDiv = document.getElementsByClassName("timelinediv")[i];
-				    	targetDiv.title="object_id";
-
-				   
-
-
-				    	//var x = timelineDivs[i].document.getElementById("item");
-				    	//var y = timelineDivs.document.getElementById("name").outerText;
-				    	console.log("item: " + targetDiv);
-				    	itemIds.push(targetDiv);
-				   	}
-
-				console.log(itemIds);
-		}
-
-
-	
-
 }
-
-var save = function(){    
-    console.log("saving...");
-    var itemIds = [];
-    var timelineDivs = document.getElementsByClassName("timelinediv");
-    for (var i = 0; i < timelineDivs.length; i++) {
-
-    	if((document.getElementsByClassName("timelinediv")[i].lastElementChild)!=null) {
-	    	var x = document.getElementsByClassName("timelinediv")[i].lastElementChild;
-	    	var index = x.getAttribute("index");
-	    	console.log("index : " + index);
-	    	objectId=resultArray[index]._id;
-	    	//var y = timelineDivs[i].document.getElementById("name").outerText;
-	    	console.log("item: " + objectId);
-	    	itemIds.push(objectId);
-    	}
-   	}
-
- console.log(itemIds);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-var timelineDivs = document.getElementsByClassName("timelinediv");
-
-		  // Traverse through timeline divs and check for first empty div
-		  for (var i = 0; i < timelineDivs.length; i++) {
-		    if (timelineDivs[i].innerHTML === "") {
-		      return timelineDivs[i];
-		    } 
-		  }
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
