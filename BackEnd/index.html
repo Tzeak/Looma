@@ -1,0 +1,49 @@
+<html>
+	<head>
+		<title>PHP Test</title>
+		<style>
+			#opendiv {
+				border: 1px solid black;
+				margin: 50px;
+			}
+			#savediv {
+				border: 1px solid black;
+				margin: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<button onclick="katesFunction()">Open a file!</button>
+		<br/>
+		<div id="opendiv"></div>
+		<button onclick="sendData()">Save the following timeline!</button>
+		<div id="savediv"></div>
+		<br/>
+	</body>
+	<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script>
+		function katesFunction() {
+			var data = {
+				'id' : '56d00301fd78b701310041ad'
+			};
+			$.post("open.php", data, function(data) {
+				$("#opendiv").html(data);
+			}); //Send data to server via post request
+			// document.getElementById("opendiv").innerText = data;
+		}
+
+		function sendData() {
+			//How data is spec'd to be sent to the save function
+			var data = {
+				name : "Fred",
+				line : ["568dcdf19324a6f91e74131d", "568dcdf19324a6f91e74131e"]
+			};
+
+			document.getElementById("savediv").innerHTML = data.name + "<br/>" + data.line.toString();
+			$.post("save.php", data); //Send data to server via post request
+
+		}
+	
+	</script> <!--Put ajax in here-->
+</html>
