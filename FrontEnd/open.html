@@ -160,13 +160,13 @@
 
        	$(document).ready(function () {
          
-	       $(".lessonDiv#title").mouseover(function(){
-			    $(this).css("background-color", "lightgray");
-			    $(this).css("color", "black");
-			    $(this).css("border-radius", "5px");
-			    $(this).css("padding", "0px");
+	       $('.lessonDiv li').mouseover(function(){
+			    $('#title', this).css("background-color", "lightgray");
+			    $('#title', this).css("color", "black");
+			    $('#title', this).css("border-radius", "5px");
+			    $('#title', this).css("padding", "0px");
 			});
-	        $(".lessonDiv#title").mouseout(function(){
+	        $("#title").mouseout(function(){
 	        	$(this).css("background-color", "gray");
 			    $(this).css("color", "white");
 			    $(this).css("border-radius", "5px");
