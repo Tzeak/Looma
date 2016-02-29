@@ -10,6 +10,12 @@
 				position: relative;
 				float: right;
 			}
+			#title:hover {
+				background-color: lightgray;
+			    color: black;
+			    border-radius: 5px;
+			    padding:0px;
+			}
 			#lessonDiv {
 				background-color:gray;
 				color:white;
@@ -186,23 +192,24 @@
         //var searchArray = ["Learning Math with Tim the Tiger","Algebra for Ants","Games for Reading Fridays","Ranger Rabbit and the Royal Vowels","How to eat an apple","Science for Losers",""];
 
         
-
+        /*
        	$(document).ready(function () {
          
-	       $('.lessonDiv li').mouseover(function(){
-			    $('#title', this).css("background-color", "lightgray");
-			    $('#title', this).css("color", "black");
-			    $('#title', this).css("border-radius", "5px");
-			    $('#title', this).css("padding", "0px");
-			});
-	        $("#title").mouseout(function(){
-	        	$(this).css("background-color", "gray");
-			    $(this).css("color", "white");
+	       $('.lessonDiv').hover(function(){
+			    $(this).css("background-color", "lightgray");
+			    $(this).css("color", "black");
 			    $(this).css("border-radius", "5px");
 			    $(this).css("padding", "0px");
 			});
+	        $('li #title').mouseout(function(){
+	        	$('#title', this).css("background-color", "gray");
+			    $('#title', this).css("color", "white");
+			    $('#title', this).css("border-radius", "5px");
+			    $('#title', this).css("padding", "0px");
+			});
 
         })
+*/
     </script>
 
 
