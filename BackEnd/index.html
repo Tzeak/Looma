@@ -13,7 +13,7 @@
 		</style>
 	</head>
 	<body>
-		<button onclick="katesFunction()">Open a file!</button>
+		<button onclick="openTimeline()">Open a file!</button>
 		<br/>
 		<div id="opendiv"></div>
 		<button onclick="sendData()">Save the following timeline!</button>
@@ -23,9 +23,9 @@
 	<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script>
-		function katesFunction() {
+		function openTimeline() {
 			var data = {
-				'id' : '56d00301fd78b701310041ad'
+				'id' : '56d3bb9dfd78b74e370041a8'
 			};
 			$.post("open.php", data, function(data) {
 				$("#opendiv").html(data);
