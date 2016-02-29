@@ -103,7 +103,8 @@
 
 	</div>
 
-
+	<div id="opendiv">
+	</div>
 
 
 
@@ -118,27 +119,32 @@
 
 	    var lessons = [
 	    {
-	    	"_id":"ObjectId(5549)", 
-	    	"lesson_title":"Learning with Tim the Tiger"
+	    	"_id" : "56d3bb9dfd78b74e370041a8", 
+	    	"title" : "Timeline 1"
 	    },
+
 	    {
-	    	"_id":"ObjectId(5549)", 
-	    	"lesson_title":"Algebra for Ants"
+	    	"_id" : "56d3c5a0e96ff887a77c3c9e",
+	    	"title" : "Timeline 2"
 	    },
-	    {
-	    	"_id":"ObjectId(5549)", 
-	    	"lesson_title":"Games for Readings"
-	    }]
+
+	   	{
+	    	"_id" : "56d3c5d6e96ff887a77c3c9f",
+	    	"title" : "Timeline 3"
+	    }
+
+	    ]
 
 
 	    var loadJSON = function() {
 		    for(i = 0; i < lessons.length; i++) {
-				var rElement = createNewListElement(lessons[i].lesson_title);
+				var rElement = createNewListElement(lessons[i].title, lessons[i]._id);
 			    lessonDiv.appendChild(rElement);
+
 			}
 		}
 
-		var createNewListElement = function(itemString) {
+		var createNewListElement = function(itemString, itemId) {
 				//searchArray.push(lessons[i]);
 		    var listItem = document.createElement("li"); 
 
@@ -151,7 +157,30 @@
 
 			listItem.appendChild(listLabel);
 
+			var button = document.createElement("button");
+			button.innerText = "open";
+			button.className = "open";
+
+			var id = document.createAttribute("id");        // Create a "href" attribute
+			id.value = itemId;            // Set the value of the href attribute
+			button.setAttributeNode(id);
+
+			button.onclick = openTimeline;	
+			listItem.appendChild(button);		
+
 			return listItem;
+		}
+
+		function openTimeline() {
+			
+			var data = {
+				'id' : this.id
+			};
+			$.post("../BackEnd/open.php", data, function(data) {
+				$("#opendiv").html(data);
+			});
+			//Send data to server via post request
+			// document.getElementById("opendiv").innerText = data;
 		}
 
         //var searchArray = ["Learning Math with Tim the Tiger","Algebra for Ants","Games for Reading Fridays","Ranger Rabbit and the Royal Vowels","How to eat an apple","Science for Losers",""];
