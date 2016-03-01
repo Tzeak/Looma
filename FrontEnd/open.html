@@ -67,14 +67,16 @@
 
 			button {display:inline;}
 
+			li {list-style-type:none;}
+
 		</style>
 	</head>
 
 	<body onload="loadJSON()">
 		<div id="container">
 		<div id="sidebar">
-			    <button type="button" id="btnSave" onclick="save()">Present</button>
-    			<button type="button" id="btnSave" onclick="save()">Edit</button>
+			    <button type="button" id="btnSave" onclick="create()">Creat New Lesson</button>
+    			
 		<form>
 			Search: <input type="text" name="search" id="string">
 			<button type="button" id="btnSave" onclick="save()">Search</button>
@@ -163,16 +165,27 @@
 
 			listItem.appendChild(listLabel);
 
-			var button = document.createElement("button");
-			button.innerText = "open";
-			button.className = "open";
+			var editButton = document.createElement("button");
+			editButton.innerText = "Edit";
+			editButton.className = "Edit";
 
+			var presentButton = document.createElement("button");
+			presentButton.innerText = "Present";
+			presentButton.className = "Present";
+
+			
+			//id refers to the selected lesson
 			var id = document.createAttribute("id");        // Create a "href" attribute
 			id.value = itemId;            // Set the value of the href attribute
-			button.setAttributeNode(id);
+			editButton.setAttributeNode(id);
 
-			button.onclick = openTimeline;	
-			listItem.appendChild(button);		
+			var id2 = document.createAttribute("id");        // Create a "href" attribute
+			id2.value = itemId;            // Set the value of the href attribute
+			presentButton.setAttributeNode(id2);
+
+			editButton.onclick = openTimeline;	
+			listItem.appendChild(editButton);
+			listItem.appendChild(presentButton);		
 
 			return listItem;
 		}

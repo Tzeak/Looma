@@ -419,6 +419,8 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 var save = function(){    
     console.log("saving...");
     var itemIds = [];
+    var titleString = document.getElementById("titleString").value;
+
     var timelineDivs = document.getElementsByClassName("timelinediv");
     for (var i = 0; i < timelineDivs.length; i++) {
 
@@ -433,5 +435,9 @@ var save = function(){
     	}
    	}
 
- console.log(itemIds);
+   	var timeline = new Object();
+    	timeline.lesson_title = titleString;
+    	timeline.items = itemIds;
+
+ console.log(timeline);
 }
