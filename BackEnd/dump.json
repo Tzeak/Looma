@@ -1,4 +1,5 @@
-
+.//looma-dictionary-utilities.php:			$query = array('en' => new MongoRegex("/^$englishWord$/i"));  //NOTE: using regex to do a case insensitive search for the word 
+.//looma-chapters.php:			// that holds the MongoDB ObjectId for this chapter (for looking up the activities list when needed)
 
 // CHAPTERS
 
