@@ -28,6 +28,21 @@ catch(MongoConnectionException $e)
  *				- If the document does not exist, return null to the calling function
  */
 
+
+// class MongoId2 extends MongoId {
+//         public function __construct($id = null) {
+//             if(is_array($id)) {
+//                 $id = (object) $id;
+//             }
+
+//             if(is_object($id) && isset($id->{'$id'})) {
+//                 $id = $id->{'$id'};
+//             }
+
+//             return parent::__construct($id);
+//         }
+//     }
+
 function searchMongo($id)
 {
 
