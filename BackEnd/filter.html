@@ -12,7 +12,10 @@
 	<script>
 		function query() {
 			var data = {
-				'filter' : '2EN03'
+				'grade' : '',
+				'subject' : null,
+				'chapter' : '',
+				'section':null 
 			};
 			$.get("query.php", data, function(data) {
 				$("#lol").html(data);
