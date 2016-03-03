@@ -75,7 +75,7 @@
 	<body onload="loadJSON()">
 		<div id="container">
 		<div id="sidebar">
-			    <button type="button" id="btnSave" onclick="create()">Creat New Lesson</button>
+			    <button type="button" id="btnSave" onclick="location.href='index2.html';">Creat New Lesson</button>
     			
 		<form>
 			Search: <input type="text" name="search" id="string">
@@ -90,22 +90,15 @@
 
 
 	<div id = "wrapper">
-    	<div class="lessonDiv" id="lessonDiv">
+    	
+    		<form action="index2.html" method="GET" class="items">
+    				<div class="lessonDiv" id="lessonDiv"></div>
+    				<button name="hello">hello!</button>
+
+    		</form>
 		  
-		    <!--<div class="lesson_id"> Learning Math with Tim the Tiger  </div>
-		    <div class="lesson_id"> Algebra for Ants  </div>
-		    <div class="lesson_id"> Games for Reading Fridays  </div>
-		    <div class="lesson_id"> Ranger Rabbit and the Royal Vowels  </div>
-		    <div class="lesson_id"> How to eat an apple  </div>
-		    <div class="lesson_id"> Science for Losers  </div>
-		    <div class="lesson_id"> Learning Math with Tim the Tiger  </div>
-		    <div class="lesson_id"> Algebra for Ants  </div>
-		    <div class="lesson_id"> Games for Reading Fridays  </div>
-		    <div class="lesson_id"> Ranger Rabbit and the Royal Vowels  </div>
-		    <div class="lesson_id"> How to eat an apple  </div>
-		    <div class="lesson_id"> Science for Losers  </div> -->
-			
-		</div>
+		  
+		
 	</div>
 
 
@@ -141,7 +134,36 @@
 	    	"title" : "Timeline 3"
 	    }
 
-	    ]
+	    ];
+
+	    var timeline = [
+	    {
+	    	"_id":"ObjectId(5549)", 
+	    	"chapter_id":"2EN02",
+	    	"filetype":"EP",
+	    	"thumbnail":"images/kitty.jpg",
+	    	"filepath": "resources/textbook/",
+	    	"displayname":"KITTY"
+	    },
+	    {
+	    	"_id":"ObjectId(5551)", 
+	    	"chapter_id":"3EN02",
+	    	"filetype":"EP",
+	    	"filepath":"resources/pictures/",
+	    	"format":"video", 
+	    	"thumbnail":"images/pup.jpg",
+	    	"displayname":"Chemistry Safety with Bill Nye"
+	    },
+	    {
+	    	"_id":"ObjectId(5552)", 
+	    	"chapter_id":"4EN02",
+	    	"filetype":"EP",
+	    	"filepath":"resources/videos/",
+	    	"format":"game", 
+	    	"thumbnail":"images/pup2.jpg",
+	    	"displayname":"Is this letter a vowel?"
+	    }
+	    ];
 
 
 	    var loadJSON = function() {
@@ -168,6 +190,19 @@
 			var editButton = document.createElement("button");
 			editButton.innerText = "Edit";
 			editButton.className = "Edit";
+			/*var onclick = document.createAttribute("onclick");        // Create a "href" attribute
+			onclick.value = "openTimeline";            // Set the value of the href attribute
+			editButton.setAttributeNode(onclick);
+
+			var data = document.createAttribute("mongoId");        // Create a "href" attribute
+			data.value = "openTimeline";            // Set the value of the href attribute
+			editButton.setAttributeNode(onclick);*/
+
+
+			
+			/*var link = document.createAttribute("action");        // Create a "href" attribute
+			link.value = "index2.html";            // Set the value of the href attribute
+			editButton.setAttributeNode(link);*/
 
 			var presentButton = document.createElement("button");
 			presentButton.innerText = "Present";
@@ -183,52 +218,40 @@
 			id2.value = itemId;            // Set the value of the href attribute
 			presentButton.setAttributeNode(id2);
 
-			editButton.onclick = openTimeline;	
+			editButton.onclick = openTimeline;
 			listItem.appendChild(editButton);
 			listItem.appendChild(presentButton);		
 
 			return listItem;
 		}
 
-		function openTimeline() {
+
+function openTimeline() {
 			
-			var data = {
+			//send id to back end, which returns the object of timeline items
+			/*var data = {
 				'id' : this.id
 			};
 			$.post("../BackEnd/open.php", data, function(data) {
 				$("#opendiv").html(data);
 			});
-			//Send data to server via post request
+			// document.getElementById("opendiv").innerText = data;*/
+			
+			var data = JSON.stringify(timeline); 
+			console.log(data);
+
 			// document.getElementById("opendiv").innerText = data;
-		}
+		
+		  	
+		  	loadTimeline();
+		  	//window.location.href = 'index2.html';
 
-        //var searchArray = ["Learning Math with Tim the Tiger","Algebra for Ants","Games for Reading Fridays","Ranger Rabbit and the Royal Vowels","How to eat an apple","Science for Losers",""];
-
-        
-        /*
-       	$(document).ready(function () {
-         
-	       $('.lessonDiv').hover(function(){
-			    $(this).css("background-color", "lightgray");
-			    $(this).css("color", "black");
-			    $(this).css("border-radius", "5px");
-			    $(this).css("padding", "0px");
-			});
-	        $('li #title').mouseout(function(){
-	        	$('#title', this).css("background-color", "gray");
-			    $('#title', this).css("color", "white");
-			    $('#title', this).css("border-radius", "5px");
-			    $('#title', this).css("padding", "0px");
-			});
-
-        })
-*/
+}
     </script>
 
 
-	<!--
+
 	<script type="text/javascript" src="index2.js"></script>
-	-->
 	
 </html>
 

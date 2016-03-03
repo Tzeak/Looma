@@ -441,3 +441,28 @@ var save = function(){
 
  console.log(timeline);
 }
+
+
+
+function loadTimeline() {
+			console.log("loadTimeline");
+			
+			var datavalues = localStorage.getItem('data');
+			//parse the value 
+			var finalvalue = JSON.parse(datavalues);
+
+			console.log(finalvalue);
+
+			var timelineDivs = document.getElementsByClassName("timelinediv");
+
+		  	// add each timeline item to each timelinediv
+		  	for (var i = 0; i < timelineDivs.length; i++) {
+		  			console.log("inserting into box# " + i);
+		  			timelineDivs[i].innerText="HELLO";
+
+		  			//createNewListElement(timeline[i].displayname);
+		  	}
+}
+
+document.getElementById("displaybox").innerHTML = window.location.search;
+
