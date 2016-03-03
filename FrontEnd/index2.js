@@ -464,5 +464,21 @@ function loadTimeline() {
 		  	}
 }
 
-document.getElementById("displaybox").innerHTML = window.location.search;
+
+var query = window.location.search;
+console.log("query1: " + query);
+if (query.substring(0, 1) == '?') {
+    query = query.substring(1);
+}
+var query2 = query.replace(/%22/g, '"');
+var query3 = query2.replace(/%20/g, " ");
+console.log("query3: " + query3);
+document.getElementById("displaybox").innerHTML = query3;
+
+
+var timeline = JSON.parse(query3);
+console.log("timeline: " + timeline);
+
+
+
 
