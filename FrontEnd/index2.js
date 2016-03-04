@@ -506,6 +506,8 @@ function loadTimeline() {
 }
 
 var createTimelineElement = function(itemString) {
+
+	
 	  // Create new list items
 
 	  var listItem = document.createElement("li");
@@ -544,17 +546,19 @@ var createTimelineElement = function(itemString) {
 
 	  
 	var att = document.createAttribute("src");        // Create a "href" attribute
-	att.value = resultArray[i].thumbnail;            // Set the value of the href attribute
+	att.value = resultArray[i].fp + "*.jpg";            // Set the value of the href attribute
 	//console.log("i = " + i);
 	thumbnail.setAttributeNode(att);                      // Add the href attribute to <a>
 
-	  listLabel.innerText = itemString.displayname + ", Grade " + resultArray[i].chapter_id[0];
+	  listLabel.innerText = itemString.dn + ", Grade " + itemString.prefix[0];
 	  // addButton.onclick = addJSON;
-	  listItem.appendChild(thumbnail);
+	  // listItem.appendChild(thumbnail);
 	  listItem.appendChild(listLabel);
 	  listItem.appendChild(addButton);
 
 	  return listItem;
+
+
 
 	}
 
@@ -571,7 +575,7 @@ console.log("query3: " + query3);
 document.getElementById("displaybox").innerHTML = query3;
 
 
-var resultArray = JSON.parse(query2);
+var resultArray = JSON.parse(query3);
 console.log("timeline: " + resultArray);
 
 
@@ -580,19 +584,25 @@ var timelineID = resultArray._id;
 $.post("../BackEnd/openTimeline.php", timelineID, function(timelineID) {
 	$("#displaybox").html(timelineID);
 });
+
+var timelineDiv = timelineID;
+
+// var timelineDiv2 = JSON.parse(timelineDiv);
+// console.log(typeof(timelineDiv2));
 // HI
 
-console.log("timelineID " +timelineID);
-
+console.log("timelineDiv " +timelineDiv);
+console.log("class: " + timelineDiv[0].class);
 
 var timelineDivs = document.getElementsByClassName("timelinediv");
 
-for (var i = 0; i < timelineID.length; i++) {
-	var rElement = createTimelineElement(timelineID[i]);
+for (var i = 0; i < timelineDiv.length; i++) {
+	console.log(timelineDiv);
+	var rElement = createTimelineElement(timelineDiv[i]);
 	timelineDivs[i].appendChild(rElement);
 
 	//console.log("inserting hello into box# " + i);
-	//timelineDivs[i].innerText="HELLO";
+	timelineDivs[i].innerText="HELLO";
 }
 
     	//if((document.getElementsByClassName("timelinediv")[i].lastElementChild)!=null) {
