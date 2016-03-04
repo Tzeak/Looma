@@ -534,7 +534,7 @@ console.log("timeline: " + resultArray);
 
 var timelineDivs = document.getElementsByClassName("timelinediv");
 
-for (var i = 0; i < timelineDivs.length; i++) {
+for (var i = 0; i < resultArray.length; i++) {
 	var rElement = createTimelineElement(resultArray[i]);
 	timelineDivs[i].appendChild(rElement);
 
