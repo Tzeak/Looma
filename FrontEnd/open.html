@@ -2,7 +2,6 @@
 	<head>
 
 		<style>
-
 			#container {
 				width: 100%;
 			}
@@ -44,7 +43,6 @@
 				padding: 20px;
 				width: 80%;
 				margin: 15 auto;
-
 			}
 			body {
 				font-family: Arial;
@@ -64,11 +62,8 @@
 			form {
 				text-align: center;
 			}
-
 			button {display:inline;}
-
 			li {list-style-type:none;}
-
 		</style>
 	</head>
 
@@ -93,7 +88,6 @@
     	
     		<!--<form action="index2.html" method="GET" class="items">-->
     				<div class="lessonDiv" id="lessonDiv"></div>
-    				<button name="hello">hello!</button>
 
     		</form>
 		  
@@ -117,25 +111,20 @@
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
     <script>
-
 	    var lessons = [
 	    {
 	    	"_id" : "56d3bb9dfd78b74e370041a8", 
 	    	"title" : "Timeline 1"
 	    },
-
 	    {
 	    	"_id" : "56d3c5a0e96ff887a77c3c9e",
 	    	"title" : "Timeline 2"
 	    },
-
 	   	{
 	    	"_id" : "56d3c5d6e96ff887a77c3c9f",
 	    	"title" : "Timeline 3"
 	    }
-
 	    ];
-
 	    var timeline = [
 	    {
 	    	"_id":"ObjectId(5549)", 
@@ -164,80 +153,50 @@
 	    	"displayname":"Is this letter a vowel?"
 	    }
 	    ];
-
-
 	    var loadJSON = function() {
 		    for(i = 0; i < lessons.length; i++) {
 				var rElement = createNewListElement(lessons[i].title, lessons[i]._id);
 			    lessonDiv.appendChild(rElement);
-
 			}
 		}
-
 		var createNewListElement = function(itemString, itemId) {
 				//searchArray.push(lessons[i]);
 		    var listItem = document.createElement("li"); 
-
 			var id = document.createAttribute("id");        // Create a "href" attribute
 			id.value = "title";            // Set the value of the href attribute
 			listItem.setAttributeNode(id);
-
 			var listLabel = document.createElement("label");
 			listLabel.innerText=itemString;
-
 			listItem.appendChild(listLabel);
-
 			var editButton = document.createElement("button");
 			editButton.innerText = "Edit";
 			editButton.className = "Edit";
-			var onclick = document.createAttribute("onclick");        // Create a "href" attribute
-			onclick.value = "openTimeline";            // Set the value of the href attribute
-			editButton.setAttributeNode(onclick);
-
-
-
 			
 			/*var link = document.createAttribute("action");        // Create a "href" attribute
 			link.value = "index2.html";            // Set the value of the href attribute
 			editButton.setAttributeNode(link);*/
-
 			var presentButton = document.createElement("button");
 			presentButton.innerText = "Present";
 			presentButton.className = "Present";
-			var onclick = document.createAttribute("onclick");        // Create a "href" attribute
-			onclick.value = "openTimeline";            // Set the value of the href attribute
-			presentButton.setAttributeNode(onclick);
-
 			
 			//id refers to the selected lesson
 			var id = document.createAttribute("id");        // Create a "href" attribute
 			id.value = itemId;            // Set the value of the href attribute
 			editButton.setAttributeNode(id);
-
 			var id2 = document.createAttribute("id");        // Create a "href" attribute
 			id2.value = itemId;            // Set the value of the href attribute
 			presentButton.setAttributeNode(id2);
-
 			editButton.onclick = openTimeline;
+			presentButton.onclick = presentTimeline;
 			listItem.appendChild(editButton);
-
-			presentButton.onclick = openTimeline;
 			listItem.appendChild(presentButton);		
-
 			return listItem;
 		}
-
-
 function openTimeline() {
 			
-<<<<<<< HEAD
-			console.log("id: " + this.id);
-			var data = {
-=======
 			console.log("opentTimeline...");
 			//send id to back end, which returns the object of timeline items
 			/*var data = {
->>>>>>> 2754dfe555d5c581d2d7ad01ca65bf436c4f2e63
 				'id' : this.id
 			};
 			$.post("../BackEnd/open.php", data, function(data) {
@@ -247,14 +206,25 @@ function openTimeline() {
 			
 			var data = JSON.stringify(timeline); 
 			console.log(data);
-
 			window.location = "index2.html?" + data;
-
-			// document.getElementById("opendiv").innerText = data;
-		
-		  	
-		  	
-
+			// document.getElementById("opendiv").innerText = data
+}
+function presentTimeline() {
+			
+			console.log("opentTimeline...");
+			//send id to back end, which returns the object of timeline items
+			/*var data = {
+				'id' : this.id
+			};
+			$.post("../BackEnd/open.php", data, function(data) {
+				$("#opendiv").html(data);
+			});
+			// document.getElementById("opendiv").innerText = data;*/
+			
+			var data = JSON.stringify(timeline); 
+			console.log(data);
+			window.location = "present.html?" + data;
+			// document.getElementById("opendiv").innerText = data
 }
     </script>
 
@@ -263,5 +233,3 @@ function openTimeline() {
 	<script type="text/javascript" src="index2.js"></script>
 	
 </html>
-
-

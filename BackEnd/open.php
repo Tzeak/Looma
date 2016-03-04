@@ -6,7 +6,7 @@
 
 	// Find a specific timeline using the Mongo ID
 	$line = $timelines->findOne(array('_id' => new MongoId($thisID)));
-	echo json_encode($line) . "<br/><br/>";
+	echo json_encode($line);
 	
 	// Create array to hold the timeline element JSONs
 	$timelineArray = array();
@@ -24,6 +24,4 @@
 		}
 		$timelineArray[$i] = $document;		// find the document! yay!
 	}
-
-	var_dump($timelineArray);
 ?>
