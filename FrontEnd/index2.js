@@ -247,7 +247,7 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		 	results.team5 = resultArray[4].tag;*/
 
 		 	for(i=0;i<resultArray.length; i++) {
-				results["team" + i]=resultArray[i].displayname + ", Grade " + resultArray[i].chapter_id[0];
+				results["team" + i]=resultArray[i].dn + ", Grade " + resultArray[i].prefix[0];
 				//results.i = resultArray[i].tag;
 				console.log(results.team0);
 				console.log(resultArray[i]);
@@ -317,12 +317,12 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 
 		  
 		var att = document.createAttribute("src");        // Create a "href" attribute
-		att.value = resultArray[i].thumbnail;            // Set the value of the href attribute
+		att.value = resultArray[i].fp + "*.jpg";            // Set the value of the href attribute
 		console.log("i = " + i);
 		console.log("resultArray[i] = " + resultArray[i]);
 		thumbnail.setAttributeNode(att);                      // Add the href attribute to <a>
 		
-		  listLabel.innerText = itemString.displayname + ", Grade " + resultArray[i].chapter_id[0];
+		  listLabel.innerText = itemString.dn + ", Grade " + resultArray[i].prefix[0];
 		  // addButton.onclick = addJSON;
 		  listItem.appendChild(thumbnail);
 		  listItem.appendChild(listLabel);
@@ -541,11 +541,13 @@ $.post("../BackEnd/openTimeline.php", timelineID, function(timelineID) {
 });
 // HI
 
+console.log("timelineID " +timelineID);
+
 
 var timelineDivs = document.getElementsByClassName("timelinediv");
 
-for (var i = 0; i < resultArray.length; i++) {
-	var rElement = createTimelineElement(resultArray[i]);
+for (var i = 0; i < timelineID.length; i++) {
+	var rElement = createTimelineElement(timelineID[i]);
 	timelineDivs[i].appendChild(rElement);
 
 	//console.log("inserting hello into box# " + i);
