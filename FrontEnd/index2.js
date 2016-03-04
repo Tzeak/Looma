@@ -523,14 +523,24 @@ console.log("query1: " + query);
 if (query.substring(0, 1) == '?') {
     query = query.substring(1);
 }
-var query2 = query.replace(/%22/g, '"');
-var query3 = query2.replace(/%20/g, " ");
+var query3 = decodeURI(query);
+// var query2 = query.replace(/%22/g, '"');
+// var query3 = query2.replace(/%20/g, " ");
 console.log("query3: " + query3);
 document.getElementById("displaybox").innerHTML = query3;
 
 
 var resultArray = JSON.parse(query3);
 console.log("timeline: " + resultArray);
+
+
+// THIS LOADS THE DOCS TO INDEX2.HTML!!!!!!!!!!! 
+var timelineID = resultArray._id;
+$.post("../BackEnd/openTimeline.php", timelineID, function(timelineID) {
+	$("#displaybox").html(timelineID);
+});
+// HI
+
 
 var timelineDivs = document.getElementsByClassName("timelinediv");
 

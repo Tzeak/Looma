@@ -223,18 +223,18 @@ function openTimeline() {
 			
 			console.log("opentTimeline...");
 			//send id to back end, which returns the object of timeline items
-			/*var data = {
+			var data = {
 				'id' : this.id
 			};
 			$.post("../BackEnd/open.php", data, function(data) {
-				$("#opendiv").html(data);
+				window.location = "index2.html?" + data;
 			});
-			// document.getElementById("opendiv").innerText = data;*/
+			// document.getElementById("opendiv").innerText = data;
 			
 			var data = JSON.stringify(timeline); 
 			console.log(data);
 
-			window.location = "index2.html?" + data;
+			// window.location = "index2.html?" + data;
 
 			// document.getElementById("opendiv").innerText = data
 }
@@ -243,18 +243,18 @@ function presentTimeline() {
 			
 			console.log("opentTimeline...");
 			//send id to back end, which returns the object of timeline items
-			/*var data = {
+			var data = {
 				'id' : this.id
 			};
 			$.post("../BackEnd/open.php", data, function(data) {
-				$("#opendiv").html(data);
+				window.location = "present.html?" + data;
 			});
-			// document.getElementById("opendiv").innerText = data;*/
+			// document.getElementById("opendiv").innerText = data;
 			
 			var data = JSON.stringify(timeline); 
 			console.log(data);
 
-			window.location = "present.html?" + data;
+			// window.location = "present.html?" + data;
 
 			// document.getElementById("opendiv").innerText = data
 }
