@@ -1,0 +1,267 @@
+<html>
+	<head>
+
+		<style>
+
+			#container {
+				width: 100%;
+			}
+			.boxdiv {
+			  border: 1px solid #000;
+			  min-height:120px;
+			  width:90px;
+			  display:inline-block;
+			  margin:5px;
+			  padding: 15px;
+			}
+			li:hover {
+				background-color: lightgray;
+			    color: black;
+			    border-radius: 5px;
+			    padding:0px;
+			}
+
+			.timelinediv {
+			  border: 1px solid #000;
+			  min-height:120px;
+			  width:90px;
+			  display:inline-block; 
+			  margin:5px;
+			  padding: 15px;
+			  float: left;
+			  font-size: 15px;
+			}
+
+			.button {
+				position: relative;
+				float: right;
+			}
+
+			.timeline{
+				width: 1500px;
+				height:100px;
+			}
+
+			.drop {
+			  min-height:120px;
+			  width:90px;
+			  display:inline-block;
+			  margin:5px;
+			  padding: 5px;
+			}
+
+			#results {
+				width: 80%;
+				min-height: 300px;
+			}
+			#wrapper {
+				border: 1px solid #000;
+			  /*min-height:50px; min-width:100px; 
+			  display:inline-block;*/
+			  margin:5px;
+			  padding: 15px;
+			  position: relative;
+			  float: left;
+			  width: 80%;
+			  margin-right: 25px;
+			  margin-top: 25px;
+			  height:160px;
+
+			  overflow-x:scroll;
+			  overflow-y:hidden;
+
+
+			}
+			#btnSave {
+				float: right;
+			}
+			#button {
+				color:white;
+				background:#A1A850;
+				padding: 10px;
+				border-radius:5px;
+				width: 70px;
+			}
+			button {display:inline;}
+			#sidebar {
+				float:left;
+				background: lightgray;
+				padding: 20px;
+				margin: 30px;
+				width: 30%;
+			}
+			body {
+				font-family: Arial;
+				font-size: 20px;
+			}
+			#string {
+				font-family: Arial;
+				font-size: 20px;
+				height: 50px;
+				width: 250px;
+				margin-right: 30px;
+				background:white;
+				padding:10px;
+				border-radius:5px;
+			}
+			#resultsdiv {
+				background:gray;
+				color:white;
+				border:none;
+
+				overflow-x:hidden;
+				overflow-y:scroll;
+				height:450px;
+				font-size: 15px;
+
+			}
+			#timelineWhole {
+				background:white;
+				clear:all;
+			}
+
+			.boxdiv{
+				background: gray;
+				height:500px;
+		
+			}
+
+			#displaybox {
+				width: 80%;
+				height: 665px;
+				background: gray;
+				position: relative;
+				float: right;
+				margin-top: 28px;
+				margin-right: 25px;
+			}
+
+			#dummy {
+				border: 1px solid #000;
+			  min-height:50px; min-width:90px;
+			  display:inline-block;
+			  margin:5px;
+			  padding: 15px;
+			  background: blue;
+			}
+
+			img {
+				width: 60px;
+			}
+
+
+			button {display:inline;}
+
+		</style>
+	</head>
+
+	<body>
+		<div id="container">
+	Title: <input type="text" name="title" id="titleString">
+	<button type="button" id="btnSave" onclick="save()">Save</button>
+	<div id= "displaybox"> HELLO </div>
+
+
+
+    <br/><br/><br/>
+
+    <!--<div class="timeline" id="timelineWhole">
+	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
+	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
+	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
+	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
+	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
+	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
+    </div>-->
+
+   <div id = "wrapper">
+    	<div class="timeline" id="timelineWhole">
+		    <div class="timelinediv"></div>
+		    <div class="timelinediv"></div>
+		    <div class="timelinediv"></div>
+		    <div class="timelinediv"></div>
+		    <div class="timelinediv"></div>
+		    <div class="timelinediv"></div>
+		    <div class="timelinediv"></div>
+		    <div class="timelinediv"></div>
+		    <div class="timelinediv"></div>
+		    <div class="timelinediv"></div>
+		</div>
+
+	</div>
+
+    <br/>
+    <br><br>
+    
+
+</div>
+
+
+
+	</body>
+<!--	<script>
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+} -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="jquery-1.12.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#timelineWhole").sortable({
+            //$('#btnSave').hide();
+                opacity: 0.7,
+                revert: true,   //Animates
+                scroll: true,   //Allows page to scroll when dragging. Good for tall pages.
+                handle: $(".timelinediv"),
+                update: function () {  
+                	$('#btnSave').show() 
+            	}
+            });
+
+        })
+      
+
+        	/*$('#btnSave').on('click', function(){
+        		//var timelineDivs = document.getElementsByClassName("timelinediv");
+				    // Traverse through timeline divs and check for first empty div
+				    var items = $(".timelinediv");
+				    console.log("saving...");
+				    var itemIds = [];
+				    for (var i = 0; i < items.length; i++) {
+				    	var x = $("#item");
+				    	var y = $("#name").value;
+				    	//var x = getAttribute("label-id");
+				    	//var label = $('#data-id');
+				    	itemIds.push(y);
+				    	console.log("name: "+ y);
+
+				  		//itemIds.push(items.eq(i).data('id'));
+				  		//console.log(items.eq(i).data('id'));
+				    }
+				    console.log(itemIds);*/
+
+						
+				
+			//});
+
+		//})
+		
+	</script>
+	<script type="text/javascript" src="index2.js"></script>
+
+	
+</html>
+
+

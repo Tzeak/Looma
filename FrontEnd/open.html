@@ -194,9 +194,6 @@
 			onclick.value = "openTimeline";            // Set the value of the href attribute
 			editButton.setAttributeNode(onclick);
 
-			var data = document.createAttribute("mongoId");        // Create a "href" attribute
-			data.value = "openTimeline";            // Set the value of the href attribute
-			editButton.setAttributeNode(onclick);
 
 
 			
@@ -207,6 +204,9 @@
 			var presentButton = document.createElement("button");
 			presentButton.innerText = "Present";
 			presentButton.className = "Present";
+			var onclick = document.createAttribute("onclick");        // Create a "href" attribute
+			onclick.value = "openTimeline";            // Set the value of the href attribute
+			presentButton.setAttributeNode(onclick);
 
 			
 			//id refers to the selected lesson
@@ -241,7 +241,10 @@ function openTimeline() {
 			var data = JSON.stringify(timeline); 
 			console.log(data);
 
-			window.location = "index2.html?" + data;
+			if(button.innerText == "Edit")
+				window.location = "index2.html?" + data;
+			else 
+				window.location = "present.html?" + data;
 
 			// document.getElementById("opendiv").innerText = data;
 		
