@@ -1,5 +1,6 @@
 ###Connect-Test
 This branch focuses on developing the connection between mongo database and the edit timeline feature
+Run local server in Looma/ 
 
 Files to look at:
 * FrontEnd/index.html
