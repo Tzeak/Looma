@@ -241,10 +241,7 @@ function openTimeline() {
 			var data = JSON.stringify(timeline); 
 			console.log(data);
 
-			if(button.innerText == "Edit")
-				window.location = "index2.html?" + data;
-			else 
-				window.location = "present.html?" + data;
+			window.location = "index2.html?" + data;
 
 			// document.getElementById("opendiv").innerText = data;
 		
