@@ -1,0 +1,20 @@
+<html>
+
+
+	<head><title>Test</title></head>
+	<body>
+			<button id="request" timeid="56d9f847ce85a00f330041a7" onclick="editTimeline()">hello</button>
+	</body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script>
+		function editTimeline(){
+
+			var input = document.getElementById("request");
+			var timeID = input.getAttribute("timeid");
+			$.post("../BackEnd/open.php", timeID, function(data) {
+				window.location = "FrontEnd/index2.html?" + "timeID="+ timeID;
+		});
+	}
+	</script>
+</html>
+
