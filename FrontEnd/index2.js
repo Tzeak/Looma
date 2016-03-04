@@ -581,7 +581,6 @@ $.post("../BackEnd/openTimeline.php", timelineID, function(timelineID) {
 	$("#displaybox").html(timelineID);
 });
 // HI
-
 console.log("timelineID " +timelineID);
 
 
