@@ -185,6 +185,8 @@
 
 			editButton.onclick = openTimeline;	
 			listItem.appendChild(editButton);
+
+			presentButton.onclick = openTimeline;
 			listItem.appendChild(presentButton);		
 
 			return listItem;
@@ -192,6 +194,7 @@
 
 		function openTimeline() {
 			
+			console.log("id: " + this.id);
 			var data = {
 				'id' : this.id
 			};

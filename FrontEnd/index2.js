@@ -71,6 +71,35 @@ var library = [
     },
 ];
 
+var timeline = [
+    {
+    	"_id":"ObjectId(5549)", 
+    	"chapter_id":"2EN02",
+    	"filetype":"EP",
+    	"thumbnail":"images/kitty.jpg",
+    	"filepath": "resources/textbook/",
+    	"displayname":"KITTY"
+    },
+    {
+    	"_id":"ObjectId(5551)", 
+    	"chapter_id":"3EN02",
+    	"filetype":"EP",
+    	"filepath":"resources/pictures/",
+    	"format":"video", 
+    	"thumbnail":"images/pup.jpg",
+    	"displayname":"Chemistry Safety with Bill Nye"
+    },
+    {
+    	"_id":"ObjectId(5552)", 
+    	"chapter_id":"4EN02",
+    	"filetype":"EP",
+    	"filepath":"resources/videos/",
+    	"format":"game", 
+    	"thumbnail":"images/pup2.jpg",
+    	"displayname":"Is this letter a vowel?"
+    },
+];
+
 /*var lib = '{"library":[' +
     '{"format":"textbook", "tag":"Geometry Through the Ages: Chapter 7"},' +
     '{"format":"quiz", "tag":"Grade 6 Math Quiz - Algebra"},' +
@@ -297,6 +326,18 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 			var num = document.createAttribute("index");        // Create a "href" attribute
 			num.value = i;            // Set the value of the href attribute
 			listItem.setAttributeNode(num);
+
+			var filetype = document.createAttribute("data-ft");        // Create a "href" attribute
+			filetype.value = resultArray[i].filetype;            // Set the value of the href attribute
+			listItem.setAttributeNode(filetype);
+
+			var filepath = document.createAttribute("data-fp");        // Create a "href" attribute
+			filepath.value = resultArray[i].filepath;            // Set the value of the href attribute
+			listItem.setAttributeNode(filepath);
+
+			var filename = document.createAttribute("data-fn");        // Create a "href" attribute
+			filename.value = resultArray[i].displayname;            // Set the value of the href attribute
+			listItem.setAttributeNode(filename);
 
 			/*var remove = document.createAttribute("ondrag");        // Create a "href" attribute
 			remove.value = "addJSON(event)";            // Set the value of the href attribute
