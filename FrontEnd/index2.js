@@ -276,7 +276,7 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		 	results.team5 = resultArray[4].tag;*/
 
 		 	for(i=0;i<resultArray.length; i++) {
-				results["team" + i]=resultArray[i].displayname + ", Grade " + resultArray[i].chapter_id[0];
+				results["team" + i]=resultArray[i].dn + ", Grade " + resultArray[i].prefix[0];
 				//results.i = resultArray[i].tag;
 				console.log(results.team0);
 				console.log(resultArray[i]);
@@ -358,12 +358,12 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 
 		  
 		var att = document.createAttribute("src");        // Create a "href" attribute
-		att.value = resultArray[i].thumbnail;            // Set the value of the href attribute
+		att.value = resultArray[i].fp + "*.jpg";            // Set the value of the href attribute
 		console.log("i = " + i);
 		console.log("resultArray[i] = " + resultArray[i]);
 		thumbnail.setAttributeNode(att);                      // Add the href attribute to <a>
 		
-		  listLabel.innerText = itemString.displayname + ", Grade " + resultArray[i].chapter_id[0];
+		  listLabel.innerText = itemString.dn + ", Grade " + resultArray[i].prefix[0];
 		  // addButton.onclick = addJSON;
 		  listItem.appendChild(thumbnail);
 		  listItem.appendChild(listLabel);
@@ -564,20 +564,31 @@ console.log("query1: " + query);
 if (query.substring(0, 1) == '?') {
     query = query.substring(1);
 }
-query2 = decodeURI(query);
-// var query2 = query.replace(/%22/g, '"').replace(/%20/g, " ");
-// var query3 = query2;
-console.log("query2: " + query2);
-//document.getElementById("displaybox").innerHTML = query2;
+var query3 = decodeURI(query);
+// var query2 = query.replace(/%22/g, '"');
+// var query3 = query2.replace(/%20/g, " ");
+console.log("query3: " + query3);
+document.getElementById("displaybox").innerHTML = query3;
 
 
 var resultArray = JSON.parse(query2);
 console.log("timeline: " + resultArray);
 
+
+// THIS LOADS THE DOCS TO INDEX2.HTML!!!!!!!!!!! 
+var timelineID = resultArray._id;
+$.post("../BackEnd/openTimeline.php", timelineID, function(timelineID) {
+	$("#displaybox").html(timelineID);
+});
+// HI
+
+console.log("timelineID " +timelineID);
+
+
 var timelineDivs = document.getElementsByClassName("timelinediv");
 
-for (var i = 0; i < resultArray.length; i++) {
-	var rElement = createTimelineElement(resultArray[i]);
+for (var i = 0; i < timelineID.length; i++) {
+	var rElement = createTimelineElement(timelineID[i]);
 	timelineDivs[i].appendChild(rElement);
 
 	//console.log("inserting hello into box# " + i);
