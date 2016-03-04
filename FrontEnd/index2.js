@@ -482,3 +482,109 @@ var save = function(){
 
  console.log(timeline);
 }
+
+
+
+function loadTimeline() {
+			console.log("loadTimeline");
+			
+			var datavalues = localStorage.getItem('data');
+			//parse the value 
+			var finalvalue = JSON.parse(datavalues);
+
+			console.log(finalvalue);
+
+			var timelineDivs = document.getElementsByClassName("timelinediv");
+
+		  	// add each timeline item to each timelinediv
+		  	for (var i = 0; i < timelineDivs.length; i++) {
+		  			console.log("inserting into box# " + i);
+		  			timelineDivs[i].innerText="HELLO";
+
+		  			//createNewListElement(timeline[i].displayname);
+		  	}
+}
+
+var createTimelineElement = function(itemString) {
+	  // Create new list items
+
+	  var listItem = document.createElement("li");
+	  	
+	  	/*var LiAtt = document.createAttribute("draggable");        // Create a "href" attribute
+		LiAtt.value = "true";            // Set the value of the href attribute
+		listItem.setAttributeNode(LiAtt);   
+		var LiAtt2 = document.createAttribute("ondragstart");        // Create a "href" attribute
+		LiAtt2.value = "drag(event)";            // Set the value of the href attribute
+		listItem.setAttributeNode(LiAtt2);*/   
+
+		var id = document.createAttribute("id");        // Create a "href" attribute
+		id.value = "item";            // Set the value of the href attribute
+		listItem.setAttributeNode(id);
+
+		var num = document.createAttribute("index");        // Create a "href" attribute
+		num.value = i;            // Set the value of the href attribute
+		listItem.setAttributeNode(num);
+
+		/*var remove = document.createAttribute("ondrag");        // Create a "href" attribute
+		remove.value = "addJSON(event)";            // Set the value of the href attribute
+		listItem.setAttributeNode(remove);*/
+
+
+	  var listLabel = document.createElement("label");
+
+	  var id = document.createAttribute("id");        // Create a "href" attribute
+		id.value = "name";            // Set the value of the href attribute
+		listLabel.setAttributeNode(id);
+
+
+	  var thumbnail = document.createElement("img");
+	  var addButton = document.createElement("button");
+	  addButton.innerText = "Add";
+	  addButton.className = "add";
+
+	  
+	var att = document.createAttribute("src");        // Create a "href" attribute
+	att.value = resultArray[i].thumbnail;            // Set the value of the href attribute
+	//console.log("i = " + i);
+	thumbnail.setAttributeNode(att);                      // Add the href attribute to <a>
+
+	  listLabel.innerText = itemString.displayname + ", Grade " + resultArray[i].chapter_id[0];
+	  // addButton.onclick = addJSON;
+	  listItem.appendChild(thumbnail);
+	  listItem.appendChild(listLabel);
+	  listItem.appendChild(addButton);
+
+	  return listItem;
+
+	}
+
+
+var query = window.location.search;
+console.log("query1: " + query);
+if (query.substring(0, 1) == '?') {
+    query = query.substring(1);
+}
+var query2 = query.replace(/%22/g, '"');
+var query3 = query2.replace(/%20/g, " ");
+console.log("query3: " + query3);
+document.getElementById("displaybox").innerHTML = query3;
+
+
+var resultArray = JSON.parse(query3);
+console.log("timeline: " + resultArray);
+
+var timelineDivs = document.getElementsByClassName("timelinediv");
+
+for (var i = 0; i < timelineDivs.length; i++) {
+	var rElement = createTimelineElement(resultArray[i]);
+	timelineDivs[i].appendChild(rElement);
+
+	//console.log("inserting hello into box# " + i);
+	//timelineDivs[i].innerText="HELLO";
+}
+
+    	//if((document.getElementsByClassName("timelinediv")[i].lastElementChild)!=null) {
+
+
+
+

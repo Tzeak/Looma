@@ -61,8 +61,8 @@
 			  margin:5px;
 			  padding: 15px;
 			  position: relative;
-			  float: right;
-			  width: 58%;
+			  float: left;
+			  width: 80%;
 			  margin-right: 25px;
 			  margin-top: 25px;
 			  height:160px;
@@ -127,7 +127,7 @@
 			}
 
 			#displaybox {
-				width: 60%;
+				width: 80%;
 				height: 665px;
 				background: gray;
 				position: relative;
@@ -157,53 +157,6 @@
 
 	<body>
 		<div id="container">
-		<div id="sidebar">
-		<form>
-			Search: <input type="text" name="search" id="string">
-			<p id="button" onclick="querySearch()"> Submit </p>
-			<!--<input type="submit" value="Submit" onclick="querySearch()"> -->
-			
-			
-			<h3> Grade Level </h3>
-			<input type="checkbox" style="zoom:2" id="1" name="1" checked>1 &nbsp;
-			<input type="checkbox" style="zoom:2" id="2"name="2" checked>2 &nbsp;
-			<input type="checkbox" style="zoom:2" id="3"name="3" checked>3 &nbsp;
-			<input type="checkbox" style="zoom:2" id="4"name="4" checked>4<br/>
-			<input type="checkbox" style="zoom:2" id="5" name="5" checked>5 &nbsp;
-			<input type="checkbox" style="zoom:2" id="6"name="6" checked>6 &nbsp;
-			<input type="checkbox" style="zoom:2" id="7"name="7" checked>7 &nbsp;
-			<input type="checkbox" style="zoom:2" id="8"name="8" checked>8
-
-			<hr>
-
-			<h3> Subject </h3>
-			<input type="checkbox" style="zoom:2" id="Math" name="Math" checked>Math &nbsp;
-			<input type="checkbox" style="zoom:2" id="Science"name="Science" checked>Science &nbsp;
-			<input type="checkbox" style="zoom:2" id="English"name="English" checked>English<br/>
-			<input type="checkbox" style="zoom:2" id="History"name="History" checked>History &nbsp;
-			<input type="checkbox" style="zoom:2" id="Geography" name="Geography" checked>Geography &nbsp;
-
-			<hr>
-
-			<h3> Media Type </h3>
-			<input type="checkbox" style="zoom:2" id="Books" name="Books" checked>Books &nbsp;
-			<input type="checkbox" style="zoom:2" id="Audio"name="Audio" checked>Audio &nbsp;
-			<input type="checkbox" style="zoom:2" id="Videos"name="Videos" checked>Videos &nbsp;
-			<input type="checkbox" style="zoom:2" id="Activities"name="Activities" checked>Activities &nbsp;
-			<input type="checkbox" style="zoom:2" id="Pictures"name="Pictures" checked>Pictures &nbsp;
-
-		</form>
-
-			<div class="boxdiv" id="results">
-				    <p><b>Results</b></p>
-			<div id="resultsdiv">
-			    <ul id="resultsDivUL">
-			    </ul>
-		   	</div>
-		   </div>
-
-		   <!--<div id="dummy" draggable="true" ondragstart="drag(event)"></div>-->
-	</div>
 	Title: <input type="text" name="title" id="titleString">
 	<button type="button" id="btnSave" onclick="save()">Save</button>
 	<div id= "displaybox"> HELLO </div>
