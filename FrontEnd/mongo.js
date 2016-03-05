@@ -8,7 +8,7 @@ console.log(timelineID);
 $.post("../BackEnd/openTimeline.php", timelineID, function(data) {
 	//>>>>>>DEBUG
 		//console.log(typeof(data));
-		//data = JSON.parse(data);
+		data = JSON.parse(data);
 		//console.log(typeof(data));
 		//console.log(data);
 		//console.log(data[0]['fp']);
