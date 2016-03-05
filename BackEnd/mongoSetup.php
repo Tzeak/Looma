@@ -17,7 +17,7 @@ try
 }
 catch(MongoConnectionException $e)
 {
-	echo "Error connecting to MongoDB. Make sure you have run the command mongod --dbpath data/";
+	echo "MongoConnectError connecting to MongoDB. Make sure you have run the command mongod --dbpath data/";
 	exit();
 }
 
