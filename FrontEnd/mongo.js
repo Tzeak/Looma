@@ -11,7 +11,9 @@ $.post("../BackEnd/openTimeline.php", timelineID, function(data) {
 	//Attempt to make regex to find thumbnail - fail
 		//var thumbnail = content.match(/[A-Z\-_]+thumb.jpg/gi);
 
-	//for(var i = 0; i < data.legnth; i++) {
+		console.log(data.length);
+		var i =0;
+	//for(i = 0; i < data.legnth; i++) {
 		console.log(data);
 		var img = "<img src='../" + data[i].fp + "English-" + (i+1) + "_thumb.jpg'>" + "<br/>";
 		var title = data[i].dn;
