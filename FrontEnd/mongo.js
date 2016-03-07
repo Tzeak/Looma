@@ -13,12 +13,12 @@ $.post("../BackEnd/openTimeline.php", timelineID, function(data) {
 
 		console.log(data.length);
 		var i =0;
-	//for(i = 0; i < data.legnth; i++) {
+	for(i = 0; i < data.length; i++) {
 		console.log(data);
 		var img = "<img src='../" + data[i].fp + "English-" + (i+1) + "_thumb.jpg'>" + "<br/>";
 		var title = data[i].dn;
 		$("#time" + (i+1)).html(img + title);
-	//}
+	}
 	//This is where I'd put my thumbnail variable, IF IT WORKED X.X 
 		//var img = "<img src='../" + data[0].fp + thumbnail + "<br/>";
 	
