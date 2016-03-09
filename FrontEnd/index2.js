@@ -1,131 +1,130 @@
 var library = [
     {
     	"_id":"ObjectId(5549)", 
-    	"chapter_id":"2EN02",
+    	"prefix":"2EN02",
     	"filetype":"EP",
     	"thumbnail":"images/kitty.jpg",
     	"filepath": "resources/textbook/",
-    	"displayname":"KITTY"
+    	"dn":"KITTY"
     },
     {
     	"_id":"ObjectId(5551)", 
-    	"chapter_id":"3EN02",
+    	"prefix":"3EN02",
     	"filetype":"EP",
     	"filepath":"resources/pictures/",
     	"format":"video", 
     	"thumbnail":"images/pup.jpg",
-    	"displayname":"Chemistry Safety with Bill Nye"
+    	"dn":"Chemistry Safety with Bill Nye"
     },
     {
     	"_id":"ObjectId(5552)", 
-    	"chapter_id":"4EN02",
+    	"prefix":"4EN02",
     	"filetype":"EP",
     	"filepath":"resources/videos/",
     	"format":"game", 
     	"thumbnail":"images/pup2.jpg",
-    	"displayname":"Is this letter a vowel?"
+    	"dn":"Is this letter a vowel?"
     },
     {
     	"_id":"ObjectId(5548)", 
-    	"chapter_id":"5EN02",
+    	"prefix":"5EN02",
     	"filetype":"EP",
     	"filepath":"resources/audio/",
     	"format":"video", 
     	"thumbnail":"images/pup4.jpg",
-    	"displayname":"The Chronicles of Narnia: The Lion, the Witch, and the Wardrobe, and Supilise"
+    	"dn":"The Chronicles of Narnia: The Lion, the Witch, and the Wardrobe, and Supilise"
     },
         {
     	"_id":"ObjectId(5547)", 
-    	"chapter_id":"2EN02",
+    	"prefix":"2EN02",
     	"filetype":"EP",
     	"thumbnail":"images/kitty.jpg",
     	"filepath": "resources/textbook/",
-    	"displayname":"KITTY"
+    	"dn":"KITTY"
     },
     {
     	"_id":"ObjectId(5559)", 
-    	"chapter_id":"3EN02",
+    	"prefix":"3EN02",
     	"filetype":"EP",
     	"filepath":"resources/pictures/",
     	"format":"video", 
     	"thumbnail":"images/pup.jpg",
-    	"displayname":"Chemistry Safety with Bill Nye"
+    	"dn":"Chemistry Safety with Bill Nye"
     },
     {
     	"_id":"ObjectId(5552)", 
-    	"chapter_id":"4EN02",
+    	"prefix":"4EN02",
     	"filetype":"EP",
     	"filepath":"resources/videos/",
     	"format":"game", 
     	"thumbnail":"images/pup2.jpg",
-    	"displayname":"Is this letter a vowel?"
+    	"dn":"Is this letter a vowel?"
     },
     {
     	"_id":"ObjectId(5557)", 
-    	"chapter_id":"5EN02",
+    	"prefix":"5EN02",
     	"filetype":"EP",
     	"filepath":"resources/audio/",
     	"format":"video", 
     	"thumbnail":"images/pup4.jpg",
-    	"displayname":"The Chronicles of Narnia: The Lion, the Witch, and the Wardrobe, and Supilise"
+    	"dn":"The Chronicles of Narnia: The Lion, the Witch, and the Wardrobe, and Supilise"
     },
 ];
 
 var timeline = [
     {
     	"_id":"ObjectId(5549)", 
-    	"chapter_id":"2EN02",
+    	"prefix":"2EN02",
     	"filetype":"EP",
     	"thumbnail":"images/kitty.jpg",
     	"filepath": "resources/textbook/",
-    	"displayname":"KITTY"
+    	"dn":"KITTY"
     },
     {
     	"_id":"ObjectId(5551)", 
-    	"chapter_id":"3EN02",
+    	"prefix":"3EN02",
     	"filetype":"EP",
     	"filepath":"resources/pictures/",
     	"format":"video", 
     	"thumbnail":"images/pup.jpg",
-    	"displayname":"Chemistry Safety with Bill Nye"
+    	"dn":"Chemistry Safety with Bill Nye"
     },
     {
     	"_id":"ObjectId(5552)", 
-    	"chapter_id":"4EN02",
+    	"prefix":"4EN02",
     	"filetype":"EP",
     	"filepath":"resources/videos/",
     	"format":"game", 
     	"thumbnail":"images/pup2.jpg",
-    	"displayname":"Is this letter a vowel?"
+    	"dn":"Is this letter a vowel?"
     },
 ];
 
-/*var lib = '{"library":[' +
-    '{"format":"textbook", "tag":"Geometry Through the Ages: Chapter 7"},' +
-    '{"format":"quiz", "tag":"Grade 6 Math Quiz - Algebra"},' +
-    '{"format":"video", "tag":"Chemistry Safety with Bill Nye"},' +
-    '{"format":"game", "tag":"Is this letter a vowel?"},' +
-    '{"format":"textbook", "tag":"This is a new book and ITS HEREEE"},' +
-    '{"format":"video", "tag":"Napalise with Elise: Chapter 3"} ]}';
-var content = JSON.parse(lib);*/
 
 var resultArray = [];
+
+
 
 var querySearch = function() {	//Query filter every time a filter option is pressed
 	console.log('Running filter');
 
+
+	//checking if results div has content in it, and if it does remove it before adding new search results.
 	var ul = document.getElementById("resultsDivUL");
 	if(ul.children != null) {
 		var children = ul.querySelectorAll("li");
 		console.log(children);
 	}
 
+	console.log("deleting existing content");
+	//THIS IS NOT WORKING-- supposed to delete existing content
 	Array.prototype.forEach.call(children,function(node) {
 		node.parentNode.removeChild (node);
 	});
 
 //SEARCH
 
+	//searchString is user inputed search term
 	var searchString = document.getElementById("string").value;
 
 	//construct Results JSON object
@@ -156,13 +155,6 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 	var geography = document.getElementById('Geography');
 
 
-	//var grade = document.getElementById('grade');
-	//var gradeValue= grade.options[grade.selectedIndex].value;
-
-	//var subject = document.getElementById('subject');
-	//var subjectValue= subject.options[subject.selectedIndex].value;
-
-
 	//Construct Results object
 	var filterResults = new Object();
 		filterResults.module = 'filter';
@@ -187,41 +179,26 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		filterResults.history1 = history.checked;
 		filterResults.geography = geography.checked;
 		
-
-		//filterResults.grade = gradeValue.checked
-		//filterResults.subject = subjectValue;
-
-		console.log(filterResults);
-
-		//Pass results to results module
-		console.log(searchResults);
-		//constructResults(results);
-
 	
-
-
+	//searching all content items for search term and pushing them into new searchArray
 	if(searchResults.module  == 'search' ) {
 		var i;
 		var j;
-
-
-		
 		var searchArray = [];
 
 		for(i = 0; i < library.length; i++) {
-			var str = library[i].displayname;
+			var str = library[i].dn;
 			var find = str.search(searchResults.string);
 			//create array
-			//console.log(str);
 		
 			if(find >= 0) { //match was found
-				//console.log(content.library[i]);
 				searchArray.push(library[i]); //how to get content?
 
 			}
 		}
 
-		//var resultArray = [];
+		//push all searchArray items that also fit filter settings to new filterArray1
+		//media type filter
 		var filterArray1 = [];
 
 		for(j=0; j < searchArray.length; j++) {
@@ -245,193 +222,24 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 				//console.log(searchArray[j].tag);
 				filterArray1.push(searchArray[j]);
 			}
-
-
 		}
 
+		//grade filter
 		for(i=0;i<filterArray1.length;i++) {
 			for (j=1;j<9;j++) {
-				console.log(filterArray1[i].chapter_id[0]);
-				if((filterArray1[i].chapter_id[0]) == j && filterResults['grade' + j] == true)
+				console.log(filterArray1[i].prefix[0]);
+				if((filterArray1[i].prefix[0]) == j && filterResults['grade' + j] == true)
 					resultArray.push(filterArray1[i]);
 			}
 		}
 
 
-
-		/*document.getElementById("results0").innerHTML = resultArray[0].tag;
-		document.getElementById("results1").innerHTML = resultArray[1].tag;
-		document.getElementById("results2").innerHTML = resultArray[2].tag;
-		document.getElementById("results3").innerHTML = resultArray[3].tag;*/
-		//console.log(resultArray);
-
-
-		//Timeline
-		//Results JSON object
-		var results = new Object();
-			/*results.team1 = resultArray[0].tag;
-			results.team2 = resultArray[1].tag;
-			results.team3 = resultArray[2].tag;
-		 	results.team4 = resultArray[3].tag;
-		 	results.team5 = resultArray[4].tag;*/
-
-		 	for(i=0;i<resultArray.length; i++) {
-				results["team" + i]=resultArray[i].dn + ", Grade " + resultArray[i].prefix[0];
-				//results.i = resultArray[i].tag;
-				console.log(results.team0);
-				console.log(resultArray[i]);
-		 	}
-
-
-
-
-		console.log("results display");
-		var resultsWhole = document.querySelector("div#resultsdiv");
-		var resultsUL = document.querySelector("div#resultsdiv ul#resultsDivUL");
-		var timelineWhole = document.querySelector("div#timelineWhole");
-
-
-		// Load JSON objects into results box immediately
-		// window.onload = function loadJSON() {
-
-		var loadJSON = function() {
-
-		  //Load JSON objects into Results div
-		  console.log("Loading JSON objects into Results div...");
-
-		  for(i=0;i<resultArray.length; i++)
-		  {
-		    var rElement = createNewListElement(resultArray[i]);
-		    resultsUL.appendChild(rElement);
-		  }
-		}
-
-
-		var createNewListElement = function(itemString) {
-		  // Create new list items
-
-		  var listItem = document.createElement("li");
-		  	
-		  	/*var LiAtt = document.createAttribute("draggable");        // Create a "href" attribute
-			LiAtt.value = "true";            // Set the value of the href attribute
-			listItem.setAttributeNode(LiAtt);   
-			var LiAtt2 = document.createAttribute("ondragstart");        // Create a "href" attribute
-			LiAtt2.value = "drag(event)";            // Set the value of the href attribute
-			listItem.setAttributeNode(LiAtt2);*/   
-
-			var id = document.createAttribute("id");        // Create a "href" attribute
-			id.value = "item";            // Set the value of the href attribute
-			listItem.setAttributeNode(id);
-
-			var num = document.createAttribute("index");        // Create a "href" attribute
-			num.value = i;            // Set the value of the href attribute
-			listItem.setAttributeNode(num);
-
-			var filetype = document.createAttribute("data-ft");        // Create a "href" attribute
-			filetype.value = resultArray[i].filetype;            // Set the value of the href attribute
-			listItem.setAttributeNode(filetype);
-
-			var filepath = document.createAttribute("data-fp");        // Create a "href" attribute
-			filepath.value = resultArray[i].filepath;            // Set the value of the href attribute
-			listItem.setAttributeNode(filepath);
-
-			var filename = document.createAttribute("data-fn");        // Create a "href" attribute
-			filename.value = resultArray[i].displayname;            // Set the value of the href attribute
-			listItem.setAttributeNode(filename);
-
-			/*var remove = document.createAttribute("ondrag");        // Create a "href" attribute
-			remove.value = "addJSON(event)";            // Set the value of the href attribute
-			listItem.setAttributeNode(remove);*/
-
-
-		  var listLabel = document.createElement("label");
-
-		  var id = document.createAttribute("id");        // Create a "href" attribute
-			id.value = "name";            // Set the value of the href attribute
-			listLabel.setAttributeNode(id);
-
-
-		  var thumbnail = document.createElement("img");
-		  var addButton = document.createElement("button");
-		  addButton.innerText = "Add";
-		  addButton.className = "add";
-
-		  
-		var att = document.createAttribute("src");        // Create a "href" attribute
-		att.value = resultArray[i].fp + "*.jpg";            // Set the value of the href attribute
-		console.log("i = " + i);
-		console.log("resultArray[i] = " + resultArray[i]);
-		thumbnail.setAttributeNode(att);                      // Add the href attribute to <a>
+//TIMELINE
 		
-		  listLabel.innerText = itemString.dn + ", Grade " + resultArray[i].prefix[0];
-		  // addButton.onclick = addJSON;
-		  listItem.appendChild(thumbnail);
-		  listItem.appendChild(listLabel);
-		  listItem.appendChild(addButton);
-
-		  return listItem;
-
-		}
-
-
-
-		// Check for next empty div
-		var checkDivsEmpty = function() {
-		  console.log("Checking for first empty timeline div...");
-
-		  // Gather all timeline divs so we can traverse through them
-		  var timelineDivs = document.getElementsByClassName("timelinediv");
-
-		  // Traverse through timeline divs and check for first empty div
-		  for (var i = 0; i < timelineDivs.length; i++) {
-		    if (timelineDivs[i].innerHTML === "") {
-		      return timelineDivs[i];
-		    } 
-		  }
-		  return "none";
-		}
-
-
-
-		var addJSON = function() {
-		  // Clone current list item
-		  var listItem = this.parentNode;
-		  var newListItem = listItem.cloneNode(true);
-
-		  // Change button class to "remove"
-		  newListItem.querySelector("button.add").classList.remove("add");
-		  newListItem.querySelector("button").classList.add("remove");
-
-		  // Modify new "remove" button
-		  var newRemoveButton = newListItem.querySelector("button.remove");
-		  newRemoveButton.innerText = "Remove";
-		  newRemoveButton.addEventListener("click", removeJSON);
-
-		  // Append newListItem to first empty div using checkDivsEmpty()
-		  var nextEmptyDiv = checkDivsEmpty();
-
-		  if (nextEmptyDiv === "none") {
-		    alert ("No empty divs");
-		  } else {
-		    console.log("Adding new list item to timeline...");
-		    nextEmptyDiv.appendChild(newListItem);
-		  }
-		}
-
-
-
-		var removeJSON = function() {
-		  console.log("Removing list item from timeline...");
-
-		  // Removing list item from timelineHolder
-		  var listItem = this.parentNode;
-		  listItem.remove();
-		}
 
 
 		// Load the JSON object
 		loadJSON(); 
-
 
 		// Cycle over the resultsUL ul list items
 		for (var i = 0; i < resultsUL.children.length; i++) {   // for each LI
@@ -441,21 +249,145 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		}
 
 
+		// Check for next empty div
+		var checkDivsEmpty = function() {
+			  console.log("Checking for first empty timeline div...");
 
-		// Cycle over the timelineHolder ul list items
-		// THIS CURRENTLY DOES NOTHING (b/c it doesn't start out with any remove buttons)
-		for (var i = 0; i < timelineWhole.children.length; i++) {  // for each timeline div
-		  var removeButton = timelineWhole.querySelector("li button.remove");
-		  // var removeButton = timelineWhole.children[i].querySelector("li button.remove");
-		  if(removeButton!=null)
-		  	removeButton.addEventListener("click", removeJSON);   // bind removeJSON to remove button
-		  console.log("Giving remove buttons actions...");
+			  // Gather all timeline divs so we can traverse through them
+			  var timelineDivs = document.getElementsByClassName("timelinediv");
+
+			  // Traverse through timeline divs and check for first empty div
+			  for (var i = 0; i < timelineDivs.length; i++) {
+			    if (timelineDivs[i].innerHTML === "") {
+			      return timelineDivs[i];
+			    } 
+		  }
+		  return "none";
 		}
 
+		var addJSON = function() {
 
+				console.log("hello!!!");
+				// Clone current list item
+				var listItem = this.parentNode;
+				var newListItem = listItem.cloneNode(true);
+
+				// Change button class to "remove"
+				newListItem.querySelector("button.add").classList.remove("add");
+				newListItem.querySelector("button").classList.add("remove");
+
+				// Modify new "remove" button
+				var newRemoveButton = newListItem.querySelector("button.remove");
+				newRemoveButton.innerText = "Remove";
+				newRemoveButton.addEventListener("click", removeJSON);
+
+				// Append newListItem to first empty div using checkDivsEmpty()
+				var nextEmptyDiv = checkDivsEmpty();
+
+				if (nextEmptyDiv === "none") {
+				alert ("No empty divs");
+				} else {
+				console.log("Adding new list item to timeline...");
+				nextEmptyDiv.appendChild(newListItem);
+				}
+		}
+
+		var removeJSON = function() {
+			  console.log("Removing list item from timeline...");
+
+			  // Removing list item from timelineHolder
+			  var listItem = this.parentNode;
+			  listItem.remove();
+		}
 	
+	}
 }
+
+
+console.log("results display");
+var resultsWhole = document.querySelector("div#resultsdiv");
+var resultsUL = document.querySelector("div#resultsdiv ul#resultsDivUL");
+var timelineWhole = document.querySelector("div#timelineWhole");
+
+//Load JSON objects into Results div
+var loadJSON = function() {
+
+	  console.log("Loading JSON objects into Results div...");
+
+	  for(i=0;i<resultArray.length; i++)
+	  {
+	    var rElement = createNewListElement(resultArray[i]);
+	    resultsUL.appendChild(rElement);
+	  }
 }
+
+// Create new list items for results div
+var createNewListElement = function(itemString) {
+	  var listItem = document.createElement("li");
+	  
+	  	//id for li element
+		var id = document.createAttribute("id"); 
+		id.value = "item";           
+		listItem.setAttributeNode(id);
+
+		//index attribute for li element (to access resultArray[index] info after the item is moved around in the timeline)
+		var num = document.createAttribute("index");      
+		num.value = i;    
+		listItem.setAttributeNode(num);
+
+		//attributes to list items for when we add preview feature
+		var filetype = document.createAttribute("data-ft");   
+		filetype.value = resultArray[i].filetype; 
+		listItem.setAttributeNode(filetype);
+
+		var filepath = document.createAttribute("data-fp");   
+		filepath.value = resultArray[i].filepath; 
+		listItem.setAttributeNode(filepath);
+
+		var filename = document.createAttribute("data-fn");       
+		filename.value = resultArray[i].displayname;         
+		listItem.setAttributeNode(filename);
+
+
+		//create label element for displaying content display name/info	  
+	  	var listLabel = document.createElement("label");
+
+	  	//id for label element
+	  	var id = document.createAttribute("id");  
+		id.value = "name";         
+		listLabel.setAttributeNode(id);
+
+
+		//image element for thumbnail photo	
+		var thumbnail = document.createElement("img");
+		
+		//add button to add list item from results div to timeline
+		var addButton = document.createElement("button");
+		addButton.innerText = "Add";
+		addButton.className = "add";
+
+	  
+		//access thumbnail image using filepath in json object
+		var att = document.createAttribute("src");    
+		att.value = resultArray[i].fp + "*.jpg";       
+		console.log("i = " + i);
+		console.log("resultArray[i] = " + resultArray[i]);
+		thumbnail.setAttributeNode(att);                    
+
+		
+		//set the display text for each content item
+		listLabel.innerText = itemString.dn + ", Grade " + resultArray[i].prefix[0];
+		
+		//append elements to the list item
+		listItem.appendChild(thumbnail);
+		listItem.appendChild(listLabel);
+		listItem.appendChild(addButton);
+
+	  	return listItem;
+
+}
+
+
 
 var save = function(){    
     console.log("saving...");
@@ -484,7 +416,6 @@ var save = function(){
 }
 
 
-
 function loadTimeline() {
 			console.log("loadTimeline");
 			
@@ -511,13 +442,6 @@ var createTimelineElement = function(itemString) {
 	  // Create new list items
 
 	  var listItem = document.createElement("li");
-	  	
-	  	/*var LiAtt = document.createAttribute("draggable");        // Create a "href" attribute
-		LiAtt.value = "true";            // Set the value of the href attribute
-		listItem.setAttributeNode(LiAtt);   
-		var LiAtt2 = document.createAttribute("ondragstart");        // Create a "href" attribute
-		LiAtt2.value = "drag(event)";            // Set the value of the href attribute
-		listItem.setAttributeNode(LiAtt2);*/   
 
 		var id = document.createAttribute("id");        // Create a "href" attribute
 		id.value = "item";            // Set the value of the href attribute
