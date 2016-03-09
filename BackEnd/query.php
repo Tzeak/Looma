@@ -19,38 +19,40 @@
 
 require_once('mongoSetup.php');
 
+
+
 //Construct Regular Expression for Filter
-$word = "";
+$filterword = "";
 if(isset($_GET["grade"]) && $_GET["grade"] != '')
 {
-	$word .= $_GET["grade"]; 
+	$filterword .= $_GET["grade"]; 
 }
 else
 {
 	//Match any grade, 1-8
-	$word.= "[1-8]";
+	$filterword.= "[1-8]";
 }
 if(isset($_GET["subject"]) && $_GET["subject"] != '')
 {
-	$word .= $_GET["subject"]; 
+	$filterword .= $_GET["subject"]; 
 }
 else
 {
 	//Match any Subject of One or More Letters
-	$word .= "[A-Za-z]+";
+	$filterword .= "[A-Za-z]+";
 }
 if(isset($_GET["chapter"]) && $_GET["chapter"] != '')
 {
-	$word .= $_GET["chapter"]; 
+	$filterword .= $_GET["chapter"]; 
 }
 else
 {
 	//Match Any chapter from 0-99
-	$word.= "[0-9][0-9]?";
+	$filterword.= "[0-9][0-9]?";
 }
 if(isset($_GET['section']) && $_GET["section"] != '')
 {
-	$word .= "\." . $_GET['section'];
+	$filterword .= "\." . $_GET['section'];
 }
 else
 {
@@ -78,13 +80,15 @@ if(isset($_GET["ft"]) && $_GET["ft"] != '')
 	//png 
 }
 //Debug -- what's the regular expression that was constructed?
-//echo "<br/><br/>".$word . "<br/><br/>";
+//echo "<br/><br/>".$filterword . "<br/><br/>";
+
+echo $filterword;
 	
 	//Construct a query by placing regex into relevant array
-	//NOTE: using regex to do a case insensitive search for the word 
-	$chapter_query = array('_id' => new MongoRegex("^$word/i"));  
-	$text_query= array('prefix' => new MongoRegex("^$word/i"));  
-	$else_query= array('ch_id' => new MongoRegex("^$word/i"));  
+	//NOTE: using regex to do a case insensitive search for the filterword 
+	$chapter_query = array('_id' => new MongoRegex("^$filterword/i"));  
+	$text_query= array('prefix' => new MongoRegex("^$filterword/i"));  
+	$else_query= array('ch_id' => new MongoRegex("^$filterword/i"));  
 
 	//Query Mongo Database
 	$res1 = queryMongo($else_query);	// Dictionary and Activities

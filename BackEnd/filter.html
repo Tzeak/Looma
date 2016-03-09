@@ -1,32 +1,29 @@
 <html>
 		<style>
-			#lol {
+			#filterdiv, #searchdiv {
 				border: 1px solid black;
 				margin: 50px;
+				height:300px;
+				overflow-y:auto;
 			}
 		</style>
-	<div id='lol'></div>
-	<button onclick="query()">hi</button>
+	<button onclick="filter()">filter</button>
+	<button onclick="search()">search</button>
+	<div id='filterdiv'></div>
+	<div id='searchdiv'></div>
 	<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script>
-		function query() {
+		function filter() {
 			var data = {
-				'ft' : 'ep'
-			};
-			/*var data = {
-				'grade' : '',
+				'grade' : '3',
 				'subject' : null,
 				'chapter' : '',
-				'section':null 
-			};*/
-			var datatypes = new Array();
+				'section':null,
+				'ft' : 'jpg'
+			};
 			$.get("query.php", data, function(data) {
-				console.log(typeof(data));
-				//data = JSON.parse(data);
-				console.log(typeof(data));
-				
-				$("#lol").html(data);
+				$("#filterdiv").html(data);
 			}); //Send data to server via post request
 			// document.getElementById("opendiv").innerText = data;
 		}
