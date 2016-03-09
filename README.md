@@ -19,11 +19,11 @@ Once installed, clone this repo and run the following command to kick off the de
 
 ##### Authors
 * Front-End and UI/UX
-	* [EliseHerrmannsfeldt](https://github.com/eherrman)
-	* [SuparnaJasuja](https://github.com/sjasuja111)
+	* [Elise Herrmannsfeldt](https://github.com/eherrman)
+	* [Suparna Jasuja](https://github.com/sjasuja111)
 * Back-End and DB Management
 	* [Kate Lassalle-Klein](https://github.com/katelk28)
-	* [RoshanRamankutty](https://github.com/tzeak)
+	* [Roshan Ramankutty](https://github.com/tzeak)
 
 
 Made with love @ Santa Clara University
