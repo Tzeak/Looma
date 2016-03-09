@@ -127,13 +127,15 @@
 	    ];
 	    var timeline = [
 	    {
-	    	"_id":"ObjectId(5549)", 
-	    	"chapter_id":"2EN02",
-	    	"filetype":"EP",
-	    	"thumbnail":"images/kitty.jpg",
-	    	"filepath": "resources/textbook/",
-	    	"displayname":"KITTY"
-	    },
+			"_id" : "568dcdf19324a6f91e74131d",
+			"class" : "class1",
+			"subject" : "english",
+			"prefix" : "1EN",
+			"fn" : "English-1.pdf",
+			"fp" : "textbooks/Class1/English/",
+			"dn" : "Class 1 English",
+			"ndn" : "कक्षा 1 अन्ग्रेगी"
+		},
 	    {
 	    	"_id":"ObjectId(5551)", 
 	    	"chapter_id":"3EN02",
@@ -196,37 +198,34 @@ function openTimeline() {
 			
 			console.log("opentTimeline...");
 			//send id to back end, which returns the object of timeline items
-			var data = {
+			/*var data = {
 				'id' : this.id
 			};
 			$.post("../BackEnd/open.php", data, function(data) {
-				window.location = "index2.html?" + data;
+				$("#opendiv").html(data);
 			});
-			// document.getElementById("opendiv").innerText = data;
+			// document.getElementById("opendiv").innerText = data;*/
 			
 			var data = JSON.stringify(timeline); 
 			console.log(data);
-			// window.location = "index2.html?" + data;
-
+			window.location = "index2.html?" + data;
 			// document.getElementById("opendiv").innerText = data
 }
 function presentTimeline() {
 			
 			console.log("opentTimeline...");
 			//send id to back end, which returns the object of timeline items
-			var data = {
+			/*var data = {
 				'id' : this.id
 			};
 			$.post("../BackEnd/open.php", data, function(data) {
-				window.location = "present.html?" + data;
+				$("#opendiv").html(data);
 			});
-			// document.getElementById("opendiv").innerText = data;
+			// document.getElementById("opendiv").innerText = data;*/
 			
 			var data = JSON.stringify(timeline); 
 			console.log(data);
-
-			// window.location = "present.html?" + data;
-
+			window.location = "present.html?" + data;
 			// document.getElementById("opendiv").innerText = data
 }
     </script>
