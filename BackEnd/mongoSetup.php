@@ -17,7 +17,7 @@ try
 }
 catch(MongoConnectionException $e)
 {
-	echo "Error connecting to MongoDB. Make sure you have run the command mongod --dbpath data/";
+	echo "MongoConnectError connecting to MongoDB. Make sure you have run the command mongod --dbpath data/";
 	exit();
 }
 
@@ -27,21 +27,6 @@ catch(MongoConnectionException $e)
  *				- If the document exists, return $document to the calling function.
  *				- If the document does not exist, return null to the calling function
  */
-
-
-// class MongoId2 extends MongoId {
-//         public function __construct($id = null) {
-//             if(is_array($id)) {
-//                 $id = (object) $id;
-//             }
-
-//             if(is_object($id) && isset($id->{'$id'})) {
-//                 $id = $id->{'$id'};
-//             }
-
-//             return parent::__construct($id);
-//         }
-//     }
 
 function searchMongo($id)
 {
@@ -62,5 +47,32 @@ function searchMongo($id)
 	}
 	
 	return null;
+}
+
+
+function getTimelineElements ($timelineID) {
+
+	global $activities, $textbooks, $dictionary, $chapters, $timelines;		
+
+	// Create an array with the IDs of the elements
+	$timelineDoc = $timelines->findOne(array('_id' => new MongoId($timelineID)));
+
+	// Create array to hold the timeline element JSONs
+	$timelineElementsArray = array();
+	$cntelements = count($timelineDoc['line']);
+	for ($i=0; $i<$cntelements; $i++) 
+	{
+		$mongoID = $timelineDoc['line'][$i];	// placeholder for the mongoID we're searching for
+		$document = searchMongo($mongoID);		// searchMongo() searches the collection for the right 
+
+		if ($document == null) {
+			error_log("There is no document with this ID!", 0);
+			// We should make a real error log .......
+			// error_log("You messed up!", 3, "/var/tmp/my-errors.log");
+			break;
+		}
+		$timelineElementsArray[$i] = $document;		// find the document! yay!
+	}
+	return $timelineElementsArray;
 }
 ?>

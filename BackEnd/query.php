@@ -56,7 +56,27 @@ else
 {
 	//Auto match section with lack of section -- this code doesn't matter!
 }
+// Construct Media Filter
 
+if(isset($_GET["ft"]) && $_GET["ft"] != '')
+{
+	$media = $_GET["ft"];
+	//$media_query = array('ft' => new MongoRegex("^$media/i"));
+	$media_query = array('ft' => new MongoRegex("^$media/i"));
+	$result = queryMongo($media_query);
+	echo json_encode($result);
+
+	//EP 
+	//gif 
+	//html
+	//jpg 
+	//mov 
+	//mp3 
+	//mp4 
+	//mp5 
+	//pdf 
+	//png 
+}
 //Debug -- what's the regular expression that was constructed?
 //echo "<br/><br/>".$word . "<br/><br/>";
 	
@@ -71,10 +91,9 @@ else
 	$res2 = queryMongo($text_query);	// Textbooks 
 	$res3 = queryMongo($chapter_query);	// Chapters
 	//Print Results
-	echo($res1); 
-	echo($res2);
-	echo($res3);
-
+	//echo(json_encode($res1));
+	//echo(json_encode($res2));
+	//echo(json_encode($res3));
 
 //Query Mongo Database
 function queryMongo($searchArray) {
@@ -85,22 +104,43 @@ function queryMongo($searchArray) {
 	$dictionary_cursor = $dictionary->find($searchArray);
 	$chapter_cursor = $chapters->find($searchArray);
 
-	$res = "";
+	$res =  array();
+	$i = 0;
 	foreach($activities_cursor as $doc)
 	{
-		$res .= json_encode($doc);
+		if(isset($doc))
+		{
+			$res[$i] = $doc;
+			//echo json_encode($doc);
+			$i++;
+		}
 	}
 	foreach($dictionary_cursor as $doc)
 	{
-		$res .= json_encode($doc);
+		if(isset($doc))
+		{
+			$res[$i] = $doc;
+			//echo json_encode($doc);
+			$i++;
+		}
 	}
 	foreach($textbook_cursor as $doc)
 	{
-		$res .= json_encode($doc);
+		if(isset($doc))
+		{
+			$res[$i] = $doc;
+			//echo json_encode($doc);
+			$i++;
+		}
 	}
 	foreach($chapter_cursor as $doc)
 	{
-		$res .= json_encode($doc);
+		if(isset($doc))
+		{
+			$res[$i] = $doc;
+			//echo json_encode($doc);
+			$i++;
+		}
 	}
 	
 	return $res;
