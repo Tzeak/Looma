@@ -235,20 +235,6 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 
 
 //TIMELINE
-		
-
-
-		// Load the JSON object
-		loadJSON(); 
-
-		// Cycle over the resultsUL ul list items
-		for (var i = 0; i < resultsUL.children.length; i++) {   // for each LI
-		  var addButton = resultsUL.children[i].querySelector("button.add");  // select the add button
-		  addButton.addEventListener("click", addJSON);   // bind addJSON to add button
-		  console.log("Giving add buttons actions...");
-		}
-
-
 		// Check for next empty div
 		var checkDivsEmpty = function() {
 			  console.log("Checking for first empty timeline div...");
@@ -298,7 +284,21 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 			  // Removing list item from timelineHolder
 			  var listItem = this.parentNode;
 			  listItem.remove();
+		}		
+
+
+		// Load the JSON object
+		loadJSON(); 
+
+		// Cycle over the resultsUL ul list items
+		for (var i = 0; i < resultsUL.children.length; i++) {   // for each LI
+		  var addButton = resultsUL.children[i].querySelector("button.add");  // select the add button
+		  addButton.addEventListener("click", addJSON);   // bind addJSON to add button
+		  console.log("Giving add buttons actions...");
 		}
+
+
+
 	
 	}
 }
