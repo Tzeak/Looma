@@ -28,6 +28,10 @@ catch(MongoConnectionException $e)
  *				- If the document does not exist, return null to the calling function
  */
 
+/* Function:		searchMongo()
+ * Description:		Input	- Mongo ID of a Document
+ *					Return	- Document
+ */
 function searchMongo($id)
 {
 
@@ -37,7 +41,6 @@ function searchMongo($id)
 
 	for ($i=0; $i<count($collectionarray); $i++)
    	{
-	
 		$document = $collectionarray[$i]->findOne(array('_id' => new MongoId($id)));
 
 		if ($document != null) 
@@ -45,11 +48,13 @@ function searchMongo($id)
 			return $document; // it's in this collection!
 		} 
 	}
-	
 	return null;
 }
 
-
+/* Function:		getTimelineElements
+ * Description:		Input	- Mongo ID of a Timeline Object
+ *					Return	- Array of MongoDB Documents from the associated timeline
+ */
 function getTimelineElements ($timelineID) {
 
 	global $activities, $textbooks, $dictionary, $chapters, $timelines;		
@@ -74,5 +79,30 @@ function getTimelineElements ($timelineID) {
 		$timelineElementsArray[$i] = $document;		// find the document! yay!
 	}
 	return $timelineElementsArray;
+}
+
+/* Function:		cleanDocArray
+ * Description:		Takes array of Mongo Documents and "cleans" the id object for json_encode()
+ *					Runs O(n)
+ */
+function cleanDocArray($docArray)
+{
+	for($i = 0; $i < $docArray; $i++)
+		$docArray[$i] = cleanDocument($docArray[$i]);
+
+	return $docArray;
+}
+
+/* Function:		cleanDocument
+ * Description:		Takes Mongo Document and "cleans" the id object for json_encode()
+ *					Runs O(1)
+ */
+function cleanDocument($doc)
+{
+	//This might need to be in a try/catch block in the case of constructed mongoid
+	// i.e for chapters
+	//cleans document for json_encode
+	$doc['_id'] = $doc['_id']->{'$id'};
+	return $doc;
 }
 ?>

@@ -19,8 +19,6 @@
 
 require_once('mongoSetup.php');
 
-
-
 //Construct Regular Expression for Filter
 $filterword = "";
 if(isset($_GET["grade"]) && $_GET["grade"] != '')
@@ -66,6 +64,12 @@ if(isset($_GET["ft"]) && $_GET["ft"] != '')
 	//$media_query = array('ft' => new MongoRegex("^$media/i"));
 	$media_query = array('ft' => new MongoRegex("^$media/i"));
 	$result = queryMongo($media_query);
+	$rescount = count($result);
+
+	//Clean mongoid php contamination for json_encode
+	for($i = 0; $i < $rescount; $i++)
+		$result[$i] = cleanDocument($result[$i]);
+
 	echo json_encode($result);
 
 	//EP 
