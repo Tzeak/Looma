@@ -139,14 +139,21 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 	var activities = document.getElementById('Activities');
 	var pictures = document.getElementById('Pictures');
 
-	var grade1 = document.getElementById('1');
+var filterResults = new Object();
+
+	/*var grades = document.getElementsByClassName('grade');
+	for(i=1; i<9; i++) {
+		filterResults.grades[i] = grades[i].checked;
+	}*/
+
+	/*var grade1 = document.getElementById('1');
 	var grade2 = document.getElementById('2');
 	var grade3 = document.getElementById('3');
 	var grade4 = document.getElementById('4');
 	var grade5 = document.getElementById('5');
 	var grade6 = document.getElementById('6');
 	var grade7 = document.getElementById('7');
-	var grade8 = document.getElementById('8');
+	var grade8 = document.getElementById('8');*/
 
 	var math = document.getElementById('Math');
 	var science = document.getElementById('Science');
@@ -156,7 +163,7 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 
 
 	//Construct Results object
-	var filterResults = new Object();
+	//var filterResults = new Object();
 		filterResults.module = 'filter';
 		filterResults.bbooks = books.checked;
 		filterResults.baudio = audio.checked;
@@ -164,14 +171,14 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		filterResults.bactivities = activities.checked;
 		filterResults.bpictures = pictures.checked;
 
-		filterResults.grade1 = grade1.checked;
+	/*	filterResults.grade1 = grade1.checked;
 		filterResults.grade2 = grade2.checked;
 		filterResults.grade3 = grade3.checked;
 		filterResults.grade4 = grade4.checked;
 		filterResults.grade5 = grade5.checked;
 		filterResults.grade6 = grade6.checked;
 		filterResults.grade7 = grade7.checked;
-		filterResults.grade8 = grade8.checked;
+		filterResults.grade8 = grade8.checked;*/
 
 		filterResults.math = math.checked;
 		filterResults.science = science.checked;
