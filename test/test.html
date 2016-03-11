@@ -1,0 +1,56 @@
+<html>
+
+
+
+
+<style>
+	#testdiv {
+		margin:10px;
+		border:1px solid #000;
+	}
+</style>
+
+
+
+
+<body>
+
+	<div id="testdiv">
+	</div>
+
+</body>
+
+
+	<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+<script>
+
+
+// this needs to be changed. This needs to be sending from the PHP. check out index2.js to see how it's done
+
+var array = [
+    {
+    	"thing 1" : "hi1",
+    	"thing 2" : "bye1"
+    },
+    {
+    	"thing 1" : "hi2",
+    	"thing 2" : "bye2"
+    }
+];
+
+console.log(array);
+
+// $("#testdiv").load("test.php");
+
+$.post("test.php", array, function(array) {
+	$("#testdiv").html(array);
+});
+
+</script>
+
+
+
+
+</html>
