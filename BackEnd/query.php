@@ -67,8 +67,9 @@ if(isset($_GET["ft"]) && $_GET["ft"] != '')
 	$rescount = count($result);
 
 	//Clean mongoid php contamination for json_encode
-	for($i = 0; $i < $rescount; $i++)
-		$result[$i] = cleanDocument($result[$i]);
+	//for($i = 0; $i < $rescount; $i++)
+		//$result[$i] = fixDocId($result[$i]);
+	$result = fixDocArray($result);
 
 	echo json_encode($result);
 

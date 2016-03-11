@@ -21,16 +21,9 @@ catch(MongoConnectionException $e)
 	exit();
 }
 
-/* Function:	searchMongo($id)
- * Description:	This function takes in a MongoId and searches for it through each of the collections
- *				in the database. 
- *				- If the document exists, return $document to the calling function.
- *				- If the document does not exist, return null to the calling function
- */
-
-/* Function:		searchMongo()
+/* Function:		searchMongo($id)
  * Description:		Input	- Mongo ID of a Document
- *					Return	- Document
+ *					Return	- Document or null
  */
 function searchMongo($id)
 {
@@ -81,23 +74,24 @@ function getTimelineElements ($timelineID) {
 	return $timelineElementsArray;
 }
 
-/* Function:		cleanDocArray
+/* Function:		fixDocArray
  * Description:		Takes array of Mongo Documents and "cleans" the id object for json_encode()
  *					Runs O(n)
  */
-function cleanDocArray($docArray)
+function fixDocArray($docArray)
 {
-	for($i = 0; $i < $docArray; $i++)
-		$docArray[$i] = cleanDocument($docArray[$i]);
+	$docCount = count($docArray);
+	for($i = 0; $i < $docCount; $i++)
+		$docArray[$i] = fixDocId($docArray[$i]);
 
 	return $docArray;
 }
 
-/* Function:		cleanDocument
+/* Function:		fixDocId
  * Description:		Takes Mongo Document and "cleans" the id object for json_encode()
  *					Runs O(1)
  */
-function cleanDocument($doc)
+function fixDocId($doc)
 {
 	//This might need to be in a try/catch block in the case of constructed mongoid
 	// i.e for chapters
