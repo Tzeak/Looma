@@ -252,42 +252,6 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		  return "none";
 		}
 
-		var addJSON = function() {
-
-				console.log("hello!!!");
-				// Clone current list item
-				var listItem = this.parentNode;
-				var newListItem = listItem.cloneNode(true);
-
-				// Change button class to "remove"
-				newListItem.querySelector("button.add").classList.remove("add");
-				newListItem.querySelector("button").classList.add("remove");
-
-				// Modify new "remove" button
-				var newRemoveButton = newListItem.querySelector("button.remove");
-				newRemoveButton.innerText = "Remove";
-				newRemoveButton.addEventListener("click", removeJSON);
-
-				// Append newListItem to first empty div using checkDivsEmpty()
-				var nextEmptyDiv = checkDivsEmpty();
-
-				if (nextEmptyDiv === "none") {
-				alert ("No empty divs");
-				} else {
-				console.log("Adding new list item to timeline...");
-				nextEmptyDiv.appendChild(newListItem);
-				}
-		}
-
-		var removeJSON = function() {
-			  console.log("Removing list item from timeline...");
-
-			  // Removing list item from timelineHolder
-			  var listItem = this.parentNode;
-			  listItem.remove();
-		}		
-
-
 		// Load the JSON object
 		loadJSON(); 
 
@@ -297,18 +261,66 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		  addButton.addEventListener("click", addJSON);   // bind addJSON to add button
 		  console.log("Giving add buttons actions...");
 		}
-
-
-
-	
 	}
 }
+//End of querySearch
 
 
 console.log("results display");
 var resultsWhole = document.querySelector("div#resultsdiv");
 var resultsUL = document.querySelector("div#resultsdiv ul#resultsDivUL");
 var timelineWhole = document.querySelector("div#timelineWhole");
+
+var addJSON = function() {
+
+	console.log("hello!!!");
+	// Clone current list item
+	var listItem = this.parentNode;
+	var newListItem = listItem.cloneNode(true);
+
+	// Change button class to "remove"
+	newListItem.querySelector("button.add").classList.remove("add");
+	newListItem.querySelector("button").classList.add("remove");
+
+	// Modify new "remove" button
+	var newRemoveButton = newListItem.querySelector("button.remove");
+	newRemoveButton.innerText = "Remove";
+	newRemoveButton.addEventListener("click", removeJSON);
+
+	// Append newListItem to first empty div using checkDivsEmpty()
+	var nextEmptyDiv = checkDivsEmpty();
+
+	if (nextEmptyDiv === "none") {
+	alert ("No empty divs");
+	} else {
+	console.log("Adding new list item to timeline...");
+	nextEmptyDiv.appendChild(newListItem);
+	}
+}
+
+var removeJSON = function() {
+	  console.log("Removing list item from timeline...");
+
+	  // Removing list item from timelineHolder
+	  var listItem = this.parentNode;
+	  listItem.remove();
+	}	
+
+var checkDivsEmpty = function() {
+	  console.log("Checking for first empty timeline div...");
+
+	  // Gather all timeline divs so we can traverse through them
+	  var timelineDivs = document.getElementsByClassName("timelinediv");
+
+
+	  // Traverse through timeline divs and check for first empty div
+	  for (var i = 0; i < timelineDivs.length; i++) {
+	    if (timelineDivs[i].innerHTML === "") {
+	      return timelineDivs[i];
+	    } 
+  }
+  return "none";
+}	
 
 //Load JSON objects into Results div
 var loadJSON = function() {
@@ -418,23 +430,23 @@ var save = function(){
 
 
 function loadTimeline() {
-			console.log("loadTimeline");
-			
-			var datavalues = localStorage.getItem('data');
-			//parse the value 
-			var finalvalue = JSON.parse(datavalues);
+	console.log("loadTimeline");
+	
+	var datavalues = localStorage.getItem('data');
+	//parse the value 
+	var finalvalue = JSON.parse(datavalues);
 
-			console.log(finalvalue);
+	console.log(finalvalue);
 
-			var timelineDivs = document.getElementsByClassName("timelinediv");
+	var timelineDivs = document.getElementsByClassName("timelinediv");
 
-		  	// add each timeline item to each timelinediv
-		  	for (var i = 0; i < timelineDivs.length; i++) {
-		  			console.log("inserting into box# " + i);
-		  			timelineDivs[i].innerText="HELLO";
+  	// add each timeline item to each timelinediv
+  	for (var i = 0; i < timelineDivs.length; i++) {
+  			console.log("inserting into box# " + i);
+  			timelineDivs[i].innerText="HELLO";
 
-		  			//createNewListElement(timeline[i].displayname);
-		  	}
+  			//createNewListElement(timeline[i].displayname);
+  	}
 }
 
 var createTimelineElement = function(itemString) {
@@ -532,6 +544,13 @@ for (var i = 0; i < timelineDiv.length; i++) {
 }
 
     	//if((document.getElementsByClassName("timelinediv")[i].lastElementChild)!=null) {
+
+
+var script = document.createElement('script');
+script.src = "https://code.jquery.com/ui/1.11.4/jquery-ui.js";
+script.type = 'text/javascript';
+document.getElementsByTagName('head')[0].appendChild(script);
+
 
 
 

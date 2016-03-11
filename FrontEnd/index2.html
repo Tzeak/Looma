@@ -201,9 +201,8 @@
 			    </ul>
 		   	</div>
 		   </div>
-
-		   <!--<div id="dummy" draggable="true" ondragstart="drag(event)"></div>-->
 	</div>
+
 	Title: <input type="text" name="title" id="titleString">
 	<button type="button" id="btnSave" onclick="save()">Save</button>
 	<div id= "displaybox"> HELLO </div>
@@ -211,15 +210,6 @@
 
 
     <br/><br/><br/>
-
-    <!--<div class="timeline" id="timelineWhole">
-	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
-	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
-	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
-	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
-	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
-	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
-    </div>-->
 
    <div id = "wrapper">
     	<div class="timeline" id="timelineWhole">
@@ -246,25 +236,11 @@
 
 
 	</body>
-<!--	<script>
-function allowDrop(ev) {
-    ev.preventDefault();
-}
-
-function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-}
-
-function drop(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
-} -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="jquery-1.12.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
-    <script>
+   <script>
         $(document).ready(function () {
             $("#timelineWhole").sortable({
             //$('#btnSave').hide();
@@ -278,32 +254,6 @@ function drop(ev) {
             });
 
         })
-      
-
-        	/*$('#btnSave').on('click', function(){
-        		//var timelineDivs = document.getElementsByClassName("timelinediv");
-				    // Traverse through timeline divs and check for first empty div
-				    var items = $(".timelinediv");
-				    console.log("saving...");
-				    var itemIds = [];
-				    for (var i = 0; i < items.length; i++) {
-				    	var x = $("#item");
-				    	var y = $("#name").value;
-				    	//var x = getAttribute("label-id");
-				    	//var label = $('#data-id');
-				    	itemIds.push(y);
-				    	console.log("name: "+ y);
-
-				  		//itemIds.push(items.eq(i).data('id'));
-				  		//console.log(items.eq(i).data('id'));
-				    }
-				    console.log(itemIds);*/
-
-						
-				
-			//});
-
-		//})
 
 		
 	</script>
