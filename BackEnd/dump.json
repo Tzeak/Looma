@@ -1,0 +1,128 @@
+.//looma-dictionary-utilities.php:			$query = array('en' => new MongoRegex("/^$englishWord$/i"));  //NOTE: using regex to do a case insensitive search for the word 
+.//looma-chapters.php:			// that holds the MongoDB ObjectId for this chapter (for looking up the activities list when needed)
+
+// CHAPTERS
+
+{
+	"_id" : "1M03",
+	"pn" : 12,
+	"npn" : 10,
+	"dn" : "Numbers from 1 to 5",
+	"ndn" : "१ देखि ५ सम्मका सङ्ख्याहरू"
+}
+{
+	"_id" : "1M04",
+	"pn" : 16,
+	"npn" : 14,
+	"dn" : "Four-sided",
+	"ndn" : "चारकुने"
+}
+{
+	"_id" : "1M05",
+	"pn" : 17,
+	"npn" : 15,
+	"dn" : "Three-sided",
+	"ndn" : "तीनकुने"
+}
+
+
+
+// ACTIVITIES
+
+{
+	"_id" : ObjectId("568dcdda9324a6f91e741093"),
+	"ch_id" : "2EN02",
+	"ft" : "mp4",
+	"MB" : 1.5,
+	"fn" : "Professions.mp4",
+	"dn" : "Professions"
+}
+{
+	"_id" : ObjectId("568dcdda9324a6f91e741094"),
+	"ch_id" : "2EN03",
+	"ft" : "EP",
+	"fn" : 3096210,
+	"dn" : "How Many"
+}
+{
+	"_id" : ObjectId("568dcdda9324a6f91e741095"),
+	"ch_id" : "2EN03",
+	"ft" : "mp4",
+	"MB" : 7.6,
+	"min" : "2:25",
+	"fn" : "Moon_Phases.mp4",
+	"dn" : "Moon Phases"
+}
+
+
+
+// TEXTBOOKS
+
+{
+	"_id" : ObjectId("568dcdf19324a6f91e74132e"),
+	"class" : "class4",
+	"subject" : "math",
+	"prefix" : "4M",
+	"fn" : "Math-4.pdf",
+	"nfn" : "Math-4-Nepali.pdf",
+	"fp" : "textbooks/Class4/Math/",
+	"dn" : "Class 4 Math",
+	"ndn" : "कक्षा 4 गणित"
+}
+{
+	"_id" : ObjectId("568dcdf19324a6f91e74132f"),
+	"class" : "class4",
+	"subject" : "science",
+	"prefix" : "4S",
+	"fn" : "Science-4.pdf",
+	"nfn" : "Science-4-Nepali.pdf",
+	"fp" : "textbooks/Class4/Science/",
+	"dn" : "Class 4 Science",
+	"ndn" : "कक्षा 4 बिज्ञान"
+}
+{
+	"_id" : ObjectId("568dcdf19324a6f91e741330"),
+	"class" : "class4",
+	"subject" : "social studies",
+	"prefix" : "4SS",
+	"fn" : "SocialStudies-4.pdf",
+	"nfn" : "SocialStudies-4-Nepali.pdf",
+	"fp" : "textbooks/Class4/SocialStudies/",
+	"dn" : "Class 4 Social Studies",
+	"ndn" : "कक्षा 4 सामाजिक शिक्षा"
+}
+
+
+
+// DICTIONARY
+
+{
+	"_id" : ObjectId("5690154a9324a6f91e74299f"),
+	"ch_id" : "1EN01",
+	"en" : "fine",
+	"np" : "राम्रो, ठीक, जरिमाना",
+	"part" : "adjective",
+	"def" : "fine - adj.   characterized by elegance or refinement or accomplishment; minutely precise especially in differences in meaning",
+	"sy" : "okay, good",
+	"ant" : "coarse",
+	"rand" : 0.6800438597239759
+}
+{
+	"_id" : ObjectId("5690154a9324a6f91e7429a0"),
+	"ch_id" : "1EN01",
+	"en" : "four",
+	"np" : "चार",
+	"part" : "noun",
+	"def" : "four - noun   being one more than three; noun the cardinal number that is the sum of three and one",
+	"hom" : "for, fore",
+	"rand" : 0.04336044892825207
+}
+{
+	"_id" : ObjectId("5690154a9324a6f91e7429a1"),
+	"ch_id" : "1EN01",
+	"en" : "girl",
+	"np" : "केटी",
+	"part" : "noun",
+	"def" : "girl - noun  a young woman; a friendly informal reference to a grown woman",
+	"rand" : 0.14613638778502885
+}

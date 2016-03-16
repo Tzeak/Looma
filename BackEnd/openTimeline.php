@@ -13,7 +13,7 @@ require_once 'mongoSetup.php';
 $timelineID = $_POST['$id'];		// the post is coming from index2.js
 
 $timelineElementsArray = getTimelineElements($timelineID);
-var_dump(json_encode($timelineElementsArray));
+echo json_encode($timelineElementsArray);
 
 // // Create array to hold document data
 // $timelineData = array();
@@ -22,6 +22,5 @@ var_dump(json_encode($timelineElementsArray));
 // 	$timelineData[$i] = searchMongo($timelineIDs["elements"][$i]);	// searchMongo() is in mongoSetup.php
 // }
 // return $timelineData;
-
 
 ?>

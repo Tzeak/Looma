@@ -17,17 +17,14 @@ try
 }
 catch(MongoConnectionException $e)
 {
-	echo "Error connecting to MongoDB. Make sure you have run the command mongod --dbpath data/";
+	echo "MongoConnectError connecting to MongoDB. Make sure you have run the command mongod --dbpath data/";
 	exit();
 }
 
-/* Function:	searchMongo($id)
- * Description:	This function takes in a MongoId and searches for it through each of the collections
- *				in the database. 
- *				- If the document exists, return $document to the calling function.
- *				- If the document does not exist, return null to the calling function
+/* Function:		searchMongo($id)
+ * Description:		Input	- Mongo ID of a Document
+ *					Return	- Document or null
  */
-
 function searchMongo($id)
 {
 
@@ -37,7 +34,6 @@ function searchMongo($id)
 
 	for ($i=0; $i<count($collectionarray); $i++)
    	{
-	
 		$document = $collectionarray[$i]->findOne(array('_id' => new MongoId($id)));
 
 		if ($document != null) 
@@ -45,34 +41,69 @@ function searchMongo($id)
 			return $document; // it's in this collection!
 		} 
 	}
-	
 	return null;
 }
 
+/* Function:		getTimelineElements
+ * Description:		Input	- Mongo ID of a Timeline Object
+ *					Return	- Array of MongoDB Documents from the associated timeline
+ */
+function getTimelineElements ($timelineID) {
 
-	function getTimelineElements ($timelineID) {
+	global $activities, $textbooks, $dictionary, $chapters, $timelines;		
 
-		global $activities, $textbooks, $dictionary, $chapters, $timelines;		
+	// Create an array with the IDs of the elements
+	$timelineDoc = $timelines->findOne(array('_id' => new MongoId($timelineID)));
 
-		// Create an array with the IDs of the elements
-		$timelineDoc = $timelines->findOne(array('_id' => new MongoId($timelineID)));
+	// Create array to hold the timeline element JSONs
+	$timelineElementsArray = array();
+	$cntelements = count($timelineDoc['line']);
+	for ($i=0; $i<$cntelements; $i++) 
+	{
+		$mongoID = $timelineDoc['line'][$i];	// placeholder for the mongoID we're searching for
+		$document = searchMongo($mongoID);		// searchMongo() searches the collection for the right 
 
-		// Create array to hold the timeline element JSONs
-		$timelineElementsArray = array();
-		$cntelements = count($timelineDoc['line']);
-		for ($i=0; $i<$cntelements; $i++) 
-		{
-			$mongoID = $timelineDoc['line'][$i];	// placeholder for the mongoID we're searching for
-			$document = searchMongo($mongoID);		// searchMongo() searches the collection for the right 
-
-			if ($document == null) {
-				error_log("There is no document with this ID!", 0);
-				// We should make a real error log .......
-				// error_log("You messed up!", 3, "/var/tmp/my-errors.log");
-				break;
-			}
-			$timelineElementsArray[$i] = $document;		// find the document! yay!
+		if ($document == null) {
+			error_log("There is no document with this ID!", 0);
+			// We should make a real error log .......
+			// error_log("You messed up!", 3, "/var/tmp/my-errors.log");
+			break;
 		}
-		return $timelineElementsArray;
+		$timelineElementsArray[$i] = $document;		// find the document! yay!
 	}
+	return $timelineElementsArray;
+}
+
+/* Function:		fixDocArray
+ * Description:		Takes array of Mongo Documents and "cleans" the id object for json_encode()
+ *					Runs O(n)
+ */
+function fixDocArray($docArray)
+{
+
+		$docCount = count($docArray);
+		for($i = 0; $i < $docCount; $i++)
+			$docArray[$i] = fixDocId($docArray[$i]);
+
+		return $docArray;
+}
+
+/* Function:		fixDocId
+ * Description:		Takes Mongo Document and "cleans" the id object for json_encode()
+ *					Runs O(1)
+ */
+function fixDocId($doc)
+{
+	//This might need to be in a try/catch block in the case of constructed mongoid
+	// i.e for chapters
+	//cleans document for json_encode
+	if(is_object($doc['_id']))
+			$doc['_id'] = $doc['_id']->{'$id'};
+	else
+		error_log("ID not found");
+
+	return $doc;
+	
+
+}
 ?>
