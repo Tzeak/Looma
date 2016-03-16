@@ -1,0 +1,25 @@
+<html>
+		<style>
+			#searchdiv {
+				border: 1px solid black;
+				margin: 50px;
+				height:300px;
+				overflow-y:auto;
+			}
+		</style>
+	<button onclick="search()">search</button>
+	<div id='searchdiv'></div>
+	<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script>
+		function search() {
+			var data = {
+				'search' : 'math'
+			};
+			$.get("search.php", data, function(data) {
+				$("#searchdiv").html(data);
+			}); //Send data to server via post request
+			// document.getElementById("opendiv").innerText = data;
+		}
+	</script>
+</html>

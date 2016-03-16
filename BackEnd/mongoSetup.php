@@ -80,11 +80,12 @@ function getTimelineElements ($timelineID) {
  */
 function fixDocArray($docArray)
 {
-	$docCount = count($docArray);
-	for($i = 0; $i < $docCount; $i++)
-		$docArray[$i] = fixDocId($docArray[$i]);
 
-	return $docArray;
+		$docCount = count($docArray);
+		for($i = 0; $i < $docCount; $i++)
+			$docArray[$i] = fixDocId($docArray[$i]);
+
+		return $docArray;
 }
 
 /* Function:		fixDocId
@@ -96,7 +97,13 @@ function fixDocId($doc)
 	//This might need to be in a try/catch block in the case of constructed mongoid
 	// i.e for chapters
 	//cleans document for json_encode
-	$doc['_id'] = $doc['_id']->{'$id'};
+	if(is_object($doc['_id']))
+			$doc['_id'] = $doc['_id']->{'$id'};
+	else
+		error_log("ID not found");
+
 	return $doc;
+	
+
 }
 ?>

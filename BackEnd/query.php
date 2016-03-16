@@ -19,7 +19,25 @@
 
 require_once('mongoSetup.php');
 
-//Construct Regular Expression for Filter
+	
+
+// Create a global array that will hold all mongo documents matching the filters
+$queryArray = array_merge(gscsQuery(), fileTypeQuery());
+
+// Fix $queryArray
+$queryArray = fixDocArray($queryArray);
+
+// Print the entire array!
+echo json_encode($queryArray);
+
+
+
+
+
+//Function: gscsQuery
+//	Input: n/a (it receives info from GET requests)
+// 	Return: Array of documents matching 
+//	NOTE: "gscs" stands for Grade,Subject,Chapter,Section, the only filter inputs we deal with in this function
 function gscsQuery()
 {
 	$filterword = "";
@@ -58,52 +76,52 @@ function gscsQuery()
 	{
 		//Auto match section with lack of section -- this code doesn't matter!
 	}
+
 	
 	//Construct a query by placing regex into relevant array
 	//NOTE: using regex to do a case insensitive search for the filterword 
 	$chapter_query = array('_id' => new MongoRegex("^$filterword/i"));  
 	$text_query= array('prefix' => new MongoRegex("^$filterword/i"));  
-	$actdict_query= array('ch_id' => new MongoRegex("^$filterword/i"));  
+	$actdict_query= array('ch_id' => new MongoRegex("^$filterword/i"));   
+
 
 	//Query Mongo Database
-	$res_act_dict = queryMongo($actdict_query);	// Dictionary and Activities
-	$res_textbook= queryMongo($text_query);		// Textbooks 
 	$res_chapter = queryMongo($chapter_query);	// Chapters
+	$res_textbook = queryMongo($text_query);		// Textbooks 
+	$res_act_dict = queryMongo($actdict_query);	// Dictionary and Activities
 	//Print Results
 	//echo(json_encode($res1));
 	//echo(json_encode($res2));
 	//echo(json_encode($res3));
+
+	// Create an array to hold ALL of the gscs filter values
+	$gscsDocArray = array_merge($res_chapter, $res_textbook, $res_act_dict);
+
+	// echo json_encode($gscsDocArray);
+
+	return $gscsDocArray;
 }
+
+
+//Function: fileTypeQuery
+//
+//		Input: n/a (It receives info from GET requests)
+//		Return: Array of documents that matches search array by file type
 
 function fileTypeQuery()
 {
 	if(isset($_GET["ft"]) && $_GET["ft"] != '')
 	{
 		$media = $_GET["ft"];
-		//$media_query = array('ft' => new MongoRegex("^$media/i"));
-		$media_query = array('ft' => new MongoRegex("^$media/i"));
-		$result = queryMongo($media_query);
-		$rescount = count($result);
+		//$ft_query = array('ft' => new MongoRegex("^$media/i"));
+		$ft_query = array('ft' => new MongoRegex("^$media/i"));
+		$ftDocArray = queryMongo($ft_query);
 
-		//Clean mongoid php contamination for json_encode
-		//for($i = 0; $i < $rescount; $i++)
-			//$result[$i] = fixDocId($result[$i]);
-		$result = fixDocArray($result);
-
-		echo json_encode($result);
-
-		//EP 
-		//gif 
-		//html
-		//jpg 
-		//mov 
-		//mp3 
-		//mp4 
-		//mp5 
-		//pdf 
-		//png 
+		return $ftDocArray;
 	}
 }
+
+
 //Function: queryMongo
 //
 //		Input: Array of search values 
@@ -116,13 +134,13 @@ function queryMongo($searchArray) {
 	$dictionary_cursor = $dictionary->find($searchArray);
 	$chapter_cursor = $chapters->find($searchArray);
 
-	$res =  array();
+	$docArray =  array();
 	$i = 0;
 	foreach($activities_cursor as $doc)
 	{
 		if(isset($doc))
 		{
-			$res[$i] = $doc;
+			$docArray[$i] = $doc;
 			//echo json_encode($doc);
 			$i++;
 		}
@@ -131,7 +149,7 @@ function queryMongo($searchArray) {
 	{
 		if(isset($doc))
 		{
-			$res[$i] = $doc;
+			$docArray[$i] = $doc;
 			//echo json_encode($doc);
 			$i++;
 		}
@@ -140,7 +158,7 @@ function queryMongo($searchArray) {
 	{
 		if(isset($doc))
 		{
-			$res[$i] = $doc;
+			$docArray[$i] = $doc;
 			//echo json_encode($doc);
 			$i++;
 		}
@@ -149,14 +167,16 @@ function queryMongo($searchArray) {
 	{
 		if(isset($doc))
 		{
-			$res[$i] = $doc;
+			$docArray[$i] = $doc;
 			//echo json_encode($doc);
 			$i++;
 		}
 	}
 	
-	return $res;
+	return $docArray;
 	
 }
+
+
 
 ?>
