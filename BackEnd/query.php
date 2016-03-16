@@ -20,91 +20,94 @@
 require_once('mongoSetup.php');
 
 //Construct Regular Expression for Filter
-$filterword = "";
-if(isset($_GET["grade"]) && $_GET["grade"] != '')
+function gscsQuery()
 {
-	$filterword .= $_GET["grade"]; 
-}
-else
-{
-	//Match any grade, 1-8
-	$filterword.= "[1-8]";
-}
-if(isset($_GET["subject"]) && $_GET["subject"] != '')
-{
-	$filterword .= $_GET["subject"]; 
-}
-else
-{
-	//Match any Subject of One or More Letters
-	$filterword .= "[A-Za-z]+";
-}
-if(isset($_GET["chapter"]) && $_GET["chapter"] != '')
-{
-	$filterword .= $_GET["chapter"]; 
-}
-else
-{
-	//Match Any chapter from 0-99
-	$filterword.= "[0-9][0-9]?";
-}
-if(isset($_GET['section']) && $_GET["section"] != '')
-{
-	$filterword .= "\." . $_GET['section'];
-}
-else
-{
-	//Auto match section with lack of section -- this code doesn't matter!
-}
-// Construct Media Filter
-
-if(isset($_GET["ft"]) && $_GET["ft"] != '')
-{
-	$media = $_GET["ft"];
-	//$media_query = array('ft' => new MongoRegex("^$media/i"));
-	$media_query = array('ft' => new MongoRegex("^$media/i"));
-	$result = queryMongo($media_query);
-	$rescount = count($result);
-
-	//Clean mongoid php contamination for json_encode
-	//for($i = 0; $i < $rescount; $i++)
-		//$result[$i] = fixDocId($result[$i]);
-	$result = fixDocArray($result);
-
-	echo json_encode($result);
-
-	//EP 
-	//gif 
-	//html
-	//jpg 
-	//mov 
-	//mp3 
-	//mp4 
-	//mp5 
-	//pdf 
-	//png 
-}
-//Debug -- what's the regular expression that was constructed?
-//echo "<br/><br/>".$filterword . "<br/><br/>";
-
-echo $filterword;
+	$filterword = "";
+	if(isset($_GET["grade"]) && $_GET["grade"] != '')
+	{
+		$filterword .= $_GET["grade"]; 
+	}
+	else
+	{
+		//Match any grade, 1-8
+		$filterword.= "[1-8]";
+	}
+	if(isset($_GET["subject"]) && $_GET["subject"] != '')
+	{
+		$filterword .= $_GET["subject"]; 
+	}
+	else
+	{
+		//Match any Subject of One or More Letters
+		$filterword .= "[A-Za-z]+";
+	}
+	if(isset($_GET["chapter"]) && $_GET["chapter"] != '')
+	{
+		$filterword .= $_GET["chapter"]; 
+	}
+	else
+	{
+		//Match Any chapter from 0-99
+		$filterword.= "[0-9][0-9]?";
+	}
+	if(isset($_GET['section']) && $_GET["section"] != '')
+	{
+		$filterword .= "\." . $_GET['section'];
+	}
+	else
+	{
+		//Auto match section with lack of section -- this code doesn't matter!
+	}
 	
 	//Construct a query by placing regex into relevant array
 	//NOTE: using regex to do a case insensitive search for the filterword 
 	$chapter_query = array('_id' => new MongoRegex("^$filterword/i"));  
 	$text_query= array('prefix' => new MongoRegex("^$filterword/i"));  
-	$else_query= array('ch_id' => new MongoRegex("^$filterword/i"));  
+	$actdict_query= array('ch_id' => new MongoRegex("^$filterword/i"));  
 
 	//Query Mongo Database
-	$res1 = queryMongo($else_query);	// Dictionary and Activities
-	$res2 = queryMongo($text_query);	// Textbooks 
-	$res3 = queryMongo($chapter_query);	// Chapters
+	$res_act_dict = queryMongo($actdict_query);	// Dictionary and Activities
+	$res_textbook= queryMongo($text_query);		// Textbooks 
+	$res_chapter = queryMongo($chapter_query);	// Chapters
 	//Print Results
 	//echo(json_encode($res1));
 	//echo(json_encode($res2));
 	//echo(json_encode($res3));
+}
 
-//Query Mongo Database
+function fileTypeQuery()
+{
+	if(isset($_GET["ft"]) && $_GET["ft"] != '')
+	{
+		$media = $_GET["ft"];
+		//$media_query = array('ft' => new MongoRegex("^$media/i"));
+		$media_query = array('ft' => new MongoRegex("^$media/i"));
+		$result = queryMongo($media_query);
+		$rescount = count($result);
+
+		//Clean mongoid php contamination for json_encode
+		//for($i = 0; $i < $rescount; $i++)
+			//$result[$i] = fixDocId($result[$i]);
+		$result = fixDocArray($result);
+
+		echo json_encode($result);
+
+		//EP 
+		//gif 
+		//html
+		//jpg 
+		//mov 
+		//mp3 
+		//mp4 
+		//mp5 
+		//pdf 
+		//png 
+	}
+}
+//Function: queryMongo
+//
+//		Input: Array of search values 
+//		Return: Array of documents that matches search array
 function queryMongo($searchArray) {
 	global $activities, $textbooks, $dictionary, $chapters, $timelines;
 
