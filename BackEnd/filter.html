@@ -16,14 +16,15 @@
 	<script>
 		function filter() {
 			var data = {
-				'grade' : '3',
-				'subject' : null,
-				'chapter' : '',
+				'grade' : '2',
+				'subject' : 'EN',
+				'chapter' : '01',
 				'section':null,
-				'ft' : 'jpg'
+				'ft' : 'mp4'
 			};
 			$.get("query.php", data, function(data) {
 				$("#filterdiv").html(data);
+				console.log(JSON.parse(data));
 			}); //Send data to server via post request
 			// document.getElementById("opendiv").innerText = data;
 		}

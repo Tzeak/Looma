@@ -15,13 +15,30 @@
 						3. Chapter
 						4 Section 
 						5. Type of media //In Progress
+
+	PLAN OF ACTION:	The next part to the filter module is combining the various filter queries
+	1)  convert gscsQuery() to return Array of query arrays.
+	2) convert fileTypeQuery() to return array of filetype query arrays
+	3) run loop in the beginning to merge the query arrays returned by gscs and the filetype arrays
+
+
  */
 
 require_once('mongoSetup.php');
 
+///////
+// Test out mongoquery with extra shit
+//////
+gscsQuery();
+fileTypeQuery();
+$chapter_query = array('ch_id' => new MongoRegex("^$filterword/i"));  
+$ft_query = array('ft' => new MongoRegex("^$media/i"));
 
+$final_query = array_merge($chapter_query, $ft_query);
+
+$queryArray = queryMongo($final_query);
 // Create a global array that will hold all mongo documents matching the filters
-$queryArray = array_merge(gscsQuery(), fileTypeQuery());
+//$queryArray = array_merge(gscsQuery(), fileTypeQuery());
 
 // Fix $queryArray
 $queryArray = fixDocArray($queryArray);
@@ -35,7 +52,9 @@ echo json_encode($queryArray);
 //	NOTE: "gscs" stands for Grade,Subject,Chapter,Section, the only filter inputs we deal with in this function
 	function gscsQuery()
 	{
-		$filterword = "";
+		global $chapRegex, $textRegex, $actdictRegex;
+		global $filterword;
+	   $filterword	= "";
 		if(isset($_GET["grade"]) && $_GET["grade"] != '')
 		{
 			$filterword .= $_GET["grade"]; 
@@ -79,6 +98,10 @@ echo json_encode($queryArray);
 		$text_query= array('prefix' => new MongoRegex("^$filterword/i"));  
 		$actdict_query= array('ch_id' => new MongoRegex("^$filterword/i"));   
 
+	//	$chapRegex = $chapter_query;
+	//	$textRegex = $text_query;
+	//	$actdictRegex = $actdict_query;
+
 
 		//Query Mongo Database
 		$res_chapter = queryMongo($chapter_query);	// Chapters
@@ -110,6 +133,8 @@ echo json_encode($queryArray);
 			$media = $_GET["ft"];
 			//$ft_query = array('ft' => new MongoRegex("^$media/i"));
 			$ft_query = array('ft' => new MongoRegex("^$media/i"));
+			$ftRegex = $ft_query;
+
 			$ftDocArray = queryMongo($ft_query);
 
 			return $ftDocArray;
