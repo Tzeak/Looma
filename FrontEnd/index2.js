@@ -406,7 +406,12 @@ var save = function(){
     console.log("saving...");
     var itemIds = [];
     var titleString = document.getElementById("titleString").value;
-
+    console.log("title:" + titleString);
+    
+    if(titleString == "") {
+    	alert("Lesson plan requires a title before saving.");
+    }
+    else {
     var timelineDivs = document.getElementsByClassName("timelinediv");
     for (var i = 0; i < timelineDivs.length; i++) {
 
@@ -426,6 +431,7 @@ var save = function(){
     	timeline.items = itemIds;
 
  console.log(timeline);
+	}
 }
 
 
