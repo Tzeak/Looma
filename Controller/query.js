@@ -239,6 +239,8 @@ var filterResults = new Object();
 					resultArray.push(filterArray1[i]);
 			}
 		}
+		console.log(resultArray);
+	}
 
 
 //TIMELINE
@@ -268,7 +270,6 @@ var filterResults = new Object();
 		  addButton.addEventListener("click", addJSON);   // bind addJSON to add button
 		  console.log("Giving add buttons actions...");
 		}
-	}
 }
 //End of querySearch
 
@@ -338,11 +339,13 @@ var loadJSON = function() {
 	  {
 	    var rElement = createNewListElement(resultArray[i]);
 	    resultsUL.appendChild(rElement);
+	    console.log("loaded");
 	  }
 }
 
 // Create new list items for results div
 var createNewListElement = function(itemString) {
+		console.log("creating list item");
 	  var listItem = document.createElement("li");
 	  
 	  	//id for li element
@@ -402,6 +405,7 @@ var createNewListElement = function(itemString) {
 		listItem.appendChild(thumbnail);
 		listItem.appendChild(listLabel);
 		listItem.appendChild(addButton);
+
 
 	  	return listItem;
 
