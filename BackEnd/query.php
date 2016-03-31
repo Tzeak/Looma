@@ -50,6 +50,9 @@ for ($i=0; $i<$cnt_gscs; $i++) {
 		{
 			$gscs_ft_array = array_merge($gscs_array[$i], $ft_array[$j]);
 		}
+		echo "<br/>";
+		var_dump($ft_array[$j]);
+		echo "<br/>";
 
 		$mongo_doc_array = queryMongo($gscs_ft_array);
 		$mongo_doc_array = fixDocArray($mongo_doc_array);
@@ -97,7 +100,7 @@ echo json_encode($final_array);
 	{
 		// global $chapRegex, $textRegex, $actdictRegex;
 		global $filterword;
-	   $filterword	= "";
+	    $filterword	= "";
 		if(isset($_GET["grade"]) && $_GET["grade"] != '')
 		{
 			$filterword .= $_GET["grade"]; 
@@ -105,7 +108,7 @@ echo json_encode($final_array);
 		else
 		{
 			//Match any grade, 1-8
-			$filterword.= "[1-8]";
+			$filterword .= "[1-8]";
 		}
 		if(isset($_GET["subject"]) && $_GET["subject"] != '')
 		{
@@ -175,12 +178,62 @@ echo json_encode($final_array);
 
 	function fileTypeQuery()
 	{
+		// $mediatype = "";
+		// if(isset($_GET["ft"]) && $_GET["ft"] != '')
+		// {
+		// 	$mediatype = $_GET["ft"];
+		// }
+		// else
+		// {
+		// 	$final_array = array();
+		// 	return array_push($final_array, array());
+		// }
+
+		// $final_array = array();
+		// array_push($final_array, array('ft' => new MongoRegex("^$mediatype/i")));
+
+		// return $final_array;
+
+
+
 		$mediatype = "";
-		if(isset($_GET["ft"]) && $_GET["ft"] != '')
+		$combo = false;
+		if($_GET["image"] === 'true')
 		{
-			$mediatype = $_GET["ft"];
+			$mediatype .= "(gif|jpg|png|pdf)"; 
+			$combo = true;
 		}
-		else
+		if($_GET["video"] === 'true')
+		{
+			//Match any grade, 1-8
+			if($combo)
+			{
+				$mediatype .="|";
+			}
+			$mediatype .= "(mov|mp4|mp5|gif)";
+			$combo = true;
+
+		}
+		if($_GET["audio"] === 'true')
+		{
+			if($combo)
+			{
+				$mediatype .="|";
+			}
+			$mediatype .= "(mp3)";
+			$combo = true;
+		}
+		if($_GET["misc"] === 'true')
+		{
+			if($combo)
+			{
+				$mediatype .="|";
+			}
+			$mediatype .= "(EP|html)";
+			$combo = true;
+		}
+		echo $mediatype;
+		if ($mediatype == "")
 		{
 			$final_array = array();
 			return array_push($final_array, array());
@@ -190,6 +243,8 @@ echo json_encode($final_array);
 		array_push($final_array, array('ft' => new MongoRegex("^$mediatype/i")));
 
 		return $final_array;
+
+
 	}
 
 
