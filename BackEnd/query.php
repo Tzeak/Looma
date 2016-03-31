@@ -132,13 +132,13 @@ echo json_encode($queryArray);
 
 	function fileTypeQuery()
 	{
-		global $mediatype;
+		global $mediatype = "";
 		if(isset($_GET["ft"]) && $_GET["ft"] != '')
 		{
 			$mediatype = $_GET["ft"];
-			$ft_query = array('ft' => new MongoRegex("^$mediatype/i"));
-			return $ft_query;
 		}
+		$ft_query = array('ft' => new MongoRegex("^$mediatype/i"));
+		return $ft_query;
 	}
 
 
