@@ -13,7 +13,7 @@
 						1. Grade
 						2. Subject
 						3. Chapter
-						4 Section 
+						4. Section 
 						5. Type of media //In Progress
 
 	PLAN OF ACTION:	The next part to the filter module is combining the various filter queries
@@ -32,7 +32,7 @@ require_once('mongoSetup.php');
 gscsQuery();
 fileTypeQuery();
 $chapter_query = array('ch_id' => new MongoRegex("^$filterword/i"));  
-$ft_query = array('ft' => new MongoRegex("^$media/i"));
+$ft_query = array('ft' => new MongoRegex("^$mediatype/i"));
 
 $final_query = array_merge($chapter_query, $ft_query);
 
@@ -128,11 +128,12 @@ echo json_encode($queryArray);
 
 	function fileTypeQuery()
 	{
+		global $mediatype;
 		if(isset($_GET["ft"]) && $_GET["ft"] != '')
 		{
-			$media = $_GET["ft"];
-			//$ft_query = array('ft' => new MongoRegex("^$media/i"));
-			$ft_query = array('ft' => new MongoRegex("^$media/i"));
+			$mediatype = $_GET["ft"];
+			//$ft_query = array('ft' => new MongoRegex("^$mediatype/i"));
+			$ft_query = array('ft' => new MongoRegex("^$mediatype/i"));
 			$ftRegex = $ft_query;
 
 			$ftDocArray = queryMongo($ft_query);
