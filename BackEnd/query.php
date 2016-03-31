@@ -17,7 +17,7 @@
 						5. Type of media //In Progress
 
 	PLAN OF ACTION:	The next part to the filter module is combining the various filter queries
-	1)  convert gscsQuery() to return Array of query arrays.
+	1) convert gscsQuery() to return Array of query arrays.
 	2) convert fileTypeQuery() to return array of filetype query arrays
 	3) run loop in the beginning to merge the query arrays returned by gscs and the filetype arrays
 
@@ -52,7 +52,7 @@ echo json_encode($queryArray);
 //	NOTE: "gscs" stands for Grade,Subject,Chapter,Section, the only filter inputs we deal with in this function
 	function gscsQuery()
 	{
-		global $chapRegex, $textRegex, $actdictRegex;
+		// global $chapRegex, $textRegex, $actdictRegex;
 		global $filterword;
 	   $filterword	= "";
 		if(isset($_GET["grade"]) && $_GET["grade"] != '')
@@ -95,8 +95,12 @@ echo json_encode($queryArray);
 		//Construct a query by placing regex into relevant array
 		//NOTE: using regex to do a case insensitive search for the filterword 
 		$chapter_query = array('_id' => new MongoRegex("^$filterword/i"));  
-		$text_query= array('prefix' => new MongoRegex("^$filterword/i"));  
-		$actdict_query= array('ch_id' => new MongoRegex("^$filterword/i"));   
+		$text_query = array('prefix' => new MongoRegex("^$filterword/i"));  
+		$actdict_query = array('ch_id' => new MongoRegex("^$filterword/i"));  
+
+		$gscs_array;
+		array_push($gscs_array, $chapter_query, $text_query, $actdict_query);
+		return $gscs_array;
 
 	//	$chapRegex = $chapter_query;
 	//	$textRegex = $text_query;
@@ -104,20 +108,20 @@ echo json_encode($queryArray);
 
 
 		//Query Mongo Database
-		$res_chapter = queryMongo($chapter_query);	// Chapters
-		$res_textbook = queryMongo($text_query);		// Textbooks 
-		$res_act_dict = queryMongo($actdict_query);	// Dictionary and Activities
+		// $res_chapter = queryMongo($chapter_query);	// Chapters
+		// $res_textbook = queryMongo($text_query);		// Textbooks 
+		// $res_act_dict = queryMongo($actdict_query);	// Dictionary and Activities
 		//Print Results
 		//echo(json_encode($res1));
 		//echo(json_encode($res2));
 		//echo(json_encode($res3));
 
 		// Create an array to hold ALL of the gscs filter values
-		$gscsDocArray = array_merge($res_chapter, $res_textbook, $res_act_dict);
+		// $gscsDocArray = array_merge($res_chapter, $res_textbook, $res_act_dict);
 
 		// echo json_encode($gscsDocArray);
 
-		return $gscsDocArray;
+		// return $gscsDocArray;
 	}
 
 
