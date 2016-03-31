@@ -29,22 +29,65 @@ require_once('mongoSetup.php');
 ///////
 // Test out mongoquery with extra shit
 //////
-gscsQuery();
-fileTypeQuery();
-$chapter_query = array('ch_id' => new MongoRegex("^$filterword/i"));  
-$ft_query = array('ft' => new MongoRegex("^$mediatype/i"));
+$gscs_array = gscsQuery();
+$cnt_gscs = count($gscs_array);
 
-$final_query = array_merge($chapter_query, $ft_query);
+$ft_array = fileTypeQuery();
+$cnt_ft = count ($ft_array); 
 
-$queryArray = queryMongo($final_query);
+$final_array = array();
+
+// Create foor loop to merge the query arrays and search mongo
+
+
+for ($i=0; $i<$cnt_gscs; $i++) {
+	for ($j=0; $j<$cnt_ft; $j++) {
+		if(empty($ft_array[$j]))
+		{
+			$gscs_ft_array = $gscs_array[$i];
+		}
+		else
+		{
+			$gscs_ft_array = array_merge($gscs_array[$i], $ft_array[$j]);
+		}
+
+		$mongo_doc_array = queryMongo($gscs_ft_array);
+		$mongo_doc_array = fixDocArray($mongo_doc_array);
+
+		if($i == 0)
+		{
+			$final_array["chapter"] = $mongo_doc_array;
+		}
+		else if($i == 1)
+		{
+			$final_array["textbook"] = $mongo_doc_array;
+		}
+		else if($i == 2)
+		{
+			$final_array["actdict"] = $mongo_doc_array;
+		}
+	}
+}
+echo json_encode($final_array);
+
+
+
+
+
+// $chapter_query = array('ch_id' => new MongoRegex("^$filterword/i"));  
+// $ft_query = array('ft' => new MongoRegex("^$mediatype/i"));
+
+// $final_query = array_merge($chapter_query, $ft_query);
+
+// $queryArray = queryMongo($final_query);
 // Create a global array that will hold all mongo documents matching the filters
 //$queryArray = array_merge(gscsQuery(), fileTypeQuery());
 
 // Fix $queryArray
-$queryArray = fixDocArray($queryArray);
+// $queryArray = fixDocArray($queryArray);
 
 // Print the entire array!
-echo json_encode($queryArray);
+// echo json_encode($queryArray);
 
 //Function: gscsQuery
 //	Input: n/a (it receives info from GET requests)
@@ -98,9 +141,9 @@ echo json_encode($queryArray);
 		$text_query = array('prefix' => new MongoRegex("^$filterword/i"));  
 		$actdict_query = array('ch_id' => new MongoRegex("^$filterword/i"));  
 
-		$gscs_array;
-		array_push($gscs_array, $chapter_query, $text_query, $actdict_query);
-		return $gscs_array;
+		$final_array = array();
+		array_push($final_array, $chapter_query, $text_query, $actdict_query);
+		return $final_array;
 
 	//	$chapRegex = $chapter_query;
 	//	$textRegex = $text_query;
@@ -132,13 +175,21 @@ echo json_encode($queryArray);
 
 	function fileTypeQuery()
 	{
-		global $mediatype = "";
+		$mediatype = "";
 		if(isset($_GET["ft"]) && $_GET["ft"] != '')
 		{
 			$mediatype = $_GET["ft"];
 		}
-		$ft_query = array('ft' => new MongoRegex("^$mediatype/i"));
-		return $ft_query;
+		else
+		{
+			$final_array = array();
+			return array_push($final_array, array());
+		}
+
+		$final_array = array();
+		array_push($final_array, array('ft' => new MongoRegex("^$mediatype/i")));
+
+		return $final_array;
 	}
 
 

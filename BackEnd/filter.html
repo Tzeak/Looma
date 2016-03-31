@@ -16,11 +16,11 @@
 	<script>
 		function filter() {
 			var data = {
-				'grade' : '2',
-				'subject' : 'EN',
-				'chapter' : '01',
+				'grade' : '1',
+				'subject' : 'M',
+				'chapter' : '03',
 				'section':null,
-				'ft' : 'mp4'
+				'ft' : null
 			};
 			$.get("query.php", data, function(data) {
 				$("#filterdiv").html(data);
