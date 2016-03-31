@@ -132,13 +132,8 @@ echo json_encode($queryArray);
 		if(isset($_GET["ft"]) && $_GET["ft"] != '')
 		{
 			$mediatype = $_GET["ft"];
-			//$ft_query = array('ft' => new MongoRegex("^$mediatype/i"));
 			$ft_query = array('ft' => new MongoRegex("^$mediatype/i"));
-			$ftRegex = $ft_query;
-
-			$ftDocArray = queryMongo($ft_query);
-
-			return $ftDocArray;
+			return $ft_query;
 		}
 	}
 
