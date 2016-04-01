@@ -169,7 +169,7 @@ var library2 = [
 
 
 
-var timeline = [
+/*var timeline = [
     {
     	"_id":"ObjectId(5549)", 
     	"prefix":"2EN02",
@@ -196,7 +196,7 @@ var timeline = [
     	"thumbnail":"images/pup2.jpg",
     	"dn":"Is this letter a vowel?"
     },
-];
+];*/
 
 
 var resultArray = [];
