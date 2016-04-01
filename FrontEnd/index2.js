@@ -488,19 +488,71 @@ var createNewListElement = function(itemString) {
 
 	  
 		//access thumbnail image using filepath in json object
-		var att = document.createAttribute("src");    
-		att.value = resultArray[i].fp + "*.jpg";       
-		console.log("i = " + i);
-		console.log("resultArray[i] = " + resultArray[i]);
-		thumbnail.setAttributeNode(att);                    
+		console.log("filepath exists?" + resultArray[i].fp);
+		var att = document.createAttribute("src");
+		if(resultArray[i].fp != null) {
+			
+
+			
+			get_image = null;
+			
+			$(document).ready(function () {
+				function imageAjax() {
+		            var fileExt = {};
+					fileExt[0]=".jpg";
+					$.ajax({
+					    //This will retrieve the contents of the folder if the folder is configured as 'browsable'
+					    url: resultArray[i].fp,
+					    success: function (data) {
+					       $("#displaybox").html('<ul>');
+					       //List all png or jpg or gif file names in the page
+					       $(data).find('a:contains(" + fileExt[] + ")').each(function () {
+					           var filename = this.href.replace(window.location.host, "").replace("http:///", "");
+					           console.log("image file:" + filename);
+					           //$("#displaybox").append( '<li>'+filename+ <'/li'>);
+					       });
+					       $("#displaybox").append('</ul>');
+					     }     
+					  });
+					}
+					get_image=imageAjax;
+				})
+			
+			get_image();
+
+
+			att.value = resultArray[i].fp + filename;       
+			console.log("i = " + i);
+			console.log("resultArray[i] = " + resultArray[i]);
+			   
+		}
+		else if(resultArray[i].ft == "mp3" || resultArray[i].ft == "mp4") {
+			att.value = "images/audio_icon.png";
+		}
+		else if(resultArray[i].ft == "EP") {
+			att.value = "images/game_icon.png";
+		}
+		else if(resultArray[i].def != null) {
+			att.value = "images/dictionary_icon.png";
+		}
+		//chapter
+		else if(resultArray[i].pn !=null)
+			att.value = "images/chapter_icon.png";
+		else if(resultArray[i].ft = "jpg")
+			att.value = "images/picture_icon.jpg";
+		//picture
+
+		thumbnail.setAttributeNode(att);
+		listItem.appendChild(thumbnail);
+               
 
 		
 		//set the display text for each content item
 		listLabel.innerText = itemString.dn + ", Grade " + resultArray[i].ch_id[0];
-		console.log("new list element:"+listLabel.innertext);
+		console.log("new list element:"+listLabel);
 		
 		//append elements to the list item
-		listItem.appendChild(thumbnail);
+		
 		listItem.appendChild(listLabel);
 		listItem.appendChild(addButton);
 
