@@ -5,7 +5,7 @@ var library = [
     	"filetype":"EP",
     	"thumbnail":"images/kitty.jpg",
     	"filepath": "resources/textbook/",
-    	"dn":"KITTY"
+    	"dn":"DOG"
     },
     {
     	"_id":"ObjectId(5551)", 
@@ -72,12 +72,12 @@ var library = [
 ];
 
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var library2 = [
-//AUDIO FILE
+//AUDIO FILE mp4
     {
-		"_id" : "568dcdda9324a6f91e741082",
+		"_id" : "ObjectId('568dcdda9324a6f91e741082')",
 		"ch_id" : "1EN01",
 		"ft" : "mp4",
 		"MB" : 7.6,
@@ -85,67 +85,84 @@ var library2 = [
 		"fn" : "Sesame_Street_Alphabet.mp4",
 		"dn" : "Sesame Street Alphabet"
     },
+//AUDIO FILE mp3
     {
-    	"_id":"ObjectId(5551)", 
-    	"prefix":"3EN02",
-    	"filetype":"EP",
-    	"filepath":"resources/pictures/",
-    	"format":"video", 
-    	"thumbnail":"images/pup.jpg",
-    	"dn":"Chemistry Safety with Bill Nye"
+	    "_id" : "ObjectId('568dcdda9324a6f91e74108f')",
+		"ch_id" : "2EN01",
+		"ft" : "mp3",
+		"MB" : 3,
+		"fn" : "Classroom_Song.mp3",
+		"dn" : "Classroom Song"
     },
+//GAME FILE
     {
-    	"_id":"ObjectId(5552)", 
-    	"prefix":"4EN02",
-    	"filetype":"EP",
-    	"filepath":"resources/videos/",
-    	"format":"game", 
-    	"thumbnail":"images/pup2.jpg",
-    	"dn":"Is this letter a vowel?"
+		"_id" : "ObjectId('568dcdda9324a6f91e741084')",
+		"ch_id" : "1EN02",
+		"ft" : "EP",
+		"fn" : 3122231,
+		"dn" : "EP Colour Identification"
     },
+//PICTURE FILE
     {
-    	"_id":"ObjectId(5548)", 
-    	"prefix":"5EN02",
-    	"filetype":"EP",
-    	"filepath":"resources/audio/",
-    	"format":"video", 
-    	"thumbnail":"images/pup4.jpg",
-    	"dn":"The Chronicles of Narnia: The Lion, the Witch, and the Wardrobe, and Supilise"
+	    "_id" : "ObjectId('568dcdda9324a6f91e74108a')",
+		"ch_id" : "1EN10",
+		"ft" : "jpg",
+		"MB" : 0.1,
+		"fn" : "Family_Tree_1.jpg",
+		"dn" : "Family Tree 1"
     },
-        {
-    	"_id":"ObjectId(5547)", 
-    	"prefix":"2EN02",
-    	"filetype":"EP",
-    	"thumbnail":"images/kitty.jpg",
-    	"filepath": "resources/textbook/",
-    	"dn":"KITTY"
-    },
+//ENGLISH TEXTBOOK
     {
-    	"_id":"ObjectId(5559)", 
-    	"prefix":"3EN02",
-    	"filetype":"EP",
-    	"filepath":"resources/pictures/",
-    	"format":"video", 
-    	"thumbnail":"images/pup.jpg",
-    	"dn":"Chemistry Safety with Bill Nye"
+	    "_id" : "ObjectId('568dcdf19324a6f91e74131d')",
+		"class" : "class1",
+		"subject" : "english",
+		"prefix" : "1EN",
+		"fn" : "English-1.pdf",
+		"fp" : "textbooks/Class1/English/",
+		"dn" : "Class 1 English",
+		"ndn" : "कक्षा 1 अन्ग्रेगी"
     },
+//NEPALI TEXTBOOK
     {
-    	"_id":"ObjectId(5552)", 
-    	"prefix":"4EN02",
-    	"filetype":"EP",
-    	"filepath":"resources/videos/",
-    	"format":"game", 
-    	"thumbnail":"images/pup2.jpg",
-    	"dn":"Is this letter a vowel?"
+	 	"_id" : "ObjectId('568dcdf19324a6f91e74131e')",
+		"class" : "class1",
+		"subject" : "nepali",
+		"prefix" : "1N",
+		"nfn" : "Nepali-1.pdf",
+		"fp" : "textbooks/Class1/Nepali/",
+		"dn" : "Class 1 Nepali",
+		"ndn" : "कक्षा 1 नेपाली"
     },
+//English AND nepali TEXTBOOK
     {
-    	"_id":"ObjectId(5557)", 
-    	"prefix":"5EN02",
-    	"filetype":"EP",
-    	"filepath":"resources/audio/",
-    	"format":"video", 
-    	"thumbnail":"images/pup4.jpg",
-    	"dn":"The Chronicles of Narnia: The Lion, the Witch, and the Wardrobe, and Supilise"
+		"_id" : "ObjectId('568dcdf19324a6f91e74131f')",
+		"class" : "class1",
+		"subject" : "math",
+		"prefix" : "1M",
+		"fn" : "Math-1.pdf",
+		"nfn" : "Math-1-Nepali.pdf",
+		"fp" : "textbooks/Class1/Nepali/",
+		"dn" : "Class 1 Math",
+		"ndn" : "कक्षा 1 गणित"
+    },
+    //DICTIONARY
+    {
+		"_id" : "ObjectId('5690154a9324a6f91e7429a0')",
+		"ch_id" : "1EN01",
+		"en" : "four",
+		"np" : "चार",
+		"part" : "noun",
+		"def" : "four - noun   being one more than three; noun the cardinal number that is the sum of three and one",
+		"hom" : "for, fore",
+		"rand" : 0.04336044892825207
+    },
+// CHAPTER
+    {
+    	"_id" : "1M10",
+		"pn" : 30,
+		"npn" : 28,
+		"dn" : "Addition and Subtraction up to 9",
+		"ndn" : "९ सम्मको जोड र घटाउ"
     },
 ];
 
@@ -274,13 +291,13 @@ var filterResults = new Object();
 		var j;
 		var searchArray = [];
 
-		for(i = 0; i < library.length; i++) {
-			var str = library[i].dn;
+		for(i = 0; i < library2.length; i++) {
+			var str = library2[i].dn;
 			var find = str.search(searchResults.string);
 			//create array
 		
 			if(find >= 0) { //match was found
-				searchArray.push(library[i]); //how to get content?
+				searchArray.push(library2[i]); //how to get content?
 
 			}
 		}
@@ -290,23 +307,23 @@ var filterResults = new Object();
 		var filterArray1 = [];
 
 		for(j=0; j < searchArray.length; j++) {
-			if(searchArray[j].filepath == "resources/textbook/" && filterResults.bbooks == true) {
+			if(searchArray[j].fp == "resources/textbook/" && filterResults.bbooks == true) {
 				//console.log(searchArray[j].tag);
 				filterArray1.push(searchArray[j]);
 			}
-			if(searchArray[j].filepath == "resources/audio/" && filterResults.baudio == true) {
+			if(searchArray[j].fp == "resources/audio/" && filterResults.baudio == true) {
 				//console.log(searchArray[j].tag);
 				filterArray1.push(searchArray[j]);
 			}
-			if(searchArray[j].filepath == "resources/videos/" && filterResults.bvideos == true) {
+			if(searchArray[j].fp == "resources/videos/" && filterResults.bvideos == true) {
 				//console.log(searchArray[j].tag);
 				filterArray1.push(searchArray[j]);
 			}
-			if(searchArray[j].filepath == "resources/epaath/activities/" && filterResults.bactivities == true) {
+			if(searchArray[j].fp == "resources/epaath/activities/" && filterResults.bactivities == true) {
 				//console.log(searchArray[j].tag);
 				filterArray1.push(searchArray[j]);
 			}
-			if(searchArray[j].filepath == "resources/pictures/" && filterResults.bpictures == true) {
+			if(searchArray[j].fp == "resources/pictures/" && filterResults.bpictures == true) {
 				//console.log(searchArray[j].tag);
 				filterArray1.push(searchArray[j]);
 			}
@@ -315,7 +332,7 @@ var filterResults = new Object();
 		//grade filter
 		for(i=0;i<filterArray1.length;i++) {
 			for (j=1;j<9;j++) {
-				console.log(filterArray1[i].prefix[0]);
+				console.log(filterArray1[i].ch_id[0]);
 				if((filterArray1[i].prefix[0]) == j && filterResults['grade' + j] == true)
 					resultArray.push(filterArray1[i]);
 			}
@@ -329,7 +346,6 @@ var filterResults = new Object();
 
 			  // Gather all timeline divs so we can traverse through them
 			  var timelineDivs = document.getElementsByClassName("timelinediv");
-
 
 			  // Traverse through timeline divs and check for first empty div
 			  for (var i = 0; i < timelineDivs.length; i++) {
@@ -438,15 +454,15 @@ var createNewListElement = function(itemString) {
 
 		//attributes to list items for when we add preview feature
 		var filetype = document.createAttribute("data-ft");   
-		filetype.value = resultArray[i].filetype; 
+		filetype.value = resultArray[i].ft; 
 		listItem.setAttributeNode(filetype);
 
 		var filepath = document.createAttribute("data-fp");   
-		filepath.value = resultArray[i].filepath; 
-		listItem.setAttributeNode(filepath);
+		filepath.value = resultArray[i].fp; 
+		listItem.setAttributeNode(fp);
 
 		var filename = document.createAttribute("data-fn");       
-		filename.value = resultArray[i].displayname;         
+		filename.value = resultArray[i].dn;         
 		listItem.setAttributeNode(filename);
 
 
@@ -603,7 +619,7 @@ console.log("query2: " + query2);
 //document.getElementById("displaybox").innerHTML = query2;
 
 
-var resultArray = JSON.parse(query3);
+var resultArray = JSON.parse(query2);
 console.log("timeline: " + resultArray);
 
 
