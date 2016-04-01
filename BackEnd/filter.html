@@ -8,6 +8,7 @@
 			}
 		</style>
 	<button onclick="filter()">filter</button>
+	<input type="text" id="searchbox" name="searchbox"></input>
 	<button onclick="search()">search</button>
 	<div id='filterdiv'></div>
 	<div id='searchdiv'></div>
@@ -31,8 +32,10 @@
 
 		// Search function
 		function search() {
+			var input = document.getElementById("searchbox").value;
+			alert(input);
 			var searchdata = {
-				'search' : 'dump.jsonlala'
+				'search' : input
 			};
 			$.get("search.php", searchdata, function(searchdata) {
 				$("#searchdiv").html(searchdata);
