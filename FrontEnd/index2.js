@@ -129,7 +129,7 @@ var library2 = [
 		"subject" : "nepali",
 		"prefix" : "1N",
 		"nfn" : "Nepali-1.pdf",
-		"fp" : "textbooks/Class1/Nepali/",
+		"fp" : "textbooks/Class1/English/",
 		"dn" : "Class 1 Nepali",
 		"ndn" : "कक्षा 1 नेपाली",
 		"ch_id" : "1EN10"
@@ -142,7 +142,7 @@ var library2 = [
 		"prefix" : "1M",
 		"fn" : "Math-1.pdf",
 		"nfn" : "Math-1-Nepali.pdf",
-		"fp" : "textbooks/Class1/Nepali/",
+		"fp" : "textbooks/Class1/English/",
 		"dn" : "Class 1 Math",
 		"ndn" : "कक्षा 1 गणित",
 		"ch_id" : "1EN10"
@@ -493,8 +493,8 @@ var createNewListElement = function(itemString) {
 		if(resultArray[i].fp != null) {
 			
 
-			
-			get_image = null;
+			//attempting ajax for getting image filename (BUT THIS SHIT DOESN'T WORK)
+			/*get_image = null;
 			
 			$(document).ready(function () {
 				function imageAjax() {
@@ -506,7 +506,7 @@ var createNewListElement = function(itemString) {
 					    success: function (data) {
 					       $("#displaybox").html('<ul>');
 					       //List all png or jpg or gif file names in the page
-					       $(data).find('a:contains(" + fileExt[] + ")').each(function () {
+					       $(data).find('a:contains(" + fileExt[0] + ")').each(function () {
 					           var filename = this.href.replace(window.location.host, "").replace("http:///", "");
 					           console.log("image file:" + filename);
 					           //$("#displaybox").append( '<li>'+filename+ <'/li'>);
@@ -518,10 +518,10 @@ var createNewListElement = function(itemString) {
 					get_image=imageAjax;
 				})
 			
-			get_image();
+			get_image();*/
 
-
-			att.value = resultArray[i].fp + filename;       
+			var filename = "English-1_thumb.jpg";
+			att.value = "../" + resultArray[i].fp + filename;       
 			console.log("i = " + i);
 			console.log("resultArray[i] = " + resultArray[i]);
 			   

@@ -198,13 +198,13 @@ function openTimeline() {
 			
 			console.log("opentTimeline...");
 			//send id to back end, which returns the object of timeline items
-			/*var data = {
+			var data = {
 				'id' : this.id
 			};
 			$.post("../BackEnd/open.php", data, function(data) {
 				$("#opendiv").html(data);
 			});
-			// document.getElementById("opendiv").innerText = data;*/
+			// document.getElementById("opendiv").innerText = data;
 			
 			var data = JSON.stringify(timeline); 
 			console.log(data);
