@@ -14,19 +14,30 @@
 	<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script>
+		// Filter function
 		function filter() {
-			var data = {
+			var filterdata = {
 				'grade' : '2',
 				'subject' : 'EN',
 				'chapter' : '01',
 				'section':null,
 				'ft' : 'mp4'
 			};
-			$.get("query.php", data, function(data) {
-				$("#filterdiv").html(data);
-				console.log(JSON.parse(data));
-			}); //Send data to server via post request
-			// document.getElementById("opendiv").innerText = data;
+			$.get("query.php", filterdata, function(filterdata) {
+				$("#filterdiv").html(filterdata);
+				console.log(JSON.parse(filterdata));
+			}); //Send filter data to server via GET request
+		}
+
+		// Search function
+		function search() {
+			var searchdata = {
+				'search' : 'dump.jsonlala'
+			};
+			$.get("search.php", searchdata, function(searchdata) {
+				$("#searchdiv").html(searchdata);
+				console.log(JSON.parse(searchdata));
+			}); //Send search data to server via GET request
 		}
 	</script>
 </html>
