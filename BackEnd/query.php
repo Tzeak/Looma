@@ -6,22 +6,17 @@
  					in the "Query" module in the main web application.
 
  					FILTER
- 					The "filter" function has 4 options:
- 					Grade, Subject, Chapter, Type of media
- 					- Use a regex to search each 
-
+ 					The "filter" function has 5 options:
 						1. Grade
 						2. Subject
 						3. Chapter
 						4. Section 
-						5. Type of media //In Progress
+						5. Type of media 
+					The filter returns a JSON string for the Front-End Application to then parse
 
-	PLAN OF ACTION:	The next part to the filter module is combining the various filter queries
-	1)  convert gscsQuery() to return Array of query arrays.
-	2) convert fileTypeQuery() to return array of filetype query arrays
-	3) run loop in the beginning to merge the query arrays returned by gscs and the filetype arrays
-
-
+					SEARCH
+					The "search" function will take the search query and do a simple text search through 
+					the mongo document returned by the filter
  */
 
 require_once('mongoSetup.php');
