@@ -71,6 +71,106 @@ var library = [
     },
 ];
 
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+var library2 = [
+//AUDIO FILE mp4
+    {
+		"_id" : "ObjectId('568dcdda9324a6f91e741082')",
+		"ch_id" : "1EN01",
+		"ft" : "mp4",
+		"MB" : 7.6,
+		"min" : "1:32",
+		"fn" : "Sesame_Street_Alphabet.mp4",
+		"dn" : "Sesame Street Alphabet"
+    },
+//AUDIO FILE mp3
+    {
+	    "_id" : "ObjectId('568dcdda9324a6f91e74108f')",
+		"ch_id" : "2EN01",
+		"ft" : "mp3",
+		"MB" : 3,
+		"fn" : "Classroom_Song.mp3",
+		"dn" : "Classroom Song"
+    },
+//GAME FILE
+    {
+		"_id" : "ObjectId('568dcdda9324a6f91e741084')",
+		"ch_id" : "1EN02",
+		"ft" : "EP",
+		"fn" : 3122231,
+		"dn" : "EP Colour Identification"
+    },
+//PICTURE FILE
+    {
+	    "_id" : "ObjectId('568dcdda9324a6f91e74108a')",
+		"ch_id" : "1EN10",
+		"ft" : "jpg",
+		"MB" : 0.1,
+		"fn" : "Family_Tree_1.jpg",
+		"dn" : "Family Tree 1"
+    },
+//ENGLISH TEXTBOOK
+    {
+	    "_id" : "ObjectId('568dcdf19324a6f91e74131d')",
+		"class" : "class1",
+		"subject" : "english",
+		"prefix" : "1EN",
+		"fn" : "English-1.pdf",
+		"fp" : "textbooks/Class1/English/",
+		"dn" : "Class 1 English",
+		"ndn" : "कक्षा 1 अन्ग्रेगी",
+		"ch_id" : "1EN10"
+    },
+//NEPALI TEXTBOOK
+    {
+	 	"_id" : "ObjectId('568dcdf19324a6f91e74131e')",
+		"class" : "class1",
+		"subject" : "nepali",
+		"prefix" : "1N",
+		"nfn" : "Nepali-1.pdf",
+		"fp" : "textbooks/Class1/Nepali/",
+		"dn" : "Class 1 Nepali",
+		"ndn" : "कक्षा 1 नेपाली",
+		"ch_id" : "1EN10"
+    },
+//English AND nepali TEXTBOOK
+    {
+		"_id" : "ObjectId('568dcdf19324a6f91e74131f')",
+		"class" : "class1",
+		"subject" : "math",
+		"prefix" : "1M",
+		"fn" : "Math-1.pdf",
+		"nfn" : "Math-1-Nepali.pdf",
+		"fp" : "textbooks/Class1/Nepali/",
+		"dn" : "Class 1 Math",
+		"ndn" : "कक्षा 1 गणित",
+		"ch_id" : "1EN10"
+    },
+    //DICTIONARY
+    {
+		"_id" : "ObjectId('5690154a9324a6f91e7429a0')",
+		"ch_id" : "1EN01",
+		"en" : "four",
+		"np" : "चार",
+		"part" : "noun",
+		"def" : "four - noun   being one more than three; noun the cardinal number that is the sum of three and one",
+		"hom" : "for, fore",
+		"rand" : 0.04336044892825207
+    },
+// CHAPTER
+    {
+    	"_id" : "1M10",
+		"pn" : 30,
+		"npn" : 28,
+		"dn" : "Addition and Subtraction up to 9",
+		"ndn" : "९ सम्मको जोड र घटाउ",
+		"ch_id" : "1EN10"
+    },
+];
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
 var timeline = [
     {
     	"_id":"ObjectId(5549)", 
@@ -186,52 +286,57 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		var j;
 		var searchArray = [];
 
-		for(i = 0; i < library.length; i++) {
-			var str = library[i].dn;
-			var find = str.search(searchResults.string);
+		for(i = 0; i < library2.length; i++) {
+			var str = library2[i].dn;
+			//console.log("str = " +str);
+
+			
+			//var find = str.search(searchResults.string);
+
 			//create array
 		
-			if(find >= 0) { //match was found
-				searchArray.push(library[i]); //how to get content?
-
-			}
+			//if(find >= 0) { //match was found
+				searchArray.push(library2[i]); //how to get content?
+			
 		}
+		console.log("searcharray =" + searchArray);
 
 		//push all searchArray items that also fit filter settings to new filterArray1
 		//media type filter
-		var filterArray1 = [];
+		/*var filterArray1 = [];
 
 		for(j=0; j < searchArray.length; j++) {
-			if(searchArray[j].filepath == "resources/textbook/" && filterResults.bbooks == true) {
+			if(searchArray[j].fp == "resources/textbook/" && filterResults.bbooks == true) {
 				//console.log(searchArray[j].tag);
 				filterArray1.push(searchArray[j]);
 			}
-			if(searchArray[j].filepath == "resources/audio/" && filterResults.baudio == true) {
+			if(searchArray[j].fp == "resources/audio/" && filterResults.baudio == true) {
 				//console.log(searchArray[j].tag);
 				filterArray1.push(searchArray[j]);
 			}
-			if(searchArray[j].filepath == "resources/videos/" && filterResults.bvideos == true) {
+			if(searchArray[j].fp == "resources/videos/" && filterResults.bvideos == true) {
 				//console.log(searchArray[j].tag);
 				filterArray1.push(searchArray[j]);
 			}
-			if(searchArray[j].filepath == "resources/epaath/activities/" && filterResults.bactivities == true) {
+			if(searchArray[j].fp == "resources/epaath/activities/" && filterResults.bactivities == true) {
 				//console.log(searchArray[j].tag);
 				filterArray1.push(searchArray[j]);
 			}
-			if(searchArray[j].filepath == "resources/pictures/" && filterResults.bpictures == true) {
+			if(searchArray[j].fp == "resources/pictures/" && filterResults.bpictures == true) {
 				//console.log(searchArray[j].tag);
 				filterArray1.push(searchArray[j]);
 			}
-		}
+		}*/
+
+		
 
 		//grade filter
-		for(i=0;i<filterArray1.length;i++) {
-			for (j=1;j<9;j++) {
-				console.log(filterArray1[i].prefix[0]);
-				if((filterArray1[i].prefix[0]) == j && filterResults['grade' + j] == true)
-					resultArray.push(filterArray1[i]);
-			}
+		for(i=0;i<searchArray.length;i++) {
+				console.log(searchArray[i].ch_id[0]);
+					resultArray.push(searchArray[i]);
 		}
+
+		console.log("result array:" + resultArray);
 
 
 //TIMELINE
@@ -253,6 +358,8 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		}
 
 		// Load the JSON object
+		
+		console.log("load json");
 		loadJSON(); 
 
 		// Cycle over the resultsUL ul list items
@@ -354,11 +461,11 @@ var createNewListElement = function(itemString) {
 		listItem.setAttributeNode(filetype);
 
 		var filepath = document.createAttribute("data-fp");   
-		filepath.value = resultArray[i].filepath; 
+		filepath.value = resultArray[i].fp; 
 		listItem.setAttributeNode(filepath);
 
 		var filename = document.createAttribute("data-fn");       
-		filename.value = resultArray[i].displayname;         
+		filename.value = resultArray[i].dn;         
 		listItem.setAttributeNode(filename);
 
 
@@ -389,7 +496,8 @@ var createNewListElement = function(itemString) {
 
 		
 		//set the display text for each content item
-		listLabel.innerText = itemString.dn + ", Grade " + resultArray[i].prefix[0];
+		listLabel.innerText = itemString.dn + ", Grade " + resultArray[i].ch_id[0];
+		console.log("new list element:"+listLabel.innertext);
 		
 		//append elements to the list item
 		listItem.appendChild(thumbnail);
@@ -506,7 +614,7 @@ var createTimelineElement = function(itemString) {
 	}
 
 
-var query = window.location.search;
+/*var query = window.location.search;
 console.log("query1: " + query);
 if (query.substring(0, 1) == '?') {
     query = query.substring(1);
@@ -551,7 +659,7 @@ for (var i = 0; i < timelineDiv.length; i++) {
 
     	//if((document.getElementsByClassName("timelinediv")[i].lastElementChild)!=null) {
 
-
+*/
 var script = document.createElement('script');
 script.src = "https://code.jquery.com/ui/1.11.4/jquery-ui.js";
 script.type = 'text/javascript';
