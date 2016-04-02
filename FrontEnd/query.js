@@ -275,7 +275,7 @@ var save = function(){
 
 	   	var timeline = new Object();
 	    	timeline.lesson_title = titleString;
-	    	timeline.items = itemIds;
+	    	timeline.items_array = itemIds;
 
 		console.log(timeline);
 		$.post("../BackEnd/save.php", timeline, function(data) {
