@@ -572,27 +572,33 @@ var save = function(){
     	alert("Lesson plan requires a title before saving.");
     }
     else {
-    var timelineDivs = document.getElementsByClassName("timelinediv");
-    for (var i = 0; i < timelineDivs.length; i++) {
+	    var timelineDivs = document.getElementsByClassName("timelinediv");
+	    for (var i = 0; i < timelineDivs.length; i++) {
 
-    	if((document.getElementsByClassName("timelinediv")[i].lastElementChild)!=null) {
-	    	var x = document.getElementsByClassName("timelinediv")[i].lastElementChild;
-	    	var index = x.getAttribute("index");
-	    	console.log("index : " + index);
-	    	objectId=resultArray[index]._id;
-	    	//var y = timelineDivs[i].document.getElementById("name").outerText;
-	    	console.log("item: " + objectId);
-	    	itemIds.push(objectId);
-    	}
-   	}
+	    	if((document.getElementsByClassName("timelinediv")[i].lastElementChild)!=null) {
+		    	var x = document.getElementsByClassName("timelinediv")[i].lastElementChild;
+		    	var index = x.getAttribute("index");
+		    	console.log("index : " + index);
+		    	objectId=resultArray[index]._id;
+		    	//var y = timelineDivs[i].document.getElementById("name").outerText;
+		    	console.log("item: " + objectId);
+		    	itemIds.push(objectId);
+	    	}
+	   	}
 
-   	var timeline = new Object();
-    	timeline.lesson_title = titleString;
-    	timeline.items = itemIds;
+	   	var timeline = new Object();
+	    	timeline.lesson_title = titleString;
+	    	timeline.items_array = itemIds;
 
- console.log(timeline);
+	 	console.log(timeline);
+
+		$.post("../BackEnd/save.php", timeline, function() {
+			console.log("Saved!");
+		});
+
 	}
 }
+
 
 
 function loadTimeline() {
