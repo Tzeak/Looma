@@ -23,6 +23,7 @@ var clearResults = function() {
     }
 
         //THIS IS NOT WORKING-- supposed to delete existing content
+        //replace array name with array.prototype?
     Array.prototype.forEach.call(children,function(node) {
         node.parentNode.removeChild(node);
     });
