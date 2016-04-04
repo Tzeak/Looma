@@ -17,7 +17,7 @@
 	<script>
 		// Filter function
 		function filter() {
-			var data = {
+			var filterdata = {
 				'grade' : '',
 				'subject' : '',
 				'chapter' : '',
@@ -42,6 +42,7 @@
 			};
 			$.get("search.php", searchdata, function(searchdata) {
 				$("#searchdiv").html(searchdata);
+				console.log(searchdata);
 				console.log(JSON.parse(searchdata));
 			}); //Send search data to server via GET request
 		}

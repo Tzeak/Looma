@@ -6,6 +6,7 @@
 	{
 			echo escapeshellarg($_GET['search']) . "<br/>";
 			$results = shell_exec("find ". escapeshellarg($_GET['search'])."*");
+			echo $results;
 	}
 
 	//From results, search mongo for the respective file names
