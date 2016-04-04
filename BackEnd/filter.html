@@ -17,12 +17,15 @@
 	<script>
 		// Filter function
 		function filter() {
-			var filterdata = {
-				'grade' : '2',
-				'subject' : 'EN',
-				'chapter' : '01',
-				'section':null,
-				'ft' : 'mp4'
+			var data = {
+				'grade' : '',
+				'subject' : '',
+				'chapter' : '',
+				'section': null,
+				'image' : true,
+				'video' : false,
+				'audio' : true,
+				'misc' : false
 			};
 			$.get("query.php", filterdata, function(filterdata) {
 				$("#filterdiv").html(filterdata);

@@ -24,22 +24,49 @@ require_once('mongoSetup.php');
 ///////
 // Test out mongoquery with extra shit
 //////
-gscsQuery();
-fileTypeQuery();
-$chapter_query = array('ch_id' => new MongoRegex("^$filterword/i"));  
-$ft_query = array('ft' => new MongoRegex("^$mediatype/i"));
+$gscs_array = gscsQuery();
+$cnt_gscs = count($gscs_array);
 
-$final_query = array_merge($chapter_query, $ft_query);
+$ft_array = fileTypeQuery();
+$cnt_ft = count ($ft_array); 
 
-$queryArray = queryMongo($final_query);
-// Create a global array that will hold all mongo documents matching the filters
-//$queryArray = array_merge(gscsQuery(), fileTypeQuery());
+$final_array = array();
 
-// Fix $queryArray
-$queryArray = fixDocArray($queryArray);
+// Create foor loop to merge the query arrays and search mongo
 
-// Print the entire array!
-echo json_encode($queryArray);
+
+for ($i=0; $i<$cnt_gscs; $i++) {
+	for ($j=0; $j<$cnt_ft; $j++) {
+		if(empty($ft_array[$j]))
+		{
+			$gscs_ft_array = $gscs_array[$i];
+		}
+		else
+		{
+			$gscs_ft_array = array_merge($gscs_array[$i], $ft_array[$j]);
+		}
+		echo "<br/>";
+		var_dump($ft_array[$j]);
+		echo "<br/>";
+
+		$mongo_doc_array = queryMongo($gscs_ft_array);
+		$mongo_doc_array = fixDocArray($mongo_doc_array);
+
+		if($i == 0)
+		{
+			$final_array["chapter"] = $mongo_doc_array;
+		}
+		else if($i == 1)
+		{
+			$final_array["textbook"] = $mongo_doc_array;
+		}
+		else if($i == 2)
+		{
+			$final_array["actdict"] = $mongo_doc_array;
+		}
+	}
+}
+echo json_encode($final_array);
 
 //Function: gscsQuery
 //	Input: n/a (it receives info from GET requests)
@@ -47,9 +74,9 @@ echo json_encode($queryArray);
 //	NOTE: "gscs" stands for Grade,Subject,Chapter,Section, the only filter inputs we deal with in this function
 	function gscsQuery()
 	{
-		global $chapRegex, $textRegex, $actdictRegex;
+		// global $chapRegex, $textRegex, $actdictRegex;
 		global $filterword;
-	   $filterword	= "";
+	    $filterword	= "";
 		if(isset($_GET["grade"]) && $_GET["grade"] != '')
 		{
 			$filterword .= $_GET["grade"]; 
@@ -57,7 +84,7 @@ echo json_encode($queryArray);
 		else
 		{
 			//Match any grade, 1-8
-			$filterword.= "[1-8]";
+			$filterword .= "[1-8]";
 		}
 		if(isset($_GET["subject"]) && $_GET["subject"] != '')
 		{
@@ -90,29 +117,12 @@ echo json_encode($queryArray);
 		//Construct a query by placing regex into relevant array
 		//NOTE: using regex to do a case insensitive search for the filterword 
 		$chapter_query = array('_id' => new MongoRegex("^$filterword/i"));  
-		$text_query= array('prefix' => new MongoRegex("^$filterword/i"));  
-		$actdict_query= array('ch_id' => new MongoRegex("^$filterword/i"));   
+		$text_query = array('prefix' => new MongoRegex("^$filterword/i"));  
+		$actdict_query = array('ch_id' => new MongoRegex("^$filterword/i"));  
 
-	//	$chapRegex = $chapter_query;
-	//	$textRegex = $text_query;
-	//	$actdictRegex = $actdict_query;
-
-
-		//Query Mongo Database
-		$res_chapter = queryMongo($chapter_query);	// Chapters
-		$res_textbook = queryMongo($text_query);		// Textbooks 
-		$res_act_dict = queryMongo($actdict_query);	// Dictionary and Activities
-		//Print Results
-		//echo(json_encode($res1));
-		//echo(json_encode($res2));
-		//echo(json_encode($res3));
-
-		// Create an array to hold ALL of the gscs filter values
-		$gscsDocArray = array_merge($res_chapter, $res_textbook, $res_act_dict);
-
-		// echo json_encode($gscsDocArray);
-
-		return $gscsDocArray;
+		$final_array = array();
+		array_push($final_array, $chapter_query, $text_query, $actdict_query);
+		return $final_array;
 	}
 
 
@@ -123,13 +133,73 @@ echo json_encode($queryArray);
 
 	function fileTypeQuery()
 	{
-		global $mediatype;
-		if(isset($_GET["ft"]) && $_GET["ft"] != '')
+		// $mediatype = "";
+		// if(isset($_GET["ft"]) && $_GET["ft"] != '')
+		// {
+		// 	$mediatype = $_GET["ft"];
+		// }
+		// else
+		// {
+		// 	$final_array = array();
+		// 	return array_push($final_array, array());
+		// }
+
+		// $final_array = array();
+		// array_push($final_array, array('ft' => new MongoRegex("^$mediatype/i")));
+
+		// return $final_array;
+
+
+
+		$mediatype = "";
+		$combo = false;
+		if($_GET["image"] === 'true')
 		{
-			$mediatype = $_GET["ft"];
-			$ft_query = array('ft' => new MongoRegex("^$mediatype/i"));
-			return $ft_query;
+			$mediatype .= "(gif|jpg|png|pdf)"; 
+			$combo = true;
 		}
+		if($_GET["video"] === 'true')
+		{
+			//Match any grade, 1-8
+			if($combo)
+			{
+				$mediatype .="|";
+			}
+			$mediatype .= "(mov|mp4|mp5|gif)";
+			$combo = true;
+
+		}
+		if($_GET["audio"] === 'true')
+		{
+			if($combo)
+			{
+				$mediatype .="|";
+			}
+			$mediatype .= "(mp3)";
+			$combo = true;
+		}
+		if($_GET["misc"] === 'true')
+		{
+			if($combo)
+			{
+				$mediatype .="|";
+			}
+			$mediatype .= "(EP|html)";
+			$combo = true;
+		}
+		echo $mediatype;
+		if ($mediatype == "")
+		{
+			$final_array = array();
+			return array_push($final_array, array());
+		}
+
+		$final_array = array();
+		array_push($final_array, array('ft' => new MongoRegex("^$mediatype/i")));
+
+		return $final_array;
+
+
 	}
 
 
