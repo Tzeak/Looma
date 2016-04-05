@@ -18,13 +18,13 @@
 		// Filter function
 		function filter() {
 			var filterdata = {
-				'grade' : '',
+				'grade' : '3',
 				'subject' : '',
 				'chapter' : '',
 				'section': null,
-				'image' : true,
+				'image' : false,
 				'video' : false,
-				'audio' : true,
+				'audio' : false,
 				'misc' : false
 			};
 			$.get("query.php", filterdata, function(filterdata) {
