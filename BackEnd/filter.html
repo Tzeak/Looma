@@ -7,6 +7,30 @@
 				overflow-y:auto;
 			}
 		</style>
+	Grade Level
+		<select id="dropdown_grade">
+			<option value=""></option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+		</select>
+	Subject		
+		<select id="dropdown_subject">
+			<option value=""></option>
+			<option value="EN">English</option>
+			<option value="M">Math</option>
+			<option value="S">Science</option>
+			<option value="SS">Social Studies</option>
+			<!--Add nepali?-->
+		</select>
+
+	<br/><br/>
+
 	<button onclick="filter()">filter</button>
 	<input type="text" id="searchbox" name="searchbox"></input>
 	<button onclick="search()">search</button>
@@ -14,19 +38,28 @@
 	<div id='searchdiv'></div>
 	<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	
 	<script>
 		// Filter function
 		function filter() {
-			var filterdata = {
-				'grade' : '',
-				'subject' : '',
-				'chapter' : '',
-				'section': null,
-				'image' : true,
-				'video' : false,
-				'audio' : true,
-				'misc' : false
-			};
+
+			var filterdata = new Object();
+			filterdata.module = 'filter';
+			console.log('grade:' + document.getElementById('dropdown_grade').value);
+			filterdata.grade = document.getElementById('dropdown_grade').value;
+			filterdata.subject = document.getElementById('dropdown_subject').value;
+
+
+			// var filterdata = {
+			// 	'grade' : document.getElementById('dropdown_grade').value,
+			// 	'subject' : document.getElementById('dropdown_subject').value,
+			// 	'chapter' : '',
+			// 	'section': null,
+			// 	'image' : false,
+			// 	'video' : false,
+			// 	'audio' : false,
+			// 	'misc' : false
+			// };
 			$.get("query.php", filterdata, function(filterdata) {
 				$("#filterdiv").html(filterdata);
 				console.log(JSON.parse(filterdata));
