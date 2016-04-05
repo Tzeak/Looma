@@ -97,13 +97,15 @@ echo json_encode($final_array);
 		}
 		if(isset($_GET["chapter"]) && $_GET["chapter"] != '')
 		{
-			$filterword .= $_GET["chapter"]; 
+			$filterword .= "([^\.1-9]" . $_GET["chapter"] . ")|([^\.]0" . $_GET["chapter"] . ")"; 
 		}
 		else
 		{
 			//Match Any chapter from 0-99
-			$filterword.= "[0-9][0-9]?";
+			//Assuming double digit chapter numbers
+			$filterword.= "([0-9][0-9]?)?";
 		}
+		echo $filterword;
 		if(isset($_GET['section']) && $_GET["section"] != '')
 		{
 			$filterword .= "\." . $_GET['section'];
