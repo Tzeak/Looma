@@ -1,78 +1,3 @@
-var library = [
-    {
-    	"_id":"ObjectId(5549)", 
-    	"prefix":"2EN02",
-    	"filetype":"EP",
-    	"thumbnail":"images/kitty.jpg",
-    	"filepath": "resources/textbook/",
-    	"dn":"KITTY"
-    },
-    {
-    	"_id":"ObjectId(5551)", 
-    	"prefix":"3EN02",
-    	"filetype":"EP",
-    	"filepath":"resources/pictures/",
-    	"format":"video", 
-    	"thumbnail":"images/pup.jpg",
-    	"dn":"Chemistry Safety with Bill Nye"
-    },
-    {
-    	"_id":"ObjectId(5552)", 
-    	"prefix":"4EN02",
-    	"filetype":"EP",
-    	"filepath":"resources/videos/",
-    	"format":"game", 
-    	"thumbnail":"images/pup2.jpg",
-    	"dn":"Is this letter a vowel?"
-    },
-    {
-    	"_id":"ObjectId(5548)", 
-    	"prefix":"5EN02",
-    	"filetype":"EP",
-    	"filepath":"resources/audio/",
-    	"format":"video", 
-    	"thumbnail":"images/pup4.jpg",
-    	"dn":"The Chronicles of Narnia: The Lion, the Witch, and the Wardrobe, and Supilise"
-    },
-        {
-    	"_id":"ObjectId(5547)", 
-    	"prefix":"2EN02",
-    	"filetype":"EP",
-    	"thumbnail":"images/kitty.jpg",
-    	"filepath": "resources/textbook/",
-    	"dn":"KITTY"
-    },
-    {
-    	"_id":"ObjectId(5559)", 
-    	"prefix":"3EN02",
-    	"filetype":"EP",
-    	"filepath":"resources/pictures/",
-    	"format":"video", 
-    	"thumbnail":"images/pup.jpg",
-    	"dn":"Chemistry Safety with Bill Nye"
-    },
-    {
-    	"_id":"ObjectId(5552)", 
-    	"prefix":"4EN02",
-    	"filetype":"EP",
-    	"filepath":"resources/videos/",
-    	"format":"game", 
-    	"thumbnail":"images/pup2.jpg",
-    	"dn":"Is this letter a vowel?"
-    },
-    {
-    	"_id":"ObjectId(5557)", 
-    	"prefix":"5EN02",
-    	"filetype":"EP",
-    	"filepath":"resources/audio/",
-    	"format":"video", 
-    	"thumbnail":"images/pup4.jpg",
-    	"dn":"The Chronicles of Narnia: The Lion, the Witch, and the Wardrobe, and Supilise"
-    },
-];
-
-//////////////////////////////////////////////////////////////////////////////////////////////////
-
 var library2 = [
 //AUDIO FILE mp4
     {
@@ -208,19 +133,10 @@ var resultArray = [];
 var querySearch = function() {	//Query filter every time a filter option is pressed
 	console.log('Running filter');
 
-
 	//checking if results div has content in it, and if it does remove it before adding new search results.
-	var ul = document.getElementById("resultsDivUL");
-	if(ul.children != null) {
-		var children = ul.querySelectorAll("li");
-		console.log(children);
-	}
+	clearResults();
 
-	console.log("deleting existing content");
-	//THIS IS NOT WORKING-- supposed to delete existing content
-	Array.prototype.forEach.call(children,function(node) {
-		node.parentNode.removeChild (node);
-	});
+
 
 //SEARCH
 
@@ -288,45 +204,10 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 
 		for(i = 0; i < library2.length; i++) {
 			var str = library2[i].dn;
-			//console.log("str = " +str);
 
-			
-			//var find = str.search(searchResults.string);
-
-			//create array
-		
-			//if(find >= 0) { //match was found
-				searchArray.push(library2[i]); //how to get content?
+				searchArray.push(library2[i]); //how to get content
 			
 		}
-		console.log("searcharray =" + searchArray);
-
-		//push all searchArray items that also fit filter settings to new filterArray1
-		//media type filter
-		/*var filterArray1 = [];
-
-		for(j=0; j < searchArray.length; j++) {
-			if(searchArray[j].fp == "resources/textbook/" && filterResults.bbooks == true) {
-				//console.log(searchArray[j].tag);
-				filterArray1.push(searchArray[j]);
-			}
-			if(searchArray[j].fp == "resources/audio/" && filterResults.baudio == true) {
-				//console.log(searchArray[j].tag);
-				filterArray1.push(searchArray[j]);
-			}
-			if(searchArray[j].fp == "resources/videos/" && filterResults.bvideos == true) {
-				//console.log(searchArray[j].tag);
-				filterArray1.push(searchArray[j]);
-			}
-			if(searchArray[j].fp == "resources/epaath/activities/" && filterResults.bactivities == true) {
-				//console.log(searchArray[j].tag);
-				filterArray1.push(searchArray[j]);
-			}
-			if(searchArray[j].fp == "resources/pictures/" && filterResults.bpictures == true) {
-				//console.log(searchArray[j].tag);
-				filterArray1.push(searchArray[j]);
-			}
-		}*/
 
 		
 
@@ -341,26 +222,12 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 
 //TIMELINE
 		// Check for next empty div
-		var checkDivsEmpty = function() {
-			  console.log("Checking for first empty timeline div...");
-
-			  // Gather all timeline divs so we can traverse through them
-			  var timelineDivs = document.getElementsByClassName("timelinediv");
-
-
-			  // Traverse through timeline divs and check for first empty div
-			  for (var i = 0; i < timelineDivs.length; i++) {
-			    if (timelineDivs[i].innerHTML === "") {
-			      return timelineDivs[i];
-			    } 
-		  }
-		  return "none";
-		}
-
 		// Load the JSON object
 		
 		console.log("load json");
 		loadJSON(); 
+		checkDivsEmpty();
+
 
 		// Cycle over the resultsUL ul list items
 		for (var i = 0; i < resultsUL.children.length; i++) {   // for each LI
@@ -378,187 +245,7 @@ var resultsWhole = document.querySelector("div#resultsdiv");
 var resultsUL = document.querySelector("div#resultsdiv ul#resultsDivUL");
 var timelineWhole = document.querySelector("div#timelineWhole");
 
-var addJSON = function() {
 
-	console.log("hello!!!");
-	// Clone current list item
-	var listItem = this.parentNode;
-	var newListItem = listItem.cloneNode(true);
-
-	// Change button class to "remove"
-	newListItem.querySelector("button.add").classList.remove("add");
-	newListItem.querySelector("button").classList.add("remove");
-
-	// Modify new "remove" button
-	var newRemoveButton = newListItem.querySelector("button.remove");
-	newRemoveButton.innerText = "Remove";
-	newRemoveButton.addEventListener("click", removeJSON);
-
-	// Append newListItem to first empty div using checkDivsEmpty()
-	var nextEmptyDiv = checkDivsEmpty();
-
-	if (nextEmptyDiv === "none") {
-	alert ("No empty divs");
-	} else {
-	console.log("Adding new list item to timeline...");
-	nextEmptyDiv.appendChild(newListItem);
-	}
-}
-
-var removeJSON = function() {
-	  console.log("Removing list item from timeline...");
-
-	  // Removing list item from timelineHolder
-	  var listItem = this.parentNode;
-	  listItem.remove();
-	}	
-
-var checkDivsEmpty = function() {
-	  console.log("Checking for first empty timeline div...");
-
-	  // Gather all timeline divs so we can traverse through them
-	  var timelineDivs = document.getElementsByClassName("timelinediv");
-
-
-	  // Traverse through timeline divs and check for first empty div
-	  for (var i = 0; i < timelineDivs.length; i++) {
-	    if (timelineDivs[i].innerHTML === "") {
-	      return timelineDivs[i];
-	    } 
-  }
-  return "none";
-}	
-
-//Load JSON objects into Results div
-var loadJSON = function() {
-
-	  console.log("Loading JSON objects into Results div...");
-
-	  for(i=0;i<resultArray.length; i++)
-	  {
-	    var rElement = createNewListElement(resultArray[i]);
-	    resultsUL.appendChild(rElement);
-	  }
-}
-
-// Create new list items for results div
-var createNewListElement = function(itemString) {
-	  var listItem = document.createElement("li");
-	  
-	  	//id for li element
-		var id = document.createAttribute("id"); 
-		id.value = "item";           
-		listItem.setAttributeNode(id);
-
-		//index attribute for li element (to access resultArray[index] info after the item is moved around in the timeline)
-		var num = document.createAttribute("index");      
-		num.value = i;    
-		listItem.setAttributeNode(num);
-
-		//attributes to list items for when we add preview feature
-		var filetype = document.createAttribute("data-ft");   
-		filetype.value = resultArray[i].filetype; 
-		listItem.setAttributeNode(filetype);
-
-		var filepath = document.createAttribute("data-fp");   
-		filepath.value = resultArray[i].fp; 
-		listItem.setAttributeNode(filepath);
-
-		var filename = document.createAttribute("data-fn");       
-		filename.value = resultArray[i].dn;         
-		listItem.setAttributeNode(filename);
-
-
-		//create label element for displaying content display name/info	  
-	  	var listLabel = document.createElement("label");
-
-	  	//id for label element
-	  	var id = document.createAttribute("id");  
-		id.value = "name";         
-		listLabel.setAttributeNode(id);
-
-
-		//image element for thumbnail photo	
-		var thumbnail = document.createElement("img");
-		
-		//add button to add list item from results div to timeline
-		var addButton = document.createElement("button");
-		addButton.innerText = "Add";
-		addButton.className = "add";
-
-	  
-		//access thumbnail image using filepath in json object
-		console.log("filepath exists?" + resultArray[i].fp);
-		var att = document.createAttribute("src");
-		if(resultArray[i].fp != null) {
-			
-
-			//attempting ajax for getting image filename (BUT THIS SHIT DOESN'T WORK)
-			/*get_image = null;
-			
-			$(document).ready(function () {
-				function imageAjax() {
-		            var fileExt = {};
-					fileExt[0]=".jpg";
-					$.ajax({
-					    //This will retrieve the contents of the folder if the folder is configured as 'browsable'
-					    url: resultArray[i].fp,
-					    success: function (data) {
-					       $("#displaybox").html('<ul>');
-					       //List all png or jpg or gif file names in the page
-					       $(data).find('a:contains(" + fileExt[0] + ")').each(function () {
-					           var filename = this.href.replace(window.location.host, "").replace("http:///", "");
-					           console.log("image file:" + filename);
-					           //$("#displaybox").append( '<li>'+filename+ <'/li'>);
-					       });
-					       $("#displaybox").append('</ul>');
-					     }     
-					  });
-					}
-					get_image=imageAjax;
-				})
-			
-			get_image();*/
-
-			var filename = "English-1_thumb.jpg";
-			att.value = "../" + resultArray[i].fp + filename;       
-			console.log("i = " + i);
-			console.log("resultArray[i] = " + resultArray[i]);
-			   
-		}
-		else if(resultArray[i].ft == "mp3" || resultArray[i].ft == "mp4") {
-			att.value = "images/audio_icon.png";
-		}
-		else if(resultArray[i].ft == "EP") {
-			att.value = "images/game_icon.png";
-		}
-		else if(resultArray[i].def != null) {
-			att.value = "images/dictionary_icon.png";
-		}
-		//chapter
-		else if(resultArray[i].pn !=null)
-			att.value = "images/chapter_icon.png";
-		else if(resultArray[i].ft = "jpg")
-			att.value = "images/picture_icon.jpg";
-		//picture
-
-		thumbnail.setAttributeNode(att);
-		listItem.appendChild(thumbnail);
-               
-
-		
-		//set the display text for each content item
-		listLabel.innerText = itemString.dn + ", Grade " + resultArray[i].ch_id[0];
-		console.log("new list element:"+listLabel);
-		
-		//append elements to the list item
-		
-		listItem.appendChild(listLabel);
-		listItem.appendChild(addButton);
-
-	  	return listItem;
-
-}
 
 
 
@@ -590,15 +277,13 @@ var save = function(){
 	    	timeline.lesson_title = titleString;
 	    	timeline.items_array = itemIds;
 
-	 	console.log(timeline);
-
-		$.post("../BackEnd/save.php", timeline, function() {
-			console.log("Saved!");
+		console.log(timeline);
+		$.post("../BackEnd/save.php", timeline, function(data) {
+		console.log("Saved!");
+		console.log("data" + data);
 		});
-
 	}
 }
-
 
 
 function loadTimeline() {

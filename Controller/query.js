@@ -5,7 +5,7 @@ var library = [
     	"filetype":"EP",
     	"thumbnail":"images/kitty.jpg",
     	"filepath": "resources/textbook/",
-    	"dn":"KITTY"
+    	"dn":"DOG"
     },
     {
     	"_id":"ObjectId(5551)", 
@@ -71,7 +71,8 @@ var library = [
     },
 ];
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var library2 = [
 //AUDIO FILE mp4
@@ -119,8 +120,7 @@ var library2 = [
 		"fn" : "English-1.pdf",
 		"fp" : "textbooks/Class1/English/",
 		"dn" : "Class 1 English",
-		"ndn" : "कक्षा 1 अन्ग्रेगी",
-		"ch_id" : "1EN10"
+		"ndn" : "कक्षा 1 अन्ग्रेगी"
     },
 //NEPALI TEXTBOOK
     {
@@ -129,10 +129,9 @@ var library2 = [
 		"subject" : "nepali",
 		"prefix" : "1N",
 		"nfn" : "Nepali-1.pdf",
-		"fp" : "textbooks/Class1/English/",
+		"fp" : "textbooks/Class1/Nepali/",
 		"dn" : "Class 1 Nepali",
-		"ndn" : "कक्षा 1 नेपाली",
-		"ch_id" : "1EN10"
+		"ndn" : "कक्षा 1 नेपाली"
     },
 //English AND nepali TEXTBOOK
     {
@@ -142,10 +141,9 @@ var library2 = [
 		"prefix" : "1M",
 		"fn" : "Math-1.pdf",
 		"nfn" : "Math-1-Nepali.pdf",
-		"fp" : "textbooks/Class1/English/",
+		"fp" : "textbooks/Class1/Nepali/",
 		"dn" : "Class 1 Math",
-		"ndn" : "कक्षा 1 गणित",
-		"ch_id" : "1EN10"
+		"ndn" : "कक्षा 1 गणित"
     },
     //DICTIONARY
     {
@@ -164,14 +162,14 @@ var library2 = [
 		"pn" : 30,
 		"npn" : 28,
 		"dn" : "Addition and Subtraction up to 9",
-		"ndn" : "९ सम्मको जोड र घटाउ",
-		"ch_id" : "1EN10"
+		"ndn" : "९ सम्मको जोड र घटाउ"
     },
 ];
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
 
-var timeline = [
+
+
+/*var timeline = [
     {
     	"_id":"ObjectId(5549)", 
     	"prefix":"2EN02",
@@ -198,7 +196,7 @@ var timeline = [
     	"thumbnail":"images/pup2.jpg",
     	"dn":"Is this letter a vowel?"
     },
-];
+];*/
 
 
 var resultArray = [];
@@ -239,14 +237,21 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 	var activities = document.getElementById('Activities');
 	var pictures = document.getElementById('Pictures');
 
-	var grade1 = document.getElementById('1');
+var filterResults = new Object();
+
+	/*var grades = document.getElementsByClassName('grade');
+	for(i=1; i<9; i++) {
+		filterResults.grades[i] = grades[i].checked;
+	}*/
+
+	/*var grade1 = document.getElementById('1');
 	var grade2 = document.getElementById('2');
 	var grade3 = document.getElementById('3');
 	var grade4 = document.getElementById('4');
 	var grade5 = document.getElementById('5');
 	var grade6 = document.getElementById('6');
 	var grade7 = document.getElementById('7');
-	var grade8 = document.getElementById('8');
+	var grade8 = document.getElementById('8');*/
 
 	var math = document.getElementById('Math');
 	var science = document.getElementById('Science');
@@ -256,7 +261,7 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 
 
 	//Construct Results object
-	var filterResults = new Object();
+	//var filterResults = new Object();
 		filterResults.module = 'filter';
 		filterResults.bbooks = books.checked;
 		filterResults.baudio = audio.checked;
@@ -264,14 +269,14 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		filterResults.bactivities = activities.checked;
 		filterResults.bpictures = pictures.checked;
 
-		filterResults.grade1 = grade1.checked;
+	/*	filterResults.grade1 = grade1.checked;
 		filterResults.grade2 = grade2.checked;
 		filterResults.grade3 = grade3.checked;
 		filterResults.grade4 = grade4.checked;
 		filterResults.grade5 = grade5.checked;
 		filterResults.grade6 = grade6.checked;
 		filterResults.grade7 = grade7.checked;
-		filterResults.grade8 = grade8.checked;
+		filterResults.grade8 = grade8.checked;*/
 
 		filterResults.math = math.checked;
 		filterResults.science = science.checked;
@@ -288,22 +293,18 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 
 		for(i = 0; i < library2.length; i++) {
 			var str = library2[i].dn;
-			//console.log("str = " +str);
-
-			
-			//var find = str.search(searchResults.string);
-
+			var find = str.search(searchResults.string);
 			//create array
 		
-			//if(find >= 0) { //match was found
+			if(find >= 0) { //match was found
 				searchArray.push(library2[i]); //how to get content?
-			
+
+			}
 		}
-		console.log("searcharray =" + searchArray);
 
 		//push all searchArray items that also fit filter settings to new filterArray1
 		//media type filter
-		/*var filterArray1 = [];
+		var filterArray1 = [];
 
 		for(j=0; j < searchArray.length; j++) {
 			if(searchArray[j].fp == "resources/textbook/" && filterResults.bbooks == true) {
@@ -326,17 +327,16 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 				//console.log(searchArray[j].tag);
 				filterArray1.push(searchArray[j]);
 			}
-		}*/
-
-		
-
-		//grade filter
-		for(i=0;i<searchArray.length;i++) {
-				console.log(searchArray[i].ch_id[0]);
-					resultArray.push(searchArray[i]);
 		}
 
-		console.log("result array:" + resultArray);
+		//grade filter
+		for(i=0;i<filterArray1.length;i++) {
+			for (j=1;j<9;j++) {
+				console.log(filterArray1[i].ch_id[0]);
+				if((filterArray1[i].prefix[0]) == j && filterResults['grade' + j] == true)
+					resultArray.push(filterArray1[i]);
+			}
+		}
 
 
 //TIMELINE
@@ -346,7 +346,6 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 
 			  // Gather all timeline divs so we can traverse through them
 			  var timelineDivs = document.getElementsByClassName("timelinediv");
-
 
 			  // Traverse through timeline divs and check for first empty div
 			  for (var i = 0; i < timelineDivs.length; i++) {
@@ -358,8 +357,6 @@ var querySearch = function() {	//Query filter every time a filter option is pres
 		}
 
 		// Load the JSON object
-		
-		console.log("load json");
 		loadJSON(); 
 
 		// Cycle over the resultsUL ul list items
@@ -457,12 +454,12 @@ var createNewListElement = function(itemString) {
 
 		//attributes to list items for when we add preview feature
 		var filetype = document.createAttribute("data-ft");   
-		filetype.value = resultArray[i].filetype; 
+		filetype.value = resultArray[i].ft; 
 		listItem.setAttributeNode(filetype);
 
 		var filepath = document.createAttribute("data-fp");   
 		filepath.value = resultArray[i].fp; 
-		listItem.setAttributeNode(filepath);
+		listItem.setAttributeNode(fp);
 
 		var filename = document.createAttribute("data-fn");       
 		filename.value = resultArray[i].dn;         
@@ -488,71 +485,18 @@ var createNewListElement = function(itemString) {
 
 	  
 		//access thumbnail image using filepath in json object
-		console.log("filepath exists?" + resultArray[i].fp);
-		var att = document.createAttribute("src");
-		if(resultArray[i].fp != null) {
-			
-
-			//attempting ajax for getting image filename (BUT THIS SHIT DOESN'T WORK)
-			/*get_image = null;
-			
-			$(document).ready(function () {
-				function imageAjax() {
-		            var fileExt = {};
-					fileExt[0]=".jpg";
-					$.ajax({
-					    //This will retrieve the contents of the folder if the folder is configured as 'browsable'
-					    url: resultArray[i].fp,
-					    success: function (data) {
-					       $("#displaybox").html('<ul>');
-					       //List all png or jpg or gif file names in the page
-					       $(data).find('a:contains(" + fileExt[0] + ")').each(function () {
-					           var filename = this.href.replace(window.location.host, "").replace("http:///", "");
-					           console.log("image file:" + filename);
-					           //$("#displaybox").append( '<li>'+filename+ <'/li'>);
-					       });
-					       $("#displaybox").append('</ul>');
-					     }     
-					  });
-					}
-					get_image=imageAjax;
-				})
-			
-			get_image();*/
-
-			var filename = "English-1_thumb.jpg";
-			att.value = "../" + resultArray[i].fp + filename;       
-			console.log("i = " + i);
-			console.log("resultArray[i] = " + resultArray[i]);
-			   
-		}
-		else if(resultArray[i].ft == "mp3" || resultArray[i].ft == "mp4") {
-			att.value = "images/audio_icon.png";
-		}
-		else if(resultArray[i].ft == "EP") {
-			att.value = "images/game_icon.png";
-		}
-		else if(resultArray[i].def != null) {
-			att.value = "images/dictionary_icon.png";
-		}
-		//chapter
-		else if(resultArray[i].pn !=null)
-			att.value = "images/chapter_icon.png";
-		else if(resultArray[i].ft = "jpg")
-			att.value = "images/picture_icon.jpg";
-		//picture
-
-		thumbnail.setAttributeNode(att);
-		listItem.appendChild(thumbnail);
-               
+		var att = document.createAttribute("src");    
+		att.value = resultArray[i].fp + "*.jpg";       
+		console.log("i = " + i);
+		console.log("resultArray[i] = " + resultArray[i]);
+		thumbnail.setAttributeNode(att);                    
 
 		
 		//set the display text for each content item
-		listLabel.innerText = itemString.dn + ", Grade " + resultArray[i].ch_id[0];
-		console.log("new list element:"+listLabel);
+		listLabel.innerText = itemString.dn + ", Grade " + resultArray[i].prefix[0];
 		
 		//append elements to the list item
-		
+		listItem.appendChild(thumbnail);
 		listItem.appendChild(listLabel);
 		listItem.appendChild(addButton);
 
@@ -566,39 +510,30 @@ var save = function(){
     console.log("saving...");
     var itemIds = [];
     var titleString = document.getElementById("titleString").value;
-    console.log("title:" + titleString);
+
+
     
-    if(titleString == "") {
-    	alert("Lesson plan requires a title before saving.");
-    }
-    else {
-	    var timelineDivs = document.getElementsByClassName("timelinediv");
-	    for (var i = 0; i < timelineDivs.length; i++) {
 
-	    	if((document.getElementsByClassName("timelinediv")[i].lastElementChild)!=null) {
-		    	var x = document.getElementsByClassName("timelinediv")[i].lastElementChild;
-		    	var index = x.getAttribute("index");
-		    	console.log("index : " + index);
-		    	objectId=resultArray[index]._id;
-		    	//var y = timelineDivs[i].document.getElementById("name").outerText;
-		    	console.log("item: " + objectId);
-		    	itemIds.push(objectId);
-	    	}
-	   	}
+    var timelineDivs = document.getElementsByClassName("timelinediv");
+    for (var i = 0; i < timelineDivs.length; i++) {
 
-	   	var timeline = new Object();
-	    	timeline.lesson_title = titleString;
-	    	timeline.items_array = itemIds;
+    	if((document.getElementsByClassName("timelinediv")[i].lastElementChild)!=null) {
+	    	var x = document.getElementsByClassName("timelinediv")[i].lastElementChild;
+	    	var index = x.getAttribute("index");
+	    	console.log("index : " + index);
+	    	objectId=resultArray[index]._id;
+	    	//var y = timelineDivs[i].document.getElementById("name").outerText;
+	    	console.log("item: " + objectId);
+	    	itemIds.push(objectId);
+    	}
+   	}
 
-	 	console.log(timeline);
+   	var timeline = new Object();
+    	timeline.lesson_title = titleString;
+    	timeline.items = itemIds;
 
-		$.post("../BackEnd/save.php", timeline, function() {
-			console.log("Saved!");
-		});
-
-	}
+ console.log(timeline);
 }
-
 
 
 function loadTimeline() {
@@ -672,7 +607,7 @@ var createTimelineElement = function(itemString) {
 	}
 
 
-/*var query = window.location.search;
+var query = window.location.search;
 console.log("query1: " + query);
 if (query.substring(0, 1) == '?') {
     query = query.substring(1);
@@ -684,7 +619,7 @@ console.log("query2: " + query2);
 //document.getElementById("displaybox").innerHTML = query2;
 
 
-var resultArray = JSON.parse(query3);
+var resultArray = JSON.parse(query2);
 console.log("timeline: " + resultArray);
 
 
@@ -717,7 +652,7 @@ for (var i = 0; i < timelineDiv.length; i++) {
 
     	//if((document.getElementsByClassName("timelinediv")[i].lastElementChild)!=null) {
 
-*/
+
 var script = document.createElement('script');
 script.src = "https://code.jquery.com/ui/1.11.4/jquery-ui.js";
 script.type = 'text/javascript';

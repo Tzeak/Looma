@@ -14,6 +14,6 @@
 require_once 'mongoSetup.php';
 
 /*Insert array into Timeline*/
-$info = array("name" => $_POST["name"], "line" => $_POST["line"]);
+$info = array("name" => $_POST["lesson_title"], "line" => $_POST["items_array"]);
 $timelines->insert($info);
 ?>
