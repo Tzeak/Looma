@@ -109,7 +109,7 @@ var createNewListElement = function(itemString) {
 
         //attributes to list items for when we add preview feature
         var filetype = document.createAttribute("data-ft");   
-        filetype.value = resultArray[i].filetype; 
+        filetype.value = resultArray[i].ft; 
         listItem.setAttributeNode(filetype);
 
         var filepath = document.createAttribute("data-fp");   
@@ -156,7 +156,7 @@ var createNewListElement = function(itemString) {
                         //This will retrieve the contents of the folder if the folder is configured as 'browsable'
                         url: resultArray[i].fp,
                         success: function (data) {
-                           $("#displaybox").html('<ul>');
+                           $("#display x").html('<ul>');
                            //List all png or jpg or gif file names in the page
                            $(data).find('a:contains(" + fileExt[0] + ")').each(function () {
                                var filename = this.href.replace(window.location.host, "").replace("http:///", "");

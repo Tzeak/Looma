@@ -67,10 +67,10 @@
 		</style>
 	</head>
 
-	<body onload="loadJSON()">
+	<body onload="load()">
 		<div id="container">
 		<div id="sidebar">
-			    <button type="button" id="btnSave" onclick="location.href='index2.html';">Creat New Lesson</button>
+			    <button type="button" id="btnSave" onclick="location.href='index2.html';">Create New Lesson</button>
     			
 		<form>
 			Search: <input type="text" name="search" id="string">
@@ -127,43 +127,42 @@
 	    ];
 	    var timeline = [
 	    {
-			"_id" : "568dcdf19324a6f91e74131d",
-			"class" : "class1",
-			"subject" : "english",
-			"prefix" : "1EN",
-			"fn" : "English-1.pdf",
-			"fp" : "textbooks/Class1/English/",
-			"dn" : "Class 1 English",
-			"ndn" : "कक्षा 1 अन्ग्रेगी"
+			"_id" : "ObjectId('568dcdda9324a6f91e741082')",
+			"ch_id" : "1EN01",
+			"ft" : "mp4",
+			"MB" : 7.6,
+			"min" : "1:32",
+			"fn" : "Sesame_Street_Alphabet.mp4",
+			"dn" : "Sesame Street Alphabet"
 		},
 	    {
-	    	"_id":"ObjectId(5551)", 
-	    	"chapter_id":"3EN02",
-	    	"filetype":"EP",
-	    	"filepath":"resources/pictures/",
-	    	"format":"video", 
-	    	"thumbnail":"images/pup.jpg",
-	    	"displayname":"Chemistry Safety with Bill Nye"
+		    "_id" : "ObjectId('568dcdda9324a6f91e74108f')",
+			"ch_id" : "2EN01",
+			"ft" : "mp3",
+			"MB" : 3,
+			"fn" : "Classroom_Song.mp3",
+			"dn" : "Classroom Song"
 	    },
 	    {
-	    	"_id":"ObjectId(5552)", 
-	    	"chapter_id":"4EN02",
-	    	"filetype":"EP",
-	    	"filepath":"resources/videos/",
-	    	"format":"game", 
-	    	"thumbnail":"images/pup2.jpg",
-	    	"displayname":"Is this letter a vowel?"
+		    "_id" : "ObjectId('568dcdda9324a6f91e741084')",
+			"ch_id" : "1EN02",
+			"ft" : "EP",
+			"fn" : 3122231,
+			"dn" : "EP Colour Identification"
 	    }
 	    ];
 
-	    var loadJSON = function() {
+	    var load = function() {
+	    	console.log("loadjson");
 		    for(i = 0; i < lessons.length; i++) {
+		    	//console.log("calling createNewListElement");
 				var rElement = createNewListElement(lessons[i].title, lessons[i]._id);
 			    lessonDiv.appendChild(rElement);
 			}
 		}
 		var createNewListElement = function(itemString, itemId) {
 				//searchArray.push(lessons[i]);
+			console.log("creating list element...");
 		    var listItem = document.createElement("li"); 
 			var id = document.createAttribute("id");        // Create a "href" attribute
 			id.value = "title";            // Set the value of the href attribute
@@ -313,6 +312,8 @@ function presentTimeline() {
 
 
 
-	<script type="text/javascript" src="index2.js"></script>
-	
+	<!--<script type="text/javascript" src="query.js"></script>
+	<script type="text/javascript" src="ui2.js"></script>-->
+
+
 </html>
