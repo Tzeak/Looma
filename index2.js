@@ -205,49 +205,11 @@ var resultArray = [];
 
 
 
-var querySearch = function() {
-
-
-	var filterdata = new Object();
-	filterdata.module = 'filter';
-	console.log('grade:' + document.getElementById('dropdown_grade').value);
-	filterdata.grade = document.getElementById('dropdown_grade').value;
-	filterdata.subject = document.getElementById('dropdown_subject').value;
-	filterdata.chapter = document.getElementById('dropdown_chapter').value;
-	filterdata.section = document.getElementById('dropdown_section').value;
-	filterdata.image = document.getElementById('ft_image').checked;
-	filterdata.video = document.getElementById('ft_video').checked;
-	filterdata.audio = document.getElementById('ft_audio').checked;
-	filterdata.misc = document.getElementById('ft_misc').checked;
-
-
-
-	// var filterdata = {
-	// 	'grade' : document.getElementById('dropdown_grade').value,
-	// 	'subject' : document.getElementById('dropdown_subject').value,
-	// 	'chapter' : '',
-	// 	'section': null,
-	// 	'image' : false,
-	// 	'video' : false,
-	// 	'audio' : false,
-	// 	'misc' : false
-	// };
-	$.get("../BackEnd/query.php", filterdata, function(filterdata) {
-		$("#resultsdiv").html(filterdata);
-		console.log(JSON.parse(filterdata));
-	}); //Send filter data to server via GET request
-
-}
-
-////////////////////////////////////////////// BEGIN OLD CODE FOR SEARCH & FILTER
-
-	//Query filter every time a filter option is pressed
-	/* BEGIN COMMENT - filter and search
+var querySearch = function() {	//Query filter every time a filter option is pressed
 	console.log('Running filter');
 
 
 	//checking if results div has content in it, and if it does remove it before adding new search results.
-	
 	var ul = document.getElementById("resultsDivUL");
 	if(ul.children != null) {
 		var children = ul.querySelectorAll("li");
@@ -275,12 +237,9 @@ var querySearch = function() {
 	var audio = document.getElementById('Audio');
 	var videos = document.getElementById('Videos');
 	var activities = document.getElementById('Activities');
-	var pictures = document.getElementById('Pictures'); 
+	var pictures = document.getElementById('Pictures');
 
-	// Make dropdown for grade values
-	var grade = document.getElementById('grade');
-
-	/*var grade1 = document.getElementById('1');
+	var grade1 = document.getElementById('1');
 	var grade2 = document.getElementById('2');
 	var grade3 = document.getElementById('3');
 	var grade4 = document.getElementById('4');
@@ -304,8 +263,6 @@ var querySearch = function() {
 		filterResults.bvideos = videos.checked;
 		filterResults.bactivities = activities.checked;
 		filterResults.bpictures = pictures.checked;
-
-		filterResults.grade = grade.value;
 
 		filterResults.grade1 = grade1.checked;
 		filterResults.grade2 = grade2.checked;
@@ -344,7 +301,6 @@ var querySearch = function() {
 		}
 		console.log("searcharray =" + searchArray);
 
-
 		//push all searchArray items that also fit filter settings to new filterArray1
 		//media type filter
 		/*var filterArray1 = [];
@@ -370,22 +326,36 @@ var querySearch = function() {
 				//console.log(searchArray[j].tag);
 				filterArray1.push(searchArray[j]);
 			}
-		}
+		}*/
 
 		
 
 		//grade filter
-		for(i=0;i<filterArray1.length;i++) {
-			// for (j=1;j<9;j++) {
-			// 	console.log(filterArray1[i].prefix[0]);
-			// 	if((filterArray1[i].prefix[0]) == j && filterResults['grade' + j] == true)
-					resultArray.push(filterArray1[i]);
-			}
-		} 
+		for(i=0;i<searchArray.length;i++) {
+				console.log(searchArray[i].ch_id[0]);
+					resultArray.push(searchArray[i]);
+		}
+
 		console.log("result array:" + resultArray);
 
 
 //TIMELINE
+		// Check for next empty div
+		var checkDivsEmpty = function() {
+			  console.log("Checking for first empty timeline div...");
+
+			  // Gather all timeline divs so we can traverse through them
+			  var timelineDivs = document.getElementsByClassName("timelinediv");
+
+
+			  // Traverse through timeline divs and check for first empty div
+			  for (var i = 0; i < timelineDivs.length; i++) {
+			    if (timelineDivs[i].innerHTML === "") {
+			      return timelineDivs[i];
+			    } 
+		  }
+		  return "none";
+		}
 
 		// Load the JSON object
 		
@@ -399,10 +369,8 @@ var querySearch = function() {
 		  console.log("Giving add buttons actions...");
 		}
 	}
-} END COMMENT*/
+}
 //End of querySearch
-
-////////////////////////////////////////////// END OLD CODE FOR SEARCH & FILTER
 
 
 console.log("results display");
@@ -604,33 +572,27 @@ var save = function(){
     	alert("Lesson plan requires a title before saving.");
     }
     else {
-	    var timelineDivs = document.getElementsByClassName("timelinediv");
-	    for (var i = 0; i < timelineDivs.length; i++) {
+    var timelineDivs = document.getElementsByClassName("timelinediv");
+    for (var i = 0; i < timelineDivs.length; i++) {
 
-	    	if((document.getElementsByClassName("timelinediv")[i].lastElementChild)!=null) {
-		    	var x = document.getElementsByClassName("timelinediv")[i].lastElementChild;
-		    	var index = x.getAttribute("index");
-		    	console.log("index : " + index);
-		    	objectId=resultArray[index]._id;
-		    	//var y = timelineDivs[i].document.getElementById("name").outerText;
-		    	console.log("item: " + objectId);
-		    	itemIds.push(objectId);
-	    	}
-	   	}
+    	if((document.getElementsByClassName("timelinediv")[i].lastElementChild)!=null) {
+	    	var x = document.getElementsByClassName("timelinediv")[i].lastElementChild;
+	    	var index = x.getAttribute("index");
+	    	console.log("index : " + index);
+	    	objectId=resultArray[index]._id;
+	    	//var y = timelineDivs[i].document.getElementById("name").outerText;
+	    	console.log("item: " + objectId);
+	    	itemIds.push(objectId);
+    	}
+   	}
 
-	   	var timeline = new Object();
-	    	timeline.lesson_title = titleString;
-	    	timeline.items_array = itemIds;
+   	var timeline = new Object();
+    	timeline.lesson_title = titleString;
+    	timeline.items = itemIds;
 
-	 	console.log(timeline);
-
-		$.post("../BackEnd/save.php", timeline, function() {
-			console.log("Saved!");
-		});
-
+ console.log(timeline);
 	}
 }
-
 
 
 function loadTimeline() {
@@ -704,12 +666,7 @@ var createTimelineElement = function(itemString) {
 	}
 
 
-/******************BEGIN COMMENT**************/
 /*var query = window.location.search;
-=======
-/* BEGIN COMMENT
-var query = window.location.search;
->>>>>>> f80f482cf6de42841a6e8f984db08c18d9b0ef6e
 console.log("query1: " + query);
 if (query.substring(0, 1) == '?') {
     query = query.substring(1);
@@ -753,10 +710,8 @@ for (var i = 0; i < timelineDiv.length; i++) {
 }
 
     	//if((document.getElementsByClassName("timelinediv")[i].lastElementChild)!=null) {
-<<<<<<< HEAD
 
-/************END COMMENT****************/
-
+*/
 var script = document.createElement('script');
 script.src = "https://code.jquery.com/ui/1.11.4/jquery-ui.js";
 script.type = 'text/javascript';
