@@ -103,6 +103,7 @@ var timeline = [
 
 var resultArray = [];
 
+var displaybox = document.querySelector("div#displaybox");
 
 
 var querySearch = function() {
@@ -133,11 +134,118 @@ var querySearch = function() {
 	// 	'misc' : false
 	// };
 	$.get("../BackEnd/query.php", filterdata, function(filterdata) {
-		$("#displaybox").html(filterdata);
+		// $("#displaybox").html("hi");
 		console.log(JSON.parse(filterdata));
+		var filterdata_object = storeFilterData(filterdata);
+		printFilterData(filterdata_object);
 	}); //Send filter data to server via GET request
 
 }
+
+var storeFilterData = function(filterdata) {
+	var filterdata_object = JSON.parse(filterdata);
+	return filterdata_object;
+}
+
+var printFilterData = function(filterdata_object) {
+	// var resultArray = ["apple", "orange", "banana", "penis"];
+
+	for(var i=0; i<filterdata_object.chapter.length; i++) {
+		var rElement = createResultsDiv(filterdata_object.chapter[i])
+		// var rElement = createResultsDiv(resultArray[i]);
+		displaybox.appendChild(rElement);
+	}
+
+
+	// var filterdata_array = [];
+	// for (var i=0; i < filterdata_object.chapter.length; i++) {
+	// 	filterdata_array.push(filterdata_object.chapter[i]);
+	// 	console.log(filterdata_array[i]);
+	// }
+	// $("#displaybox").html();
+}
+
+
+var createResultsDiv = function(item) {
+	var div = document.createElement("div");
+
+	// Create div
+	var id = document.createAttribute("id"); 
+	id.value = "item";           
+	div.setAttributeNode(id);
+	div.innerText = item.dn;
+
+	return div;
+}
+
+
+
+
+var createNewListElement = function(itemString) {
+	  var listItem = document.createElement("li");
+	  
+	  	//id for li element
+		var id = document.createAttribute("id"); 
+		id.value = "item";           
+		listItem.setAttributeNode(id);
+
+		//index attribute for li element (to access resultArray[index] info after the item is moved around in the timeline)
+		var num = document.createAttribute("index");      
+		num.value = i;    
+		listItem.setAttributeNode(num);
+
+		//attributes to list items for when we add preview feature
+		var filetype = document.createAttribute("data-ft");   
+		filetype.value = resultArray[i].filetype; 
+		listItem.setAttributeNode(filetype);
+
+		var filepath = document.createAttribute("data-fp");   
+		filepath.value = resultArray[i].filepath; 
+		listItem.setAttributeNode(filepath);
+
+		var filename = document.createAttribute("data-fn");       
+		filename.value = resultArray[i].displayname;         
+		listItem.setAttributeNode(filename);
+
+
+		//create label element for displaying content display name/info	  
+	  	var listLabel = document.createElement("label");
+
+	  	//id for label element
+	  	var id = document.createAttribute("id");  
+		id.value = "name";         
+		listLabel.setAttributeNode(id);
+
+
+		//image element for thumbnail photo	
+		var thumbnail = document.createElement("img");
+		
+		//add button to add list item from results div to timeline
+		var addButton = document.createElement("button");
+		addButton.innerText = "Add";
+		addButton.className = "add";
+
+	  
+		//access thumbnail image using filepath in json object
+		var att = document.createAttribute("src");    
+		att.value = resultArray[i].fp + "*.jpg";       
+		console.log("i = " + i);
+		console.log("resultArray[i] = " + resultArray[i]);
+		thumbnail.setAttributeNode(att);                    
+
+		
+		//set the display text for each content item
+		listLabel.innerText = itemString.dn + ", Grade " + resultArray[i].prefix[0];
+		
+		//append elements to the list item
+		listItem.appendChild(thumbnail);
+		listItem.appendChild(listLabel);
+		listItem.appendChild(addButton);
+
+	  	return listItem;
+
+}
+
 
 ////////////////////////////////////////////// BEGIN OLD CODE FOR SEARCH & FILTER
 

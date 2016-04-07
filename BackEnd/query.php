@@ -45,9 +45,6 @@ for ($i=0; $i<$cnt_gscs; $i++) {
 		{
 			$gscs_ft_array = array_merge($gscs_array[$i], $ft_array[$j]);
 		}
-		echo "<br/>";
-		var_dump($ft_array[$j]);
-		echo "<br/>";
 
 		$mongo_doc_array = queryMongo($gscs_ft_array);
 		$mongo_doc_array = fixDocArray($mongo_doc_array);
@@ -105,7 +102,6 @@ echo json_encode($final_array);
 			//Assuming double digit chapter numbers
 			$filterword.= "([0-9][0-9]?)?";
 		}
-		echo $filterword;
 		if(isset($_GET['section']) && $_GET["section"] != '')
 		{
 			$filterword .= "\." . $_GET['section'];
