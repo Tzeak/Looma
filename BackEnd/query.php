@@ -6,22 +6,17 @@
  					in the "Query" module in the main web application.
 
  					FILTER
- 					The "filter" function has 4 options:
- 					Grade, Subject, Chapter, Type of media
- 					- Use a regex to search each 
-
+ 					The "filter" function has 5 options:
 						1. Grade
 						2. Subject
 						3. Chapter
 						4. Section 
-						5. Type of media //In Progress
+						5. Type of media 
+					The filter returns a JSON string for the Front-End Application to then parse
 
-	PLAN OF ACTION:	The next part to the filter module is combining the various filter queries
-	1) convert gscsQuery() to return Array of query arrays.
-	2) convert fileTypeQuery() to return array of filetype query arrays
-	3) run loop in the beginning to merge the query arrays returned by gscs and the filetype arrays
-
-
+					SEARCH
+					The "search" function will take the search query and do a simple text search through 
+					the mongo document returned by the filter
  */
 
 require_once('mongoSetup.php');
@@ -73,25 +68,6 @@ for ($i=0; $i<$cnt_gscs; $i++) {
 }
 echo json_encode($final_array);
 
-
-
-
-
-// $chapter_query = array('ch_id' => new MongoRegex("^$filterword/i"));  
-// $ft_query = array('ft' => new MongoRegex("^$mediatype/i"));
-
-// $final_query = array_merge($chapter_query, $ft_query);
-
-// $queryArray = queryMongo($final_query);
-// Create a global array that will hold all mongo documents matching the filters
-//$queryArray = array_merge(gscsQuery(), fileTypeQuery());
-
-// Fix $queryArray
-// $queryArray = fixDocArray($queryArray);
-
-// Print the entire array!
-// echo json_encode($queryArray);
-
 //Function: gscsQuery
 //	Input: n/a (it receives info from GET requests)
 // 	Return: Array of documents matching 
@@ -121,13 +97,15 @@ echo json_encode($final_array);
 		}
 		if(isset($_GET["chapter"]) && $_GET["chapter"] != '')
 		{
-			$filterword .= $_GET["chapter"]; 
+			$filterword .= "([^\.1-9]" . $_GET["chapter"] . ")|([^\.]0" . $_GET["chapter"] . ")"; 
 		}
 		else
 		{
 			//Match Any chapter from 0-99
-			$filterword.= "[0-9][0-9]?";
+			//Assuming double digit chapter numbers
+			$filterword.= "([0-9][0-9]?)?";
 		}
+		echo $filterword;
 		if(isset($_GET['section']) && $_GET["section"] != '')
 		{
 			$filterword .= "\." . $_GET['section'];
@@ -147,27 +125,6 @@ echo json_encode($final_array);
 		$final_array = array();
 		array_push($final_array, $chapter_query, $text_query, $actdict_query);
 		return $final_array;
-
-	//	$chapRegex = $chapter_query;
-	//	$textRegex = $text_query;
-	//	$actdictRegex = $actdict_query;
-
-
-		//Query Mongo Database
-		// $res_chapter = queryMongo($chapter_query);	// Chapters
-		// $res_textbook = queryMongo($text_query);		// Textbooks 
-		// $res_act_dict = queryMongo($actdict_query);	// Dictionary and Activities
-		//Print Results
-		//echo(json_encode($res1));
-		//echo(json_encode($res2));
-		//echo(json_encode($res3));
-
-		// Create an array to hold ALL of the gscs filter values
-		// $gscsDocArray = array_merge($res_chapter, $res_textbook, $res_act_dict);
-
-		// echo json_encode($gscsDocArray);
-
-		// return $gscsDocArray;
 	}
 
 

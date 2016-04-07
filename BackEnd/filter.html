@@ -8,28 +8,43 @@
 			}
 		</style>
 	<button onclick="filter()">filter</button>
+	<input type="text" id="searchbox" name="searchbox"></input>
 	<button onclick="search()">search</button>
 	<div id='filterdiv'></div>
 	<div id='searchdiv'></div>
 	<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script>
+		// Filter function
 		function filter() {
-			var data = {
+			var filterdata = {
 				'grade' : '',
 				'subject' : '',
-				'chapter' : '',
+				'chapter' : '4',
 				'section': null,
-				'image' : true,
+				'image' : false,
 				'video' : false,
-				'audio' : true,
+				'audio' : false,
 				'misc' : false
 			};
-			$.get("query.php", data, function(data) {
-				$("#filterdiv").html(data);
-				console.log(JSON.parse(data));
-			}); //Send data to server via post request
-			// document.getElementById("opendiv").innerText = data;
+			$.get("query.php", filterdata, function(filterdata) {
+				$("#filterdiv").html(filterdata);
+				console.log(JSON.parse(filterdata));
+			}); //Send filter data to server via GET request
+		}
+
+		// Search function
+		function search() {
+			var input = document.getElementById("searchbox").value;
+			alert(input);
+			var searchdata = {
+				'search' : input
+			};
+			$.get("search.php", searchdata, function(searchdata) {
+				$("#searchdiv").html(searchdata);
+				console.log(searchdata);
+				console.log(JSON.parse(searchdata));
+			}); //Send search data to server via GET request
 		}
 	</script>
 </html>
