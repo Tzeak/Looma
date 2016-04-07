@@ -13,7 +13,67 @@
 			<!--<input type="submit" value="Submit" onclick="querySearch()"> -->
 			
 			
-			<h3> Grade Level </h3>
+			Grade Level
+			<select id="dropdown_grade">
+				<option value=""></option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+			</select>
+			<br/><br/>
+			Subject		
+			<select id="dropdown_subject">
+				<option value=""></option>
+				<option value="EN">English</option>
+				<option value="M">Math</option>
+				<option value="S">Science</option>
+				<option value="SS">Social Studies</option>
+				<!--Add nepali?-->
+			</select>
+			<br/><br/>
+			Chapter		
+			<select id="dropdown_chapter">
+				<option value=""></option>
+				<option value="01">1</option>
+				<option value="02">2</option>
+				<option value="03">3</option>
+				<option value="04">4</option>
+				<option value="05">5</option>
+				<option value="06">6</option>
+				<option value="07">7</option>
+				<option value="08">8</option>
+			</select>
+			<br/><br/>
+			Section		
+			<select id="dropdown_section">
+				<option value=""></option>
+				<option value="01">1</option>
+				<option value="02">2</option>
+				<option value="03">3</option>
+				<option value="04">4</option>
+				<option value="05">5</option>
+				<option value="06">6</option>
+				<option value="07">7</option>
+				<option value="08">8</option>
+			</select>
+			<br/><br/>
+			File Type<br/>
+			<input type="checkbox" style="zoom:2" id="ft_image" name="image" >Image &nbsp;
+			<input type="checkbox" style="zoom:2" id="ft_video" name="video" >Video &nbsp;
+			<input type="checkbox" style="zoom:2" id="ft_audio" name="audio" >Audio<br/>
+			<input type="checkbox" style="zoom:2" id="ft_misc" name="misc" >Misc &nbsp;
+
+			<br/><br/>
+			<button onclick="querySearch()" type="button">go!!!</button>
+
+
+			<!--BEGIN COMMENT
+
 			<input type="checkbox" style="zoom:2" id="1" name="1" checked>1 &nbsp;
 			<input type="checkbox" style="zoom:2" id="2"name="2" checked>2 &nbsp;
 			<input type="checkbox" style="zoom:2" id="3"name="3" checked>3 &nbsp;
@@ -21,9 +81,9 @@
 			<input type="checkbox" style="zoom:2" id="5" name="5" checked>5 &nbsp;
 			<input type="checkbox" style="zoom:2" id="6"name="6" checked>6 &nbsp;
 			<input type="checkbox" style="zoom:2" id="7"name="7" checked>7 &nbsp;
-			<input type="checkbox" style="zoom:2" id="8"name="8" checked>8
+			<input type="checkbox" style="zoom:2" id="8"name="8" checked>8 -->
 
-			<hr>
+			<!--<hr>
 
 			<h3> Subject </h3>
 			<input type="checkbox" style="zoom:2" id="Math" name="Math" checked>Math &nbsp;
@@ -39,7 +99,7 @@
 			<input type="checkbox" style="zoom:2" id="Audio"name="Audio" checked>Audio &nbsp;
 			<input type="checkbox" style="zoom:2" id="Videos"name="Videos" checked>Videos &nbsp;
 			<input type="checkbox" style="zoom:2" id="Activities"name="Activities" checked>Activities &nbsp;
-			<input type="checkbox" style="zoom:2" id="Pictures"name="Pictures" checked>Pictures &nbsp;
+			<input type="checkbox" style="zoom:2" id="Pictures"name="Pictures" checked>Pictures &nbsp;-->
 
 		</form>
 
@@ -54,8 +114,12 @@
 
 	Title: <input type="text" name="title" id="titleString">
 	<button type="button" id="btnSave" onclick="save()">Save</button>
+<<<<<<< HEAD
 	<button type="button" id="btnPresent" onclick="location.href='present.html';">Present</button>
 	<div id= "displaybox"> HELLO </div>
+=======
+	<div id= "displaybox" style="overflow-y:auto;"> HELLO </div>
+>>>>>>> f80f482cf6de42841a6e8f984db08c18d9b0ef6e
 
 
 
