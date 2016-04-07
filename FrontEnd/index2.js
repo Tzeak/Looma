@@ -233,7 +233,7 @@ var querySearch = function() {
 	// 	'misc' : false
 	// };
 	$.get("../BackEnd/query.php", filterdata, function(filterdata) {
-		$("#displaybox").html(filterdata);
+		$("#resultsdiv").html(filterdata);
 		console.log(JSON.parse(filterdata));
 	}); //Send filter data to server via GET request
 
@@ -370,17 +370,11 @@ var querySearch = function() {
 				//console.log(searchArray[j].tag);
 				filterArray1.push(searchArray[j]);
 			}
-		}*/
+		}
 
 		
 
 		//grade filter
-<<<<<<< HEAD
-		for(i=0;i<searchArray.length;i++) {
-				console.log(searchArray[i].ch_id[0]);
-					resultArray.push(searchArray[i]);
-		}
-=======
 		for(i=0;i<filterArray1.length;i++) {
 			// for (j=1;j<9;j++) {
 			// 	console.log(filterArray1[i].prefix[0]);
@@ -388,8 +382,6 @@ var querySearch = function() {
 					resultArray.push(filterArray1[i]);
 			}
 		} 
->>>>>>> f80f482cf6de42841a6e8f984db08c18d9b0ef6e
-
 		console.log("result array:" + resultArray);
 
 
@@ -712,7 +704,7 @@ var createTimelineElement = function(itemString) {
 	}
 
 
-<<<<<<< HEAD
+/******************BEGIN COMMENT**************/
 /*var query = window.location.search;
 =======
 /* BEGIN COMMENT
@@ -763,11 +755,8 @@ for (var i = 0; i < timelineDiv.length; i++) {
     	//if((document.getElementsByClassName("timelinediv")[i].lastElementChild)!=null) {
 <<<<<<< HEAD
 
-*/
-=======
-END COMMENT */
+/************END COMMENT****************/
 
->>>>>>> f80f482cf6de42841a6e8f984db08c18d9b0ef6e
 var script = document.createElement('script');
 script.src = "https://code.jquery.com/ui/1.11.4/jquery-ui.js";
 script.type = 'text/javascript';
