@@ -69,131 +69,77 @@
 
 	<body onload="load()">
 		<div id="container">
-		<div id="sidebar">
-			    <button type="button" id="btnSave" onclick="location.href='index2.html';">Create New Lesson</button>
-    			
-		<form>
-			Search: <input type="text" name="search" id="string">
-			<button type="button" id="btnSave" onclick="lesson_search()">Search</button>
-			<!--<p id="button" onclick="querySearch()"> Submit </p> -->
-			
-		</form>
+			<div id="sidebar">
+				<button type="button" id="btnSave" onclick="location.href='index2.html';">Create New Lesson</button>
+					
+				<form>
+					Search: <input type="text" name="search" id="string">
+					<button type="button" id="btnSave" onclick="lesson_search()">Search</button>
+					<!--<p id="button" onclick="querySearch()"> Submit </p> -->
+					
+				</form>
 
-	</div>
+			</div> <!--sidebar-->
+			<div id = "wrapper">
+				<div class="lessonDiv" id="lessonDiv"></div>
+			</div><!--wrapper-->
+		</div> <!--container-->
 
-
-
-
-	<div id = "wrapper">
-    	
-    		<!--<form action="index2.html" method="GET" class="items">-->
-    				<div class="lessonDiv" id="lessonDiv"></div>
-
-    		</form>
-		  
-		  
-		
-	</div>
-
-
-	</div>
-
-	<div id="opendiv">
-	</div>
-
-
-
+		<div id="opendiv">
+		</div>
 	</body>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script src="jquery-1.12.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="jquery-1.12.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
-    <script>
-	    var lessons = [
-	    {
-	    	"_id" : "56d3bb9dfd78b74e370041a8", 
-	    	"title" : "Timeline 1"
-	    },
-	    {
-	    	"_id" : "56d3c5a0e96ff887a77c3c9e",
-	    	"title" : "Timeline 2"
-	    },
-	   	{
-	    	"_id" : "56d3c5d6e96ff887a77c3c9f",
-	    	"title" : "Timeline 3"
-	    }
-	    ];
-	    var timeline = [
-	    {
-			"_id" : "ObjectId('568dcdda9324a6f91e741082')",
-			"ch_id" : "1EN01",
-			"ft" : "mp4",
-			"MB" : 7.6,
-			"min" : "1:32",
-			"fn" : "Sesame_Street_Alphabet.mp4",
-			"dn" : "Sesame Street Alphabet"
-		},
-	    {
-		    "_id" : "ObjectId('568dcdda9324a6f91e74108f')",
-			"ch_id" : "2EN01",
-			"ft" : "mp3",
-			"MB" : 3,
-			"fn" : "Classroom_Song.mp3",
-			"dn" : "Classroom Song"
-	    },
-	    {
-		    "_id" : "ObjectId('568dcdda9324a6f91e741084')",
-			"ch_id" : "1EN02",
-			"ft" : "EP",
-			"fn" : 3122231,
-			"dn" : "EP Colour Identification"
-	    }
-	    ];
+<script>
+var load = function() {
+	//Retrieve all valid timelines
+	$(".lessonDiv").get("../BackEnd/timeline.json");
 
-	    var load = function() {
-	    	console.log("loadjson");
-		    for(i = 0; i < lessons.length; i++) {
-		    	//console.log("calling createNewListElement");
-				var rElement = createNewListElement(lessons[i].title, lessons[i]._id);
-			    lessonDiv.appendChild(rElement);
-			}
-		}
-		var createNewListElement = function(itemString, itemId) {
-				//searchArray.push(lessons[i]);
-			console.log("creating list element...");
-		    var listItem = document.createElement("li"); 
-			var id = document.createAttribute("id");        // Create a "href" attribute
-			id.value = "title";            // Set the value of the href attribute
-			listItem.setAttributeNode(id);
-			var listLabel = document.createElement("label");
-			listLabel.innerText=itemString;
-			listItem.appendChild(listLabel);
-			var editButton = document.createElement("button");
-			editButton.innerText = "Edit";
-			editButton.className = "Edit";
-			
-			/*var link = document.createAttribute("action");        // Create a "href" attribute
-			link.value = "index2.html";            // Set the value of the href attribute
-			editButton.setAttributeNode(link);*/
-			var presentButton = document.createElement("button");
-			presentButton.innerText = "Present";
-			presentButton.className = "Present";
-			
-			//id refers to the selected lesson
-			var id = document.createAttribute("id");        // Create a "href" attribute
-			id.value = itemId;            // Set the value of the href attribute
-			editButton.setAttributeNode(id);
-			var id2 = document.createAttribute("id");        // Create a "href" attribute
-			id2.value = itemId;            // Set the value of the href attribute
-			presentButton.setAttributeNode(id2);
-			editButton.onclick = openTimeline;
-			presentButton.onclick = presentTimeline;
-			listItem.appendChild(editButton);
-			listItem.appendChild(presentButton);		
-			return listItem;
-		}
+	console.log("loadjson");
+	for(i = 0; i < lessons.length; i++) {
+		//console.log("calling createNewListElement");
+		var rElement = createNewListElement(lessons[i].title, lessons[i]._id);
+		lessonDiv.appendChild(rElement);
+	}
+}
+var createNewListElement = function(itemString, itemId) {
+		//searchArray.push(lessons[i]);
+	console.log("creating list element...");
+	var listItem = document.createElement("li"); 
+	var id = document.createAttribute("id");        // Create a "href" attribute
+	id.value = "title";            // Set the value of the href attribute
+	listItem.setAttributeNode(id);
+	var listLabel = document.createElement("label");
+	listLabel.innerText=itemString;
+	listItem.appendChild(listLabel);
+	var editButton = document.createElement("button");
+	editButton.innerText = "Edit";
+	editButton.className = "Edit";
+	
+	/*var link = document.createAttribute("action");        // Create a "href" attribute
+	link.value = "index2.html";            // Set the value of the href attribute
+	editButton.setAttributeNode(link);*/
+	var presentButton = document.createElement("button");
+	presentButton.innerText = "Present";
+	presentButton.className = "Present";
+	
+	//id refers to the selected lesson
+	var id = document.createAttribute("id");        // Create a "href" attribute
+	id.value = itemId;            // Set the value of the href attribute
+	editButton.setAttributeNode(id);
+	var id2 = document.createAttribute("id");        // Create a "href" attribute
+	id2.value = itemId;            // Set the value of the href attribute
+	presentButton.setAttributeNode(id2);
+	editButton.onclick = openTimeline;
+	presentButton.onclick = presentTimeline;
+	listItem.appendChild(editButton);
+	listItem.appendChild(presentButton);		
+	return listItem;
+}
 function openTimeline() {
 			
 			console.log("opentTimeline...");
