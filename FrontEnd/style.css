@@ -1,3 +1,11 @@
+p {
+	font-size:12px;
+}
+
+div {
+	overflow:auto;
+}
+
 #container {
 	width: 100%;
 }
@@ -147,3 +155,19 @@ img {
 
 button {display:inline;}
 
+/* #resultitem is the id of the divs that show up in results */
+#resultitem {
+	padding:10px;
+	border-bottom:1px solid #000;
+	line-height:11px;
+}
+
+#resultsimg {
+	float:left;
+	width:100px;
+	padding-right: 10px;
+}
+
+#collectionTitle {
+	line-height:10px;
+}
