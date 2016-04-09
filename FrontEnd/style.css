@@ -1,10 +1,10 @@
 p {
 	font-size:12px;
 }
-
-div {
+ 
+/*div {
 	overflow:auto;
-}
+}*/
 
 #container {
 	width: 100%;
@@ -27,12 +27,14 @@ li:hover {
 .timelinediv {
   border: 1px solid #000;
   min-height:120px;
-  width:90px;
+  width:200px;
   display:inline-block; 
   margin:5px;
   padding: 15px;
   float: left;
   font-size: 15px;
+  max-height:100px;
+  overflow-y:scroll;
 }
 
 .button {
@@ -41,8 +43,15 @@ li:hover {
 }
 
 .timeline{
-	width: 1500px;
+	width:9999px;
 	height:100px;
+/*	background:white;
+*//*	clear:all;
+*/}
+
+#timelinewhole {
+	clear:all;
+	background-color:white;
 }
 
 .drop {
@@ -66,6 +75,7 @@ li:hover {
   position: relative;
   float: right;
   width: 58%;
+  max-width:;
   margin-right: 25px;
   margin-top: 25px;
   height:160px;
@@ -117,10 +127,6 @@ body {
 	height:450px;
 	font-size: 15px;
 
-}
-#timelineWhole {
-	background:white;
-	clear:all;
 }
 
 .boxdiv{

@@ -151,12 +151,12 @@ var storeFilterData = function(filterdata) {
 var printFilterData = function(filterdata_object) {
 	// var resultArray = ["apple", "orange", "banana", "penis"];
 
-/* //////////// BEGIN LOOP
 // INFO: I tried to create a loop that would generate everything automatically depending on what collection it was in.
 // The problem is when I try to use the variable name when accessing the object: "filterdata_object.currentCollection".
 // It takes that as a literal. So, "filterdata_object.chapter" works, but even if "currentCollection" = "chapter",
 // "filterdata_object.currentCollection" doesn't work. :(
 
+/* //////////// BEGIN LOOP
 	// A loop that prints the data in each collection array
 	for (var key in filterdata_object) {
 		var currentCollection = key;	// The current collection that it's printing through
@@ -254,6 +254,7 @@ var printFilterData = function(filterdata_object) {
 		currentResultDiv.appendChild(rElement);
 	}
 
+
 	$("#displaybox").html(currentResultDiv);
 
 	// var filterdata_array = [];
@@ -275,16 +276,26 @@ var createChapterResults = function(item) {
 	div.appendChild(image);
 
 	var loomaID = document.createElement("p");
+	loomaID.id = "result_ID";
 	loomaID.innerHTML = "<b>ID: </b>" + item._id;
 	div.appendChild(loomaID);
 
 	var displayname = document.createElement("p");
+	displayname.id = "result_dn";
 	displayname.innerHTML = "<b>Name: </b>" + item.dn;
 	div.appendChild(displayname);
 
 	var nepaliname = document.createElement("p");
+	nepaliname.id = "result_ndn";
 	nepaliname.innerHTML = "<b>Nepali Name: </b>" + item.ndn;
 	div.appendChild(nepaliname);
+
+	var addButton = document.createElement("button");
+	addButton.innerText = "Add";
+	addButton.className = "add";
+	addButton.onclick = addJSON;
+	div.appendChild(addButton);
+
 
 	return div;
 }
@@ -300,24 +311,35 @@ var createTextbookResults = function(item) {
 	div.appendChild(image);
 
 	var loomaID = document.createElement("p");
+	loomaID.id = "result_ID";
 	loomaID.innerHTML = "<b>ID: </b>" + item.prefix;
 	div.appendChild(loomaID);
 
 	var displayname = document.createElement("p");
+	displayname.id = "result_dn";
 	displayname.innerHTML = "<b>Name: </b>" + item.dn;
 	div.appendChild(displayname);
 
 	var nepaliname = document.createElement("p");
+	nepaliname.id = "result_ndn";
 	nepaliname.innerHTML = "<b>Nepali Name: </b>" + item.ndn;
 	div.appendChild(nepaliname);
 
 	var subject = document.createElement("p");
+	subject.id = "result_subject";
 	subject.innerHTML = "<b>Subject: </b>" + item.subject;
 	div.appendChild(subject);
 
 	var filepath = document.createElement("p");
+	filepath.id = "result_fp";
 	filepath.innerHTML = "<b>Filepath: </b>" + item.fp;
 	div.appendChild(filepath);
+
+	var addButton = document.createElement("button");
+	addButton.innerText = "Add";
+	addButton.className = "add";
+	addButton.onclick = addJSON;
+	div.appendChild(addButton);
 
 	return div;
 }
@@ -333,20 +355,30 @@ var createActdictResults = function(item) {
 	div.appendChild(image);
 
 	var loomaID = document.createElement("p");
+	loomaID.id = "result_ID";
 	loomaID.innerHTML = "<b>ID: </b>" + item.ch_id;
 	div.appendChild(loomaID);
 
 	var displayname = document.createElement("p");
+	displayname.id = "result_dn";
 	displayname.innerHTML = "<b>Name: </b>" + item.dn;
 	div.appendChild(displayname);
 
 	var subject = document.createElement("p");
+	subject.id = "result_subject";
 	subject.innerHTML = "<b>Filename: </b>" + item.fn;
 	div.appendChild(subject);
 
 	var filepath = document.createElement("p");
+	filepath.id = "result_fp";
 	filepath.innerHTML = "<b>Filtetype: </b>" + item.ft;
 	div.appendChild(filepath);
+
+	var addButton = document.createElement("button");
+	addButton.innerText = "Add";
+	addButton.className = "add";
+	addButton.onclick = addJSON;
+	div.appendChild(addButton);
 
 	return div;
 }
@@ -592,6 +624,21 @@ var addJSON = function() {
 	// Change button class to "remove"
 	newListItem.querySelector("button.add").classList.remove("add");
 	newListItem.querySelector("button").classList.add("remove");
+
+	// Change size of image & add break
+	newListItem.querySelector("img#resultsimg").style.width = "70px";
+	// newListItem.querySelector("img#resultsimg").style.display = "block";
+
+	// Delete unnecessary attributes
+	if(newListItem.querySelector("p#result_subject")) {
+		newListItem.querySelector("p#result_subject").remove();
+	}
+	// newListItem.querySelector("p#chapterID").remove();
+
+	// Make the timeline div wider
+	// newListItem.querySelector("div.timelinediv").style.width = "500px";
+	// console.log(typeof(newListItem.parentNode));
+	// newListItem.parentNode.style.width = "500px";
 
 	// Modify new "remove" button
 	var newRemoveButton = newListItem.querySelector("button.remove");
