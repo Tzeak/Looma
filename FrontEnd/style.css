@@ -1,113 +1,32 @@
-p {
-	font-size:12px;
-}
- 
 /*div {
 	overflow:auto;
 }*/
 
+
+/*********** Entire interface ******************/
 #container {
 	width: 100%;
 }
-.boxdiv {
-  border: 1px solid #000;
-  min-height:120px;
-  width:90px;
-  display:inline-block;
-  margin:5px;
-  padding: 15px;
-}
-li:hover {
-	background-color: lightgray;
-	color: black;
-	border-radius: 5px;
-	padding:0px;
-}
 
-.timelinediv {
-  border: 1px solid #000;
-  min-height:120px;
-  width:200px;
-  display:inline-block; 
-  margin:5px;
-  padding: 15px;
-  float: left;
-  font-size: 15px;
-  max-height:100px;
-  overflow-y:scroll;
-}
-
-.button {
-	position: relative;
-	float: right;
-}
-
-.timeline{
-	width:9999px;
-	height:100px;
-/*	background:white;
-*//*	clear:all;
-*/}
-
-#timelinewhole {
-	clear:all;
-	background-color:white;
-}
-
-.drop {
-  min-height:120px;
-  width:90px;
-  display:inline-block;
-  margin:5px;
-  padding: 5px;
-}
-
-#results {
-	width: 80%;
-	min-height: 300px;
-}
-#wrapper {
-	border: 1px solid #000;
-  /*min-height:50px; min-width:100px; 
-  display:inline-block;*/
-  margin:5px;
-  padding: 15px;
-  position: relative;
-  float: right;
-  width: 58%;
-  max-width:;
-  margin-right: 25px;
-  margin-top: 25px;
-  height:160px;
-
-  overflow-x:scroll;
-  overflow-y:hidden;
-
-
-}
-#btnSave {
-	float: right;
-}
-#button {
-	color:white;
-	background:#A1A850;
-	padding: 10px;
-	border-radius:5px;
-	width: 70px;
-}
-button {display:inline;}
-#sidebar {
-	float:left;
-	background: lightgray;
-	padding: 20px;
-	margin: 30px;
-	width: 30%;
-}
 body {
 	font-family: Arial;
 	font-size: 20px;
 }
-#string {
+
+p {
+	font-size:12px;
+}
+
+img {
+	width: 60px;
+}
+
+button {display:inline;}
+
+
+/************* Search Module *********************/
+
+#searchString {
 	font-family: Arial;
 	font-size: 20px;
 	height: 50px;
@@ -117,7 +36,42 @@ body {
 	padding:10px;
 	border-radius:5px;
 }
-#resultsdiv {
+
+/* green submit button */
+#button {
+	color:white;
+	background:#A1A850;
+	padding: 10px;
+	border-radius:5px;
+	width: 70px;
+}
+
+
+/********** Sidebar (search, filter, results) ************/
+#sidebar {
+	float:left;
+	background: lightgray;
+	padding: 20px;
+	margin: 30px;
+	width: 30%;
+}
+
+
+
+/*************** Results Module ***********************/
+.outerResultsDiv {
+  border: 1px solid #000;
+  /*min-height:120px;
+  width:90px;*/
+  display:inline-block;
+  margin:5px;
+  padding: 15px;
+  width: 80%;
+  height:500px;
+  background: gray;
+}
+
+#resultsDiv {
 	background:gray;
 	color:white;
 	border:none;
@@ -129,37 +83,13 @@ body {
 
 }
 
-.boxdiv{
-	background: gray;
-	height:500px;
 
+li:hover {
+	background-color: lightgray;
+	color: black;
+	border-radius: 5px;
+	padding:0px;
 }
-
-#displaybox {
-	width: 60%;
-	height: 665px;
-	background: gray;
-	position: relative;
-	float: right;
-	margin-top: 28px;
-	margin-right: 25px;
-}
-
-#dummy {
-	border: 1px solid #000;
-  min-height:50px; min-width:90px;
-  display:inline-block;
-  margin:5px;
-  padding: 15px;
-  background: blue;
-}
-
-img {
-	width: 60px;
-}
-
-
-button {display:inline;}
 
 /* #resultitem is the id of the divs that show up in results */
 #resultitem {
@@ -177,3 +107,71 @@ button {display:inline;}
 #collectionTitle {
 	line-height:10px;
 }
+
+
+
+/************* Timeline module ***************/
+.timelinediv {
+  border: 1px solid #000;
+  min-height:120px;
+  width:200px;
+  display:inline-block; 
+  margin:5px;
+  padding: 15px;
+  float: left;
+  font-size: 15px;
+  max-height:100px;
+  overflow-y:scroll;
+}
+
+.timelineEntire{
+	width:9999px;
+	height:100px;
+/*	background:white;
+*//*	clear:all;
+*/}
+
+#timelineDisplay {
+	clear:all;
+	background-color:white;
+}
+
+
+#wrapper {
+	border: 1px solid #000;
+  /*min-height:50px; min-width:100px; 
+  display:inline-block;*/
+  margin:5px;
+  padding: 15px;
+  position: relative;
+  float: right;
+  width: 58%;
+  max-width:;
+  margin-right: 25px;
+  margin-top: 25px;
+  height:160px;
+  overflow-x:scroll;
+  overflow-y:hidden;
+}
+
+
+/*************** Preview Mode ************************/
+#displaybox {
+	width: 60%;
+	height: 665px;
+	background: gray;
+	position: relative;
+	float: right;
+	margin-top: 28px;
+	margin-right: 25px;
+}
+
+
+/**************** Save Module ********************/
+#btnSave {
+	float: right;
+}
+
+
+
+

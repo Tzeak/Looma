@@ -8,7 +8,7 @@
 		<div id="container">
 		<div id="sidebar">
 		<form>
-			Search: <input type="text" name="search" id="string">
+			Search: <input type="text" name="search" id="searchString">
 			<p id="button" onclick="querySearch()"> Submit </p>
 			<!--<input type="submit" value="Submit" onclick="querySearch()"> -->
 			
@@ -103,9 +103,9 @@
 
 		</form>
 
-			<div class="boxdiv" id="results">
+			<div class="outerResultsDiv">
 				    <p><b>Results</b></p>
-			<div id="resultsdiv">
+			<div id="resultsDiv">
 			    <ul id="resultsDivUL">
 			    </ul>
 		   	</div>
@@ -121,7 +121,7 @@
     <br/><br/><br/>
 
    <div id = "wrapper">
-    	<div class="timeline" id="timelinewhole">
+    	<div class="timelineEntire" id="timelineDisplay">
 		    <div class="timelinediv"></div>
 		    <div class="timelinediv"></div>
 		    <div class="timelinediv"></div>
@@ -151,7 +151,7 @@
 
    <script>
         $(document).ready(function () {
-            $("#timelineWhole").sortable({
+            $("#timelineDisplay").sortable({
             //$('#btnSave').hide();
                 opacity: 0.7,
                 revert: true,   //Animates
