@@ -185,7 +185,6 @@ echo json_encode($final_array);
 			$mediatype .= "(EP|html)";
 			$combo = true;
 		}
-		echo $mediatype;
 		if ($mediatype == "")
 		{
 			$final_array = array();

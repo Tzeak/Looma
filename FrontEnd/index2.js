@@ -144,6 +144,7 @@ var querySearch = function() {
 }
 
 var storeFilterData = function(filterdata) {
+	console.log(filterdata);
 	var filterdata_object = JSON.parse(filterdata);
 	return filterdata_object;
 }
@@ -371,7 +372,7 @@ var createActdictResults = function(item) {
 
 	var filepath = document.createElement("p");
 	filepath.id = "result_fp";
-	filepath.innerHTML = "<b>Filtetype: </b>" + item.ft;
+	filepath.innerHTML = "<b>Filetype: </b>" + item.ft;
 	div.appendChild(filepath);
 
 	var addButton = document.createElement("button");
