@@ -97,9 +97,24 @@
 <script>
 var load = function() {
 	//Retrieve all valid timelines
-	$(".lessonDiv").get("../BackEnd/timeline.json");
+	timelineID = "ObjectId('5706f4eece85a0bb090041aa')";
+	$.post("../BackEnd/open.php", timelineID, function(data) {
+     	$("#opendiv").html(data);
+     	console.log(data);
+     }); //Send data to server via post request
 
-	console.log("loadjson");
+	// $.get("../BackEnd/timelines.json", function(data) {
+	// 	$("#lessonDiv").text(data);
+	// 	//var parsedData = JSON.parse(data);
+	// 	console.log(data);
+	// 	console.log(typeof(data));
+	// 	data = JSON.parse(data);
+	// });
+
+
+	//console.log("Roshan Sucks: " + roshanSUCKS);
+	lessons = Array();
+
 	for(i = 0; i < lessons.length; i++) {
 		//console.log("calling createNewListElement");
 		var rElement = createNewListElement(lessons[i].title, lessons[i]._id);
