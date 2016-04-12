@@ -182,7 +182,17 @@
 
         })
 
-		
+		var ft = "mp4";
+
+		if(ft == "mp4") {
+			document.querySelector("div#displaybox").innerHTML = '<video width="100%" height="100%" controls> <source src="media/video.mp4" type="video/mp4"> </video>';
+		}
+		else if(ft=="mp3") {
+			document.querySelector("div#displaybox").innerHTML = '<audio controls> <source src="media/audio.mp3" type="audio/mpeg"></audio>';
+		}
+		/*PDF 
+		else if(ft=="") */
+			
 	</script>
 	<!--<script type="text/javascript" src="index2.js"></script>-->
 	<script type="text/javascript" src="index2.js"></script>
