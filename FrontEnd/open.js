@@ -1,29 +1,21 @@
 var load = function() {
 	//Retrieve all valid timelines
-	timelineID = "ObjectId('5706f4eece85a0bb090041aa')";
-	$.post("../BackEnd/open.php", timelineID, function(data) {
-     	$("#opendiv").html(data);
-     	console.log(data);
-     }); //Send data to server via post request
+	console.log("load() called");
 
-	// $.get("../BackEnd/timelines.json", function(data) {
-	// 	$("#lessonDiv").text(data);
-	// 	//var parsedData = JSON.parse(data);
-	// 	console.log(data);
-	// 	console.log(typeof(data));
-	// 	data = JSON.parse(data);
-	// });
+	$.getJSON("../BackEnd/timelines.json", function(timelinesJSON) {
+		console.log(timelinesJSON);
+		$.each(timelinesJSON, function(key, val) { 
+			//Print each timeline to open.html
+			console.log("key: " + key);
+			var button = document.createElement("button").innerText = "Load";
+			$('#lessonDiv').append("<li>" + val.name);
+			$('#lessonDiv').append(button);
 
+		});
 
-	//console.log("Roshan Sucks: " + roshanSUCKS);
-	lessons = Array();
-
-	for(i = 0; i < lessons.length; i++) {
-		//console.log("calling createNewListElement");
-		var rElement = createNewListElement(lessons[i].title, lessons[i]._id);
-		lessonDiv.appendChild(rElement);
-	}
+	 }).fail(function(jqXHR){console.log(jqXHR.status)});
 }
+
 var createNewListElement = function(itemString, itemId) {
 		//searchArray.push(lessons[i]);
 	console.log("creating list element...");
