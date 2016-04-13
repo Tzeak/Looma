@@ -1,45 +1,5 @@
-#container {
-	width: 100%;
-}
-.button {
-	position: relative;
-	float: right;
-}
-#title:hover {
-	background-color: lightgray;
-    color: black;
-    border-radius: 5px;
-    padding:0px;
-}
-#lessonDiv {
-	background-color:gray;
-	color:white;
-	padding:2px;
-	margin:auto;
-	text-align: center;
-	width:80%;
-	border:solid;
-	border-color: white;
-	border-width:3px;
-	border-radius: 10px;
-}
-#button {
-	color:white;
-	background:#A1A850;
-	padding: 10px;
-	border-radius:5px;
-	width: 70px;
-}
-button {
-	display:inline;
-}
-#sidebar {
-	float:middle;
-	background: lightgray;
-	padding: 20px;
-	width: 80%;
-	margin: 15 auto;
-}
+
+
 body {
 	font-family: Arial;
 	font-size: 20px;

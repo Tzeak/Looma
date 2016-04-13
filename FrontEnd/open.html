@@ -1,22 +1,22 @@
  <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="openStyle.css">
+		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 
 	<body onload="load()">
 		<div id="container">
-			<div id="sidebar">
-				<button type="button" id="btnSave" onclick="location.href='index2.html';">Create New Lesson</button>
+			<div id="header">
+				<button type="button" id="btnNewLesson" onclick="location.href='index2.html';">Create New Lesson</button>
 					
-				<form>
+				<form id = "openForm">
 					Search: <input type="text" name="search" id="string">
-					<button type="button" id="btnSave" onclick="lesson_search()">Search</button>
+					<button type="button" id="btnSearch" onclick="lesson_search()">Search</button>
 					<!--<p id="button" onclick="querySearch()"> Submit </p> -->
 					
 				</form>
 
 			</div> <!--sidebar-->
-			<div id = "wrapper">
+			<div id = "wrap">
 				<div class="lessonDiv" id="lessonDiv"></div>
 			</div><!--wrapper-->
 		</div> <!--container-->
