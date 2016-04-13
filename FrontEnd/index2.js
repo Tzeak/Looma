@@ -74,7 +74,7 @@ var library = [
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 var library2 = [
-//AUDIO FILE mp4
+//Video FILE mp4
     {
 		"_id" : "ObjectId('568dcdda9324a6f91e741082')",
 		"ch_id" : "1EN01",
@@ -492,9 +492,21 @@ var createNewListElement = function(itemString) {
 		filetype.value = resultArray[i].filetype; 
 		listItem.setAttributeNode(filetype);
 
+		/****************FILEPATH ATTRIBUTE 4/13 ****************/
+
 		var filepath = document.createAttribute("data-fp");   
-		filepath.value = resultArray[i].fp; 
+		//filepath.value = resultArray[i].fp; 
+
+		if(resultArray[i].ft == "mp3") {
+			filepath.value = "audio/" + fn;
+		}
+		else if (resultArray[i].ft == "mp4") {
+			filepath.value = "videos/" + fn; 
+		
+
 		listItem.setAttributeNode(filepath);
+
+		/**************** END FILPATH ATTRIBUTE 4/13 ****************/
 
 		var filename = document.createAttribute("data-fn");       
 		filename.value = resultArray[i].dn;         
@@ -589,6 +601,40 @@ var createNewListElement = function(itemString) {
 		listItem.appendChild(addButton);
 
 	  	return listItem;
+
+}
+
+/**************PREVIEW********************/
+var preview = function(){
+	var ft = null;
+	var subject =null;
+	var part = null;
+	
+
+	/*media type variables*/
+	var pn = 1;
+	var pdf = "test.pdf";
+	var audio = "media/audio.mp3";
+	var video = "media/video.mp4";
+
+	if(ft == "mp4") {
+		document.querySelector("div#displaybox").innerHTML = '<video width="100%" height="100%" controls> <source src="' + video + '" type="video/mp4"> </video>';
+	}
+	else if(ft=="mp3") {
+		document.querySelector("div#displaybox").innerHTML = '<audio controls> <source src="' + audio + '" type="audio/mpeg"></audio>';
+	}
+	/*PDF */
+	else if(subject!=null) {
+		document.querySelector("div#displaybox").innerHTML = '<embed src="' + pdf + '" width="100%" height="100%" type="application/pdf">';
+	}
+	/*Definition*/
+	else if(part!=null) {
+		document.querySelector("div#displaybox").innerHTML = library2[7].def;
+	}
+	/*chapter (page number of textbook)*/
+	else if(pn!=null) {
+		document.querySelector("div#displaybox").innerHTML = '<embed src="test.pdf#page=' + pn + '" width="100%" height="100%" type="application/pdf">';
+	}
 
 }
 
