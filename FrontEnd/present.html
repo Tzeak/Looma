@@ -1,164 +1,13 @@
 <html>
 	<head>
-
-		<style>
-
-			#container {
-				width: 100%;
-			}
-			.boxdiv {
-			  border: 1px solid #000;
-			  min-height:120px;
-			  width:90px;
-			  display:inline-block;
-			  margin:5px;
-			  padding: 15px;
-			}
-			li:hover {
-				background-color: lightgray;
-			    color: black;
-			    border-radius: 5px;
-			    padding:0px;
-			}
-
-			.timelinediv {
-			  border: 1px solid #000;
-			  min-height:120px;
-			  width:90px;
-			  display:inline-block; 
-			  margin:5px;
-			  padding: 15px;
-			  float: left;
-			  font-size: 15px;
-			}
-
-			.button {
-				position: relative;
-				float: right;
-			}
-
-			.timeline{
-				width: 1500px;
-				height:100px;
-
-			}
-
-			.drop {
-			  min-height:120px;
-			  width:90px;
-			  display:inline-block;
-			  margin:5px;
-			  padding: 5px;
-			}
-
-			#results {
-				width: 80%;
-				min-height: 300px;
-			}
-			#wrapper {
-				border: 1px solid #000;
-			  /*min-height:50px; min-width:100px; 
-			  display:inline-block;*/
-			  padding: 15px;
-			  width: 90%;
-			  margin: 0 auto;
-			  /*margin-right: 25px;
-			  margin-top: 25px;*/
-			  height:160px;
-
-			  overflow-x:scroll;
-			  overflow-y:hidden;
-
-
-			}
-			#btnSave {
-				float: right;
-			}
-			#button {
-				color:white;
-				background:#A1A850;
-				padding: 10px;
-				border-radius:5px;
-				width: 70px;
-			}
-			button {display:inline;}
-			#sidebar {
-				float:left;
-				background: lightgray;
-				padding: 20px;
-				margin: 30px;
-				width: 30%;
-			}
-			body {
-				font-family: Arial;
-				font-size: 20px;
-			}
-			#string {
-				font-family: Arial;
-				font-size: 20px;
-				height: 50px;
-				width: 250px;
-				margin-right: 30px;
-				background:white;
-				padding:10px;
-				border-radius:5px;
-			}
-			#resultsdiv {
-				background:gray;
-				color:white;
-				border:none;
-
-				overflow-x:hidden;
-				overflow-y:scroll;
-				height:450px;
-				font-size: 15px;
-
-			}
-			#timelineWhole {
-				background:white;
-				clear:all;
-			}
-
-			.boxdiv{
-				background: gray;
-				height:500px;
-		
-			}
-
-			#displaybox {
-				width: 90%;
-				height: 665px;
-				background: gray;
-				position: relative;
-				margin:20 auto;
-				/*margin-top: 28px;
-				margin-right: 25px;*/
-			}
-
-			#dummy {
-				border: 1px solid #000;
-			  min-height:50px; min-width:90px;
-			  display:inline-block;
-			  margin:5px;
-			  padding: 15px;
-			  background: blue;
-			}
-
-			img {
-				width: 60px;
-			}
-
-
-			button {display:inline;}
-
-		</style>
+		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 
 	<body>
 		<div id="container">
 	Title: <!-- GET TITLE FROM BACKEND OBJECT (lesson plan info that the backend send to front) -->
 	<button type="button" id="btnSave" onclick="location.href='index2.html'">Edit Mode</button>
-	<div id= "displaybox"> HELLO </div>
+	<div id= "presentdisplaybox"> HELLO </div>
 
 
 
@@ -173,7 +22,7 @@
 	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
     </div>-->
 
-   <div id = "wrapper">
+   <div id = "presentwrapper">
     	<div class="timeline" id="timelineWhole">
 		    <div class="timelinediv"></div>
 		    <div class="timelinediv"></div>
