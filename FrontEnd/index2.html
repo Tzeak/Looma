@@ -8,14 +8,14 @@
 		<div id="container">
 		<div id="sidebar">
 		<form>
-			Search: <input type="text" name="search" id="string">
+			Search: <input type="text" name="search" id="searchString">
 			<p id="button" onclick="querySearch()"> Submit </p>
 			<!--<input type="submit" value="Submit" onclick="querySearch()"> -->
 			
 			
 			Grade Level
 			<select id="dropdown_grade">
-				<option value=""></option>
+				<option value="3">3</option>
 				<option value="1">1</option>
 				<option value="2">2</option>
 				<option value="3">3</option>
@@ -28,7 +28,7 @@
 			<br/><br/>
 			Subject		
 			<select id="dropdown_subject">
-				<option value=""></option>
+				<option value="SS">SS</option>
 				<option value="EN">English</option>
 				<option value="M">Math</option>
 				<option value="S">Science</option>
@@ -39,27 +39,27 @@
 			Chapter		
 			<select id="dropdown_chapter">
 				<option value=""></option>
-				<option value="01">1</option>
-				<option value="02">2</option>
-				<option value="03">3</option>
-				<option value="04">4</option>
-				<option value="05">5</option>
-				<option value="06">6</option>
-				<option value="07">7</option>
-				<option value="08">8</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
 			</select>
 			<br/><br/>
 			Section		
 			<select id="dropdown_section">
 				<option value=""></option>
-				<option value="01">1</option>
-				<option value="02">2</option>
-				<option value="03">3</option>
-				<option value="04">4</option>
-				<option value="05">5</option>
-				<option value="06">6</option>
-				<option value="07">7</option>
-				<option value="08">8</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
 			</select>
 			<br/><br/>
 			File Type<br/>
@@ -103,9 +103,9 @@
 
 		</form>
 
-			<div class="boxdiv" id="results">
+			<div class="outerResultsDiv">
 				    <p><b>Results</b></p>
-			<div id="resultsdiv">
+			<div id="resultsDiv">
 			    <ul id="resultsDivUL">
 			    </ul>
 		   	</div>
@@ -115,20 +115,23 @@
 	Title: <input type="text" name="title" id="titleString">
 	<button type="button" id="btnSave" onclick="save()">Save</button>
 
-	<button type="button" id="btnPresent" onclick="location.href='present.html';">Present</button>
+	
+	<!-- <button type="button" id="btnPresent" onclick="location.href='present.html';">Present</button>
 	<div id= "displaybox" style="overflow-y:auto;"> 
 		<embed src="test.pdf" width="100%" height="100%" type='application/pdf'>
-		<!--<object data="test.pdf" type="application/pdf" width="600" height="800">
+		<object data="test.pdf" type="application/pdf" width="600" height="800">
         alt : <a href="test.pdf">test.pdf</a>
-    	</object> -->
-	 </div>
+    	</object> 
+	 </div> -->
+
+	<div id= "displaybox" style="overflow-y:auto;"></div>
 
 
 
     <br/><br/><br/>
 
    <div id = "wrapper">
-    	<div class="timeline" id="timelineWhole">
+    	<div class="timelineEntire" id="timelineDisplay">
 		    <div class="timelinediv"></div>
 		    <div class="timelinediv"></div>
 		    <div class="timelinediv"></div>
@@ -158,7 +161,7 @@
 
    <script>
         $(document).ready(function () {
-            $("#timelineWhole").sortable({
+            $("#timelineDisplay").sortable({
             //$('#btnSave').hide();
                 opacity: 0.7,
                 revert: true,   //Animates

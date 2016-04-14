@@ -203,6 +203,7 @@ var timeline = [
 
 var resultArray = [];
 
+var displaybox = document.querySelector("div#displaybox");
 
 
 var querySearch = function() {
@@ -233,11 +234,325 @@ var querySearch = function() {
 	// 	'misc' : false
 	// };
 	$.get("../BackEnd/query.php", filterdata, function(filterdata) {
-		$("#resultsdiv").html(filterdata);
-		console.log(JSON.parse(filterdata));
+
+		// $("#displaybox").html("hi");
+		// console.log(JSON.parse(filterdata));
+		var filterdata_object = storeFilterData(filterdata);
+		console.log(filterdata_object);
+		printFilterData(filterdata_object);
 	}); //Send filter data to server via GET request
 
 }
+
+var storeFilterData = function(filterdata) {
+	console.log(filterdata);
+	var filterdata_object = JSON.parse(filterdata);
+	return filterdata_object;
+}
+
+var printFilterData = function(filterdata_object) {
+	// var resultArray = ["apple", "orange", "banana", "penis"];
+
+// INFO: I tried to create a loop that would generate everything automatically depending on what collection it was in.
+// The problem is when I try to use the variable name when accessing the object: "filterdata_object.currentCollection".
+// It takes that as a literal. So, "filterdata_object.chapter" works, but even if "currentCollection" = "chapter",
+// "filterdata_object.currentCollection" doesn't work. :(
+
+/* //////////// BEGIN LOOP
+	// A loop that prints the data in each collection array
+	for (var key in filterdata_object) {
+		var currentCollection = key;	// The current collection that it's printing through
+		var currentCollection_array = filterdata_object[currentCollection];
+		console.log(currentCollection);
+
+		// Heading of the collection section
+		var sectionHeading = document.createElement("h1");
+		sectionHeading.id = "collectionTitle";
+		var collectionArray_length = filterdata_object.currentCollection.length;
+		console.log(collectionArray_length);
+		if (collectionArray_length == 1) {
+			sectionHeading.innerHTML = "<h3>" + currentCollection + "(" + collectionArray_length + " Result)</h3>";
+		} 
+		else {
+			sectionHeading.innerHTML = "<h3>" + currentCollection + "(" + collectionArray_length + " Results)</h3>";
+		}
+		displaybox.appendChild(sectionHeading);
+
+		// Print actual collection info
+		if (currentCollection == "chapter") {
+			for(var i=0; i<collectionArray_length; i++) {
+				var rElement = createChapterResults(filterdata_object.currentCollection[i])
+				// var rElement = createChapterResults(resultArray[i]);
+				displaybox.appendChild(rElement);
+			}
+		}
+		else if (currentCollection == "textbook") {
+			for(var i=0; i<collectionArray_length; i++) {
+				var rElement = createTextbookResults(filterdata_object.currentCollection[i])
+				// var rElement = createChapterResults(resultArray[i]);
+				displaybox.appendChild(rElement);
+			}
+		}
+	}
+*/ ////////// END LOOP
+
+
+	// Print Chapter array
+	var currentResultDiv = document.createElement("div");
+	currentResultDiv.id = "currentResultDiv";
+	var collection = document.createElement("h1");
+	collection.id = "collectionTitle";
+	var arraylength = filterdata_object.chapter.length;
+	if (arraylength == 1) {
+		collection.innerHTML = "<h3>Chapters (" + arraylength + " Result)</h3>";
+	} 
+	else {
+		collection.innerHTML = "<h3>Chapters (" + arraylength + " Results)</h3>";
+	}
+	currentResultDiv.appendChild(collection);
+
+	for(var i=0; i<filterdata_object.chapter.length; i++) {
+		var rElement = createChapterResults(filterdata_object.chapter[i])
+		// var rElement = createChapterResults(resultArray[i]);
+		currentResultDiv.appendChild(rElement);
+	}
+
+
+	// Print Textbooks array
+	var collection = document.createElement("h1");
+	collection.id = "collectionTitle";
+
+	var arraylength = filterdata_object.textbook.length;
+	if (arraylength == 1) {
+		collection.innerHTML = "<h3>Textbooks (" + arraylength + " Result)</h3>";
+	} 
+	else {
+		collection.innerHTML = "<h3>Textbooks (" + arraylength + " Results)</h3>";
+	}
+	currentResultDiv.appendChild(collection);
+
+	for(var i=0; i<filterdata_object.textbook.length; i++) {
+		var rElement = createTextbookResults(filterdata_object.textbook[i])
+		// var rElement = createChapterResults(resultArray[i]);
+		currentResultDiv.appendChild(rElement);
+	}
+
+	// Print Actdict array
+	var collection = document.createElement("h1");
+	collection.id = "collectionTitle";
+
+	var arraylength = filterdata_object.actdict.length;
+	if (arraylength == 1) {
+		collection.innerHTML = "<h3>Activites & Dictionary (" + arraylength + " Result)</h3>";
+	} 
+	else {
+		collection.innerHTML = "<h3>Activites & Dictionary (" + arraylength + " Results)</h3>";
+	}
+	currentResultDiv.appendChild(collection);
+
+	for(var i=0; i<filterdata_object.actdict.length; i++) {
+		var rElement = createActdictResults(filterdata_object.actdict[i])
+		// var rElement = createChapterResults(resultArray[i]);
+		currentResultDiv.appendChild(rElement);
+	}
+
+
+	$("#displaybox").html(currentResultDiv);
+
+	// var filterdata_array = [];
+	// for (var i=0; i < filterdata_object.chapter.length; i++) {
+	// 	filterdata_array.push(filterdata_object.chapter[i]);
+	// 	console.log(filterdata_array[i]);
+	// }
+	// $("#displaybox").html();
+}
+
+// Create "Chapter" collection results
+var createChapterResults = function(item) {
+	var div = document.createElement("div");
+	div.id = "resultitem";
+
+	var image = document.createElement("img");
+	image.id = "resultsimg";
+	image.src = "images/kitty.jpg";
+	div.appendChild(image);
+
+	var loomaID = document.createElement("p");
+	loomaID.id = "result_ID";
+	loomaID.innerHTML = "<b>ID: </b>" + item._id;
+	div.appendChild(loomaID);
+
+	var displayname = document.createElement("p");
+	displayname.id = "result_dn";
+	displayname.innerHTML = "<b>Name: </b>" + item.dn;
+	div.appendChild(displayname);
+
+	var nepaliname = document.createElement("p");
+	nepaliname.id = "result_ndn";
+	nepaliname.innerHTML = "<b>Nepali Name: </b>" + item.ndn;
+	div.appendChild(nepaliname);
+
+	var addButton = document.createElement("button");
+	addButton.innerText = "Add";
+	addButton.className = "add";
+	addButton.onclick = addJSON;
+	div.appendChild(addButton);
+
+
+	return div;
+}
+
+// Create "Textbook" collection results
+var createTextbookResults = function(item) {
+	var div = document.createElement("div");
+	div.id = "resultitem";
+
+	var image = document.createElement("img");
+	image.id = "resultsimg";
+	image.src = "images/pup.jpg";
+	div.appendChild(image);
+
+	var loomaID = document.createElement("p");
+	loomaID.id = "result_ID";
+	loomaID.innerHTML = "<b>ID: </b>" + item.prefix;
+	div.appendChild(loomaID);
+
+	var displayname = document.createElement("p");
+	displayname.id = "result_dn";
+	displayname.innerHTML = "<b>Name: </b>" + item.dn;
+	div.appendChild(displayname);
+
+	var nepaliname = document.createElement("p");
+	nepaliname.id = "result_ndn";
+	nepaliname.innerHTML = "<b>Nepali Name: </b>" + item.ndn;
+	div.appendChild(nepaliname);
+
+	var subject = document.createElement("p");
+	subject.id = "result_subject";
+	subject.innerHTML = "<b>Subject: </b>" + item.subject;
+	div.appendChild(subject);
+
+	var filepath = document.createElement("p");
+	filepath.id = "result_fp";
+	filepath.innerHTML = "<b>Filepath: </b>" + item.fp;
+	div.appendChild(filepath);
+
+	var addButton = document.createElement("button");
+	addButton.innerText = "Add";
+	addButton.className = "add";
+	addButton.onclick = addJSON;
+	div.appendChild(addButton);
+
+	return div;
+}
+
+// Create "Actdict" collection results
+var createActdictResults = function(item) {
+	var div = document.createElement("div");
+	div.id = "resultitem";
+
+	var image = document.createElement("img");
+	image.id = "resultsimg";
+	image.src = "images/pup2.jpg";
+	div.appendChild(image);
+
+	var loomaID = document.createElement("p");
+	loomaID.id = "result_ID";
+	loomaID.innerHTML = "<b>ID: </b>" + item.ch_id;
+	div.appendChild(loomaID);
+
+	var displayname = document.createElement("p");
+	displayname.id = "result_dn";
+	displayname.innerHTML = "<b>Name: </b>" + item.dn;
+	div.appendChild(displayname);
+
+	var subject = document.createElement("p");
+	subject.id = "result_subject";
+	subject.innerHTML = "<b>Filename: </b>" + item.fn;
+	div.appendChild(subject);
+
+	var filepath = document.createElement("p");
+	filepath.id = "result_fp";
+	filepath.innerHTML = "<b>Filetype: </b>" + item.ft;
+	div.appendChild(filepath);
+
+	var addButton = document.createElement("button");
+	addButton.innerText = "Add";
+	addButton.className = "add";
+	addButton.onclick = addJSON;
+	div.appendChild(addButton);
+
+	return div;
+}
+
+
+
+/////////// CURRENTLY NOT USING THIS AT ALL
+var createNewListElement = function(itemString) {
+	  var listItem = document.createElement("li");
+	  
+	  	//id for li element
+		var id = document.createAttribute("id"); 
+		id.value = "item";           
+		listItem.setAttributeNode(id);
+
+		//index attribute for li element (to access resultArray[index] info after the item is moved around in the timeline)
+		var num = document.createAttribute("index");      
+		num.value = i;    
+		listItem.setAttributeNode(num);
+
+		//attributes to list items for when we add preview feature
+		var filetype = document.createAttribute("data-ft");   
+		filetype.value = resultArray[i].filetype; 
+		listItem.setAttributeNode(filetype);
+
+		var filepath = document.createAttribute("data-fp");   
+		filepath.value = resultArray[i].filepath; 
+		listItem.setAttributeNode(filepath);
+
+		var filename = document.createAttribute("data-fn");       
+		filename.value = resultArray[i].displayname;         
+		listItem.setAttributeNode(filename);
+
+
+		//create label element for displaying content display name/info	  
+	  	var listLabel = document.createElement("label");
+
+	  	//id for label element
+	  	var id = document.createAttribute("id");  
+		id.value = "name";         
+		listLabel.setAttributeNode(id);
+
+
+		//image element for thumbnail photo	
+		var thumbnail = document.createElement("img");
+		
+		//add button to add list item from results div to timeline
+		var addButton = document.createElement("button");
+		addButton.innerText = "Add";
+		addButton.className = "add";
+
+	  
+		//access thumbnail image using filepath in json object
+		var att = document.createAttribute("src");    
+		att.value = resultArray[i].fp + "*.jpg";       
+		console.log("i = " + i);
+		console.log("resultArray[i] = " + resultArray[i]);
+		thumbnail.setAttributeNode(att);                    
+
+		
+		//set the display text for each content item
+		listLabel.innerText = itemString.dn + ", Grade " + resultArray[i].prefix[0];
+		
+		//append elements to the list item
+		listItem.appendChild(thumbnail);
+		listItem.appendChild(listLabel);
+		listItem.appendChild(addButton);
+
+	  	return listItem;
+
+}
+
 
 ////////////////////////////////////////////// BEGIN OLD CODE FOR SEARCH & FILTER
 
@@ -420,6 +735,21 @@ var addJSON = function() {
 	// Change button class to "remove"
 	newListItem.querySelector("button.add").classList.remove("add");
 	newListItem.querySelector("button").classList.add("remove");
+
+	// Change size of image & add break
+	newListItem.querySelector("img#resultsimg").style.width = "70px";
+	// newListItem.querySelector("img#resultsimg").style.display = "block";
+
+	// Delete unnecessary attributes
+	if(newListItem.querySelector("p#result_subject")) {
+		newListItem.querySelector("p#result_subject").remove();
+	}
+	// newListItem.querySelector("p#chapterID").remove();
+
+	// Make the timeline div wider
+	// newListItem.querySelector("div.timelinediv").style.width = "500px";
+	// console.log(typeof(newListItem.parentNode));
+	// newListItem.parentNode.style.width = "500px";
 
 	// Modify new "remove" button
 	var newRemoveButton = newListItem.querySelector("button.remove");
