@@ -4,18 +4,18 @@ var load = function() {
 
 	$.getJSON("../BackEnd/timelines.json", function(timelinesJSON) {
 		//For each object in timeline directory, populate list 
-		$.each(timelinesJSON, function(key, val) { 
-			createNewTimeElement(key, val.name, val._id);
+		$.each(timelinesJSON, function(index, val) { 
+			createNewTimeElement(index, val.name, val._id);
 
 		});
 
 	 }).fail(function(jqXHR){console.log(jqXHR.status)});
 }
 
-var createNewTimeElement = function(key, itemString, itemId) {
+var createNewTimeElement = function(index, itemString, itemId) {
 
 	$('<li/>', {
-		id : "time" + key,
+		id : "time" + index,
 		value: itemId,
 	    title: itemString,
 	    rel: 'external',
@@ -23,11 +23,19 @@ var createNewTimeElement = function(key, itemString, itemId) {
 	}).appendTo('#lessonDiv ul');
 	$('<button/>', {
 		text: "Edit",
-		//onclick: openTimeline,
-	}).appendTo('#time' + key);
+		id: "editBtn" + index,
+		//onclick: "openTimeline(" + itemId + ");"
+		//onclick: "location.href='index2.html?timelineId=" + itemId + "';"
+		// onclick: "location.href='index2.html?timelineId=" + itemId + "';"  
+	}).appendTo('#time' + index);
+/*
 	$('<button/>', {
 		text: "Present",
-	}).appendTo('#time' + key);
+		id: "presenetBtn" + index,
+		onclick: "location.href='present.html?timelineId=" + itemId +"';"
+	}).appendTo('#time' + index);
+	*/
+	
 }
 
 var createNewListElement = function(itemString, itemId) {
@@ -63,7 +71,7 @@ var createNewListElement = function(itemString, itemId) {
 	listItem.appendChild(presentButton);		
 	return listItem;
 }
-function openTimeline() {
+function openTimeline(itemId) {
 			
 			console.log("opentTimeline...");
 			//send id to back end, which returns the object of timeline items
@@ -76,7 +84,7 @@ function openTimeline() {
 			});
 			// document.getElementById("opendiv").innerText = data;
 			
-			var data = JSON.stringify(timeline); 
+			var data = JSON.stringify(itemId); 
 			console.log(data);
 			window.location = "index2.html?" + data;
 			// document.getElementById("opendiv").innerText = data
