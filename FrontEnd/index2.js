@@ -464,7 +464,7 @@ var createTextbookResults = function(item) {
 
 	var image = document.createElement("img");
 	image.id = "resultsimg";
-	image.src = "images/pup.jpg";
+	image.src = "images/pup3.jpg";
 	div.appendChild(image);
 
 	var loomaID = document.createElement("p");
@@ -506,9 +506,15 @@ var createActdictResults = function(item) {
 	var div = document.createElement("div");
 	div.id = "resultitem";
 
+	// Testing out thumbnail
 	var image = document.createElement("img");
+	if (item.ft = "mp4") {
+		image.src = "../../Data_looma/s40555.gridserver.com/content/videos/" + "Moon_Phases" + "_thumb.jpg";
+	}
+	else {
+		image.src="images/pup4.jpg";
+	}
 	image.id = "resultsimg";
-	image.src = "images/pup2.jpg";
 	div.appendChild(image);
 
 	var loomaID = document.createElement("p");
