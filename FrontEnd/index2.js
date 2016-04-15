@@ -1,3 +1,8 @@
+/* 
+
+// This is the initial library. We
+// don't need this anymore.
+
 var library = [
     {
     	"_id":"ObjectId(5549)", 
@@ -70,8 +75,14 @@ var library = [
     	"dn":"The Chronicles of Narnia: The Lion, the Witch, and the Wardrobe, and Supilise"
     },
 ];
+*/ 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+
+// Not sure what this is, but I don't
+// think we need this either.
 
 var library2 = [
 //AUDIO FILE mp4
@@ -168,8 +179,13 @@ var library2 = [
 		"ch_id" : "1EN10"
     },
 ];
+*/
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+
+// Don't need this either?
 
 var timeline = [
     {
@@ -200,11 +216,50 @@ var timeline = [
     },
 ];
 
+*/
+
+
+// KATE IS WORKING ON THIS FUNCTION!
+var loadPageElements = function() {
+	console.log("Loading page");
+
+	// Create Elements to add to
+	var form = document.createElement("form");
+	var div = document.createElement("div");
+	var p = document.createElement("p");
+	var h3 = document.createElement("h3");
+	var select = document.createElement("select");
+	var option = document.createElement("option");
+	var input = document.createElement("input");
+
+	// Sidebar: Search
+	var sidebar_search = document.getElementById("div-search");
+	h3.innerText = "Search: ";
+	input.type="text";
+	input.name="search";
+	input.id="searchString";
+	document.getElementById("div-search").appendChild(h3);
+	document.getElementById("div-search").appendChild(input);
+
+
+	// Sidebar: Grade
+
+	// Sidebar: Subject
+
+	// Sidebar: Chapter
+
+	// Sidebar: Section
+
+	// Sidebar: File Type
+
+	// document.getElementById("sidebar").appendChild(form);
+}
+
+
 
 var resultArray = [];
 
 var displaybox = document.querySelector("div#displaybox");
-
 
 var querySearch = function() {
 
