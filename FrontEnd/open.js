@@ -5,6 +5,8 @@ var load = function() {
 	$.getJSON("../BackEnd/timelines.json", function(timelinesJSON) {
 		//For each object in timeline directory, populate list 
 		$.each(timelinesJSON, function(index, val) { 
+			// console.log("index: " + index + " id: " + val._id);
+
 			createNewTimeElement(index, val.name, val._id);
 
 		});
@@ -13,7 +15,6 @@ var load = function() {
 }
 
 var createNewTimeElement = function(index, itemString, itemId) {
-
 	$('<li/>', {
 		id : "time" + index,
 		value: itemId,
@@ -24,17 +25,17 @@ var createNewTimeElement = function(index, itemString, itemId) {
 	$('<button/>', {
 		text: "Edit",
 		id: "editBtn" + index,
-		//onclick: "openTimeline(" + itemId + ");"
-		//onclick: "location.href='index2.html?timelineId=" + itemId + "';"
-		// onclick: "location.href='index2.html?timelineId=" + itemId + "';"  
 	}).appendTo('#time' + index);
-/*
+	$("#editBtn" + index).bind("click", function(){
+			window.location.href = 'index2.html?timelineId=' + encodeURI(itemId);
+	});
 	$('<button/>', {
 		text: "Present",
-		id: "presenetBtn" + index,
-		onclick: "location.href='present.html?timelineId=" + itemId +"';"
+		id: "presentBtn" + index,
 	}).appendTo('#time' + index);
-	*/
+	$("#presentBtn" + index).bind("click", function(){
+		window.location.href = 'present.html?timelineId=' + encodeURI(itemId);
+	});
 	
 }
 
