@@ -603,9 +603,10 @@ var createNewListElement = function(itemString) {
 	  	return listItem;
 
 }
+}
 
 /**************PREVIEW********************/
-var preview = function(){
+function preview() {
 	var ft = null;
 	var subject =null;
 	var part = null;

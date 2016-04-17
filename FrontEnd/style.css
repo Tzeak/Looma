@@ -144,6 +144,10 @@ img {
 	width: 60px;
 }
 
+#displayImage {
+	width: 100%;
+}
+
 
 button {display:inline;}
 

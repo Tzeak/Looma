@@ -1,0 +1,193 @@
+<html>
+	<head>
+		<!-- HI GUYS! Sorry, moved your CSS to style.css. Everything is the same! -->
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+
+	<body onload="loadTimelineDivs()">
+		<div id="container">
+		<div id="sidebar">
+		<form>
+			Search: <input type="text" name="search" id="string">
+			<p id="button" onclick="querySearch()"> Submit </p>
+			<!--<input type="submit" value="Submit" onclick="querySearch()"> -->
+			
+			
+			Grade Level
+			<select id="dropdown_grade">
+				<option value=""></option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+			</select>
+			<br/><br/>
+			Subject		
+			<select id="dropdown_subject">
+				<option value=""></option>
+				<option value="EN">English</option>
+				<option value="M">Math</option>
+				<option value="S">Science</option>
+				<option value="SS">Social Studies</option>
+				<!--Add nepali?-->
+			</select>
+			<br/><br/>
+			Chapter		
+			<select id="dropdown_chapter">
+				<option value=""></option>
+				<option value="01">1</option>
+				<option value="02">2</option>
+				<option value="03">3</option>
+				<option value="04">4</option>
+				<option value="05">5</option>
+				<option value="06">6</option>
+				<option value="07">7</option>
+				<option value="08">8</option>
+			</select>
+			<br/><br/>
+			Section		
+			<select id="dropdown_section">
+				<option value=""></option>
+				<option value="01">1</option>
+				<option value="02">2</option>
+				<option value="03">3</option>
+				<option value="04">4</option>
+				<option value="05">5</option>
+				<option value="06">6</option>
+				<option value="07">7</option>
+				<option value="08">8</option>
+			</select>
+			<br/><br/>
+			File Type<br/>
+			<input type="checkbox" style="zoom:2" id="ft_image" name="image" >Image &nbsp;
+			<input type="checkbox" style="zoom:2" id="ft_video" name="video" >Video &nbsp;
+			<input type="checkbox" style="zoom:2" id="ft_audio" name="audio" >Audio<br/>
+			<input type="checkbox" style="zoom:2" id="ft_misc" name="misc" >Misc &nbsp;
+
+			<br/><br/>
+			<button onclick="querySearch()" type="button">go!!!</button>
+
+
+			<!--BEGIN COMMENT
+
+			<input type="checkbox" style="zoom:2" id="1" name="1" checked>1 &nbsp;
+			<input type="checkbox" style="zoom:2" id="2"name="2" checked>2 &nbsp;
+			<input type="checkbox" style="zoom:2" id="3"name="3" checked>3 &nbsp;
+			<input type="checkbox" style="zoom:2" id="4"name="4" checked>4<br/>
+			<input type="checkbox" style="zoom:2" id="5" name="5" checked>5 &nbsp;
+			<input type="checkbox" style="zoom:2" id="6"name="6" checked>6 &nbsp;
+			<input type="checkbox" style="zoom:2" id="7"name="7" checked>7 &nbsp;
+			<input type="checkbox" style="zoom:2" id="8"name="8" checked>8 -->
+
+			<!--<hr>
+
+			<h3> Subject </h3>
+			<input type="checkbox" style="zoom:2" id="Math" name="Math" checked>Math &nbsp;
+			<input type="checkbox" style="zoom:2" id="Science"name="Science" checked>Science &nbsp;
+			<input type="checkbox" style="zoom:2" id="English"name="English" checked>English<br/>
+			<input type="checkbox" style="zoom:2" id="History"name="History" checked>History &nbsp;
+			<input type="checkbox" style="zoom:2" id="Geography" name="Geography" checked>Geography &nbsp;
+
+			<hr>
+
+			<h3> Media Type </h3>
+			<input type="checkbox" style="zoom:2" id="Books" name="Books" checked>Books &nbsp;
+			<input type="checkbox" style="zoom:2" id="Audio"name="Audio" checked>Audio &nbsp;
+			<input type="checkbox" style="zoom:2" id="Videos"name="Videos" checked>Videos &nbsp;
+			<input type="checkbox" style="zoom:2" id="Activities"name="Activities" checked>Activities &nbsp;
+			<input type="checkbox" style="zoom:2" id="Pictures"name="Pictures" checked>Pictures &nbsp;-->
+
+		</form>
+
+			<div class="boxdiv" id="results">
+				    <p><b>Results</b></p>
+			<div id="resultsdiv">
+			    <ul id="resultsDivUL">
+			    </ul>
+		   	</div>
+		   </div>
+	</div>
+
+	Title: <input type="text" name="title" id="titleString">
+	<button type="button" id="btnSave" onclick="save()">Save</button>
+
+	<button type="button" id="btnPresent" onclick="location.href='present.html';">Present</button>
+	<div id= "displaybox" style="overflow-y:auto;"> 
+
+		<!-- PDF THAT WORKS! 
+		<embed src="test.pdf" width="100%" height="100%" type='application/pdf'>
+		-->
+
+		<!-- VIDEO FILE -->
+		<!--<video width="100%" height="100%" controls>
+  			<source src="media/video.mp4" type="video/mp4">
+		</video> -->
+
+		<!-- AUDIO FILE -->
+		<!--<audio controls>
+			  <source src="media/audio.mp3" type="audio/mpeg">
+		</audio>-->
+
+	 </div>
+
+
+
+    <br/><br/><br/>
+
+   <div id = "wrapper">
+    	<div class="timeline" id="timelineWhole">
+		    <div class="timelinediv"></div>
+		    <div class="timelinediv"></div>
+		    <div class="timelinediv"></div>
+		    <div class="timelinediv"></div>
+		    <div class="timelinediv"></div>
+		    <div class="timelinediv"></div>
+		    <div class="timelinediv"></div>
+		    <div class="timelinediv"></div>
+		    <div class="timelinediv"></div>
+		    <div class="timelinediv"></div>
+		</div>
+
+	</div>
+
+    <br/>
+    <br><br>
+    
+
+</div>
+
+
+
+	</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="jquery-1.12.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+   <script>
+        $(document).ready(function () {
+            $("#timelineWhole").sortable({
+            //$('#btnSave').hide();
+                opacity: 0.7,
+                revert: true,   //Animates
+                scroll: true,   //Allows page to scroll when dragging. Good for tall pages.
+                handle: $(".timelinediv"),
+                update: function () {  
+                	$('#btnSave').show() 
+            	}
+            });
+
+        })
+
+	</script>
+	<!--<script type="text/javascript" src="index2.js"></script>-->
+	<script type="text/javascript" src="preview.js"></script>
+
+
+	
+</html>
+
+
