@@ -224,25 +224,34 @@ var loadPageElements = function() {
 	console.log("Loading page");
 
 	// Create Elements to add to
-	var form = document.createElement("form");
 	var div = document.createElement("div");
 	var p = document.createElement("p");
+	var h1 = document.createElement("h1");
 	var h3 = document.createElement("h3");
 	var select = document.createElement("select");
 	var option = document.createElement("option");
 	var input = document.createElement("input");
 
-	// Sidebar: Search
-	var sidebar_search = document.getElementById("div-search");
-	h3.innerText = "Search: ";
-	input.type="text";
-	input.name="search";
-	input.id="searchString";
-	document.getElementById("div-search").appendChild(h3);
-	document.getElementById("div-search").appendChild(input);
+	var form = document.getElementById("div_filter");
 
+	// Sidebar: Search
+	h3.innerText = "Search: ";
+	input.type = "text";
+	input.name = "search";
+	input.id = "searchString";
+	form.appendChild(h3);
+	form.appendChild(input);
 
 	// Sidebar: Grade
+	p.innerText = "Grade Level";
+	select.id="dropdown_grade";
+	for (var i=0; i<8; i++) {
+		option.value = i;
+		option.innerText = i;
+		select.appendChild(option);
+	}
+	form.appendChild(p);
+	form.appendChild(select);
 
 	// Sidebar: Subject
 
@@ -359,10 +368,10 @@ var printFilterData = function(filterdata_object) {
 	collection.id = "collectionTitle";
 	var arraylength = filterdata_object.chapter.length;
 	if (arraylength == 1) {
-		collection.innerHTML = "<h3>Chapters (" + arraylength + " Result)</h3>";
+		collection.innerHTML = "Chapters (" + arraylength + " Result)";
 	} 
 	else {
-		collection.innerHTML = "<h3>Chapters (" + arraylength + " Results)</h3>";
+		collection.innerHTML = "Chapters (" + arraylength + " Results)";
 	}
 	currentResultDiv.appendChild(collection);
 
@@ -379,10 +388,10 @@ var printFilterData = function(filterdata_object) {
 
 	var arraylength = filterdata_object.textbook.length;
 	if (arraylength == 1) {
-		collection.innerHTML = "<h3>Textbooks (" + arraylength + " Result)</h3>";
+		collection.innerHTML = "Textbooks (" + arraylength + " Result)";
 	} 
 	else {
-		collection.innerHTML = "<h3>Textbooks (" + arraylength + " Results)</h3>";
+		collection.innerHTML = "Textbooks (" + arraylength + " Results)";
 	}
 	currentResultDiv.appendChild(collection);
 
@@ -398,10 +407,10 @@ var printFilterData = function(filterdata_object) {
 
 	var arraylength = filterdata_object.actdict.length;
 	if (arraylength == 1) {
-		collection.innerHTML = "<h3>Activites & Dictionary (" + arraylength + " Result)</h3>";
+		collection.innerHTML = "Activites & Dictionary (" + arraylength + " Result)";
 	} 
 	else {
-		collection.innerHTML = "<h3>Activites & Dictionary (" + arraylength + " Results)</h3>";
+		collection.innerHTML = "Activites & Dictionary (" + arraylength + " Results)";
 	}
 	currentResultDiv.appendChild(collection);
 
@@ -427,32 +436,36 @@ var createChapterResults = function(item) {
 	var div = document.createElement("div");
 	div.id = "resultitem";
 
+	// Thumbnail
 	var image = document.createElement("img");
 	image.id = "resultsimg";
 	image.src = "images/kitty.jpg";
 	div.appendChild(image);
 
+	// ID
 	var loomaID = document.createElement("p");
 	loomaID.id = "result_ID";
 	loomaID.innerHTML = "<b>ID: </b>" + item._id;
 	div.appendChild(loomaID);
 
+	// Display name
 	var displayname = document.createElement("p");
 	displayname.id = "result_dn";
 	displayname.innerHTML = "<b>Name: </b>" + item.dn;
 	div.appendChild(displayname);
 
+	// Nepali name
 	var nepaliname = document.createElement("p");
 	nepaliname.id = "result_ndn";
 	nepaliname.innerHTML = "<b>Nepali Name: </b>" + item.ndn;
 	div.appendChild(nepaliname);
 
+	// "Add" button
 	var addButton = document.createElement("button");
 	addButton.innerText = "Add";
 	addButton.className = "add";
 	addButton.onclick = addJSON;
 	div.appendChild(addButton);
-
 
 	return div;
 }
@@ -462,6 +475,7 @@ var createTextbookResults = function(item) {
 	var div = document.createElement("div");
 	div.id = "resultitem";
 
+	// Thumbnail
 	var thumbnail_prefix = item.fn;
 	var thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
@@ -470,31 +484,37 @@ var createTextbookResults = function(item) {
 	image.src = "../../Data_looma/s40555.gridserver.com/content/" + item.fp + thumbnail_prefix + "_thumb.jpg";
 	div.appendChild(image);
 
+	// ID
 	var loomaID = document.createElement("p");
 	loomaID.id = "result_ID";
 	loomaID.innerHTML = "<b>ID: </b>" + item.prefix;
 	div.appendChild(loomaID);
 
+	// Display name
 	var displayname = document.createElement("p");
 	displayname.id = "result_dn";
 	displayname.innerHTML = "<b>Name: </b>" + item.dn;
 	div.appendChild(displayname);
 
+	// Nepali name
 	var nepaliname = document.createElement("p");
 	nepaliname.id = "result_ndn";
 	nepaliname.innerHTML = "<b>Nepali Name: </b>" + item.ndn;
 	div.appendChild(nepaliname);
 
+	// Subject
 	var subject = document.createElement("p");
 	subject.id = "result_subject";
 	subject.innerHTML = "<b>Subject: </b>" + item.subject;
 	div.appendChild(subject);
 
+	// File path
 	var filepath = document.createElement("p");
 	filepath.id = "result_fp";
 	filepath.innerHTML = "<b>Filepath: </b>" + item.fp;
 	div.appendChild(filepath);
 
+	// "Add" button
 	var addButton = document.createElement("button");
 	addButton.innerText = "Add";
 	addButton.className = "add";
@@ -534,12 +554,11 @@ var createActdictResults = function(item) {
 		div.appendChild(part);
 	}
 	else {		// If this is an activity
-		// File types
+		// Thumbnail
+		var image = document.createElement("img");
 		if (item.ft == "mp3") {	 //audio
-			var image = document.createElement("img");
 			image.id = "resultsimg";
 			image.src = "../../Data_looma/s40555.gridserver.com/content/audio/thumbnail.png";
-			div.appendChild(image);
 		} 
 		else if (item.ft == "mp4" || item.ft == "mp5") { //video
 			var thumbnail_prefix = item.fn;
@@ -548,7 +567,6 @@ var createActdictResults = function(item) {
 			var image = document.createElement("img");
 			image.id = "resultsimg";
 			image.src = "../../Data_looma/s40555.gridserver.com/content/videos/" + thumbnail_prefix + "_thumb.jpg";
-			div.appendChild(image);
 		} 
 		else if (item.ft == "jpg"  || item.ft == "gif" || item.ft == "png" ) { //picture
 			var thumbnail_prefix = item.fn;
@@ -557,7 +575,6 @@ var createActdictResults = function(item) {
 			var image = document.createElement("img");
 			image.id = "resultsimg";
 			image.src = "../../Data_looma/s40555.gridserver.com/content/pictures/" + thumbnail_prefix + "_thumb.jpg";
-			div.appendChild(image);
 		}
 		else if (item.ft == "pdf") { //pdf
 			var thumbnail_prefix = item.fn;
@@ -566,25 +583,29 @@ var createActdictResults = function(item) {
 			var image = document.createElement("img");
 			image.id = "resultsimg";
 			image.src = "../../Data_looma/s40555.gridserver.com/content/pdfs/" + thumbnail_prefix + "_thumb.jpg";
-			div.appendChild(image);
 		}
+		div.appendChild(image);
 
+		// Display ID
 		var loomaID = document.createElement("p");
 		loomaID.id = "result_ID";
 		loomaID.innerHTML = "<b>ID: </b>" + item.ch_id;
 		div.appendChild(loomaID);
 
+		// Display file type
 		var filetype = document.createElement("p");
 		filetype.id = "result_ft";
 		filetype.innerHTML = "<b>File type: </b>" + item.ft;
 		div.appendChild(filetype);
 
+		// Display file name
 		var filename = document.createElement("p");
 		filename.id = "result_fn";
 		filename.innerHTML = "<b>File name: </b>" + item.fn;
 		div.appendChild(filename);
 	}
 
+	// "Add" button
 	var addButton = document.createElement("button");
 	addButton.innerText = "Add";
 	addButton.className = "add";
