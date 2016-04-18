@@ -3,6 +3,8 @@ var load = function() {
 	console.log("load() called");
 
 	$.getJSON("../BackEnd/timelines.json", function(timelinesJSON) {
+		//console.log(timelinesJSON);
+		//timelinesJSON = JSON.parse(timelinesJSON);
 		//For each object in timeline directory, populate list 
 		$.each(timelinesJSON, function(index, val) { 
 			// console.log("index: " + index + " id: " + val._id);

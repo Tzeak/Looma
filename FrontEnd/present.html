@@ -5,84 +5,23 @@
 
 	<body>
 		<div id="container">
-	Title: <!-- GET TITLE FROM BACKEND OBJECT (lesson plan info that the backend send to front) -->
-	<button type="button" id="btnSave" onclick="location.href='index2.html'">Edit Mode</button>
-	<div id= "presentdisplaybox"> HELLO </div>
-
-
-
-    <br/><br/><br/>
-
-    <!--<div class="timeline" id="timelineWhole">
-	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
-	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
-	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
-	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
-	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
-	    <div class="boxdiv timelinediv"><div class="drop" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
-    </div>-->
-
-   <div id = "presentwrapper">
-    	<div class="timeline" id="timelineWhole">
-		    <div class="timelinediv"></div>
-		    <div class="timelinediv"></div>
-		    <div class="timelinediv"></div>
-		    <div class="timelinediv"></div>
-		    <div class="timelinediv"></div>
-		    <div class="timelinediv"></div>
-		    <div class="timelinediv"></div>
-		    <div class="timelinediv"></div>
-		    <div class="timelinediv"></div>
-		    <div class="timelinediv"></div>
+			Title: <!-- GET TITLE FROM BACKEND OBJECT (lesson plan info that the backend send to front) -->
+			<button type="button" id="btnSave" onclick="location.href='index2.html'">Edit Mode</button>
+			<div id= "presentdisplaybox"> HELLO </div>
+			<br/><br/><br/>
+			<div id = "presentwrapper">
+				<div class="timeline" id="timelineWhole">
+					<div class="timelinediv"></div>
+				</div>
+			</div>
+			<br/><br/><br/>
 		</div>
-
-	</div>
-
-    <br/>
-    <br><br>
-    
-
-</div>
-
-
-
 	</body>
-<!--	<script>
-function allowDrop(ev) {
-    ev.preventDefault();
-}
-
-function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-}
-
-function drop(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
-} -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="jquery-1.12.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            $("#timelineWhole").sortable({
-            //$('#btnSave').hide();
-                opacity: 0.7,
-                revert: true,   //Animates
-                scroll: true,   //Allows page to scroll when dragging. Good for tall pages.
-                handle: $(".timelinediv"),
-                update: function () {  
-                	$('#btnSave').show() 
-            	}
-            });
-
-        })
-      			
-		
-	</script>
 	<script type="text/javascript" src="index2.js"></script>
+	<script type="text/javascript" src="/Controller/load.js"></script>
 
 	
 </html>
