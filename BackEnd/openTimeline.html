@@ -1,19 +1,63 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" type="text/css" href="../FrontEnd/style.css">
 	</head>
 	<body>
 		<button onclick="opentime()">open timeline</button>
-		<div id="disp"style="border-style: solid"></div>
+		<div id="disp" style="border-style: solid"></div>
+			<div id = "wrapper">
+				<div class="timeline" id="timelineWhole">
+			    <div class="timelinediv" ></div>
+			
+			</div>
+		</div>
+
+	</div>
 	</body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 	<script>
 		function opentime(){
 			console.log("I get here!?");
 			var timelineID ={ "$id": "5706f4eece85a0bb090041aa"};
-			$.post("openTimeline.php", timelineID, function(timeline){
-				console.log(timeline);
-				$("#disp").html(timeline);
+
+				var createNewTimeElement = function(index, itemString) {
+					$('<li/>', {
+						id : "item" + index,
+					    title: itemString,
+					    text: itemString,
+					}).appendTo('.timelinediv');
+					console.log("itemString: " + text)
+					/*$('<button/>', {
+						text: "Remove",
+						id: "removeBtn" + index,
+					}).appendTo('#timelinediv');
+					*/
+				}
+
+
+			$.getJSON("openTimeline.php", timelineID, function(timelineData){
+				console.log(timelineData);
+				$("#disp").html(timelineData);
+				//var obj = JSON.parse(timelineData);
+				
+				$.each(timelineData, function(index, val) { 
+					console.log("index: " + index + " id: " + val.dn);
+					createNewTimeElement(index, val.dn);
+				});
+
+
+				
+				
+				
+			
+				
+				
+
+
+
+
+
 			})
 		}
 	</script>
