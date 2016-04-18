@@ -27,35 +27,6 @@
 
 
 
-// ACTIVITIES
-
-{
-	"_id" : ObjectId("568dcdda9324a6f91e741093"),
-	"ch_id" : "2EN02",
-	"ft" : "mp4",
-	"MB" : 1.5,
-	"fn" : "Professions.mp4",
-	"dn" : "Professions"
-}
-{
-	"_id" : ObjectId("568dcdda9324a6f91e741094"),
-	"ch_id" : "2EN03",
-	"ft" : "EP",
-	"fn" : 3096210,
-	"dn" : "How Many"
-}
-{
-	"_id" : ObjectId("568dcdda9324a6f91e741095"),
-	"ch_id" : "2EN03",
-	"ft" : "mp4",
-	"MB" : 7.6,
-	"min" : "2:25",
-	"fn" : "Moon_Phases.mp4",
-	"dn" : "Moon Phases"
-}
-
-
-
 // TEXTBOOKS
 
 {
@@ -91,6 +62,45 @@
 	"dn" : "Class 4 Social Studies",
 	"ndn" : "कक्षा 4 सामाजिक शिक्षा"
 }
+
+
+
+
+// ACTIVITIES
+
+{
+	"_id" : ObjectId("568dcdda9324a6f91e741093"),
+	"ch_id" : "2EN02",
+	"ft" : "mp4",
+	"MB" : 1.5,
+	"fn" : "Professions.mp4",
+	"dn" : "Professions"
+}
+{
+	"_id" : ObjectId("568dcdda9324a6f91e741094"),
+	"ch_id" : "2EN03",
+	"ft" : "EP",
+	"fn" : 3096210,
+	"dn" : "How Many"
+}
+{
+	"_id" : ObjectId("568dcdda9324a6f91e741095"),
+	"ch_id" : "2EN03",
+	"ft" : "mp4",
+	"MB" : 7.6,
+	"min" : "2:25",
+	"fn" : "Moon_Phases.mp4",
+	"dn" : "Moon Phases"
+}
+{
+	"_id" : ObjectId("568dcdda9324a6f91e74108b"),
+	"ch_id" : "1EN10",
+	"ft" : "jpg",
+	"MB" : 0.1,
+	"fn" : "Family_Tree_2.jpg",
+	"dn" : "Family Tree 2"
+}
+
 
 
 

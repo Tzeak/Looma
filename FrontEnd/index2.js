@@ -462,9 +462,12 @@ var createTextbookResults = function(item) {
 	var div = document.createElement("div");
 	div.id = "resultitem";
 
+	var thumbnail_prefix = item.fn;
+	var thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+
 	var image = document.createElement("img");
 	image.id = "resultsimg";
-	image.src = "images/pup3.jpg";
+	image.src = "../../Data_looma/s40555.gridserver.com/content/" + item.fp + thumbnail_prefix + "_thumb.jpg";
 	div.appendChild(image);
 
 	var loomaID = document.createElement("p");
@@ -506,36 +509,81 @@ var createActdictResults = function(item) {
 	var div = document.createElement("div");
 	div.id = "resultitem";
 
-	// Testing out thumbnail
-	var image = document.createElement("img");
-	if (item.ft = "mp4") {
-		image.src = "../../Data_looma/s40555.gridserver.com/content/videos/" + "Moon_Phases" + "_thumb.jpg";
+	if (item.def != null) {	// If this is a dictionary entry
+		var image = document.createElement("img");
+		image.id = "resultsimg";
+		image.src = "../../Data_looma/s40555.gridserver.com/content/dictionaries/thumbnail.png";
+		div.appendChild(image);
+
+		var loomaID = document.createElement("p");
+		loomaID.id = "result_ID";
+		loomaID.innerHTML = "<b>ID: </b>" + item.ch_id;
+		div.appendChild(loomaID);
+
+		var resulttype = document.createElement("p");
+		resulttype.id = "result_ID";
+		resulttype.innerHTML = "<b>Result type: </b> Dictionary entry";
+		div.appendChild(resulttype);
+
+		var word = document.createElement("p");
+		word.innerHTML = "<b>Word: </b>" + item.en;
+		div.appendChild(word);
+
+		var part = document.createElement("p");
+		part.innerHTML = "<b>Part of speech: </b>" + item.part;
+		div.appendChild(part);
 	}
-	else {
-		image.src="images/pup4.jpg";
+	else {		// If this is an activity
+		// File types
+		if (item.ft == "mp3") {	 //audio
+			var image = document.createElement("img");
+			image.id = "resultsimg";
+			image.src = "../../Data_looma/s40555.gridserver.com/content/audio/thumbnail.png";
+			div.appendChild(image);
+		} 
+		else if (item.ft == "mp4" || item.ft == "mp5") { //video
+			var thumbnail_prefix = item.fn;
+			var thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+
+			var image = document.createElement("img");
+			image.id = "resultsimg";
+			image.src = "../../Data_looma/s40555.gridserver.com/content/videos/" + thumbnail_prefix + "_thumb.jpg";
+			div.appendChild(image);
+		} 
+		else if (item.ft == "jpg"  || item.ft == "gif" || item.ft == "png" ) { //picture
+			var thumbnail_prefix = item.fn;
+			var thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+
+			var image = document.createElement("img");
+			image.id = "resultsimg";
+			image.src = "../../Data_looma/s40555.gridserver.com/content/pictures/" + thumbnail_prefix + "_thumb.jpg";
+			div.appendChild(image);
+		}
+		else if (item.ft == "pdf") { //pdf
+			var thumbnail_prefix = item.fn;
+			var thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+
+			var image = document.createElement("img");
+			image.id = "resultsimg";
+			image.src = "../../Data_looma/s40555.gridserver.com/content/pdfs/" + thumbnail_prefix + "_thumb.jpg";
+			div.appendChild(image);
+		}
+
+		var loomaID = document.createElement("p");
+		loomaID.id = "result_ID";
+		loomaID.innerHTML = "<b>ID: </b>" + item.ch_id;
+		div.appendChild(loomaID);
+
+		var filetype = document.createElement("p");
+		filetype.id = "result_ft";
+		filetype.innerHTML = "<b>File type: </b>" + item.ft;
+		div.appendChild(filetype);
+
+		var filename = document.createElement("p");
+		filename.id = "result_fn";
+		filename.innerHTML = "<b>File name: </b>" + item.fn;
+		div.appendChild(filename);
 	}
-	image.id = "resultsimg";
-	div.appendChild(image);
-
-	var loomaID = document.createElement("p");
-	loomaID.id = "result_ID";
-	loomaID.innerHTML = "<b>ID: </b>" + item.ch_id;
-	div.appendChild(loomaID);
-
-	var displayname = document.createElement("p");
-	displayname.id = "result_dn";
-	displayname.innerHTML = "<b>Name: </b>" + item.dn;
-	div.appendChild(displayname);
-
-	var subject = document.createElement("p");
-	subject.id = "result_subject";
-	subject.innerHTML = "<b>Filename: </b>" + item.fn;
-	div.appendChild(subject);
-
-	var filepath = document.createElement("p");
-	filepath.id = "result_fp";
-	filepath.innerHTML = "<b>Filetype: </b>" + item.ft;
-	div.appendChild(filepath);
 
 	var addButton = document.createElement("button");
 	addButton.innerText = "Add";
