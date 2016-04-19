@@ -19,7 +19,7 @@ $(document).ready(function () {
 		if (!results[2]) return '';
 		return decodeURIComponent(results[2].replace(/\+/g, " "));
 	}
-	$(window).load(function opentime(){
+	function opentime(){
 		console.log("opentime() called");
 		var timelineID = getParameterByName("timelineId");
 		timelineID = {"$id" : timelineID}; //Set up in format for querying mongo database
@@ -37,10 +37,11 @@ $(document).ready(function () {
 		if(!isTimelineOpen) {
 			$.getJSON("/BackEnd/openTimeline.php", timelineID, function(timelineData){
 				$("#disp").html(timelineData);
+				var timelineArray = new Array();
 
 				$.each(timelineData, function(index, val) { 
 					createNewTimeElement(index, val.dn);
-
+					timelineArray.push(val);
 				});
 			}).fail(function(jqXHR){
 				console.log(jqXHR.status)
@@ -50,5 +51,6 @@ $(document).ready(function () {
 			});
 			isTimelineOpen = true;
 		}
+		return timelineArray;
 	});
 });
