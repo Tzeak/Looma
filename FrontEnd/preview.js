@@ -147,6 +147,7 @@ function preview(key) {
 
 	/*media type variables*/
 	console.log("calling preview function for item number" + key);
+	console.log("item ft:" + associative[key].ft);
 
 	// var pn = 3;
 	// var pdf = "test.pdf";
@@ -184,7 +185,8 @@ function preview(key) {
 	else if(associative[key].pn!=null) {
 		document.querySelector("div#displaybox").innerHTML = '<embed src="test.pdf#page=' + associative[key].pn + '" width="100%" height="100%" type="application/pdf">';
 	}
-	else
-		document.querySelector("div#displaybox").innerHTML = '<p> cannot display media file YET -- file type: EP">';
+	else if (associative[key].ft=="EP") {
+		document.querySelector("div#displaybox").innerHTML = '<object type="text/html" data="open.html" style="width:100%; height:100%; margin:1%;"> </object>;'
+	}
 
 }
