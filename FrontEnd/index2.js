@@ -219,9 +219,191 @@ var timeline = [
 */
 
 
-// KATE IS WORKING ON THIS FUNCTION!
+// This loads all the preliminary elements in the page.
 var loadPageElements = function() {
-	console.log("Loading page");
+	$(document).ready(function () {
+
+		// Sidebar: Search
+
+		$("<div/>", {
+			id : "div_search"
+		}).appendTo("#div_filter");
+		$("<p/>", {
+			html : "Search: "
+		}).appendTo("#div_search");
+		$("<input/>", {
+			id : "searchString",
+			type : "text",
+			name : "search",
+		}).appendTo("#div_search");
+
+
+		// Sidebar: Grade
+
+		$("<div/>", {
+			id : "div_grade"
+		}).appendTo("#div_filter");
+
+		$("<p/>", {
+			html : "Grade Level: ", 
+		}).appendTo("#div_grade");
+
+		$("<select/>", {
+			id : "dropdown_grade"
+		}).appendTo("#div_grade");
+
+		for (var i=0; i<8; i++) {
+			if (i == 0) {
+				$("<option/>", {
+					html : "",
+					id : ""
+				}).appendTo("#dropdown_grade");
+			} 
+			else {
+				$("<option/>", {
+					html : i,
+					id : i
+				}).appendTo("#dropdown_grade");
+			}
+		}
+
+		// Sidebar: Subject
+
+		var subjects = {
+			"English" : "EN",
+			"Math" : "M",
+			"Science" : "S",
+			"Social Studies" : "SS"
+		}
+
+		$("<div/>", {
+			id : "div_subject"
+		}).appendTo("#div_filter");
+
+		$("<p/>", {
+			html : "Subject: ", 
+		}).appendTo("#div_subject");
+
+		$("<select/>", {
+			id : "dropdown_subject"
+		}).appendTo("#div_subject");
+
+		$('<option>', { 
+	        value: "",
+	        html : "" 
+	    }).appendTo("#dropdown_subject");
+
+		$.each(subjects, function (key, value) {
+		    $("<option/>", { 
+		        value: value,
+		        html : key 
+	    	}).appendTo("#dropdown_subject");
+		});
+
+		// Sidebar: Chapter
+
+		$("<div/>", {
+			id : "div_chapter"
+		}).appendTo("#div_filter");
+
+		$("<p/>", {
+			html : "Chapter: ", 
+		}).appendTo("#div_chapter");
+
+		$("<select/>", {
+			id : "dropdown_chapter"
+		}).appendTo("#div_chapter");
+
+		for (var i=0; i<8; i++) {
+			if (i == 0) {
+				$("<option/>", {
+					html : "",
+					id : ""
+				}).appendTo("#dropdown_chapter");
+			} 
+			else {
+				$("<option/>", {
+					html : i,
+					id : i
+				}).appendTo("#dropdown_chapter");
+			}
+		}
+
+		// Sidebar: Section
+
+		$("<div/>", {
+			id : "div_section"
+		}).appendTo("#div_filter");
+
+		$("<p/>", {
+			html : "Section: ", 
+		}).appendTo("#div_section");
+
+		$("<select/>", {
+			id : "dropdown_section"
+		}).appendTo("#div_section");
+
+		for (var i=0; i<8; i++) {
+			if (i == 0) {
+				$("<option/>", {
+					html : "",
+					id : ""
+				}).appendTo("#dropdown_section");
+			} 
+			else {
+				$("<option/>", {
+					html : i,
+					id : i
+				}).appendTo("#dropdown_section");
+			}
+		}
+
+		// Sidebar: File Type
+
+		var filetypes = {
+			"image" : 	{ 	id : "ft_image", 	display : "Image" 	},
+			"video" : 	{ 	id : "ft_video", 	display : "Video" 	},
+			"audio" : 	{ 	id : "ft_audio", 	display : "Audio" 	},
+			"misc" : 	{ 	id : "ft_misc", 	display : "Misc" 	},
+		}
+
+		$("<div/>", {
+			id : "div_filetypes"
+		}).appendTo("#div_filter");
+
+		$("<p/>", {
+			html : "File types: ", 
+		}).appendTo("#div_filetypes");
+
+		$.each(filetypes, function (key, value) {
+		    $("<input/>", { 
+		    	type : "checkbox",
+		    	style : "zoom:2",
+		    	id : value.id,
+		        name : key,
+		        // html : value.display
+	    	}).appendTo("#div_filetypes");
+	    	$("<label/>", { 
+		    	for : value.id,
+		    	html : value.display
+	    	}).appendTo("#div_filetypes");
+	    	$("#div_filetypes").append("<br/>");
+		});
+
+		// Button
+
+	    $("#div_filetypes").append("<br/>");
+
+		$("<button/>", {
+			onclick : "querySearch()",
+			type : "button",
+			html : "Search"
+		}).appendTo("#div_filter");
+
+	});	// End document.ready
+
+
+/*
 
 	// Create Elements to add to
 	var div = document.createElement("div");
@@ -232,26 +414,36 @@ var loadPageElements = function() {
 	var option = document.createElement("option");
 	var input = document.createElement("input");
 
+	var div_search = document.createElement("div");
 	var form = document.getElementById("div_filter");
 
 	// Sidebar: Search
-	h3.innerText = "Search: ";
+	div_search.id = "div_search";
+	p.innerHTML = "Search: ";
 	input.type = "text";
 	input.name = "search";
 	input.id = "searchString";
-	form.appendChild(h3);
-	form.appendChild(input);
+
+	$("#div_filter").append(div_search);
+	$(div_search).append(p);
+	// div_search.appendChild(p);
+	$(div_search).append(input);
+	// div_search.appendChild(input);
+	// $("#div_filter").append(div_search);
 
 	// Sidebar: Grade
 	p.innerText = "Grade Level";
+	var select = $('<select />');
 	select.id="dropdown_grade";
-	for (var i=0; i<8; i++) {
-		option.value = i;
-		option.innerText = i;
-		select.appendChild(option);
+	for(var i=0; i<8; i++) {
+	    $('<option />', {value: i, text: i}).appendTo(select);
 	}
-	form.appendChild(p);
-	form.appendChild(select);
+	$("#div_filter").append(p);
+	// $("div_filter").append(select);
+	select.appendTo(form); 
+
+*/
+
 
 	// Sidebar: Subject
 
@@ -275,7 +467,6 @@ var querySearch = function() {
 
 	var filterdata = new Object();
 	filterdata.module = 'filter';
-	console.log('grade:' + document.getElementById('dropdown_grade').value);
 	filterdata.grade = document.getElementById('dropdown_grade').value;
 	filterdata.subject = document.getElementById('dropdown_subject').value;
 	filterdata.chapter = document.getElementById('dropdown_chapter').value;
