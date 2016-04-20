@@ -10,9 +10,10 @@ Description:	This will take the array of timeline element
 
 require_once 'mongoSetup.php';
 
-$timelineID = $_POST['$id'];		// the post is coming from index2.js
+$timelineID = $_GET['$id'];		// the post is coming from index2.js
 
 $timelineElementsArray = getTimelineElements($timelineID);
+$timelineElementsArray = fixDocArray($timelineElementsArray);
 echo json_encode($timelineElementsArray);
 
 // // Create array to hold document data
