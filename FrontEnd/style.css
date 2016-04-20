@@ -14,13 +14,15 @@
 }
 #btnPresent {
 	float:right;
-	margin-right: 20px;
+	margin-right: 2%;
+	margin-top: 1%;
 }
 #btnSave {
 	float: right;
+	margin-right: 2%;
+	margin-top: 1%;
 }
 .boxdiv {
-  border: 1px solid #000;
   min-height:120px;
   width:90px;
   display:inline-block;
@@ -28,25 +30,27 @@
   padding: 15px;
   background: gray;
   height:500px;
+  border-radius: 5px;
+  color:white;
 }
 #results {
 	width: 80%;
 	min-height: 300px;
 }
 #wrapper {
-	border: 1px solid #000;
   /*min-height:50px; min-width:100px; 
   display:inline-block;*/
   margin:5px;
   padding: 15px;
-  position: relative;
-  float: right;
+  position: absolute;
   width: 58%;
-  margin-right: 25px;
-  margin-top: 25px;
+  right: 3%;
+  top: 750px;
   height:160px;
   overflow-x:scroll;
   overflow-y:hidden;
+  background: darkgray;
+  border-radius:5px;
 }
 #sidebar {
 	float:left;
@@ -54,13 +58,18 @@
 	padding: 20px;
 	margin: 30px;
 	width: 30%;
+	border-radius: 10px;
 }
 #displaybox {
 	width: 60%;
 	height: 665px;
 	background: gray;
-	position: relative;
-	float: right;
+	position: absolute;
+	right: 2%;
+	top: 6%;
+	/*position: relative;
+	float: right;*/
+	border-radius:15px;
 	margin-top: 28px;
 	margin-right: 25px;
 }
@@ -138,7 +147,6 @@
 }
 /* ************************ INDEX && PRESENT! ********************/
 .timelinediv {
-  border: 1px solid #000;
   min-height:120px;
   width:90px;
   display:inline-block; 
@@ -146,13 +154,17 @@
   padding: 15px;
   float: left;
   font-size: 15px;
+  background: white;
+  border-radius: 5px;
 }
 .timeline{
 	width: 1500px;
 	height:100px;
+	position: absolute;
+	
+	
 }
 #timelineWhole {
-	background:white;
 	clear:all;
 }
 /* ************************ ALL! ********************/
