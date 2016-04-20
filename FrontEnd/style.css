@@ -59,7 +59,7 @@ button {display:inline;}
 
 
 /*************** Results Module ***********************/
-.outerResultsDiv {
+#outerResultsDiv {
   border: 1px solid #000;
   /*min-height:120px;
   width:90px;*/
@@ -69,6 +69,7 @@ button {display:inline;}
   width: 80%;
   height:500px;
   background: gray;
+  overflow-y:auto;
 }
 
 #resultsDiv {
@@ -106,8 +107,8 @@ li:hover {
 }
 
 #collectionTitle {
-	line-height:10px;
-}
+/*	line-height:10px;
+*/}
 
 
 
