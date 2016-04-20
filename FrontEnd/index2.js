@@ -390,7 +390,7 @@ var printFilterData = function(filterdata_object) {
 	}
 
 
-	$("#displaybox").html(currentResultDiv);
+	$("#outerResultsDiv").html(currentResultDiv);
 
 	// var filterdata_array = [];
 	// for (var i=0; i < filterdata_object.chapter.length; i++) {

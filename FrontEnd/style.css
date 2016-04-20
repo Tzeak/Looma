@@ -15,6 +15,51 @@
 /* ************************ INDEX! ********************/
 
 
+/********** Sidebar (search, filter, results) ************/
+#sidebar {
+	float:left;
+	background: lightgray;
+	padding: 20px;
+	margin: 30px;
+	width: 30%;
+}
+
+
+
+/*************** Results Module ***********************/
+#outerResultsDiv {
+  border: 1px solid #000;
+  /*min-height:120px;
+  width:90px;*/
+  display:inline-block;
+  margin:5px;
+  padding: 15px;
+  width: 80%;
+  height:500px;
+  background: gray;
+  overflow-y:auto;
+}
+
+#resultsDiv {
+	background:gray;
+	color:white;
+	border:none;
+
+	overflow-x:hidden;
+	overflow-y:scroll;
+	height:450px;
+	font-size: 15px;
+
+}
+
+
+li:hover {
+	background-color: lightgray;
+	color: black;
+	border-radius: 5px;
+	padding:0px;
+}
+
 /* #resultitem is the id of the divs that show up in results */
 #resultitem {
 	padding:10px;
@@ -30,8 +75,8 @@
 }
 
 #collectionTitle {
-	line-height:10px;
-}
+/*	line-height:10px;
+*/}
 
 #displayAndTimeline {
 	position:absolute;
