@@ -493,14 +493,12 @@ var querySearch = function() {
 		// $("#displaybox").html("hi");
 		// console.log(JSON.parse(filterdata));
 		var filterdata_object = storeFilterData(filterdata);
-		console.log(filterdata_object);
 		printFilterData(filterdata_object);
 	}); //Send filter data to server via GET request
 
 }
 
 var storeFilterData = function(filterdata) {
-	console.log(filterdata);
 	var filterdata_object = JSON.parse(filterdata);
 	return filterdata_object;
 }
@@ -622,15 +620,39 @@ var printFilterData = function(filterdata_object) {
 	// $("#displaybox").html();
 }
 
+
+
+/* //////////////////////TO-DO FOR RESULTS
+
+THUMBNAILS
+- Need to make thumbnails work for chapters
+	- 	function: createChapterResults()
+	- 	We'll need to extract the whole ID. For example, from 1M03, we 
+		need to get 1, M, and 03.  Idk how to do that yet.
+- Take care of if the image source is null
+	- 	All the "thumbnail_prefix" variables: If the image source is null, 
+		it shouldn't try to get the substring, because it'll break the code
+	- 	If the file isn't there. We need to make a little 404 image and
+		code it in.
+
+//////////////////////////END TO-DO */
+
+
+var homedirectory = "../";
+
 // Create "Chapter" collection results
 var createChapterResults = function(item) {
+
+	var thumbnail_prefix = item._id;
+	thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('0'));	
+
 	var div = document.createElement("div");
 	div.id = "resultitem";
 
 	// Thumbnail
 	var image = document.createElement("img");
 	image.id = "resultsimg";
-	image.src = "images/kitty.jpg";
+	image.src = homedirectory + "content/audio/thumbnail.png";
 	div.appendChild(image);
 
 	// ID
@@ -668,11 +690,11 @@ var createTextbookResults = function(item) {
 
 	// Thumbnail
 	var thumbnail_prefix = item.fn;
-	var thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+	thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
 	var image = document.createElement("img");
 	image.id = "resultsimg";
-	image.src = "../../Data_looma/s40555.gridserver.com/content/" + item.fp + thumbnail_prefix + "_thumb.jpg";
+	image.src =  homedirectory + "content/" + item.fp + thumbnail_prefix + "_thumb.jpg";
 	div.appendChild(image);
 
 	// ID
@@ -723,7 +745,7 @@ var createActdictResults = function(item) {
 	if (item.def != null) {	// If this is a dictionary entry
 		var image = document.createElement("img");
 		image.id = "resultsimg";
-		image.src = "../../Data_looma/s40555.gridserver.com/content/dictionaries/thumbnail.png";
+		image.src = homedirectory + "content/dictionaries/thumbnail.png";
 		div.appendChild(image);
 
 		var loomaID = document.createElement("p");
@@ -749,32 +771,42 @@ var createActdictResults = function(item) {
 		var image = document.createElement("img");
 		if (item.ft == "mp3") {	 //audio
 			image.id = "resultsimg";
-			image.src = "../../Data_looma/s40555.gridserver.com/content/audio/thumbnail.png";
+			image.src = homedirectory + "content/audio/thumbnail.png";
 		} 
 		else if (item.ft == "mp4" || item.ft == "mp5") { //video
 			var thumbnail_prefix = item.fn;
-			var thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
 			var image = document.createElement("img");
 			image.id = "resultsimg";
-			image.src = "../../Data_looma/s40555.gridserver.com/content/videos/" + thumbnail_prefix + "_thumb.jpg";
+			image.src = homedirectory + "content/videos/" + thumbnail_prefix + "_thumb.jpg";
 		} 
 		else if (item.ft == "jpg"  || item.ft == "gif" || item.ft == "png" ) { //picture
 			var thumbnail_prefix = item.fn;
-			var thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
 			var image = document.createElement("img");
 			image.id = "resultsimg";
-			image.src = "../../Data_looma/s40555.gridserver.com/content/pictures/" + thumbnail_prefix + "_thumb.jpg";
+			image.src = homedirectory + "content/pictures/" + thumbnail_prefix + "_thumb.jpg";
 		}
 		else if (item.ft == "pdf") { //pdf
 			var thumbnail_prefix = item.fn;
-			var thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
 			var image = document.createElement("img");
 			image.id = "resultsimg";
-			image.src = "../../Data_looma/s40555.gridserver.com/content/pdfs/" + thumbnail_prefix + "_thumb.jpg";
-		}
+			image.src = homedirectory + "content/pdfs/" + thumbnail_prefix + "_thumb.jpg";
+		} 
+		else if (item.ft == "EP") {
+			var image = document.createElement("img");
+			image.id = "resultsimg";
+			image.src = homedirectory + "content/epaath/thumbnail.png";
+		} 
+		// else {
+		// 	var image = document.createElement("img");
+		// 	image.id = "resultsimg";
+		// 	image.src = "images/kitty.jpg";
+		// }
 		div.appendChild(image);
 
 		// Display ID
@@ -804,6 +836,19 @@ var createActdictResults = function(item) {
 	div.appendChild(addButton);
 
 	return div;
+}
+
+
+function imageExists(image_url){
+
+    var http = new XMLHttpRequest();
+
+    http.open('HEAD', image_url, false);
+    http.send();
+
+    // return http.status != 404;
+    console.log("IMAGE NOT FOUND");
+
 }
 
 
