@@ -680,6 +680,13 @@ var createChapterResults = function(item) {
 	addButton.onclick = addJSON;
 	div.appendChild(addButton);
 
+	var previewButton = document.createElement("button");
+	previewButton.innerText = "Preview";
+	previewButton.className = "preview";
+	previewButton.onclick = preview_result(item);
+	div.appendChild(previewButton);
+
+
 	return div;
 }
 
