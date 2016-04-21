@@ -1,87 +1,23 @@
  <html>
 	<head>
-
-		<style>
-			#container {
-				width: 100%;
-			}
-			.button {
-				position: relative;
-				float: right;
-			}
-			#title:hover {
-				background-color: lightgray;
-			    color: black;
-			    border-radius: 5px;
-			    padding:0px;
-			}
-			#lessonDiv {
-				background-color:gray;
-				color:white;
-				padding:2px;
-				margin:auto;
-				text-align: center;
-				width:80%;
-				border:solid;
-				border-color: white;
-				border-width:3px;
-				border-radius: 10px;
-			}
-			#button {
-				color:white;
-				background:#A1A850;
-				padding: 10px;
-				border-radius:5px;
-				width: 70px;
-			}
-			button {
-				display:inline;
-			}
-			#sidebar {
-				float:middle;
-				background: lightgray;
-				padding: 20px;
-				width: 80%;
-				margin: 15 auto;
-			}
-			body {
-				font-family: Arial;
-				font-size: 20px;
-			}
-	
-			#string {
-				font-family: Arial;
-				font-size: 20px;
-				height: 50px;
-				width: 250px;
-				margin-right: 30px;
-				background:white;
-				padding:10px;
-				border-radius:5px;
-			}
-			form {
-				text-align: center;
-			}
-			button {display:inline;}
-			li {list-style-type:none;}
-		</style>
+		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 
 	<body onload="load()">
 		<div id="container">
-			<div id="sidebar">
-				<button type="button" id="btnSave" onclick="location.href='index2.html';">Create New Lesson</button>
+			<div id="header">
+				<button type="button" id="btnNewLesson" onclick="location.href='index2.html';">Create New Lesson</button>
 					
-				<form>
+				<form id = "openForm">
 					Search: <input type="text" name="search" id="string">
-					<button type="button" id="btnSave" onclick="lesson_search()">Search</button>
+					<button type="button" id="btnSearch" onclick="lesson_search()">Search</button>
 					<!--<p id="button" onclick="querySearch()"> Submit </p> -->
 					
 				</form>
 
 			</div> <!--sidebar-->
-			<div id = "wrapper">
-				<div class="lessonDiv" id="lessonDiv"></div>
+			<div id = "wrap">
+				<div class="lessonDiv" id="lessonDiv"><ul></ul></div>
 			</div><!--wrapper-->
 		</div> <!--container-->
 
@@ -94,172 +30,6 @@
 <script src="jquery-1.12.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
-<script>
-var load = function() {
-	//Retrieve all valid timelines
-	$(".lessonDiv").get("../BackEnd/timeline.json");
-
-	console.log("loadjson");
-	for(i = 0; i < lessons.length; i++) {
-		//console.log("calling createNewListElement");
-		var rElement = createNewListElement(lessons[i].title, lessons[i]._id);
-		lessonDiv.appendChild(rElement);
-	}
-}
-var createNewListElement = function(itemString, itemId) {
-		//searchArray.push(lessons[i]);
-	console.log("creating list element...");
-	var listItem = document.createElement("li"); 
-	var id = document.createAttribute("id");        // Create a "href" attribute
-	id.value = "title";            // Set the value of the href attribute
-	listItem.setAttributeNode(id);
-	var listLabel = document.createElement("label");
-	listLabel.innerText=itemString;
-	listItem.appendChild(listLabel);
-	var editButton = document.createElement("button");
-	editButton.innerText = "Edit";
-	editButton.className = "Edit";
-	
-	/*var link = document.createAttribute("action");        // Create a "href" attribute
-	link.value = "index2.html";            // Set the value of the href attribute
-	editButton.setAttributeNode(link);*/
-	var presentButton = document.createElement("button");
-	presentButton.innerText = "Present";
-	presentButton.className = "Present";
-	
-	//id refers to the selected lesson
-	var id = document.createAttribute("id");        // Create a "href" attribute
-	id.value = itemId;            // Set the value of the href attribute
-	editButton.setAttributeNode(id);
-	var id2 = document.createAttribute("id");        // Create a "href" attribute
-	id2.value = itemId;            // Set the value of the href attribute
-	presentButton.setAttributeNode(id2);
-	editButton.onclick = openTimeline;
-	presentButton.onclick = presentTimeline;
-	listItem.appendChild(editButton);
-	listItem.appendChild(presentButton);		
-	return listItem;
-}
-function openTimeline() {
-			
-			console.log("opentTimeline...");
-			//send id to back end, which returns the object of timeline items
-			var data = {
-				'id' : this.id
-			};
-			console.log("timeline data:" + data.id);
-			$.post("../BackEnd/open.php", data, function(data) {
-				$("#opendiv").html(data);
-			});
-			// document.getElementById("opendiv").innerText = data;
-			
-			var data = JSON.stringify(timeline); 
-			console.log(data);
-			window.location = "index2.html?" + data;
-			// document.getElementById("opendiv").innerText = data
-}
-function presentTimeline() {
-			
-			console.log("opentTimeline...");
-			//send id to back end, which returns the object of timeline items
-			var data = {
-				'id' : this.id
-			};
-			$.post("../BackEnd/open.php", data, function(data) {
-				$("#opendiv").html(data);
-			});
-			// document.getElementById("opendiv").innerText = data;
-			
-			var data = JSON.stringify(timeline); 
-			console.log(data);
-			window.location = "present.html?" + data;
-			// document.getElementById("opendiv").innerText = data
-}
-  
-
-
-	    var loadJSON = function() {
-		    for(i = 0; i < lessons.length; i++) {
-				var rElement = createNewListElement(lessons[i].title, lessons[i]._id);
-			    lessonDiv.appendChild(rElement);
-			}
-		}
-		var createNewListElement = function(itemString, itemId) {
-				//searchArray.push(lessons[i]);
-		    var listItem = document.createElement("li"); 
-			var id = document.createAttribute("id");        // Create a "href" attribute
-			id.value = "title";            // Set the value of the href attribute
-			listItem.setAttributeNode(id);
-			var listLabel = document.createElement("label");
-			listLabel.innerText=itemString;
-			listItem.appendChild(listLabel);
-			var editButton = document.createElement("button");
-			editButton.innerText = "Edit";
-			editButton.className = "Edit";
-			
-			var link = document.createAttribute("action");        // Create a "href" attribute
-			link.value = "index2.html";            // Set the value of the href attribute
-			editButton.setAttributeNode(link);
-			var presentButton = document.createElement("button");
-			presentButton.innerText = "Present";
-			presentButton.className = "Present";
-			
-			//id refers to the selected lesson
-			var id = document.createAttribute("id");        // Create a "href" attribute
-			id.value = itemId;            // Set the value of the href attribute
-			editButton.setAttributeNode(id);
-			var id2 = document.createAttribute("id");        // Create a "href" attribute
-			id2.value = itemId;            // Set the value of the href attribute
-			presentButton.setAttributeNode(id2);
-			editButton.onclick = openTimeline;
-			presentButton.onclick = presentTimeline;
-			listItem.appendChild(editButton);
-			listItem.appendChild(presentButton);		
-			return listItem;
-		}
-function openTimeline() {
-			
-			console.log("opentTimeline...");
-			//send id to back end, which returns the object of timeline items
-			var data = {
-				'id' : this.id
-			};
-			console.log("timeline data:" + data.id);
-			$.post("../BackEnd/open.php", data, function(data) {
-				$("#opendiv").html(data);
-			});
-			// document.getElementById("opendiv").innerText = data;
-			
-			var data = JSON.stringify(timeline); 
-			console.log(data);
-			window.location = "index2.html?" + data;
-			// document.getElementById("opendiv").innerText = data
-}
-function presentTimeline() {
-			
-			console.log("opentTimeline...");
-			//send id to back end, which returns the object of timeline items
-			var data = {
-				'id' : this.id
-			};
-			$.post("../BackEnd/open.php", data, function(data) {
-				$("#opendiv").html(data);
-			});
-			// document.getElementById("opendiv").innerText = data;
-			
-			var data = JSON.stringify(timeline); 
-			console.log(data);
-			window.location = "present.html?" + data;
-			// document.getElementById("opendiv").innerText = data
-}
-
-
-    </script>
-
-
-
-	<!--<script type="text/javascript" src="query.js"></script>
-	<script type="text/javascript" src="ui2.js"></script>-->
-
+<script src="open.js"></script>
 
 </html>
