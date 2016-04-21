@@ -463,7 +463,7 @@ var createChapterResults = function(item) {
 	var previewButton = document.createElement("button");
 	previewButton.innerText = "Preview";
 	previewButton.className = "preview";
-	previewButton.onclick = preview_result(item);
+	// previewButton.onclick = preview_result(item);
 	div.appendChild(previewButton);
 
 

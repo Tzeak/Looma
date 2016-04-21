@@ -19,7 +19,9 @@ $(document).ready(function () {
 		if (!results[2]) return '';
 		return decodeURIComponent(results[2].replace(/\+/g, " "));
 	}
-	function opentime(){
+	$(window).load(function opentime(){
+		var timelineArray = new Array();
+
 		console.log("opentime() called");
 		var timelineID = getParameterByName("timelineId");
 		timelineID = {"$id" : timelineID}; //Set up in format for querying mongo database
@@ -35,9 +37,7 @@ $(document).ready(function () {
 		}
 
 		if(!isTimelineOpen) {
-			$.getJSON("/BackEnd/openTimeline.php", timelineID, function(timelineData){
-				$("#disp").html(timelineData);
-				var timelineArray = new Array();
+			$.getJSON("/BackEnd/openTimeline.php", timelineID, function(timelineData){;
 
 				$.each(timelineData, function(index, val) { 
 					createNewTimeElement(index, val.dn);
