@@ -36,12 +36,14 @@
 		function sendData() {
 			//How data is spec'd to be sent to the save function
 			var data = {
-				name : "Fred",
-				line : ["568dcdf19324a6f91e74131d", "568dcdf19324a6f91e74131e"]
+				"lesson_title": "Fred",
+				"items_array": ["568dcdf19324a6f91e74131d", "568dcdf19324a6f91e74131e"]
 			};
 
-			document.getElementById("savediv").innerHTML = data.name + "<br/>" + data.line.toString();
-			$.post("save.php", data); //Send data to server via post request
+			document.getElementById("savediv").innerHTML = data.lesson_title + "<br/>" + data.items_array.toString();
+			$.post("save.php", data, function(result){
+				console.log(result);
+			}); //Send data to server via post request
 
 		}
 	
