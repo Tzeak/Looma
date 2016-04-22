@@ -25,7 +25,8 @@ window.onload = function loadPageElements() {
 			id : "div_search"
 		}).appendTo("#div_filter");
 		$("<p/>", {
-			html : "Search: "
+			id : "search_label",
+			html : "Search: &nbsp"
 		}).appendTo("#div_search");
 		$("<input/>", {
 			id : "searchString",
@@ -164,6 +165,7 @@ window.onload = function loadPageElements() {
 			"misc" : 	{ 	id : "ft_misc", 	display : "Misc" 	},
 		}
 
+		
 		$("<div/>", {
 			id : "div_filetypes"
 		}).appendTo("#div_filter");
@@ -184,7 +186,7 @@ window.onload = function loadPageElements() {
 		    	for : value.id,
 		    	html : value.display
 	    	}).appendTo("#div_filetypes");
-	    	$("#div_filetypes").append("<br/>");
+	    	//$("#div_filetypes").append("<br/>");
 		});
 
 		// Button

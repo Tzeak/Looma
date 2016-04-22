@@ -5,6 +5,11 @@
 	</head>
 
 	<body onload="loadPageElements()">
+
+		Title: <input type="text" name="title" id="titleString" class="textBox">
+		<button type="button" id="btnSave" onclick="save()">Save</button>
+		<button type="button" id="btnPresent" onclick="location.href='present.html';">Present</button>
+		
 		<div id="container">
 			<div id="sidebar">
 				<form id="div_filter">
@@ -20,11 +25,6 @@
 				</div>
 			</div>
 
-	Title: <input type="text" name="title" id="titleString" class="textBox">
-	<button type="button" id="btnOpen" onclick="location.href='open.html'">Open</button>
-	<button type="button" id="btnSave" onclick="save()">Save</button>
-	<button type="button" id="btnPresent" onclick="location.href='present.html';">Present</button>
-
 	
 	<!-- <button type="button" id="btnPresent" onclick="location.href='present.html';">Present</button>
 	<div id= "displaybox" style="overflow-y:auto;"> 
@@ -34,7 +34,8 @@
     	</object> 
 	 </div> -->
 
-	<div id= "displaybox" style="overflow-y:auto;"></div>
+			<div id = "displayAndTimeline">
+				<div id= "displaybox" style="overflow-y:auto;"></div>
 
 
 
@@ -44,6 +45,7 @@
     	<div class="timelineEntire" id="timelineDisplay">
 		</div>
 	</div>
+
 
 	</body>
 
