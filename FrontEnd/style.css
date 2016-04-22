@@ -265,9 +265,9 @@ li:hover {
 #container {
 	width: 100%;
 }
-img {
+/*img {
 	width: 60px;
-}
+}*/
 button {
 	display:inline;
 	color:white;

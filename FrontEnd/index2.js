@@ -333,16 +333,16 @@ var printFilterData = function(filterdata_object) {
 	// Print Chapter array
 	var currentResultDiv = document.createElement("div");
 	currentResultDiv.id = "currentResultDiv";
-	var collection = document.createElement("h1");
-	collection.id = "collectionTitle";
+	var collectionTitle = document.createElement("h1");
+	collectionTitle.id = "collectionTitleTitle";
 	var arraylength = filterdata_object.chapters.length;
 	if (arraylength == 1) {
-		collection.innerHTML = "Chapters (" + arraylength + " Result)";
+		collectionTitle.innerHTML = "Chapters (" + arraylength + " Result)";
 	} 
 	else {
-		collection.innerHTML = "Chapters (" + arraylength + " Results)";
+		collectionTitle.innerHTML = "Chapters (" + arraylength + " Results)";
 	}
-	currentResultDiv.appendChild(collection);
+	currentResultDiv.appendChild(collectionTitle);
 
 	for(var i=0; i<filterdata_object.chapters.length; i++) {
 		var rElement = createChapterResults(filterdata_object.chapters[i])
@@ -352,17 +352,17 @@ var printFilterData = function(filterdata_object) {
 
 
 	// Print Textbooks array
-	var collection = document.createElement("h1");
-	collection.id = "collectionTitle";
+	var collectionTitle = document.createElement("h1");
+	collectionTitle.id = "collectionTitleTitle";
 
 	var arraylength = filterdata_object.textbooks.length;
 	if (arraylength == 1) {
-		collection.innerHTML = "Textbooks (" + arraylength + " Result)";
+		collectionTitle.innerHTML = "Textbooks (" + arraylength + " Result)";
 	} 
 	else {
-		collection.innerHTML = "Textbooks (" + arraylength + " Results)";
+		collectionTitle.innerHTML = "Textbooks (" + arraylength + " Results)";
 	}
-	currentResultDiv.appendChild(collection);
+	currentResultDiv.appendChild(collectionTitle);
 
 	for(var i=0; i<filterdata_object.textbooks.length; i++) {
 		var rElement = createTextbookResults(filterdata_object.textbooks[i])
@@ -371,17 +371,17 @@ var printFilterData = function(filterdata_object) {
 	}
 
 	// Print Actdict array
-	var collection = document.createElement("h1");
-	collection.id = "collectionTitle";
+	var collectionTitle = document.createElement("h1");
+	collectionTitle.id = "collectionTitleTitle";
 
 	var arraylength = filterdata_object.activities.length;
 	if (arraylength == 1) {
-		collection.innerHTML = "Activites (" + arraylength + " Result)";
+		collectionTitle.innerHTML = "Activites (" + arraylength + " Result)";
 	} 
 	else {
-		collection.innerHTML = "Activites (" + arraylength + " Results)";
+		collectionTitle.innerHTML = "Activites (" + arraylength + " Results)";
 	}
-	currentResultDiv.appendChild(collection);
+	currentResultDiv.appendChild(collectionTitle);
 
 	for(var i=0; i<filterdata_object.activities.length; i++) {
 		var rElement = createActivityResults(filterdata_object.activities[i])
@@ -389,17 +389,17 @@ var printFilterData = function(filterdata_object) {
 		currentResultDiv.appendChild(rElement);
 	}
 
-	var collection = document.createElement("h1");
-	collection.id = "collectionTitle";
+	var collectionTitle = document.createElement("h1");
+	collectionTitle.id = "collectionTitleTitle";
 
 	var arraylength = filterdata_object.dictionary.length;
 	if (arraylength == 1) {
-		collection.innerHTML = "Dictionary (" + arraylength + " Result)";
+		collectionTitle.innerHTML = "Dictionary (" + arraylength + " Result)";
 	} 
 	else {
-		collection.innerHTML = "Dictionary (" + arraylength + " Results)";
+		collectionTitle.innerHTML = "Dictionary (" + arraylength + " Results)";
 	}
-	currentResultDiv.appendChild(collection);
+	currentResultDiv.appendChild(collectionTitle);
 
 	for(var i=0; i<filterdata_object.dictionary.length; i++) {
 		var rElement = createDictionaryResults(filterdata_object.dictionary[i])
@@ -418,6 +418,102 @@ var printFilterData = function(filterdata_object) {
 	// $("#displaybox").html();
 }
 
+var homedirectory = "../";
+
+
+// When you click the preview button
+var preview_result = function(collection, item) {
+	console.log("PREVIEWING THINGS");
+
+	if (collection == "chapters") {
+		console.log("chapters");
+		// Chapter (pn of textbook)
+		var str = item._id;
+		var arr_split = str.split("");
+
+		// For loop extracts the last 2 numbers as the chapter.
+		for (var i = arr_split.length-1; i>=0; i--) {
+			var currentChapter = arr_split[i-1].concat(arr_split[i]);
+			arr_split.splice(i, 1);
+			arr_split.splice(i-1, 1);
+			break;
+		}
+
+		if (arr_split.length == 3) {	// If the subject is EN, or SS (or something with 2 letters)
+			arr_split[1] = arr_split[1].concat(arr_split[2]);
+			arr_split.splice(2, 1);
+		}
+		else if (arr_split.length < 3) {	// If the subject is M or S, N (or something with 1 letter)
+			// MAKE THIS WORK
+		}
+
+		var currentGradeNumber = arr_split[0];
+		var currentGrade = "Class".concat(arr_split[0]);
+		if (arr_split[1] == "EN") {
+			var currentSubject = "English";
+		} 
+		else if (arr_split[1] == "M") {
+			var currentSubject = "Math";
+		} 
+		else if (arr_split[1] == "N") {
+			var currentSubject = "Nepali";
+		} 
+		else if (arr_split[1] == "S") {
+			var currentSubject = "Science";
+		} 
+		else if (arr_split[1] == "SS") {
+			var currentSubject = "SocialStudies";
+		}
+
+		document.querySelector("div#displaybox").innerHTML = '<embed src="' + homedirectory + 'content/textbooks/' + currentGrade + "/" + currentSubject + "/" + currentSubject + "-" + currentGradeNumber + '.pdf#page=' + item.pn + '" width="100%" height="100%" type="application/pdf">';
+	}
+
+
+	else if (collection == "textbooks") {
+		console.log("textbooks");
+		document.querySelector("div#displaybox").innerHTML = '<embed src="' + homedirectory + 'content/' + item.fp + item.fn + '" width="100%" height="100%" type="application/pdf">';
+	}
+
+
+	else if (collection == "activities") {
+		if(item.ft == "mp4" || item.ft == "mov" || item.ft == "mp5") {
+			document.querySelector("div#displaybox").innerHTML = '<video width="100%" height="100%" controls> <source src="' + homedirectory + 'content/videos/' + item.fn + '" type="video/mp4"> </video>';
+			// var newParagraph = document.createElement("p");
+			// newParagraph.innerText = "media type: video";
+			// document.querySelector("div#timelineBox").appendChild(newParagraph);
+		}
+		else if(item.ft=="mp3") {
+		document.querySelector("div#displaybox").innerHTML = '<audio controls> <source src="' + homedirectory + 'content/audio/' + item.fn + '" type="audio/mpeg"></audio>';
+		}
+		// Pictures
+		else if(item.ft=="jpg" || item.ft=="gif" || item.ft=="png") {
+			document.querySelector("div#displaybox").innerHTML = '<img src="' + homedirectory + 'content/pictures/' + item.fn + '"id="displayImage">';
+		}
+		else if (item.ft=="EP") {
+		document.querySelector("div#displaybox").innerHTML = '<object type="text/html" data="' + homedirectory + 'content/epaath/activites/' + item.fn  + 'style="width:100%; height:100%; margin:1%;"> </object>;'
+		}
+	}
+
+
+	else if (collection == "dictionary") {
+		document.querySelector("div#displaybox").innerHTML = item.def;
+	}
+
+
+	// Chapter information
+
+
+
+	// Video
+
+	// Audio
+	
+	// Definiton 
+	
+	
+	// Game
+	
+}
 
 
 /* //////////////////////TO-DO FOR RESULTS
@@ -428,15 +524,16 @@ THUMBNAILS
 		it shouldn't try to get the substring, because it'll break the code
 	- 	If the file isn't there. We need to make a little 404 image and
 		code it in.
+- Names
+	-	If there's a decimal in the ID, make it so that it extracts
+		info correctly
 
 //////////////////////////END TO-DO */
-
-
-var homedirectory = "../";
 
 // Create "Chapter" collection results
 var createChapterResults = function(item) {
 
+	var collection = "chapters";
 	var div = document.createElement("div");
 	div.id = "resultitem";
 
@@ -444,49 +541,47 @@ var createChapterResults = function(item) {
 	/////////////////////// ALSO MAKE WORK IF THE ID HAS A DECIMAL!!!!!!!!//////////////////////
 
 	var str = item._id;
-	var res = str.split("");
-	console.log(res);
+	var arr_split = str.split("");
 
 	// For loop extracts the last 2 numbers as the chapter.
 
-	for (var i = res.length-1; i>=0; i--) {
-		// console.log(typeof(res[i]));
-		// if (res[i] == "0" || res[i] == "1" || res[i] == "2" || res[i] == "3" || res[i] == "4" || res[i] == "5" || res[i] == "6" || res[i] == "7" || res[i] == "8" || res[i] == "9") {
-		// 	res.splice(i,1); 
+	for (var i = arr_split.length-1; i>=0; i--) {
+		// console.log(typeof(arr_split[i]));
+		// if (arr_split[i] == "0" || arr_split[i] == "1" || arr_split[i] == "2" || arr_split[i] == "3" || arr_split[i] == "4" || arr_split[i] == "5" || arr_split[i] == "6" || arr_split[i] == "7" || arr_split[i] == "8" || arr_split[i] == "9") {
+		// 	arr_split.splice(i,1); 
 		// }
-		// console.log(res);
+		// console.log(arr_split);
 		// break;
 
-		var currentChapter = res[i-1].concat(res[i]);
-		console.log("current chapter: " + currentChapter);
-		res.splice(i, 1);
-		res.splice(i-1, 1);
+		var currentChapter = arr_split[i-1].concat(arr_split[i]);
+		arr_split.splice(i, 1);
+		arr_split.splice(i-1, 1);
 		break;
 	}
 
-	if (res.length == 3) {	// If the subject is EN, or SS (or something with 2 letters)
-		res[1] = res[1].concat(res[2]);
-		res.splice(2, 1);
+	if (arr_split.length == 3) {	// If the subject is EN, or SS (or something with 2 letters)
+		arr_split[1] = arr_split[1].concat(arr_split[2]);
+		arr_split.splice(2, 1);
 	}
-	else if (res.length < 3) {	// If the subject is M or S, N (or something with 1 letter)
+	else if (arr_split.length < 3) {	// If the subject is M or S, N (or something with 1 letter)
 		// MAKE THIS WORK
 	}
 
-	var currentGradeNumber = res[0];
-	var currentGrade = "Class".concat(res[0]);
-	if (res[1] == "EN") {
+	var currentGradeNumber = arr_split[0];
+	var currentGrade = "Class".concat(arr_split[0]);
+	if (arr_split[1] == "EN") {
 		var currentSubject = "English";
 	} 
-	else if (res[1] == "M") {
+	else if (arr_split[1] == "M") {
 		var currentSubject = "Math";
 	} 
-	else if (res[1] == "N") {
+	else if (arr_split[1] == "N") {
 		var currentSubject = "Nepali";
 	} 
-	else if (res[1] == "S") {
+	else if (arr_split[1] == "S") {
 		var currentSubject = "Science";
 	} 
-	else if (res[1] == "SS") {
+	else if (arr_split[1] == "SS") {
 		var currentSubject = "SocialStudies";
 	}
 
@@ -526,6 +621,9 @@ var createChapterResults = function(item) {
 	previewButton.innerText = "Preview";
 	previewButton.className = "preview";
 	// previewButton.onclick = preview_result(item);
+	$(previewButton).bind("click", function() {
+		preview_result(collection, item);
+	})
 	div.appendChild(previewButton);
 
 	return div;
@@ -533,6 +631,7 @@ var createChapterResults = function(item) {
 
 // Create "Textbook" collection results
 var createTextbookResults = function(item) {
+	var collection = "textbooks";
 	var div = document.createElement("div");
 	div.id = "resultitem";
 
@@ -575,11 +674,21 @@ var createTextbookResults = function(item) {
 	addButton.onclick = addJSON;
 	div.appendChild(addButton);
 
+	var previewButton = document.createElement("button");
+	previewButton.innerText = "Preview";
+	previewButton.className = "preview";
+	// previewButton.onclick = preview_result(item);
+	$(previewButton).bind("click", function() {
+		preview_result(collection, item);
+	})
+	div.appendChild(previewButton);
+
 	return div;
 }
 
 // Create "Actdict" collection results
 var createActivityResults = function(item) {
+	var collection = "activities";
 	var div = document.createElement("div");
 	div.id = "resultitem";
 
@@ -650,10 +759,20 @@ var createActivityResults = function(item) {
 	addButton.onclick = addJSON;
 	div.appendChild(addButton);
 
+	var previewButton = document.createElement("button");
+	previewButton.innerText = "Preview";
+	previewButton.className = "preview";
+	// previewButton.onclick = preview_result(item);
+	$(previewButton).bind("click", function() {
+		preview_result(collection, item);
+	})
+	div.appendChild(previewButton);
+
 	return div;
 }
 
 var createDictionaryResults = function(item) {
+	var collection = "dictionary";
 	var div = document.createElement("div");
 	div.id = "resultitem";
 
@@ -687,6 +806,15 @@ var createDictionaryResults = function(item) {
 	addButton.onclick = addJSON;
 	div.appendChild(addButton);
 
+	var previewButton = document.createElement("button");
+	previewButton.innerText = "Preview";
+	previewButton.className = "preview";
+	// previewButton.onclick = preview_result(item);
+	$(previewButton).bind("click", function() {
+		preview_result(collection, item);
+	})
+	div.appendChild(previewButton);
+
 	return div;
 }
 
@@ -704,7 +832,7 @@ function imageExists(image_url){
 }
 
 
-
+/*
 /////////// CURRENTLY NOT USING THIS AT ALL
 var createNewListElement = function(itemString) {
 	  var listItem = document.createElement("li");
@@ -770,7 +898,7 @@ var createNewListElement = function(itemString) {
 	  	return listItem;
 
 }
-
+*/
 
 console.log("results display");
 var resultsWhole = document.querySelector("div#resultsdiv");
