@@ -19,7 +19,7 @@ $(document).ready(function () {
 		if (!results[2]) return '';
 		return decodeURIComponent(results[2].replace(/\+/g, " "));
 	}
-	$(window).load(function opentime(){
+	function opentime(){
 		var timelineArray = new Array();
 
 		console.log("opentime() called");
@@ -52,5 +52,5 @@ $(document).ready(function () {
 			isTimelineOpen = true;
 		}
 		return timelineArray;
-	});
+	}
 });

@@ -44,6 +44,28 @@ function searchMongo($id)
 	return null;
 }
 
+// function searchActivities($id) 
+// {
+// 	global $activities;
+// 	$document = $activities->findOne(array('_id' => new MongoId($id)));
+// 	if ($document != null) 
+// 	{
+// 		return $document; // it's in this collection!
+// 	} 
+// 	return null;
+// }
+
+// function searchDictionary($id) 
+// {
+// 	global $dictionary;
+// 	$document = $dictionary->findOne(array('_id' => new MongoId($id)));
+// 	if ($document != null) 
+// 	{
+// 		return $document; // it's in this collection!
+// 	} 
+// 	return null;
+// }
+
 /* Function:		getTimelineElements
  * Description:		Input	- Mongo ID of a Timeline Object
  *					Return	- Array of MongoDB Documents from the associated timeline
