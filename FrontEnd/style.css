@@ -141,14 +141,14 @@ li:hover {
   background: darkgray;
   border-radius:5px;
 }
-#sidebar {
+/*#sidebar {
 	float:left;
 	background: lightgray;
 	padding: 20px;
 	margin: 30px;
 	width: 30%;
 	border-radius: 10px;
-}
+}*/
 
 #displaybox {
 	width: 60%;
@@ -162,6 +162,7 @@ li:hover {
 	border-radius:15px;
 	margin-top: 28px;
 	margin-right: 25px;
+	margin-left: 25px;
 }
 
 
