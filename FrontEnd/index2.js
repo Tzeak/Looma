@@ -1,3 +1,8 @@
+
+
+var timelineArray = opentime();
+
+
 // This loads all the preliminary elements in the page.
 var loadPageElements = function() {
 	$(document).ready(function () {
@@ -1018,6 +1023,7 @@ var loadJSON = function() {
 	  }
 }
 
+/*
 // Create new list items for results div
 var createNewListElement = function(itemString) {
 	  var listItem = document.createElement("li");
@@ -1068,34 +1074,6 @@ var createNewListElement = function(itemString) {
 		console.log("filepath exists?" + resultArray[i].fp);
 		var att = document.createAttribute("src");
 		if(resultArray[i].fp != null) {
-			
-
-			//attempting ajax for getting image filename (BUT THIS SHIT DOESN'T WORK)
-			/*get_image = null;
-			
-			$(document).ready(function () {
-				function imageAjax() {
-		            var fileExt = {};
-					fileExt[0]=".jpg";
-					$.ajax({
-					    //This will retrieve the contents of the folder if the folder is configured as 'browsable'
-					    url: resultArray[i].fp,
-					    success: function (data) {
-					       $("#displaybox").html('<ul>');
-					       //List all png or jpg or gif file names in the page
-					       $(data).find('a:contains(" + fileExt[0] + ")').each(function () {
-					           var filename = this.href.replace(window.location.host, "").replace("http:///", "");
-					           console.log("image file:" + filename);
-					           //$("#displaybox").append( '<li>'+filename+ <'/li'>);
-					       });
-					       $("#displaybox").append('</ul>');
-					     }     
-					  });
-					}
-					get_image=imageAjax;
-				})
-			
-			get_image();*/
 
 			var filename = "English-1_thumb.jpg";
 			att.value = "../" + resultArray[i].fp + filename;       
@@ -1136,7 +1114,7 @@ var createNewListElement = function(itemString) {
 	  	return listItem;
 
 }
-
+*/
 
 
 var save = function(){    

@@ -1,24 +1,17 @@
-$(document).ready(function () {
-	$("#timelineWhole").sortable({
-		opacity: 0.7,
-		revert: true,   //Animates
-		scroll: true,   //Allows page to scroll when dragging. Good for tall pages.
-		handle: $(".timelinediv"),
-		update: function () {  
-			$('#btnSave').show();
-		}
-	});
+
 
 	var isTimelineOpen = false;
+
 	function getParameterByName(name, url) {
 		if (!url) url = window.location.href;
 		name = name.replace(/[\[\]]/g, "\\$&");
 		var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)", "i"),
 			results = regex.exec(url);
-		if (!results) return null;
-		if (!results[2]) return '';
-		return decodeURIComponent(results[2].replace(/\+/g, " "));
+		if (!results) return null; //if no results, returns null
+		if (!results[2]) return ''; 
+		return decodeURIComponent(results[2].replace(/\+/g, " ")); //Returns the value given a particular parameter name
 	}
+
 	function opentime(){
 		var timelineArray = new Array();
 
@@ -37,20 +30,26 @@ $(document).ready(function () {
 		}
 
 		if(!isTimelineOpen) {
-			$.getJSON("/BackEnd/openTimeline.php", timelineID, function(timelineData){;
+			if(timelineID["$id"] == null)
+				console.log("returning empty array");
+			else 
+			{
+				$.getJSON("/BackEnd/openTimeline.php", timelineID, function(timelineData){;
 
-				$.each(timelineData, function(index, val) { 
-					createNewTimeElement(index, val.dn);
-					timelineArray.push(val);
+					$.each(timelineData, function(index, val) { 
+						createNewTimeElement(index, val.dn);
+						timelineArray.push(val);
+					});
+				}).fail(function(jqXHR){
+					console.log(jqXHR.status)
+					$.get("/BackEnd/openTimeline.php", timelineID, function(timelineData){
+						console.log(timelineData);
+					});
 				});
-			}).fail(function(jqXHR){
-				console.log(jqXHR.status)
-				$.get("/BackEnd/openTimeline.php", timelineID, function(timelineData){
-					console.log(timelineData);
-				});
-			});
+			}
+				
+			
 			isTimelineOpen = true;
 		}
-		return timelineArray;
+ 		return timelineArray;
 	}
-});

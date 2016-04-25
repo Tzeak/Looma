@@ -17,6 +17,7 @@ var load = function() {
 }
 
 var createNewTimeElement = function(index, itemString, itemId) {
+	// var div = document.createElement("div");
 	$('<li/>', {
 		id : "time" + index,
 		value: itemId,
