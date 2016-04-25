@@ -35,8 +35,8 @@ var loadPageElements = function() {
 		for (var i=0; i<8; i++) {
 			if (i == 0) {
 				$("<option/>", {
-					html : "3",
-					id : "3"
+					html : "",
+					id : ""
 				}).appendTo("#dropdown_grade");
 			} 
 			else {
@@ -432,12 +432,44 @@ var preview_result = function(collection, item) {
 		var arr_split = str.split("");
 
 		// For loop extracts the last 2 numbers as the chapter.
-		for (var i = arr_split.length-1; i>=0; i--) {
-			var currentChapter = arr_split[i-1].concat(arr_split[i]);
-			arr_split.splice(i, 1);
-			arr_split.splice(i-1, 1);
-			break;
-		}
+
+/////////////// THIS ACCOMMODATES FOR LACK OF 0'S BEFORE SOME OF THEM. LOL UGH.
+		// If there is a decimal
+			// If there are 2 numbers between the last letter & the decimal
+				// Extract the 2 numbers between the last letter & the decimal
+				// If the first number is 0
+					// current chapter = the 2nd number
+				// Else if the first number is not 0
+					// concatenate the 2 numbers
+					// current chapter = the 2 numbers
+			// Else if there is 1 number between the last letter & the decimal
+				// Extract the number between the last letter & decimal
+				// current chapter = that number
+		// Else if there is no decimal
+			// If there are 2 numbers after the last letter
+					// Extract the 2 numbers after the last letter
+					// If the first number is 0
+						// current chapter = the 2nd number
+					// Else if the first number is not 0
+						// concatenate the 2 numbers
+						// current chapter = the 2 numbers
+				// Else if there is 1 number after the last letter
+					// Extract the number after the last letter
+					// current chapter = that number
+/////////////////////////////
+
+// TO DO
+// - extract sections when there is a decimal
+// - some of them have display names & some dont & some have nepali dns & some dont & idk
+// - add Roshan's function for mongo fix _id object into not object b/c i took that out when i was making the 3 arrays into 4 arrays
+
+
+			for (var i = arr_split.length-1; i>=0; i--) {
+				var currentChapter = arr_split[i-1].concat(arr_split[i]);
+				arr_split.splice(i, 1);
+				arr_split.splice(i-1, 1);
+				break;
+			}
 
 		if (arr_split.length == 3) {	// If the subject is EN, or SS (or something with 2 letters)
 			arr_split[1] = arr_split[1].concat(arr_split[2]);

@@ -88,6 +88,7 @@ echo json_encode($final_array);
 		}
 		if(isset($_GET["subject"]) && $_GET["subject"] != '')
 		{
+			// $filterword .= "^[^%]*" . $_GET['subject'] . "[^%]*$";
 			$filterword .= $_GET["subject"]; 
 		}
 		else
