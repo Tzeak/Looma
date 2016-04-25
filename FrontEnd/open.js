@@ -9,14 +9,14 @@ var load = function() {
 		$.each(timelinesJSON, function(index, val) { 
 			// console.log("index: " + index + " id: " + val._id);
 
-			createNewTimeElement(index, val.name, val._id);
+			createOpenListElement(index, val.name, val._id);
 
 		});
 
 	 }).fail(function(jqXHR){console.log(jqXHR.status)});
 }
 
-var createNewTimeElement = function(index, itemString, itemId) {
+var createOpenListElement = function(index, itemString, itemId) {
 	// var div = document.createElement("div");
 	$('<li/>', {
 		id : "time" + index,

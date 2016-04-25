@@ -20,32 +20,40 @@
 		timelineID = {"$id" : timelineID}; //Set up in format for querying mongo database
 
 
-		var createNewTimeElement = function(index, itemString) {
-			$('<div/>', {class: "timelinediv", id: "timediv" + index}).appendTo('#timelineWhole');
-			$('<li/>', {
-				id : "item" + index,
-				title: itemString,
-				text: itemString,
-			}).appendTo('#timediv' + index);
-		}
+		// var createNewTimeElement = function(index, itemString) {
+		// 	$('<div/>', {class: "timelinediv", id: "timediv" + index}).appendTo('#timelineWhole');
+		// 	$('<li/>', {
+		// 		id : "item" + index,
+		// 		title: itemString,
+		// 		text: itemString,
+		// 	}).appendTo('#timediv' + index);
+		// }
 
 		if(!isTimelineOpen) {
 			if(timelineID["$id"] == null)
 				console.log("returning empty array");
 			else 
 			{
-				$.getJSON("/BackEnd/openTimeline.php", timelineID, function(timelineData){;
-
-					$.each(timelineData, function(index, val) { 
-						createNewTimeElement(index, val.dn);
-						timelineArray.push(val);
-					});
+				// $.ajaxSetup({async: false});
+				$.ajax({
+					url: "/BackEnd/openTimeline.php",
+					dataType: 'json',
+					async: false,
+					data: timelineID,
+					success: function(timelineData){
+						console.log("getting timeline");
+						$.each(timelineData, function(index, val){
+							// createTimelineElement(val);
+							timelineArray.push(val);
+						});
+					}
 				}).fail(function(jqXHR){
 					console.log(jqXHR.status)
 					$.get("/BackEnd/openTimeline.php", timelineID, function(timelineData){
 						console.log(timelineData);
 					});
 				});
+
 			}
 				
 			

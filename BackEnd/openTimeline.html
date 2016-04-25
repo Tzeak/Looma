@@ -7,9 +7,8 @@
 		<button onclick="opentime()">open timeline</button>
 		<div id="disp" style="border-style: solid"></div>
 			<div id = "wrapper">
-				<div class="timeline" id="timelineWhole">
+				<div class="timeline" id="timelineWhole"></div>
 			</div>
-		</div>
 
 	</div>
 	</body>
@@ -27,9 +26,11 @@
 		}
 		function opentime(){
 			var timelineID = getParameterByName("timelineId");
+			var timelineID = {"$id": timelineID};
 
 			var createNewTimeElement = function(index, itemString) {
-				$('<div/>', {class: "timelinediv", id: "timediv" + index}).appendTo('#timelineWhole');
+				console.log("Create enw time eleint called");
+				$('<div/>', {id: "timediv" + index}).appendTo('#timelineWhole');
 				$('<li/>', {
 					id : "item" + index,
 					title: itemString,
@@ -39,13 +40,19 @@
 
 			if(!isTimelineOpen) {
 				$.getJSON("openTimeline.php", timelineID, function(timelineData){
-						$("#disp").html(timelineData);
+						console.log(timelineData);
+						$("#disp").text(timelineData);
 						
 						$.each(timelineData, function(index, val) { 
 							createNewTimeElement(index, val.dn);
 
 						});
-				}).fail(function(jqXHR){console.log(jqXHR.status)});
+				}).fail(function(jqXHR){
+					console.log(jqXHR.status);
+					$.get("/BackEnd/openTimeline.php", timelineID, function(timelineData){
+						console.log(timelineData);
+					});
+				});
 				isTimelineOpen = true;
 			}
 		}

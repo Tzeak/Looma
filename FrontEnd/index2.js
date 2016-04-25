@@ -1,11 +1,5 @@
-
-
-var timelineArray = opentime();
-
-
 // This loads all the preliminary elements in the page.
-var loadPageElements = function() {
-	$(document).ready(function () {
+window.onload = function loadPageElements() {
 
 		// Sidebar: Search
 
@@ -40,8 +34,8 @@ var loadPageElements = function() {
 		for (var i=0; i<8; i++) {
 			if (i == 0) {
 				$("<option/>", {
-					html : "",
-					id : ""
+					html : "3",
+					id : "3"
 				}).appendTo("#dropdown_grade");
 			} 
 			else {
@@ -185,61 +179,97 @@ var loadPageElements = function() {
 			html : "Search"
 		}).appendTo("#div_filter");
 
-	});	// End document.ready
+		createTimelineElement();
+}
 
 
-/*
 
-	// Create Elements to add to
-	var div = document.createElement("div");
-	var p = document.createElement("p");
-	var h1 = document.createElement("h1");
-	var h3 = document.createElement("h3");
-	var select = document.createElement("select");
-	var option = document.createElement("option");
-	var input = document.createElement("input");
 
-	var div_search = document.createElement("div");
-	var form = document.getElementById("div_filter");
+var createTimelineElement = function() {
 
-	// Sidebar: Search
-	div_search.id = "div_search";
-	p.innerHTML = "Search: ";
-	input.type = "text";
-	input.name = "search";
-	input.id = "searchString";
+	var timelineElements = opentime();	// gets the ID from the URL and retrieves the whole timeline array
+	console.log(timelineElements);
 
-	$("#div_filter").append(div_search);
-	$(div_search).append(p);
-	// div_search.appendChild(p);
-	$(div_search).append(input);
-	// div_search.appendChild(input);
-	// $("#div_filter").append(div_search);
+	$.each(timelineElements, function(index, timelineObj) {
 
-	// Sidebar: Grade
-	p.innerText = "Grade Level";
-	var select = $('<select />');
-	select.id="dropdown_grade";
-	for(var i=0; i<8; i++) {
-	    $('<option />', {value: i, text: i}).appendTo(select);
-	}
-	$("#div_filter").append(p);
-	// $("div_filter").append(select);
-	select.appendTo(form); 
+		var timelinediv = document.createElement("div");
+		timelinediv.className = "timelinediv";
+
+		var div = document.createElement("div");
+		div.id = "resultitem";
+
+
+		$("<p/>", {
+			id : "timline_dn",
+			html : "<b>" + timelineObj.dn + "</b>"
+		}).appendTo(div);
+
+		// Nepali Name
+		$("<p/>", {
+			id : "timeline_ndn",
+			html : timelineObj.ndn
+		}).appendTo(div);
+
+		// ID
+		$("<p/>", {
+			id : "result_ID",
+			html : timelineObj._id
+		}).appendTo(div);
+		
+		$(div).appendTo(timelinediv);
+		$(timelinediv).appendTo("#timelineDisplay");
+		// $(".timelinediv").sortable('refresh');
+	});
+
+	
+
+	/*
+	  // Create new list items
+
+	  var listItem = document.createElement("li");
+
+		var id = document.createAttribute("id");        // Create a "href" attribute
+		id.value = "item";            // Set the value of the href attribute
+		listItem.setAttributeNode(id);
+
+		var num = document.createAttribute("index");        // Create a "href" attribute
+		num.value = i;            // Set the value of the href attribute
+		listItem.setAttributeNode(num);
+
+		// var remove = document.createAttribute("ondrag");        // Create a "href" attribute
+		// remove.value = "addJSON(event)";            // Set the value of the href attribute
+		// listItem.setAttributeNode(remove);
+
+
+	  var listLabel = document.createElement("label");
+
+	  var id = document.createAttribute("id");        // Create a "href" attribute
+		id.value = "name";            // Set the value of the href attribute
+		listLabel.setAttributeNode(id);
+
+
+	  var thumbnail = document.createElement("img");
+	  var addButton = document.createElement("button");
+	  addButton.innerText = "Add";
+	  addButton.className = "add";
+
+	  
+	var att = document.createAttribute("src");        // Create a "href" attribute
+	att.value = resultArray[i].fp + "*.jpg";            // Set the value of the href attribute
+	//console.log("i = " + i);
+	thumbnail.setAttributeNode(att);                      // Add the href attribute to <a>
+
+	  listLabel.innerText = itemString.dn + ", Grade " + itemString.prefix[0];
+	  // addButton.onclick = addJSON;
+	  // listItem.appendChild(thumbnail);
+	  listItem.appendChild(listLabel);
+	  listItem.appendChild(addButton);
+
+	  return listItem;
 
 */
 
-
-	// Sidebar: Subject
-
-	// Sidebar: Chapter
-
-	// Sidebar: Section
-
-	// Sidebar: File Type
-
-	// document.getElementById("sidebar").appendChild(form);
-}
+	}
 
 
 
@@ -295,6 +325,8 @@ var printFilterData = function(filterdata_object) {
 // The problem is when I try to use the variable name when accessing the object: "filterdata_object.currentCollection".
 // It takes that as a literal. So, "filterdata_object.chapter" works, but even if "currentCollection" = "chapter",
 // "filterdata_object.currentCollection" doesn't work. :(
+
+	// Roshan said use bracket notation instead of dot notation
 
 /* //////////// BEGIN LOOP
 	// A loop that prints the data in each collection array
@@ -632,7 +664,7 @@ var createChapterResults = function(item) {
 	// Display name
 	$("<p/>", {
 		id : "result_dn",
-		html : "<b>Chapter " + currentChapter + ":<br/>" + item.dn + "</b>"
+		html : "<b>" + item.dn + "</b>"
 	}).appendTo(div);
 
 	// Nepali Name
@@ -725,6 +757,7 @@ var createTextbookResults = function(item) {
 
 // Create "Actdict" collection results
 var createActivityResults = function(item) {
+	console.log("creating activities");
 	var collection = "activities";
 	var div = document.createElement("div");
 	div.id = "resultitem";
@@ -869,75 +902,7 @@ function imageExists(image_url){
 }
 
 
-/*
-/////////// CURRENTLY NOT USING THIS AT ALL
-var createNewListElement = function(itemString) {
-	  var listItem = document.createElement("li");
-	  
-	  	//id for li element
-		var id = document.createAttribute("id"); 
-		id.value = "item";           
-		listItem.setAttributeNode(id);
 
-		//index attribute for li element (to access resultArray[index] info after the item is moved around in the timeline)
-		var num = document.createAttribute("index");      
-		num.value = i;    
-		listItem.setAttributeNode(num);
-
-		//attributes to list items for when we add preview feature
-		var filetype = document.createAttribute("data-ft");   
-		filetype.value = resultArray[i].filetype; 
-		listItem.setAttributeNode(filetype);
-
-		var filepath = document.createAttribute("data-fp");   
-		filepath.value = resultArray[i].filepath; 
-		listItem.setAttributeNode(filepath);
-
-		var filename = document.createAttribute("data-fn");       
-		filename.value = resultArray[i].displayname;         
-		listItem.setAttributeNode(filename);
-
-
-		//create label element for displaying content display name/info	  
-	  	var listLabel = document.createElement("label");
-
-	  	//id for label element
-	  	var id = document.createAttribute("id");  
-		id.value = "name";         
-		listLabel.setAttributeNode(id);
-
-
-		//image element for thumbnail photo	
-		var thumbnail = document.createElement("img");
-		
-		//add button to add list item from results div to timeline
-		var addButton = document.createElement("button");
-		addButton.innerText = "Add";
-		addButton.className = "add";
-
-	  
-		//access thumbnail image using filepath in json object
-		var att = document.createAttribute("src");    
-		att.value = resultArray[i].fp + "*.jpg";       
-		console.log("i = " + i);
-		console.log("resultArray[i] = " + resultArray[i]);
-		thumbnail.setAttributeNode(att);                    
-
-		
-		//set the display text for each content item
-		listLabel.innerText = itemString.dn + ", Grade " + resultArray[i].prefix[0];
-		
-		//append elements to the list item
-		listItem.appendChild(thumbnail);
-		listItem.appendChild(listLabel);
-		listItem.appendChild(addButton);
-
-	  	return listItem;
-
-}
-*/
-
-console.log("results display");
 var resultsWhole = document.querySelector("div#resultsdiv");
 var resultsUL = document.querySelector("div#resultsdiv ul#resultsDivUL");
 var timelineWhole = document.querySelector("div#timelineWhole");
@@ -1011,110 +976,7 @@ var checkDivsEmpty = function() {
   return "none";
 }	
 
-//Load JSON objects into Results div
-var loadJSON = function() {
 
-	  console.log("Loading JSON objects into Results div...");
-
-	  for(i=0;i<resultArray.length; i++)
-	  {
-	    var rElement = createNewListElement(resultArray[i]);
-	    resultsUL.appendChild(rElement);
-	  }
-}
-
-/*
-// Create new list items for results div
-var createNewListElement = function(itemString) {
-	  var listItem = document.createElement("li");
-	  
-	  	//id for li element
-		var id = document.createAttribute("id"); 
-		id.value = "item";           
-		listItem.setAttributeNode(id);
-
-		//index attribute for li element (to access resultArray[index] info after the item is moved around in the timeline)
-		var num = document.createAttribute("index");      
-		num.value = i;    
-		listItem.setAttributeNode(num);
-
-		//attributes to list items for when we add preview feature
-		var filetype = document.createAttribute("data-ft");   
-		filetype.value = resultArray[i].filetype; 
-		listItem.setAttributeNode(filetype);
-
-		var filepath = document.createAttribute("data-fp");   
-		filepath.value = resultArray[i].fp; 
-		listItem.setAttributeNode(filepath);
-
-		var filename = document.createAttribute("data-fn");       
-		filename.value = resultArray[i].dn;         
-		listItem.setAttributeNode(filename);
-
-
-		//create label element for displaying content display name/info	  
-	  	var listLabel = document.createElement("label");
-
-	  	//id for label element
-	  	var id = document.createAttribute("id");  
-		id.value = "name";         
-		listLabel.setAttributeNode(id);
-
-
-		//image element for thumbnail photo	
-		var thumbnail = document.createElement("img");
-		
-		//add button to add list item from results div to timeline
-		var addButton = document.createElement("button");
-		addButton.innerText = "Add";
-		addButton.className = "add";
-
-	  
-		//access thumbnail image using filepath in json object
-		console.log("filepath exists?" + resultArray[i].fp);
-		var att = document.createAttribute("src");
-		if(resultArray[i].fp != null) {
-
-			var filename = "English-1_thumb.jpg";
-			att.value = "../" + resultArray[i].fp + filename;       
-			console.log("i = " + i);
-			console.log("resultArray[i] = " + resultArray[i]);
-			   
-		}
-		else if(resultArray[i].ft == "mp3" || resultArray[i].ft == "mp4") {
-			att.value = "images/audio_icon.png";
-		}
-		else if(resultArray[i].ft == "EP") {
-			att.value = "images/game_icon.png";
-		}
-		else if(resultArray[i].def != null) {
-			att.value = "images/dictionary_icon.png";
-		}
-		//chapter
-		else if(resultArray[i].pn !=null)
-			att.value = "images/chapter_icon.png";
-		else if(resultArray[i].ft = "jpg")
-			att.value = "images/picture_icon.jpg";
-		//picture
-
-		thumbnail.setAttributeNode(att);
-		listItem.appendChild(thumbnail);
-               
-
-		
-		//set the display text for each content item
-		listLabel.innerText = itemString.dn + ", Grade " + resultArray[i].ch_id[0];
-		console.log("new list element:"+listLabel);
-		
-		//append elements to the list item
-		
-		listItem.appendChild(listLabel);
-		listItem.appendChild(addButton);
-
-	  	return listItem;
-
-}
-*/
 
 
 var save = function(){    
@@ -1155,76 +1017,6 @@ var save = function(){
 }
 
 
-
-function loadTimeline() {
-	console.log("loadTimeline");
-	
-	var datavalues = localStorage.getItem('data');
-	//parse the value 
-	var finalvalue = JSON.parse(datavalues);
-
-	console.log(finalvalue);
-
-	var timelineDivs = document.getElementsByClassName("timelinediv");
-
-  	// add each timeline item to each timelinediv
-  	for (var i = 0; i < timelineDivs.length; i++) {
-  			console.log("inserting into box# " + i);
-  			timelineDivs[i].innerText="HELLO";
-
-  			//createNewListElement(timeline[i].displayname);
-  	}
-}
-
-var createTimelineElement = function(itemString) {
-
-	
-	  // Create new list items
-
-	  var listItem = document.createElement("li");
-
-		var id = document.createAttribute("id");        // Create a "href" attribute
-		id.value = "item";            // Set the value of the href attribute
-		listItem.setAttributeNode(id);
-
-		var num = document.createAttribute("index");        // Create a "href" attribute
-		num.value = i;            // Set the value of the href attribute
-		listItem.setAttributeNode(num);
-
-		/*var remove = document.createAttribute("ondrag");        // Create a "href" attribute
-		remove.value = "addJSON(event)";            // Set the value of the href attribute
-		listItem.setAttributeNode(remove);*/
-
-
-	  var listLabel = document.createElement("label");
-
-	  var id = document.createAttribute("id");        // Create a "href" attribute
-		id.value = "name";            // Set the value of the href attribute
-		listLabel.setAttributeNode(id);
-
-
-	  var thumbnail = document.createElement("img");
-	  var addButton = document.createElement("button");
-	  addButton.innerText = "Add";
-	  addButton.className = "add";
-
-	  
-	var att = document.createAttribute("src");        // Create a "href" attribute
-	att.value = resultArray[i].fp + "*.jpg";            // Set the value of the href attribute
-	//console.log("i = " + i);
-	thumbnail.setAttributeNode(att);                      // Add the href attribute to <a>
-
-	  listLabel.innerText = itemString.dn + ", Grade " + itemString.prefix[0];
-	  // addButton.onclick = addJSON;
-	  // listItem.appendChild(thumbnail);
-	  listItem.appendChild(listLabel);
-	  listItem.appendChild(addButton);
-
-	  return listItem;
-
-
-
-	}
 
 
 
