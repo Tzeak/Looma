@@ -10,6 +10,10 @@ var homedirectory = "../";
 
 
 
+
+
+
+
 /////////////////////////// ONLOAD FUNCTION ///////////////////////////
 
 // This loads all the preliminary elements in the page.
@@ -196,15 +200,21 @@ window.onload = function loadPageElements() {
 		createTimelineFromOpen();
 }
 
+
 var addToAssArray = function(object) {
 	console.log("adding to ass array");
 }
 
 
 
+
+
+
+
 /////////////////////////// TIMELINE MANIPULATION ///////////////////////////
 
 var createTimelineFromOpen = function() {
+	console.log("create timeline from open");
 
 	var timelineElements = opentime();	// gets the ID from the URL and retrieves the whole timeline array
 	console.log(timelineElements);
@@ -281,6 +291,8 @@ var createTimelineFromOpen = function() {
 
 
 var createTimelineFromResults = function(object) {
+		console.log("create timeline from results");
+
 
 	// console.log(object._id);
 
@@ -313,6 +325,11 @@ var createTimelineFromResults = function(object) {
 	// Modify new "remove" button
 	var newRemoveButton = newTimelineItem.querySelector("button.remove");
 	newRemoveButton.innerText = "Remove";
+	newRemoveButton.removeEventListener("click", function() {
+		addToAssArray(item);
+		createTimelineElement(item); 
+		console.log("clicked add button lol");
+	});
 	newRemoveButton.addEventListener("click", removeTimelineElement);
 
 
@@ -327,83 +344,51 @@ var createTimelineFromResults = function(object) {
 	// Append newTimelineItem to first empty div using checkDivsEmpty()
 	// var nextEmptyDiv = checkDivsEmpty();
 
+	sortableFunction();
+}
 
+var createTimelineElement = function(object){
+	var innerdiv = null;
 
-	// if (nextEmptyDiv === "none") {
-	// alert ("No empty divs");
-	// } else {
-	// console.log("Adding new list item to timeline...");
-	// nextEmptyDiv.appendChild(newTimelineItem);
-	// }
+ 	if(object.ft !=null)
+ 		innerdiv = createActivityDiv(object);
+
+ 	//textbook
+ 	//if (collection=="textbooks")
+ 	if(object.subject!=null)
+ 		innerdiv = createTextbookDiv(object);
+
+ 	//dictionary
+ 	//if (collection=="dictionary")
+ 	if(object.part!=null)
+ 		innerdiv = createDictionaryDiv(object);
+
+ 	//chapter
+ 	//if (collection = "chapters")
+ 	if(object.pn!=null)
+ 		innerdiv = createChapterDiv(object);	
+
+ 	var timelinediv = $(innerdiv).appendTo($("<div/>", {class: "timelinediv"}).appendTo("#timelineDisplay"));
+ 	$(".timelinediv button.add").remove();
+	var removebutton = $("<button/>", {class: "remove", html:"Remove"}).bind("click", removeTimelineElement);
+	$(timelinediv).append(removebutton);
 
 	sortableFunction();
 }
 
-var createTimelineElement = function(object) {
-	// timelineAssArray[object._id] = object;	
 
-	var timelinediv = document.createElement("div");
-	timelinediv.className = "timelinediv";
-
-	
-	//activities
-	//if (collection=="activities") -- timelineObj needs to contain which collection the item is from
-	if(object.ft !=null)
-		var innerdiv = createActivityDiv(object);
-
-	//textbook
-	//if (collection=="textbooks")
-	if(object.subject!=null)
-		var innerdiv = createTextbookDiv(object);
-
-	//dictionary
-	//if (collection=="dictionary")
-	if(object.part!=null)
-		var innerdiv = createDictionaryDiv(object);
-
-	//chapter
-	//if (collection = "chapters")
-	if(object.pn!=null)
-		var innerdiv = createChapterDiv(object);
-
-
-	innerdiv.querySelector("button.add").classList.remove("add");
-	innerdiv.querySelector("button").classList.add("remove");
-	
-	var newRemoveButton = innerdiv.querySelector("button.remove");
-	newRemoveButton.innerText = "Remove";
-	// newRemoveButton.addEventListener("click", removeTimelineElement);
-	newRemoveButton.onclick = removeTimelineElement;
-
-	$(innerdiv).appendTo(timelinediv);
-	$(timelinediv).appendTo("#timelineDisplay");
-}
-
-
+ 
 
 var removeTimelineElement = function() {
-	  console.log("Removing list item from timeline...");
-
-	  // Removing list item from timelineHolder
-	  var timelineItem = this.parentNode;
-	  timelineItem.parentNode.remove();
-	}	
-
-// var checkDivsEmpty = function() {
-// 	  console.log("Checking for first empty timeline div...");
-
-// 	  // Gather all timeline divs so we can traverse through them
-// 	  var timelineDivs = document.getElementsByClassName("timelinediv");
+  // Removing list item from timelineHolder
+  var timelineItem = this.parentNode;
+  timelineItem.parentNode.remove();
+}	
 
 
-// 	  // Traverse through timeline divs and check for first empty div
-// 	  for (var i = 0; i < timelineDivs.length; i++) {
-// 	    if (timelineDivs[i].innerHTML === "") {
-// 	      return timelineDivs[i];
-// 	    } 
-//   }
-//   return "none";
-// }	
+
+
+
 
 
 
@@ -851,6 +836,13 @@ var createDictionaryDiv = function(item) {
 }
 
 
+
+
+
+
+
+
+
 /////////////////////////// PREVIEW ///////////////////////////
 
 // When you click the preview button
@@ -1015,6 +1007,13 @@ var save = function(){
 
 	}
 }
+
+
+
+
+
+
+
 
 
 
