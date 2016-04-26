@@ -5,25 +5,18 @@
 	</head>
 
 	<body onload="loadPageElements()">
-
-		Title: <input type="text" name="title" id="titleString" class="textBox">
-		<button type="button" id="btnSave" onclick="save()">Save</button>
-		<button type="button" id="btnPresent" onclick="location.href='present.html';">Present</button>
-		
+		<div id="navbar">
+			<img id="logo" src="images/LoomaLogo.png" width="100px">
+			<div id="titleString">Title:&nbsp<input type="text" name="title" class="textBox"></div>
+			<button type="button" id="btnSave" onclick="save()">Save</button>
+			<button type="button" id="btnPresent" onclick="location.href='present.html';">Present</button>
+		</div>
 		<div id="container">
-			<div id="sidebar">
+			<div id="querybar">
 				<form id="div_filter">
 				</form>
-				<div id="outerResultsDiv">
-					<!--	Do we need this anymore?????????
-					<p><b>Results</b></p>
-					<div id="resultsDiv">
-					   <ul id="resultsDivUL">
-					   </ul> 
-				   	</div>
-				   --> 
-				</div>
 			</div>
+		<div id="outerResultsDiv"></div>
 
 
 
