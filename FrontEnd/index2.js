@@ -197,12 +197,14 @@ window.onload = function loadPageElements() {
 			html : "Search"
 		}).appendTo("#div_filter");
 
-		createTimelineFromOpen();
+
+		openTimeline();
 }
 
 
 var addToAssArray = function(object) {
-	console.log("adding to ass array");
+	timelineAssArray[object._id] = object;
+	console.log("added " + object._id + " to ass array");
 }
 
 
@@ -213,140 +215,13 @@ var addToAssArray = function(object) {
 
 /////////////////////////// TIMELINE MANIPULATION ///////////////////////////
 
-var createTimelineFromOpen = function() {
-	console.log("create timeline from open");
-
+var openTimeline = function() {
 	var timelineElements = opentime();	// gets the ID from the URL and retrieves the whole timeline array
-	console.log(timelineElements);
-
 	$.each(timelineElements, function(index, timelineObj) {
 		createTimelineElement(timelineObj);
-		/*
-		// Push the timelineObj into the timelineAAAAAAAAAAAWWWWWWASSSSSArray
-		timelineAssArray[timelineObj._id] = timelineObj;	
-
-		var timelinediv = document.createElement("div");
-		timelinediv.className = "timelinediv";
-
-		
-		//activities
-		//if (collection=="activities") -- timelineObj needs to contain which collection the item is from
-		if(timelineObj.ft !=null)
-			var innerdiv = createActivityDiv(timelineObj);
-
-		//textbook
-		//if (collection=="textbooks")
-		if(timelineObj.subject!=null)
-			var innerdiv = createTextbookDiv(timelineObj);
-
-		//dictionary
-		//if (collection=="dictionary")
-		if(timelineObj.part!=null)
-			var innerdiv = createDictionaryDiv(timelineObj);
-
-		//chapter
-		//if (collection = "chapters")
-		if(timelineObj.pn!=null)
-			var innerdiv = createChapterDiv(timelineObj);			
-
-
-
-
-
-		// var innerdiv = document.createElement("div");
-		// innerdiv.className = "innerdiv";
-
-		// $("<p/>", {
-		// 	id : "timline_dn",
-		// 	html : "<b>" + timelineObj.dn + "</b>"
-		// }).appendTo(innerdiv);
-
-		// // Nepali Name
-		// $("<p/>", {
-		// 	id : "timeline_ndn",
-		// 	html : timelineObj.ndn
-		// }).appendTo(innerdiv);
-
-		// // ID
-		// $("<p/>", {
-		// 	id : "result_ID",
-		// 	html : timelineObj._id
-		// }).appendTo(innerdiv);
-
-		innerdiv.querySelector("button.add").classList.remove("add");
-		innerdiv.querySelector("button").classList.add("remove");
-		
-		var newRemoveButton = innerdiv.querySelector("button.remove");
-		newRemoveButton.innerText = "Remove";
-		newRemoveButton.addEventListener("click", removeTimelineElement);
-
-		$(innerdiv).appendTo(timelinediv);
-		$(timelinediv).appendTo("#timelineDisplay");
-
-		*/
 	});
-	sortableFunction();
 }
 
-
-/*
-var createTimelineFromResults = function(object) {
-		console.log("create timeline from results");
-
-
-	// console.log(object._id);
-
-	// Clone current list item
-	var resultItem = this.parentNode;
-	var newTimelineItem = resultItem.cloneNode(true);
-
-	// Change button class to "remove"
-	newTimelineItem.querySelector("button.add").classList.remove("add");
-	newTimelineItem.querySelector("button").classList.add("remove");
-
-	newTimelineItem.querySelector("button.preview").classList.remove("preview");
-	newTimelineItem.querySelector("button").classList.add("preview_timeline");
-
-	// Change size of image
-	newTimelineItem.querySelector("img#resultsimg").style.width = "70px";
-	// newTimelineItem.querySelector("img#resultsimg").style.display = "block";
-
-	// Delete unnecessary attributes
-	if(newTimelineItem.querySelector("p#result_subject")) {
-		newTimelineItem.querySelector("p#result_subject").remove();
-	}
-	// newTimelineItem.querySelector("p#chapterID").remove();
-
-	// Make the timeline div wider
-	// newTimelineItem.querySelector("div.timelinediv").style.width = "500px";
-	// console.log(typeof(newTimelineItem.parentNode));
-	// newTimelineItem.parentNode.style.width = "500px";
-
-	// Modify new "remove" button
-	var newRemoveButton = newTimelineItem.querySelector("button.remove");
-	newRemoveButton.innerText = "Remove";
-	newRemoveButton.removeEventListener("click", function() {
-		addToAssArray(item);
-		createTimelineElement(item); 
-		console.log("clicked add button lol");
-	});
-	newRemoveButton.addEventListener("click", removeTimelineElement);
-
-
-	newTimelineItem.classList.remove("resultitem");
-
-	var timelinediv = document.createElement("div");
-	timelinediv.className = "timelinediv";
-
-	$(newTimelineItem).appendTo(timelinediv);
-	$(timelinediv).appendTo("#timelineDisplay");
-
-	// Append newTimelineItem to first empty div using checkDivsEmpty()
-	// var nextEmptyDiv = checkDivsEmpty();
-
-	sortableFunction();
-}
-*/
 
 var createTimelineElement = function(object){
 
@@ -428,7 +303,6 @@ var storeFilterData = function(filterdata) {
 
 
 var printFilterData = function(filterdata_object) {
-console.log("printing filter data");
 	// Print Chapter array
 	var currentResultDiv = document.createElement("div");
 	currentResultDiv.id = "currentResultDiv";
@@ -619,7 +493,6 @@ var createChapterDiv = function(item) {
 	$(addButton).bind("click", function() {
 		addToAssArray(item);
 		createTimelineElement(item); 
-		console.log("clicked add button lol");
 	});
 	div.appendChild(addButton);
 
@@ -698,7 +571,6 @@ var createTextbookDiv = function(item) {
 
 // Create "Actdict" collection results
 var createActivityDiv = function(item) {
-	console.log("creating activities");
 	var collection = "activities";
 	var div = document.createElement("div");
 	// div.className = "resultitem";
