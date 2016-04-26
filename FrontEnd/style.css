@@ -1,20 +1,47 @@
 /* ************************ INDEX! ********************/
-/********** Sidebar (search, filter, results) ************/
-#sidebar {
-	float:left;
-	background: lightgray;
+
+/********** navigation bar ************/
+#navbar {
+	background: #D76126;
 	padding: 20px;
-	margin: 0 30 30 30;
-	/*margin-top: 6%;*/
-	vertical-align:top;
-	width: 30%;
-	border-radius: 10px;
+	height: 40px;
+	color:white;
+}
+#titleString {
+	position:relative;
+	float: left;
+	padding-left: 100px;
+	font-size: 24pt;
+}
+
+#logo {
+	position: relative;
+	float: left;
+	width: 150px;
+}
+
+#btnPresent {
+	float:right;
+	margin-right: 2%;
 	
 }
+#btnSave {
+	float: right;
+	margin-right: 2%;
+	
+}
+
+/********** Query Bar (search, filter, results) ************/
+#querybar {
+	background: lightgray;
+	padding: 20px;
+	height: 70px;
+
+}
 .textBox {
-	font-family: Arial;
+	font-family: Helvetica;
 	font-size: 20px;
-	height: 35px;
+	height: 37px;
 	width: 250px;
 	margin-right: 30px;
 	background:white;
@@ -22,10 +49,13 @@
 	border-radius:0.313em;
 }
 
+#div_search {
+	width: 20%;
+}
+
 #search_label {
 	display: inline-block;
 }
-
 
 #dropdown_grade {
 	font-size: 20px;
@@ -44,7 +74,7 @@
 }
 
 #div_subject,#div_grade,#div_chapter,#div_section{
-	width: 50%;
+	width: 15%;
 	float: left;
 	position: relative;
 }
@@ -63,19 +93,31 @@
 }
 
 /*************** Results Module ***********************/
-
 #outerResultsDiv {
+	float:left;
+	background: lightgray;
+	padding: 20px;
+	margin: 0 30 30 30;
+	/*margin-top: 6%;*/
+	vertical-align:top;
+	width: 30%;
+	border-radius: 10px;
+	height: 500px;
+}
+
+/*#outerResultsDiv {
   /*min-height:120px;
   width:90px;*/
+  float: left;
   display:inline-block;
   margin: auto;
-  padding: 25px;
-  width: 85%;
+  padding: 20px;
+  width: 30%;
   height:500px;
   background: gray;
   overflow-y:auto;
   border-radius: 5px;
-}
+}*/
 
 #resultsDiv {
 	background:gray;
@@ -134,16 +176,6 @@ li:hover {
 	clear:all;
 }
 
-#btnPresent {
-	float:right;
-	margin-right: 2%;
-	margin-top: 1%;
-}
-#btnSave {
-	float: right;
-	margin-right: 2%;
-	margin-top: 1%;
-}
 .boxdiv {
   min-height:120px;
   width:90px;
@@ -168,7 +200,7 @@ li:hover {
   position: absolute;
   width: 55%;
   right: 3%;
-  top: 510px;
+  top: 660px;
   height:160px;
   overflow-x:scroll;
   overflow-y:auto;
@@ -228,26 +260,30 @@ li:hover {
 }
 /* ************************ PRESENT! ********************/
 #presentdisplaybox {
-	width: 90%;
+	width: 100%;
 	height: 665px;
 	background: gray;
 	position: relative;
 	margin:20 auto;
+	margin-top: 5%;
+	border-radius:10px;
 	/*margin-top: 28px;
 	margin-right: 25px;*/
 }
 #presentwrapper {
-	  border: 1px solid #000;
+	 
 	  /*min-height:50px; min-width:100px; 
 	  display:inline-block;*/
 	  padding: 15px;
-	  width: 90%;
+	  width: 100%;
 	  margin: 0 auto;
 	  /*margin-right: 25px;
 	  margin-top: 25px;*/
 	  height:160px;
 	  overflow-x:scroll;
 	  overflow-y:hidden;
+	  background: darkgray;
+	  border-radius:0.313em;
 }
 /* ************************ INDEX && OPEN! ********************/
 #string {
@@ -296,17 +332,19 @@ li:hover {
 button {
 	display:inline;
 	color:white;
-	background:#A1A850;
+	background:#2E3192;
 	padding: 10px;
 	border-radius:0.313em;
-	width: 70px;
+	width: 120px;
+	height: 50px;
 	white-space: nowrap;
+	font-size: 24px;
 }
 li {
 	list-style-type:none;
 }
 body {
-	font-family: Arial;
+	font-family: Helvetica;;
 	font-size: 20px;
 }
 p {
