@@ -220,7 +220,7 @@ var createTimelineFromOpen = function() {
 	console.log(timelineElements);
 
 	$.each(timelineElements, function(index, timelineObj) {
-		createTimelineElement;
+		createTimelineElement(timelineObj);
 		/*
 		// Push the timelineObj into the timelineAAAAAAAAAAAWWWWWWASSSSSArray
 		timelineAssArray[timelineObj._id] = timelineObj;	
@@ -289,7 +289,7 @@ var createTimelineFromOpen = function() {
 }
 
 
-
+/*
 var createTimelineFromResults = function(object) {
 		console.log("create timeline from results");
 
@@ -346,8 +346,10 @@ var createTimelineFromResults = function(object) {
 
 	sortableFunction();
 }
+*/
 
 var createTimelineElement = function(object){
+
 	var innerdiv = null;
 
  	if(object.ft !=null)
