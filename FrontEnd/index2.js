@@ -1,3 +1,17 @@
+
+
+
+/////////////////////////// INITIALIZING THINGS ///////////////////////////
+
+
+var timelineAssArray = new Object();
+
+var homedirectory = "../";
+
+
+
+/////////////////////////// ONLOAD FUNCTION ///////////////////////////
+
 // This loads all the preliminary elements in the page.
 window.onload = function loadPageElements() {
 
@@ -179,199 +193,260 @@ window.onload = function loadPageElements() {
 			html : "Search"
 		}).appendTo("#div_filter");
 
-		createTimelineElement();
+		createTimelineFromOpen();
+}
+
+var addToAssArray = function(object) {
+	console.log("adding to ass array");
 }
 
 
 
+/////////////////////////// TIMELINE MANIPULATION ///////////////////////////
 
-var createTimelineElement = function() {
+var createTimelineFromOpen = function() {
 
 	var timelineElements = opentime();	// gets the ID from the URL and retrieves the whole timeline array
 	console.log(timelineElements);
 
 	$.each(timelineElements, function(index, timelineObj) {
+		createTimelineElement;
+		/*
+		// Push the timelineObj into the timelineAAAAAAAAAAAWWWWWWASSSSSArray
+		timelineAssArray[timelineObj._id] = timelineObj;	
 
 		var timelinediv = document.createElement("div");
 		timelinediv.className = "timelinediv";
 
-		var div = document.createElement("div");
-		div.id = "resultitem";
-
-
-		$("<p/>", {
-			id : "timline_dn",
-			html : "<b>" + timelineObj.dn + "</b>"
-		}).appendTo(div);
-
-		// Nepali Name
-		$("<p/>", {
-			id : "timeline_ndn",
-			html : timelineObj.ndn
-		}).appendTo(div);
-
-		// ID
-		$("<p/>", {
-			id : "result_ID",
-			html : timelineObj._id
-		}).appendTo(div);
 		
-		$(div).appendTo(timelinediv);
+		//activities
+		//if (collection=="activities") -- timelineObj needs to contain which collection the item is from
+		if(timelineObj.ft !=null)
+			var innerdiv = createActivityDiv(timelineObj);
+
+		//textbook
+		//if (collection=="textbooks")
+		if(timelineObj.subject!=null)
+			var innerdiv = createTextbookDiv(timelineObj);
+
+		//dictionary
+		//if (collection=="dictionary")
+		if(timelineObj.part!=null)
+			var innerdiv = createDictionaryDiv(timelineObj);
+
+		//chapter
+		//if (collection = "chapters")
+		if(timelineObj.pn!=null)
+			var innerdiv = createChapterDiv(timelineObj);			
+
+
+
+
+
+		// var innerdiv = document.createElement("div");
+		// innerdiv.className = "innerdiv";
+
+		// $("<p/>", {
+		// 	id : "timline_dn",
+		// 	html : "<b>" + timelineObj.dn + "</b>"
+		// }).appendTo(innerdiv);
+
+		// // Nepali Name
+		// $("<p/>", {
+		// 	id : "timeline_ndn",
+		// 	html : timelineObj.ndn
+		// }).appendTo(innerdiv);
+
+		// // ID
+		// $("<p/>", {
+		// 	id : "result_ID",
+		// 	html : timelineObj._id
+		// }).appendTo(innerdiv);
+
+		innerdiv.querySelector("button.add").classList.remove("add");
+		innerdiv.querySelector("button").classList.add("remove");
+		
+		var newRemoveButton = innerdiv.querySelector("button.remove");
+		newRemoveButton.innerText = "Remove";
+		newRemoveButton.addEventListener("click", removeTimelineElement);
+
+		$(innerdiv).appendTo(timelinediv);
 		$(timelinediv).appendTo("#timelineDisplay");
-		// $(".timelinediv").sortable('refresh');
+
+		*/
 	});
+	sortableFunction();
+}
+
+
+
+var createTimelineFromResults = function(object) {
+
+	// console.log(object._id);
+
+	// Clone current list item
+	var resultItem = this.parentNode;
+	var newTimelineItem = resultItem.cloneNode(true);
+
+	// Change button class to "remove"
+	newTimelineItem.querySelector("button.add").classList.remove("add");
+	newTimelineItem.querySelector("button").classList.add("remove");
+
+	newTimelineItem.querySelector("button.preview").classList.remove("preview");
+	newTimelineItem.querySelector("button").classList.add("preview_timeline");
+
+	// Change size of image
+	newTimelineItem.querySelector("img#resultsimg").style.width = "70px";
+	// newTimelineItem.querySelector("img#resultsimg").style.display = "block";
+
+	// Delete unnecessary attributes
+	if(newTimelineItem.querySelector("p#result_subject")) {
+		newTimelineItem.querySelector("p#result_subject").remove();
+	}
+	// newTimelineItem.querySelector("p#chapterID").remove();
+
+	// Make the timeline div wider
+	// newTimelineItem.querySelector("div.timelinediv").style.width = "500px";
+	// console.log(typeof(newTimelineItem.parentNode));
+	// newTimelineItem.parentNode.style.width = "500px";
+
+	// Modify new "remove" button
+	var newRemoveButton = newTimelineItem.querySelector("button.remove");
+	newRemoveButton.innerText = "Remove";
+	newRemoveButton.addEventListener("click", removeTimelineElement);
+
+
+	newTimelineItem.classList.remove("resultitem");
+
+	var timelinediv = document.createElement("div");
+	timelinediv.className = "timelinediv";
+
+	$(newTimelineItem).appendTo(timelinediv);
+	$(timelinediv).appendTo("#timelineDisplay");
+
+	// Append newTimelineItem to first empty div using checkDivsEmpty()
+	// var nextEmptyDiv = checkDivsEmpty();
+
+
+
+	// if (nextEmptyDiv === "none") {
+	// alert ("No empty divs");
+	// } else {
+	// console.log("Adding new list item to timeline...");
+	// nextEmptyDiv.appendChild(newTimelineItem);
+	// }
+
+	sortableFunction();
+}
+
+var createTimelineElement = function(object) {
+	// timelineAssArray[object._id] = object;	
+
+	var timelinediv = document.createElement("div");
+	timelinediv.className = "timelinediv";
 
 	
+	//activities
+	//if (collection=="activities") -- timelineObj needs to contain which collection the item is from
+	if(object.ft !=null)
+		var innerdiv = createActivityDiv(object);
 
-	/*
-	  // Create new list items
+	//textbook
+	//if (collection=="textbooks")
+	if(object.subject!=null)
+		var innerdiv = createTextbookDiv(object);
 
-	  var listItem = document.createElement("li");
+	//dictionary
+	//if (collection=="dictionary")
+	if(object.part!=null)
+		var innerdiv = createDictionaryDiv(object);
 
-		var id = document.createAttribute("id");        // Create a "href" attribute
-		id.value = "item";            // Set the value of the href attribute
-		listItem.setAttributeNode(id);
-
-		var num = document.createAttribute("index");        // Create a "href" attribute
-		num.value = i;            // Set the value of the href attribute
-		listItem.setAttributeNode(num);
-
-		// var remove = document.createAttribute("ondrag");        // Create a "href" attribute
-		// remove.value = "addJSON(event)";            // Set the value of the href attribute
-		// listItem.setAttributeNode(remove);
-
-
-	  var listLabel = document.createElement("label");
-
-	  var id = document.createAttribute("id");        // Create a "href" attribute
-		id.value = "name";            // Set the value of the href attribute
-		listLabel.setAttributeNode(id);
+	//chapter
+	//if (collection = "chapters")
+	if(object.pn!=null)
+		var innerdiv = createChapterDiv(object);
 
 
-	  var thumbnail = document.createElement("img");
-	  var addButton = document.createElement("button");
-	  addButton.innerText = "Add";
-	  addButton.className = "add";
+	innerdiv.querySelector("button.add").classList.remove("add");
+	innerdiv.querySelector("button").classList.add("remove");
+	
+	var newRemoveButton = innerdiv.querySelector("button.remove");
+	newRemoveButton.innerText = "Remove";
+	// newRemoveButton.addEventListener("click", removeTimelineElement);
+	newRemoveButton.onclick = removeTimelineElement;
 
-	  
-	var att = document.createAttribute("src");        // Create a "href" attribute
-	att.value = resultArray[i].fp + "*.jpg";            // Set the value of the href attribute
-	//console.log("i = " + i);
-	thumbnail.setAttributeNode(att);                      // Add the href attribute to <a>
-
-	  listLabel.innerText = itemString.dn + ", Grade " + itemString.prefix[0];
-	  // addButton.onclick = addJSON;
-	  // listItem.appendChild(thumbnail);
-	  listItem.appendChild(listLabel);
-	  listItem.appendChild(addButton);
-
-	  return listItem;
-
-*/
-
-	}
+	$(innerdiv).appendTo(timelinediv);
+	$(timelinediv).appendTo("#timelineDisplay");
+}
 
 
 
-var resultArray = [];
+var removeTimelineElement = function() {
+	  console.log("Removing list item from timeline...");
 
-var displaybox = document.querySelector("div#displaybox");
+	  // Removing list item from timelineHolder
+	  var timelineItem = this.parentNode;
+	  timelineItem.parentNode.remove();
+	}	
+
+// var checkDivsEmpty = function() {
+// 	  console.log("Checking for first empty timeline div...");
+
+// 	  // Gather all timeline divs so we can traverse through them
+// 	  var timelineDivs = document.getElementsByClassName("timelinediv");
+
+
+// 	  // Traverse through timeline divs and check for first empty div
+// 	  for (var i = 0; i < timelineDivs.length; i++) {
+// 	    if (timelineDivs[i].innerHTML === "") {
+// 	      return timelineDivs[i];
+// 	    } 
+//   }
+//   return "none";
+// }	
+
+
+
+
+
+
+/////////////////////////// QUERY / RESULTS ///////////////////////////
+
+// var resultArray = [];
 
 var querySearch = function() {
 
-
-	var filterdata = new Object();
-	filterdata.module = 'filter';
-	filterdata.grade = document.getElementById('dropdown_grade').value;
-	filterdata.subject = document.getElementById('dropdown_subject').value;
-	filterdata.chapter = document.getElementById('dropdown_chapter').value;
-	filterdata.section = document.getElementById('dropdown_section').value;
-	filterdata.image = document.getElementById('ft_image').checked;
-	filterdata.video = document.getElementById('ft_video').checked;
-	filterdata.audio = document.getElementById('ft_audio').checked;
-	filterdata.misc = document.getElementById('ft_misc').checked;
-
-
-
-	// var filterdata = {
-	// 	'grade' : document.getElementById('dropdown_grade').value,
-	// 	'subject' : document.getElementById('dropdown_subject').value,
-	// 	'chapter' : '',
-	// 	'section': null,
-	// 	'image' : false,
-	// 	'video' : false,
-	// 	'audio' : false,
-	// 	'misc' : false
-	// };
+	var filterdata = {
+		'grade' : document.getElementById('dropdown_grade').value,
+		'subject' : document.getElementById('dropdown_subject').value,
+		'chapter' : document.getElementById('dropdown_chapter').value,
+		'section': document.getElementById('dropdown_section').value,
+		'image' : document.getElementById('ft_image').checked,
+		'video' : document.getElementById('ft_video').checked,
+		'audio' : document.getElementById('ft_audio').checked,
+		'misc' : document.getElementById('ft_misc').checked
+	};
 	$.get("../BackEnd/query.php", filterdata, function(filterdata) {
-
-		// $("#displaybox").html("hi");
 		console.log(JSON.parse(filterdata));
 		var filterdata_object = storeFilterData(filterdata);
 		printFilterData(filterdata_object);
 	}); //Send filter data to server via GET request
-
 }
+
 
 var storeFilterData = function(filterdata) {
 	var filterdata_object = JSON.parse(filterdata);
 	return filterdata_object;
 }
 
+
 var printFilterData = function(filterdata_object) {
-	// var resultArray = ["apple", "orange", "banana", "penis"];
-
-// INFO: I tried to create a loop that would generate everything automatically depending on what collection it was in.
-// The problem is when I try to use the variable name when accessing the object: "filterdata_object.currentCollection".
-// It takes that as a literal. So, "filterdata_object.chapter" works, but even if "currentCollection" = "chapter",
-// "filterdata_object.currentCollection" doesn't work. :(
-
-	// Roshan said use bracket notation instead of dot notation
-
-/* //////////// BEGIN LOOP
-	// A loop that prints the data in each collection array
-	for (var key in filterdata_object) {
-		var currentCollection = key;	// The current collection that it's printing through
-		var currentCollection_array = filterdata_object[currentCollection];
-		console.log(currentCollection);
-
-		// Heading of the collection section
-		var sectionHeading = document.createElement("h1");
-		sectionHeading.id = "collectionTitle";
-		var collectionArray_length = filterdata_object.currentCollection.length;
-		console.log(collectionArray_length);
-		if (collectionArray_length == 1) {
-			sectionHeading.innerHTML = "<h3>" + currentCollection + "(" + collectionArray_length + " Result)</h3>";
-		} 
-		else {
-			sectionHeading.innerHTML = "<h3>" + currentCollection + "(" + collectionArray_length + " Results)</h3>";
-		}
-		displaybox.appendChild(sectionHeading);
-
-		// Print actual collection info
-		if (currentCollection == "chapter") {
-			for(var i=0; i<collectionArray_length; i++) {
-				var rElement = createChapterResults(filterdata_object.currentCollection[i])
-				// var rElement = createChapterResults(resultArray[i]);
-				displaybox.appendChild(rElement);
-			}
-		}
-		else if (currentCollection == "textbook") {
-			for(var i=0; i<collectionArray_length; i++) {
-				var rElement = createTextbookResults(filterdata_object.currentCollection[i])
-				// var rElement = createChapterResults(resultArray[i]);
-				displaybox.appendChild(rElement);
-			}
-		}
-	}
-*/ ////////// END LOOP
-
-
+console.log("printing filter data");
 	// Print Chapter array
 	var currentResultDiv = document.createElement("div");
 	currentResultDiv.id = "currentResultDiv";
 	var collectionTitle = document.createElement("h1");
-	collectionTitle.id = "collectionTitleTitle";
+	collectionTitle.id = "collectionTitle";
 	var arraylength = filterdata_object.chapters.length;
 	if (arraylength == 1) {
 		collectionTitle.innerHTML = "Chapters (" + arraylength + " Result)";
@@ -381,16 +456,18 @@ var printFilterData = function(filterdata_object) {
 	}
 	currentResultDiv.appendChild(collectionTitle);
 
+
 	for(var i=0; i<filterdata_object.chapters.length; i++) {
-		var rElement = createChapterResults(filterdata_object.chapters[i])
-		// var rElement = createChapterResults(resultArray[i]);
+		var rElement = createChapterDiv(filterdata_object.chapters[i])
+		// var rElement = createChapterDiv(resultArray[i]);
 		currentResultDiv.appendChild(rElement);
 	}
 
 
 	// Print Textbooks array
+
 	var collectionTitle = document.createElement("h1");
-	collectionTitle.id = "collectionTitleTitle";
+	collectionTitle.id = "collectionTitle";
 
 	var arraylength = filterdata_object.textbooks.length;
 	if (arraylength == 1) {
@@ -402,14 +479,15 @@ var printFilterData = function(filterdata_object) {
 	currentResultDiv.appendChild(collectionTitle);
 
 	for(var i=0; i<filterdata_object.textbooks.length; i++) {
-		var rElement = createTextbookResults(filterdata_object.textbooks[i])
-		// var rElement = createChapterResults(resultArray[i]);
+		var rElement = createTextbookDiv(filterdata_object.textbooks[i])
+		// var rElement = createChapterDiv(resultArray[i]);
 		currentResultDiv.appendChild(rElement);
 	}
 
-	// Print Actdict array
+
+	// Print Activities array
 	var collectionTitle = document.createElement("h1");
-	collectionTitle.id = "collectionTitleTitle";
+	collectionTitle.id = "collectionTitle";
 
 	var arraylength = filterdata_object.activities.length;
 	if (arraylength == 1) {
@@ -421,13 +499,15 @@ var printFilterData = function(filterdata_object) {
 	currentResultDiv.appendChild(collectionTitle);
 
 	for(var i=0; i<filterdata_object.activities.length; i++) {
-		var rElement = createActivityResults(filterdata_object.activities[i])
-		// var rElement = createChapterResults(resultArray[i]);
+		var rElement = createActivityDiv(filterdata_object.activities[i])
+		// var rElement = createChapterDiv(resultArray[i]);
 		currentResultDiv.appendChild(rElement);
 	}
 
+
+	// Print Dictionary array
 	var collectionTitle = document.createElement("h1");
-	collectionTitle.id = "collectionTitleTitle";
+	collectionTitle.id = "collectionTitle";
 
 	var arraylength = filterdata_object.dictionary.length;
 	if (arraylength == 1) {
@@ -439,24 +519,339 @@ var printFilterData = function(filterdata_object) {
 	currentResultDiv.appendChild(collectionTitle);
 
 	for(var i=0; i<filterdata_object.dictionary.length; i++) {
-		var rElement = createDictionaryResults(filterdata_object.dictionary[i])
-		// var rElement = createChapterResults(resultArray[i]);
+		var rElement = createDictionaryDiv(filterdata_object.dictionary[i])
+		// var rElement = createChapterDiv(resultArray[i]);
 		currentResultDiv.appendChild(rElement);
 	}
 
 
-	$("#outerResultsDiv").html(currentResultDiv);
 
-	// var filterdata_array = [];
-	// for (var i=0; i < filterdata_object.chapter.length; i++) {
-	// 	filterdata_array.push(filterdata_object.chapter[i]);
-	// 	console.log(filterdata_array[i]);
-	// }
-	// $("#displaybox").html();
+	$("#outerResultsDiv").html(currentResultDiv);
 }
 
-var homedirectory = "../";
 
+
+/* //////////////////////TO-DO FOR RESULTS
+
+THUMBNAILS
+- Take care of if the image source is null
+	- 	All the "thumbnail_prefix" variables: If the image source is null, 
+		it shouldn't try to get the substring, because it'll break the code
+	- 	If the file isn't there. We need to make a little 404 image and
+		code it in.
+- Names
+	-	If there's a decimal in the ID, make it so that it extracts
+		info correctly
+
+//////////////////////////END TO-DO */
+
+// Create "Chapter" collection results
+var createChapterDiv = function(item) {
+	var collection = "chapters";
+	var div = document.createElement("div");
+	div.className = "resultitem";
+
+	// Thumbnail & Extracting the ID elements
+	/////////////////////// ALSO MAKE WORK IF THE ID HAS A DECIMAL!!!!!!!!//////////////////////
+
+	var str = item._id;
+	var arr_split = str.split("");
+
+	// For loop extracts the last 2 numbers as the chapter.
+
+	for (var i = arr_split.length-1; i>=0; i--) {
+		// console.log(typeof(arr_split[i]));
+		// if (arr_split[i] == "0" || arr_split[i] == "1" || arr_split[i] == "2" || arr_split[i] == "3" || arr_split[i] == "4" || arr_split[i] == "5" || arr_split[i] == "6" || arr_split[i] == "7" || arr_split[i] == "8" || arr_split[i] == "9") {
+		// 	arr_split.splice(i,1); 
+		// }
+		// console.log(arr_split);
+		// break;
+
+		var currentChapter = arr_split[i-1].concat(arr_split[i]);
+		arr_split.splice(i, 1);
+		arr_split.splice(i-1, 1);
+		break;
+	}
+
+	if (arr_split.length == 3) {	// If the subject is EN, or SS (or something with 2 letters)
+		arr_split[1] = arr_split[1].concat(arr_split[2]);
+		arr_split.splice(2, 1);
+	}
+	else if (arr_split.length < 3) {	// If the subject is M or S, N (or something with 1 letter)
+		// MAKE THIS WORK
+	}
+
+	var currentGradeNumber = arr_split[0];
+	var currentGrade = "Class".concat(arr_split[0]);
+	if (arr_split[1] == "EN") {
+		var currentSubject = "English";
+	} 
+	else if (arr_split[1] == "M") {
+		var currentSubject = "Math";
+	} 
+	else if (arr_split[1] == "N") {
+		var currentSubject = "Nepali";
+	} 
+	else if (arr_split[1] == "S") {
+		var currentSubject = "Science";
+	} 
+	else if (arr_split[1] == "SS") {
+		var currentSubject = "SocialStudies";
+	}
+
+	var thumbnail_prefix = currentSubject.concat("-", currentGradeNumber);
+
+	var image = document.createElement("img");
+	image.id = "resultsimg";
+	image.src = homedirectory + "content/textbooks/" + currentGrade + "/" + currentSubject + "/" + thumbnail_prefix + "_thumb.jpg";
+	div.appendChild(image);
+
+	// Display name
+	$("<p/>", {
+		id : "result_dn",
+		html : "<b>" + item.dn + "</b>"
+	}).appendTo(div);
+
+	// Nepali Name
+	$("<p/>", {
+		id : "result_ndn",
+		html : item.ndn
+	}).appendTo(div);
+
+	// ID
+	$("<p/>", {
+		id : "result_ID",
+		html : item._id
+	}).appendTo(div);
+
+	// "Add" button
+	var addButton = document.createElement("button");
+	addButton.innerText = "Add";
+	addButton.className = "add";
+	// addButton.onclick = createTimelineElement(item);
+	$(addButton).bind("click", function() {
+		addToAssArray(item);
+		createTimelineElement(item); 
+		console.log("clicked add button lol");
+	});
+	div.appendChild(addButton);
+
+	var previewButton = document.createElement("button");
+	previewButton.innerText = "Preview";
+	previewButton.className = "preview";
+	// previewButton.onclick = preview_result(item);
+	$(previewButton).bind("click", function() {
+		preview_result(collection, item);
+	})
+	div.appendChild(previewButton);
+
+	return div;
+}
+
+// Create "Textbook" collection results
+var createTextbookDiv = function(item) {
+	var collection = "textbooks";
+	var div = document.createElement("div");
+	div.className = "resultitem";
+
+	// Thumbnail
+	var thumbnail_prefix = item.fn;
+	thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+
+	$("<img/>", {
+		id : "resultsimg",
+		src : homedirectory + "content/" + item.fp + thumbnail_prefix + "_thumb.jpg"
+	}).appendTo(div);
+
+	// var image = document.createElement("img");
+	// image.id = "resultsimg";
+	// image.src =  homedirectory + "content/" + item.fp + thumbnail_prefix + "_thumb.jpg";
+	// div.appendChild(image);
+
+	// Display name
+	$("<p/>", {
+		id : "result_dn",
+		html : "<b>" + item.dn + "</b>"
+	}).appendTo(div);
+
+	// Nepali Name
+	$("<p/>", {
+		id : "result_ndn",
+		html : item.ndn
+	}).appendTo(div);
+
+	// ID
+	$("<p/>", {
+		id : "result_ID",
+		html : item._id
+	}).appendTo(div);
+
+	// "Add" button
+	var addButton = document.createElement("button");
+	addButton.innerText = "Add";
+	addButton.className = "add";
+	$(addButton).bind("click", function() {
+		addToAssArray(item);
+		createTimelineElement(item); 
+		console.log("clicked add button lol");
+	});
+	div.appendChild(addButton);
+
+	var previewButton = document.createElement("button");
+	previewButton.innerText = "Preview";
+	previewButton.className = "preview";
+	// previewButton.onclick = preview_result(item);
+	$(previewButton).bind("click", function() {
+		preview_result(collection, item);
+	})
+	div.appendChild(previewButton);
+
+	return div;
+}
+
+// Create "Actdict" collection results
+var createActivityDiv = function(item) {
+	console.log("creating activities");
+	var collection = "activities";
+	var div = document.createElement("div");
+	// div.className = "resultitem";
+
+	// Thumbnail
+	var image = document.createElement("img");
+	if (item.ft == "mp3") {	 //audio
+		image.id = "resultsimg";
+		image.src = homedirectory + "content/audio/thumbnail.png";
+	} 
+	else if (item.ft == "mp4" || item.ft == "mp5") { //video
+		var thumbnail_prefix = item.fn;
+		thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+
+		var image = document.createElement("img");
+		image.id = "resultsimg";
+		image.src = homedirectory + "content/videos/" + thumbnail_prefix + "_thumb.jpg";
+	} 
+	else if (item.ft == "jpg"  || item.ft == "gif" || item.ft == "png" ) { //picture
+		var thumbnail_prefix = item.fn;
+		thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+
+		var image = document.createElement("img");
+		image.id = "resultsimg";
+		image.src = homedirectory + "content/pictures/" + thumbnail_prefix + "_thumb.jpg";
+	}
+	else if (item.ft == "pdf") { //pdf
+		var thumbnail_prefix = item.fn;
+		thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+
+		var image = document.createElement("img");
+		image.id = "resultsimg";
+		image.src = homedirectory + "content/pdfs/" + thumbnail_prefix + "_thumb.jpg";
+	} 
+	else if (item.ft == "EP") {
+		var image = document.createElement("img");
+		image.id = "resultsimg";
+		image.src = homedirectory + "content/epaath/thumbnail.png";
+	} 
+	// else {
+	// 	var image = document.createElement("img");
+	// 	image.id = "resultsimg";
+	// 	image.src = "images/kitty.jpg";
+	// }
+	div.appendChild(image);
+
+	// Display ID
+	var loomaID = document.createElement("p");
+	loomaID.id = "result_ID";
+	loomaID.innerHTML = "<b>ID: </b>" + item.ch_id;
+	div.appendChild(loomaID);
+
+	// Display file type
+	var filetype = document.createElement("p");
+	filetype.id = "result_ft";
+	filetype.innerHTML = "<b>File type: </b>" + item.ft;
+	div.appendChild(filetype);
+
+	// Display file name
+	var filename = document.createElement("p");
+	filename.id = "result_fn";
+	filename.innerHTML = "<b>File name: </b>" + item.fn;
+	div.appendChild(filename);
+
+	// "Add" button
+	var addButton = document.createElement("button");
+	addButton.innerText = "Add";
+	addButton.className = "add";
+	$(addButton).bind("click", function() {
+		addToAssArray(item);
+		createTimelineElement(item); 
+		console.log("clicked add button lol");
+	});
+	div.appendChild(addButton);
+
+	var previewButton = document.createElement("button");
+	previewButton.innerText = "Preview";
+	previewButton.className = "preview";
+	// previewButton.onclick = preview_result(item);
+	$(previewButton).bind("click", function() {
+		preview_result(collection, item);
+	})
+	div.appendChild(previewButton);
+
+	return div;
+}
+
+var createDictionaryDiv = function(item) {
+	var collection = "dictionary";
+	var div = document.createElement("div");
+	div.className = "resultitem";
+
+	var image = document.createElement("img");
+	image.id = "resultsimg";
+	image.src = homedirectory + "content/dictionaries/thumbnail.png";
+	div.appendChild(image);
+
+	var loomaID = document.createElement("p");
+	loomaID.id = "result_ID";
+	loomaID.innerHTML = "<b>ID: </b>" + item.ch_id;
+	div.appendChild(loomaID);
+
+	var resulttype = document.createElement("p");
+	resulttype.id = "result_ID";
+	resulttype.innerHTML = "<b>Result type: </b> Dictionary entry";
+	div.appendChild(resulttype);
+
+	var word = document.createElement("p");
+	word.innerHTML = "<b>Word: </b>" + item.en;
+	div.appendChild(word);
+
+	var part = document.createElement("p");
+	part.innerHTML = "<b>Part of speech: </b>" + item.part;
+	div.appendChild(part);
+
+	// "Add" button
+	var addButton = document.createElement("button");
+	addButton.innerText = "Add";
+	addButton.className = "add";
+	$(addButton).bind("click", function() {
+		addToAssArray(item);
+		createTimelineElement(item); 
+		console.log("clicked add button lol");
+	});
+	div.appendChild(addButton);
+
+	var previewButton = document.createElement("button");
+	previewButton.innerText = "Preview";
+	previewButton.className = "preview";
+	// previewButton.onclick = preview_result(item);
+	$(previewButton).bind("click", function() {
+		preview_result(collection, item);
+	})
+	div.appendChild(previewButton);
+
+	return div;
+}
+
+
+/////////////////////////// PREVIEW ///////////////////////////
 
 // When you click the preview button
 var preview_result = function(collection, item) {
@@ -563,7 +958,6 @@ var preview_result = function(collection, item) {
 		}
 	}
 
-
 	else if (collection == "dictionary") {
 		document.querySelector("div#displaybox").innerHTML = item.def;
 	}
@@ -571,413 +965,19 @@ var preview_result = function(collection, item) {
 
 	// Chapter information
 
-
-
 	// Video
 
 	// Audio
 	
 	// Definiton 
 	
-	
 	// Game
 	
 }
 
 
-/* //////////////////////TO-DO FOR RESULTS
 
-THUMBNAILS
-- Take care of if the image source is null
-	- 	All the "thumbnail_prefix" variables: If the image source is null, 
-		it shouldn't try to get the substring, because it'll break the code
-	- 	If the file isn't there. We need to make a little 404 image and
-		code it in.
-- Names
-	-	If there's a decimal in the ID, make it so that it extracts
-		info correctly
-
-//////////////////////////END TO-DO */
-
-// Create "Chapter" collection results
-var createChapterResults = function(item) {
-
-	var collection = "chapters";
-	var div = document.createElement("div");
-	div.id = "resultitem";
-
-	// Thumbnail & Extracting the ID elements
-	/////////////////////// ALSO MAKE WORK IF THE ID HAS A DECIMAL!!!!!!!!//////////////////////
-
-	var str = item._id;
-	var arr_split = str.split("");
-
-	// For loop extracts the last 2 numbers as the chapter.
-
-	for (var i = arr_split.length-1; i>=0; i--) {
-		// console.log(typeof(arr_split[i]));
-		// if (arr_split[i] == "0" || arr_split[i] == "1" || arr_split[i] == "2" || arr_split[i] == "3" || arr_split[i] == "4" || arr_split[i] == "5" || arr_split[i] == "6" || arr_split[i] == "7" || arr_split[i] == "8" || arr_split[i] == "9") {
-		// 	arr_split.splice(i,1); 
-		// }
-		// console.log(arr_split);
-		// break;
-
-		var currentChapter = arr_split[i-1].concat(arr_split[i]);
-		arr_split.splice(i, 1);
-		arr_split.splice(i-1, 1);
-		break;
-	}
-
-	if (arr_split.length == 3) {	// If the subject is EN, or SS (or something with 2 letters)
-		arr_split[1] = arr_split[1].concat(arr_split[2]);
-		arr_split.splice(2, 1);
-	}
-	else if (arr_split.length < 3) {	// If the subject is M or S, N (or something with 1 letter)
-		// MAKE THIS WORK
-	}
-
-	var currentGradeNumber = arr_split[0];
-	var currentGrade = "Class".concat(arr_split[0]);
-	if (arr_split[1] == "EN") {
-		var currentSubject = "English";
-	} 
-	else if (arr_split[1] == "M") {
-		var currentSubject = "Math";
-	} 
-	else if (arr_split[1] == "N") {
-		var currentSubject = "Nepali";
-	} 
-	else if (arr_split[1] == "S") {
-		var currentSubject = "Science";
-	} 
-	else if (arr_split[1] == "SS") {
-		var currentSubject = "SocialStudies";
-	}
-
-	var thumbnail_prefix = currentSubject.concat("-", currentGradeNumber);
-
-	var image = document.createElement("img");
-	image.id = "resultsimg";
-	image.src = homedirectory + "content/textbooks/" + currentGrade + "/" + currentSubject + "/" + thumbnail_prefix + "_thumb.jpg";
-	div.appendChild(image);
-
-	// Display name
-	$("<p/>", {
-		id : "result_dn",
-		html : "<b>" + item.dn + "</b>"
-	}).appendTo(div);
-
-	// Nepali Name
-	$("<p/>", {
-		id : "result_ndn",
-		html : item.ndn
-	}).appendTo(div);
-
-	// ID
-	$("<p/>", {
-		id : "result_ID",
-		html : item._id
-	}).appendTo(div);
-
-	// "Add" button
-	var addButton = document.createElement("button");
-	addButton.innerText = "Add";
-	addButton.className = "add";
-	addButton.onclick = addJSON;
-	div.appendChild(addButton);
-
-	var previewButton = document.createElement("button");
-	previewButton.innerText = "Preview";
-	previewButton.className = "preview";
-	// previewButton.onclick = preview_result(item);
-	$(previewButton).bind("click", function() {
-		preview_result(collection, item);
-	})
-	div.appendChild(previewButton);
-
-	return div;
-}
-
-// Create "Textbook" collection results
-var createTextbookResults = function(item) {
-	var collection = "textbooks";
-	var div = document.createElement("div");
-	div.id = "resultitem";
-
-	// Thumbnail
-	var thumbnail_prefix = item.fn;
-	thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
-
-	$("<img/>", {
-		id : "resultsimg",
-		src : homedirectory + "content/" + item.fp + thumbnail_prefix + "_thumb.jpg"
-	}).appendTo(div);
-
-	// var image = document.createElement("img");
-	// image.id = "resultsimg";
-	// image.src =  homedirectory + "content/" + item.fp + thumbnail_prefix + "_thumb.jpg";
-	// div.appendChild(image);
-
-	// Display name
-	$("<p/>", {
-		id : "result_dn",
-		html : "<b>" + item.dn + "</b>"
-	}).appendTo(div);
-
-	// Nepali Name
-	$("<p/>", {
-		id : "result_ndn",
-		html : item.ndn
-	}).appendTo(div);
-
-	// ID
-	$("<p/>", {
-		id : "result_ID",
-		html : item._id
-	}).appendTo(div);
-
-	// "Add" button
-	var addButton = document.createElement("button");
-	addButton.innerText = "Add";
-	addButton.className = "add";
-	addButton.onclick = addJSON;
-	div.appendChild(addButton);
-
-	var previewButton = document.createElement("button");
-	previewButton.innerText = "Preview";
-	previewButton.className = "preview";
-	// previewButton.onclick = preview_result(item);
-	$(previewButton).bind("click", function() {
-		preview_result(collection, item);
-	})
-	div.appendChild(previewButton);
-
-	return div;
-}
-
-// Create "Actdict" collection results
-var createActivityResults = function(item) {
-	console.log("creating activities");
-	var collection = "activities";
-	var div = document.createElement("div");
-	div.id = "resultitem";
-
-	// Thumbnail
-	var image = document.createElement("img");
-	if (item.ft == "mp3") {	 //audio
-		image.id = "resultsimg";
-		image.src = homedirectory + "content/audio/thumbnail.png";
-	} 
-	else if (item.ft == "mp4" || item.ft == "mp5") { //video
-		var thumbnail_prefix = item.fn;
-		thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
-
-		var image = document.createElement("img");
-		image.id = "resultsimg";
-		image.src = homedirectory + "content/videos/" + thumbnail_prefix + "_thumb.jpg";
-	} 
-	else if (item.ft == "jpg"  || item.ft == "gif" || item.ft == "png" ) { //picture
-		var thumbnail_prefix = item.fn;
-		thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
-
-		var image = document.createElement("img");
-		image.id = "resultsimg";
-		image.src = homedirectory + "content/pictures/" + thumbnail_prefix + "_thumb.jpg";
-	}
-	else if (item.ft == "pdf") { //pdf
-		var thumbnail_prefix = item.fn;
-		thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
-
-		var image = document.createElement("img");
-		image.id = "resultsimg";
-		image.src = homedirectory + "content/pdfs/" + thumbnail_prefix + "_thumb.jpg";
-	} 
-	else if (item.ft == "EP") {
-		var image = document.createElement("img");
-		image.id = "resultsimg";
-		image.src = homedirectory + "content/epaath/thumbnail.png";
-	} 
-	// else {
-	// 	var image = document.createElement("img");
-	// 	image.id = "resultsimg";
-	// 	image.src = "images/kitty.jpg";
-	// }
-	div.appendChild(image);
-
-	// Display ID
-	var loomaID = document.createElement("p");
-	loomaID.id = "result_ID";
-	loomaID.innerHTML = "<b>ID: </b>" + item.ch_id;
-	div.appendChild(loomaID);
-
-	// Display file type
-	var filetype = document.createElement("p");
-	filetype.id = "result_ft";
-	filetype.innerHTML = "<b>File type: </b>" + item.ft;
-	div.appendChild(filetype);
-
-	// Display file name
-	var filename = document.createElement("p");
-	filename.id = "result_fn";
-	filename.innerHTML = "<b>File name: </b>" + item.fn;
-	div.appendChild(filename);
-
-	// "Add" button
-	var addButton = document.createElement("button");
-	addButton.innerText = "Add";
-	addButton.className = "add";
-	addButton.onclick = addJSON;
-	div.appendChild(addButton);
-
-	var previewButton = document.createElement("button");
-	previewButton.innerText = "Preview";
-	previewButton.className = "preview";
-	// previewButton.onclick = preview_result(item);
-	$(previewButton).bind("click", function() {
-		preview_result(collection, item);
-	})
-	div.appendChild(previewButton);
-
-	return div;
-}
-
-var createDictionaryResults = function(item) {
-	var collection = "dictionary";
-	var div = document.createElement("div");
-	div.id = "resultitem";
-
-	var image = document.createElement("img");
-	image.id = "resultsimg";
-	image.src = homedirectory + "content/dictionaries/thumbnail.png";
-	div.appendChild(image);
-
-	var loomaID = document.createElement("p");
-	loomaID.id = "result_ID";
-	loomaID.innerHTML = "<b>ID: </b>" + item.ch_id;
-	div.appendChild(loomaID);
-
-	var resulttype = document.createElement("p");
-	resulttype.id = "result_ID";
-	resulttype.innerHTML = "<b>Result type: </b> Dictionary entry";
-	div.appendChild(resulttype);
-
-	var word = document.createElement("p");
-	word.innerHTML = "<b>Word: </b>" + item.en;
-	div.appendChild(word);
-
-	var part = document.createElement("p");
-	part.innerHTML = "<b>Part of speech: </b>" + item.part;
-	div.appendChild(part);
-
-	// "Add" button
-	var addButton = document.createElement("button");
-	addButton.innerText = "Add";
-	addButton.className = "add";
-	addButton.onclick = addJSON;
-	div.appendChild(addButton);
-
-	var previewButton = document.createElement("button");
-	previewButton.innerText = "Preview";
-	previewButton.className = "preview";
-	// previewButton.onclick = preview_result(item);
-	$(previewButton).bind("click", function() {
-		preview_result(collection, item);
-	})
-	div.appendChild(previewButton);
-
-	return div;
-}
-
-
-function imageExists(image_url){
-
-    var http = new XMLHttpRequest();
-
-    http.open('HEAD', image_url, false);
-    http.send();
-
-    // return http.status != 404;
-    console.log("IMAGE NOT FOUND");
-
-}
-
-
-
-var resultsWhole = document.querySelector("div#resultsdiv");
-var resultsUL = document.querySelector("div#resultsdiv ul#resultsDivUL");
-var timelineWhole = document.querySelector("div#timelineWhole");
-
-var addJSON = function() {
-
-	console.log("hello!!!");
-	// Clone current list item
-	var listItem = this.parentNode;
-	var newListItem = listItem.cloneNode(true);
-
-	// TRYING TO GET THIS TO WORK... When the div is added to timeline, get rid of the bottom border
-	// $(newListItem).css("border-bottom", "");
-
-	// Change button class to "remove"
-	newListItem.querySelector("button.add").classList.remove("add");
-	newListItem.querySelector("button").classList.add("remove");
-
-	// Change size of image & add break
-	newListItem.querySelector("img#resultsimg").style.width = "70px";
-	// newListItem.querySelector("img#resultsimg").style.display = "block";
-
-	// Delete unnecessary attributes
-	if(newListItem.querySelector("p#result_subject")) {
-		newListItem.querySelector("p#result_subject").remove();
-	}
-	// newListItem.querySelector("p#chapterID").remove();
-
-	// Make the timeline div wider
-	// newListItem.querySelector("div.timelinediv").style.width = "500px";
-	// console.log(typeof(newListItem.parentNode));
-	// newListItem.parentNode.style.width = "500px";
-
-	// Modify new "remove" button
-	var newRemoveButton = newListItem.querySelector("button.remove");
-	newRemoveButton.innerText = "Remove";
-	newRemoveButton.addEventListener("click", removeJSON);
-
-	// Append newListItem to first empty div using checkDivsEmpty()
-	var nextEmptyDiv = checkDivsEmpty();
-
-	if (nextEmptyDiv === "none") {
-	alert ("No empty divs");
-	} else {
-	console.log("Adding new list item to timeline...");
-	nextEmptyDiv.appendChild(newListItem);
-	}
-}
-
-var removeJSON = function() {
-	  console.log("Removing list item from timeline...");
-
-	  // Removing list item from timelineHolder
-	  var listItem = this.parentNode;
-	  listItem.remove();
-	}	
-
-var checkDivsEmpty = function() {
-	  console.log("Checking for first empty timeline div...");
-
-	  // Gather all timeline divs so we can traverse through them
-	  var timelineDivs = document.getElementsByClassName("timelinediv");
-
-
-	  // Traverse through timeline divs and check for first empty div
-	  for (var i = 0; i < timelineDivs.length; i++) {
-	    if (timelineDivs[i].innerHTML === "") {
-	      return timelineDivs[i];
-	    } 
-  }
-  return "none";
-}	
-
-
-
+/////////////////////////// SAVE ///////////////////////////
 
 var save = function(){    
     console.log("saving...");
@@ -1018,7 +1018,20 @@ var save = function(){
 
 
 
+/////////////////////////// SORTABLE UI ///////////////////////////
 
+var sortableFunction = function() {
+    $("#timelineDisplay").sortable({
+    //$('#btnSave').hide();
+        opacity: 0.7,
+        revert: true,   //Animates
+        scroll: true,   //Allows page to scroll when dragging. Good for tall pages.
+        handle: $(".timelinediv"),
+        update: function () {  
+        	$('#btnSave').show() 
+    	}
+    });
+}
 
 
 

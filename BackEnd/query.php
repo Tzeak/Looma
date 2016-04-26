@@ -45,9 +45,10 @@ for ($i=0; $i<$cnt_gscs; $i++) {
 			$gscs_ft_array = array_merge($gscs_array[$i], $ft_array[$j]);
 		}
 
-		// $mongo_act_array = queryMongo($)
 		$mongo_doc_arrays = queryMongo($gscs_ft_array);
-		// $mongo_doc_arrays = fixDocArray($mongo_doc_arrays);
+		for ($k=0; $k<count($mongo_doc_arrays); $k++){
+			$mongo_doc_arrays[$i] = fixDocArray($mongo_doc_arrays[$i]);
+		}
 
 		if($i == 0)
 		{
