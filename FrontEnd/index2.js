@@ -31,7 +31,8 @@ var loadPageElements = function() {
 		}).appendTo("#div_grade");
 
 		$("<select/>", {
-			id : "dropdown_grade"
+			id : "dropdown_grade",
+			placeholder: "Grade Level"
 		}).appendTo("#div_grade");
 
 		for (var i=0; i<8; i++) {
@@ -154,9 +155,9 @@ var loadPageElements = function() {
 			id : "div_filetypes"
 		}).appendTo("#div_filter");
 
-		$("<p/>", {
-			html : "File types: ", 
-		}).appendTo("#div_filetypes");
+		// $("<p/>", {
+		// 	html : "File types: ", 
+		// }).appendTo("#div_filetypes");
 
 		$.each(filetypes, function (key, value) {
 		    $("<input/>", { 
@@ -178,6 +179,7 @@ var loadPageElements = function() {
 	    $("#div_filetypes").append("<br/>");
 
 		$("<button/>", {
+			id : "submit_button",
 			onclick : "querySearch()",
 			type : "button",
 			html : "Search"
