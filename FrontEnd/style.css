@@ -149,7 +149,7 @@
 
 /*#outerResultsDiv {
   /*min-height:120px;
-  width:90px;*/
+  width:90px;
   float: left;
   display:inline-block;
   margin: auto;
@@ -181,7 +181,7 @@ li:hover {
 }
 
 /* #resultitem is the id of the divs that show up in results */
-#resultitem {
+.resultitem {
 	padding:10px;
 	border-bottom:1px solid #000;
 	line-height:11px;
@@ -233,7 +233,7 @@ li:hover {
   top: 660px;
   height:160px;
   overflow-x:scroll;
-  overflow-y:hidden;
+  overflow-y:auto;
   background: darkgray;
   border-radius:0.313em;
 }
@@ -358,9 +358,9 @@ li:hover {
 	position: relative;
 	margin-top: 20px;
 }
-img {
+/*img {
 	width: 60px;
-}
+}*/
 button {
 	display:inline;
 	color:white;

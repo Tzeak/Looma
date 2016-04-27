@@ -9,7 +9,7 @@
 		</style>
 	Grade Level
 		<select id="dropdown_grade">
-			<option value=""></option>
+			<option value="3">3</option>
 			<option value="1">1</option>
 			<option value="2">2</option>
 			<option value="3">3</option>
@@ -21,7 +21,7 @@
 		</select>
 	Subject		
 		<select id="dropdown_subject">
-			<option value=""></option>
+			<option value="EN">EN</option>
 			<option value="EN">English</option>
 			<option value="M">Math</option>
 			<option value="S">Science</option>
@@ -43,12 +43,19 @@
 		// Filter function
 		function filter() {
 
+			var filterdata = {
+				'grade' : document.getElementById('dropdown_grade').value,
+				'subject' : document.getElementById('dropdown_subject').value,
+				'image' : null,
+				'video' : null,
+				'audio' : null,
+				'misc' : null
+			};
 
-			var filterdata = new Object();
-			filterdata.module = 'filter';
-			console.log('grade:' + document.getElementById('dropdown_grade').value);
-			filterdata.grade = document.getElementById('dropdown_grade').value;
-			filterdata.subject = document.getElementById('dropdown_subject').value;
+			// var filterdata = new Object();
+			// filterdata.module = 'filter';
+			// filterdata.grade = document.getElementById('dropdown_grade').value;
+			// filterdata.subject = document.getElementById('dropdown_subject').value;
 
 
 			// var filterdata = {

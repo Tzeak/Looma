@@ -28,12 +28,11 @@ $gscs_array = gscsQuery();
 $cnt_gscs = count($gscs_array);
 
 $ft_array = fileTypeQuery();
-$cnt_ft = count ($ft_array); 
+$cnt_ft = count($ft_array); 
 
 $final_array = array();
 
 // Create foor loop to merge the query arrays and search mongo
-
 
 for ($i=0; $i<$cnt_gscs; $i++) {
 	for ($j=0; $j<$cnt_ft; $j++) {
@@ -46,20 +45,26 @@ for ($i=0; $i<$cnt_gscs; $i++) {
 			$gscs_ft_array = array_merge($gscs_array[$i], $ft_array[$j]);
 		}
 
-		$mongo_doc_array = queryMongo($gscs_ft_array);
-		$mongo_doc_array = fixDocArray($mongo_doc_array);
+		$mongo_doc_arrays = queryMongo($gscs_ft_array);
+		for ($k=0; $k<count($mongo_doc_arrays); $k++){
+			$mongo_doc_arrays[$i] = fixDocArray($mongo_doc_arrays[$i]);
+		}
 
 		if($i == 0)
 		{
-			$final_array["chapter"] = $mongo_doc_array;
+			$final_array["chapters"] = $mongo_doc_arrays[0];
 		}
 		else if($i == 1)
 		{
-			$final_array["textbook"] = $mongo_doc_array;
+			$final_array["textbooks"] = $mongo_doc_arrays[1];
 		}
 		else if($i == 2)
 		{
-			$final_array["actdict"] = $mongo_doc_array;
+			$final_array["activities"] = $mongo_doc_arrays[2];
+		}
+		else if ($i == 3)
+		{
+			$final_array["dictionary"] = $mongo_doc_arrays[3];
 		}
 	}
 }
@@ -71,7 +76,6 @@ echo json_encode($final_array);
 //	NOTE: "gscs" stands for Grade,Subject,Chapter,Section, the only filter inputs we deal with in this function
 	function gscsQuery()
 	{
-		// global $chapRegex, $textRegex, $actdictRegex;
 		global $filterword;
 	    $filterword	= "";
 		if(isset($_GET["grade"]) && $_GET["grade"] != '')
@@ -85,6 +89,7 @@ echo json_encode($final_array);
 		}
 		if(isset($_GET["subject"]) && $_GET["subject"] != '')
 		{
+			// $filterword .= "^[^%]*" . $_GET['subject'] . "[^%]*$";
 			$filterword .= $_GET["subject"]; 
 		}
 		else
@@ -115,11 +120,12 @@ echo json_encode($final_array);
 		//Construct a query by placing regex into relevant array
 		//NOTE: using regex to do a case insensitive search for the filterword 
 		$chapter_query = array('_id' => new MongoRegex("^$filterword/i"));  
-		$text_query = array('prefix' => new MongoRegex("^$filterword/i"));  
-		$actdict_query = array('ch_id' => new MongoRegex("^$filterword/i"));  
+		$text_query = array('prefix' => new MongoRegex("^$filterword/i")); 
+		$act_query = array('ch_id' => new MongoRegex("^$filterword/i"));
+		$dict_query = array('ch_id' => new MongoRegex("^$filterword/i"));  
 
 		$final_array = array();
-		array_push($final_array, $chapter_query, $text_query, $actdict_query);
+		array_push($final_array, $chapter_query, $text_query, $act_query, $dict_query);
 		return $final_array;
 	}
 
@@ -207,51 +213,88 @@ echo json_encode($final_array);
 	function queryMongo($searchArray) {
 		global $activities, $textbooks, $dictionary, $chapters, $timelines;
 
-		$activities_cursor = $activities->find($searchArray);
-		$textbook_cursor = $textbooks->find($searchArray);
-		$dictionary_cursor = $dictionary->find($searchArray);
 		$chapter_cursor = $chapters->find($searchArray);
+		$textbook_cursor = $textbooks->find($searchArray);
+		$activities_cursor = $activities->find($searchArray);
+		$dictionary_cursor = $dictionary->find($searchArray);
 
-		$docArray =  array();
-		$i = 0;
-		foreach($activities_cursor as $doc)
-		{
-			if(isset($doc))
-			{
-				$docArray[$i] = $doc;
-				//echo json_encode($doc);
-				$i++;
+		$docArrays = array();
+		$chapterArray = array();
+		$textbookArray = array();
+		$actArray = array();
+		$dictArray = array();
+		// $i = 0;
+
+		foreach($chapter_cursor as $doc) {
+			if(isset($doc)) {
+				array_push($chapterArray, $doc);
+				// $chapterArray[] = $doc;
+				// echo ("ADDINGCHAPTER!!!");
+				// echo json_encode($chapterArray);
 			}
 		}
-		foreach($dictionary_cursor as $doc)
-		{
-			if(isset($doc))
-			{
-				$docArray[$i] = $doc;
-				//echo json_encode($doc);
-				$i++;
+		foreach($textbook_cursor as $doc) {
+			if(isset($doc)) {
+				array_push($textbookArray, $doc);
+				// echo ("textbooks");
 			}
 		}
-		foreach($textbook_cursor as $doc)
-		{
-			if(isset($doc))
-			{
-				$docArray[$i] = $doc;
-				//echo json_encode($doc);
-				$i++;
+		foreach($activities_cursor as $doc) {
+			if(isset($doc)) {
+				array_push($actArray, $doc);
 			}
 		}
-		foreach($chapter_cursor as $doc)
-		{
-			if(isset($doc))
-			{
-				$docArray[$i] = $doc;
-				//echo json_encode($doc);
-				$i++;
+		foreach($dictionary_cursor as $doc) {
+			if(isset($doc)) {
+				array_push($dictArray, $doc);
 			}
 		}
-		
-		return $docArray;
+
+
+		// foreach($activities_cursor as $doc)
+		// {
+		// 	if(isset($doc))
+		// 	{
+		// 		$actArray[$i] = $doc;
+		// 		// echo json_encode($doc);
+		// 		$i++;
+		// 	}
+		// }
+		// $i = 0;
+		// foreach($dictionary_cursor as $doc)
+		// {
+		// 	if(isset($doc))
+		// 	{
+		// 		$dictArray[$i] = $doc;
+		// 		// echo json_encode($doc);
+		// 		$i++;
+		// 	}
+		// }
+		// $i = 0;
+		// foreach($textbook_cursor as $doc)
+		// {
+		// 	if(isset($doc))
+		// 	{
+		// 		$textbookArray[$i] = $doc;
+		// 		//echo json_encode($doc);
+		// 		$i++;
+		// 	}
+		// }
+		// $i = 0;
+		// foreach($chapter_cursor as $doc)
+		// {
+		// 	if(isset($doc))
+		// 	{
+		// 		$chapterArray[$i] = $doc;
+		// 		//echo json_encode($doc);
+		// 		$i++;
+		// 	}
+		// }
+		// $docArrays[] = 
+		// echo json_encode($docArrays);
+		array_push($docArrays, $chapterArray, $textbookArray, $actArray, $dictArray);	// This is an array of arrays
+		// echo json_encode($chapterArray);
+		return $docArrays;
 	}
 
 
