@@ -9,12 +9,13 @@ var loadPageElements = function() {
 		}).appendTo("#div_filter");
 		$("<p/>", {
 			id : "search_label",
-			html : "Search: &nbsp"
+			
 		}).appendTo("#div_search");
 		$("<input/>", {
 			id : "searchString",
 			class: "textBox",
 			type : "text",
+			placeholder: "Search",
 			name : "search",
 		}).appendTo("#div_search");
 
