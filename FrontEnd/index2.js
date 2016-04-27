@@ -204,7 +204,6 @@ window.onload = function loadPageElements() {
 
 var addToAssArray = function(object) {
 	timelineAssArray[object._id] = object;
-	console.log("added " + object._id + " to ass array");
 }
 
 
@@ -226,6 +225,8 @@ var openTimeline = function() {
 var createTimelineElement = function(object){
 
 	var innerdiv = null;
+	var attName = "objid";
+	var attVal = object._id;
 
  	if(object.ft !=null)
  		innerdiv = createActivityDiv(object);
@@ -245,10 +246,20 @@ var createTimelineElement = function(object){
  	if(object.pn!=null)
  		innerdiv = createChapterDiv(object);	
 
- 	var timelinediv = $(innerdiv).appendTo($("<div/>", {class: "timelinediv"}).appendTo("#timelineDisplay"));
+	addToAssArray(object);
+	console.log(timelineAssArray);
+
+	// Remove "resultitem" class from div
+	$(innerdiv).removeClass("resultitem");
+	$(innerdiv).addClass("innerdiv");
+
+	var timelinediv = $("<div/>", {class:"timelinediv"}).appendTo("#timelineDisplay");
+	$(innerdiv).appendTo(timelinediv);
+ 	$(timelinediv).attr(attName, attVal);
+ 	// console.log(timelinediv.className);
  	$(".timelinediv button.add").remove();
 	var removebutton = $("<button/>", {class: "remove", html:"Remove"}).bind("click", removeTimelineElement);
-	$(timelinediv).append(removebutton);
+	$(innerdiv).append(removebutton);
 
 	sortableFunction();
 }
@@ -409,8 +420,12 @@ THUMBNAILS
 // Create "Chapter" collection results
 var createChapterDiv = function(item) {
 	var collection = "chapters";
+
+	// var div = $("<div/>", {class: "resultitem"});
+
 	var div = document.createElement("div");
 	div.className = "resultitem";
+	// div.value = item._id;
 
 	// Thumbnail & Extracting the ID elements
 	/////////////////////// ALSO MAKE WORK IF THE ID HAS A DECIMAL!!!!!!!!//////////////////////
@@ -491,7 +506,6 @@ var createChapterDiv = function(item) {
 	addButton.className = "add";
 	// addButton.onclick = createTimelineElement(item);
 	$(addButton).bind("click", function() {
-		addToAssArray(item);
 		createTimelineElement(item); 
 	});
 	div.appendChild(addButton);
@@ -551,9 +565,7 @@ var createTextbookDiv = function(item) {
 	addButton.innerText = "Add";
 	addButton.className = "add";
 	$(addButton).bind("click", function() {
-		addToAssArray(item);
 		createTimelineElement(item); 
-		console.log("clicked add button lol");
 	});
 	div.appendChild(addButton);
 
@@ -573,7 +585,7 @@ var createTextbookDiv = function(item) {
 var createActivityDiv = function(item) {
 	var collection = "activities";
 	var div = document.createElement("div");
-	// div.className = "resultitem";
+	div.className = "resultitem";
 
 	// Thumbnail
 	var image = document.createElement("img");
@@ -640,9 +652,7 @@ var createActivityDiv = function(item) {
 	addButton.innerText = "Add";
 	addButton.className = "add";
 	$(addButton).bind("click", function() {
-		addToAssArray(item);
 		createTimelineElement(item); 
-		console.log("clicked add button lol");
 	});
 	div.appendChild(addButton);
 
@@ -691,9 +701,7 @@ var createDictionaryDiv = function(item) {
 	addButton.innerText = "Add";
 	addButton.className = "add";
 	$(addButton).bind("click", function() {
-		addToAssArray(item);
 		createTimelineElement(item); 
-		console.log("clicked add button lol");
 	});
 	div.appendChild(addButton);
 
@@ -855,23 +863,32 @@ var save = function(){
     	alert("Lesson plan requires a title before saving.");
     }
     else {
-	    var timelineDivs = document.getElementsByClassName("timelinediv");
-	    for (var i = 0; i < timelineDivs.length; i++) {
+	    // var timelineDivs = document.getElementsByClassName("timelinediv");
+	    // for (var i = 0; i < timelineDivs.length; i++) {
 
-	    	if((document.getElementsByClassName("timelinediv")[i].lastElementChild)!=null) {
-		    	var x = document.getElementsByClassName("timelinediv")[i].lastElementChild;
-		    	var index = x.getAttribute("index");
-		    	console.log("index : " + index);
-		    	objectId=resultArray[index]._id;
-		    	//var y = timelineDivs[i].document.getElementById("name").outerText;
-		    	console.log("item: " + objectId);
-		    	itemIds.push(objectId);
-	    	}
+	    // 	if((document.getElementsByClassName("timelinediv")[i].lastElementChild)!=null) {
+		   //  	var x = document.getElementsByClassName("timelinediv")[i].lastElementChild;
+		   //  	var index = x.getAttribute("index");
+		   //  	console.log("index : " + index);
+		   //  	objectId=resultArray[index]._id;
+		   //  	//var y = timelineDivs[i].document.getElementById("name").outerText;
+		   //  	console.log("item: " + objectId);
+		   //  	itemIds.push(objectId);
+	    // 	}
+
+	     var timelineDivs = document.getElementsByClassName("timelinediv");
+	     var objectId = "";
+	     for (var i=0; i<timelineDivs.length; i++) {
+	     	objectId = timelineAssArray[timelineDivs[i].getAttribute("objid")]._id;
+	     	itemIds.push(objectId);
+	     }
+
+	}
+
+	   	var timeline = {
+	   		lesson_title : titleString,
+	   		items_array : itemIds
 	   	}
-
-	   	var timeline = new Object();
-	    	timeline.lesson_title = titleString;
-	    	timeline.items_array = itemIds;
 
 	 	console.log(timeline);
 
@@ -879,8 +896,8 @@ var save = function(){
 			console.log("Saved!");
 		});
 
-	}
 }
+
 
 
 
