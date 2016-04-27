@@ -51,6 +51,9 @@
 
 #div_search {
 	width: 20%;
+	padding:0px;
+	margin:0;
+	display:inline;
 }
 
 #search_label {
@@ -59,6 +62,8 @@
 
 #dropdown_grade {
 	font-size: 20px;
+	display:inline;
+
 }
 
 #dropdown_subject {
@@ -74,9 +79,10 @@
 }
 
 #div_subject,#div_grade,#div_chapter,#div_section{
-	width: 15%;
+	
 	float: left;
 	position: relative;
+	width: 10%;
 }
 
 #div_chapter {
@@ -86,23 +92,42 @@
 
 #div_section {
 	padding-bottom: 10px;
+	width:6%;
 }
 
 #div_filetypes {
 	margin-top: 20px;
 }
 
+#ft_misc {
+	float:right;
+}
+#ft_image {
+	float:right;
+}
+#ft_video {
+	float:right;
+}
+#div_filter {
+
+}
+
+
 /*************** Results Module ***********************/
 #outerResultsDiv {
 	float:left;
+	position:relative;
 	background: lightgray;
 	padding: 20px;
-	margin: 0 30 30 30;
+	/*margin: 0 30 30 30;*/
 	/*margin-top: 6%;*/
 	vertical-align:top;
 	width: 30%;
 	border-radius: 10px;
 	height: 500px;
+	left: 3%;
+	z-index: 1;
+	display:inline;
 }
 
 /*#outerResultsDiv {
@@ -349,6 +374,7 @@ body {
 }
 p {
 	font-size:1em;
+	margin-top:0px;
 }
 li:hover {
 	background-color: lightgray;
