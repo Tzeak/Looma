@@ -119,6 +119,7 @@
 
 #div_filter {
 
+
 }
 
 #submit_button {
@@ -150,7 +151,7 @@
 
 /*#outerResultsDiv {
   /*min-height:120px;
-  width:90px;*/
+  width:90px;
   float: left;
   display:inline-block;
   margin: auto;
@@ -238,6 +239,7 @@ li:hover {
   background: darkgray;
   border-radius:0.313em;
 }
+
 #displaybox {
 	width: 60%;
 	height: 57.5%;
