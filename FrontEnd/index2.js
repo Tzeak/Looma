@@ -895,6 +895,7 @@ var save = function(){
 		$.post("../BackEnd/save.php", timeline, function() {
 			console.log("Saved!");
 		});
+		alert("Your timeline, " + titleString + ", has been saved!");
 
 }
 
