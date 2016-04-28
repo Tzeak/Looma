@@ -292,12 +292,13 @@ li:hover {
 /* ************************ PRESENT! ********************/
 #presentdisplaybox {
 	width: 100%;
-	height: 665px;
+	height: 640px;
 	background: gray;
 	position: relative;
-	margin:20 auto;
-	margin-top: 5%;
+	margin: 20 auto;
+	margin-top: 3%;
 	border-radius:10px;
+	margin-bottom: 0px;
 	/*margin-top: 28px;
 	margin-right: 25px;*/
 }
@@ -308,13 +309,19 @@ li:hover {
 	  padding: 15px;
 	  width: 100%;
 	  margin: 0 auto;
+	  height:150px;
 	  /*margin-right: 25px;
 	  margin-top: 25px;*/
-	  height:160px;
 	  overflow-x:scroll;
 	  overflow-y:hidden;
 	  background: darkgray;
 	  border-radius:0.313em;
+	  position:relative;
+	  opacity:0;
+}
+figure:hover #presentwrapper {
+	display: block;
+	opacity:1;
 }
 /* ************************ INDEX && OPEN! ********************/
 #string {
