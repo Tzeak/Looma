@@ -861,10 +861,10 @@ var preview_result = function(collection, item) {
 var save = function(){    
     console.log("saving...");
     var itemIds = [];
-    var titleString = document.getElementById("titleString").value;
-    console.log("title:" + titleString);
+    var titleInput = document.getElementById("titleInput").value;
+    console.log("title:" + titleInput);
     
-    if(titleString == "") {
+    if(titleInput == "") {
     	alert("Lesson plan requires a title before saving.");
     }
     else {
@@ -891,7 +891,7 @@ var save = function(){
 	}
 
 	   	var timeline = {
-	   		lesson_title : titleString,
+	   		lesson_title : titleInput,
 	   		items_array : itemIds
 	   	}
 
@@ -900,7 +900,7 @@ var save = function(){
 		$.post("../BackEnd/save.php", timeline, function() {
 			console.log("Saved!");
 		});
-		alert("Your timeline, " + titleString + ", has been saved!");
+		alert("Your timeline, " + titleInput + ", has been saved!");
 
 }
 
