@@ -30,17 +30,22 @@ function searchMongo($id)
 
 	global $activities, $textbooks, $dictionary, $chapters, $timelines;
 	// Look through all collections for that document with the Mongo ID
-	$collectionarray = array($activities, $textbooks, $dictionary, $chapters);
+	$collectionarray = array($activities, $textbooks, $dictionary);
+
+	// Chapters collection
+	$document = $chapters->findOne(array('_id' => $id));
+	if ($document != null) {
+		return $document;
+	}
 
 	for ($i=0; $i<count($collectionarray); $i++)
    	{
 		$document = $collectionarray[$i]->findOne(array('_id' => new MongoId($id)));
-
-		if ($document != null) 
-		{
+		if ($document != null) {
 			return $document; // it's in this collection!
-		} 
+		}
 	}
+
 	return null;
 }
 
