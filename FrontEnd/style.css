@@ -318,12 +318,8 @@ li:hover {
 	  background: darkgray;
 	  border-radius:0.313em;
 	  position:relative;
-	  opacity:0;
 }
-figure:hover #presentwrapper {
-	display: block;
-	opacity:1;
-}
+
 /* ************************ INDEX && OPEN! ********************/
 #string {
 	font-family: Arial;
