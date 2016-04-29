@@ -6,9 +6,9 @@
 	body #div_search {
 		margin-top: .6%;
 	}
-	#btnSave {
+	/*#btnSave {
 		background:black;
-	}
+	}*/
 	body #div_grade, #div_subject, #div_chapter, #div_section {
 		margin-top: -.5%;
 	}
@@ -30,6 +30,7 @@
 	padding: 5px;
 	height: 45px;
 	color:white;
+	padding-right:20px;
 }
 #titleString {
 	position:relative;
@@ -325,6 +326,19 @@ li:hover {
 	border-width:3px;
 	border-radius: 10px;
 }
+.btnOpenTimeline {
+	margin-right: 15px;
+	margin-left: 15px;
+}
+.lessonEntry {
+	margin-left: 50px;
+	margin-right: 50px;
+	height: 50px;
+}
+
+/*.editPresent0, .editPresent1, .editPresent2 {
+	float: right;
+}*/
 /* ************************ PRESENT! ********************/
 #presentdisplaybox {
 	width: 100%;

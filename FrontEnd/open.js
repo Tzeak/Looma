@@ -20,22 +20,34 @@ var createOpenListElement = function(index, itemString, itemId) {
 	// var div = document.createElement("div");
 	$('<li/>', {
 		id : "time" + index,
+		class: "lessonEntry",
 		value: itemId,
 	    title: itemString,
 	    rel: 'external',
 	    text: itemString,
 	}).appendTo('#lessonDiv ul');
+
+	$('<div/>', {
+		class: "editPresent" + index,
+	}).appendTo('#time' + index);
+
+	$('.editPresent'+index).css({ 
+    	"float": "right"
+    }); 
+
 	$('<button/>', {
 		text: "Edit",
+		class: "btnOpenTimeline", 
 		id: "editBtn" + index,
-	}).appendTo('#time' + index);
+	}).appendTo('.editPresent' + index);
 	$("#editBtn" + index).bind("click", function(){
 			window.location.href = 'index2.html?timelineId=' + encodeURI(itemId);
 	});
 	$('<button/>', {
 		text: "Present",
+		class: "btnOpenTimeline",
 		id: "presentBtn" + index,
-	}).appendTo('#time' + index);
+	}).appendTo('.editPresent' + index);
 	$("#presentBtn" + index).bind("click", function(){
 		window.location.href = 'present.html?timelineId=' + encodeURI(itemId);
 	});
