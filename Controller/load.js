@@ -61,3 +61,8 @@
 		}
  		return timelineArray;
 	}
+
+	function deletetime(itemId) {
+		console.log("deletetime() called");
+		// timelineID = {"$id" : timelineID}; //Set up in format for querying mongo database
+	}
