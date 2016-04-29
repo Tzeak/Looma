@@ -1,20 +1,4 @@
 <?php
-
-	// require_once 'mongoSetup.php';
-	// $filename = 'timelines.json';
-
-	// $thisID = $_POST["itemId"];
-
-	// for ()
-
-	// echo $thisID;
-
-
-
-
-
-
-
 /*
  * File:		delete.php
  * Description:	This file runs upon deleting a timeline from open.html
@@ -34,7 +18,7 @@
 /*Connect to MongoDB*/
 require_once 'mongoSetup.php';
 /*Set variables */
-$filename = 'timelines_test.json';
+$filename = 'timelines.json';
 
 /*Create and Insert Timeline into Database*/
 	$info = array("name" => $_POST["itemString"], "itemId" => $_POST["itemId"], "line" => $_POST["line"]);
@@ -48,11 +32,15 @@ $filename = 'timelines_test.json';
 
 	foreach($timelinesJSON as $key => $value) {
 		if (in_array($info["itemId"], $value)) {
-			unset($timelinesJSON[$key]);
-			echo "Deleted!!!";
+			$timelines->remove(array('_id' => new MongoId($info["itemId"])));	// Removes from Mongo
+			unset($timelinesJSON[$key]);	// Removes from JSON
+			$timelinesJSON = array_values(array_filter($timelinesJSON));	// Resets indices once the item is removed
+			echo "Deleted " . $info["name"];
 		}
 	}
 	$timelinesJSON = json_encode($timelinesJSON);
-	echo "Nothing found.";
+	$timelinesJSON = file_put_contents('timelines.json', $timelinesJSON);
+
+
 
 ?>
