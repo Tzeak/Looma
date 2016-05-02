@@ -1,4 +1,6 @@
 go-pear.phar
 data/
+data_new/
 content/
+mongodump/
 .DS_Store
