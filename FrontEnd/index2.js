@@ -225,8 +225,6 @@ var openTimeline = function() {
 var createTimelineElement = function(object){
 
 	var innerdiv = null;
-	var attName = "objid";
-	var attVal = object._id;
 
  	if(object.ft !=null)
  		innerdiv = createActivityDiv(object);
@@ -255,10 +253,10 @@ var createTimelineElement = function(object){
 
 	var timelinediv = $("<div/>", {class:"timelinediv"}).appendTo("#timelineDisplay");
 	$(innerdiv).appendTo(timelinediv);
- 	$(timelinediv).attr(attName, attVal);
+ 	$(timelinediv).attr("data-objid", object._id);
  	// console.log(timelinediv.className);
  	$(".timelinediv button.add").remove();
-	var removebutton = $("<button/>", {class: "remove", html:"Remove"}).bind("click", removeTimelineElement);
+	var removebutton = $("<button/>", {class: "remove", html:"-"}).bind("click", removeTimelineElement);
 	$(innerdiv).append(removebutton);
 
 	sortableFunction();
@@ -288,6 +286,7 @@ var removeTimelineElement = function() {
 // var resultArray = [];
 
 var querySearch = function() {
+	$("currentResultDiv").html("");
 
 	var filterdata = {
 		'grade' : document.getElementById('dropdown_grade').value,
@@ -314,29 +313,62 @@ var storeFilterData = function(filterdata) {
 
 
 var printFilterData = function(filterdata_object) {
-	// Print Chapter array
 	var currentResultDiv = document.createElement("div");
 	currentResultDiv.id = "currentResultDiv";
+	// currentResultDiv.appendTo("#outerResultsDiv");
+	$(currentResultDiv).appendTo("#outerResultsDiv");
+
+
+	// Print Chapter array
+	var chapterResultDiv = document.createElement("div");
+	chapterResultDiv.id = "chapterResultDiv";
+	$(chapterResultDiv).appendTo(currentResultDiv);
+
 	var collectionTitle = document.createElement("h1");
 	collectionTitle.id = "collectionTitle";
-	var arraylength = filterdata_object.chapters.length;
+	var arraylength = filterdata_object.chapters.length;		// WE NEED TO FIX THIS. This is counting sections as well!!!
 	if (arraylength == 1) {
 		collectionTitle.innerHTML = "Chapters (" + arraylength + " Result)";
 	} 
 	else {
 		collectionTitle.innerHTML = "Chapters (" + arraylength + " Results)";
 	}
-	currentResultDiv.appendChild(collectionTitle);
+	chapterResultDiv.appendChild(collectionTitle);
 
 
 	for(var i=0; i<filterdata_object.chapters.length; i++) {
-		var rElement = createChapterDiv(filterdata_object.chapters[i])
+		var rElement = createChapterDiv(filterdata_object.chapters[i], filterdata_object.chapters[i-1]);
+		if ($(rElement).data("type") == "chapter") {
+			chapterResultDiv.appendChild(rElement);
+		}
+		else if ($(rElement).data("type") == "section") {
+			var matchingChapterDiv = getElementWithPrefix(chapterResultDiv, rElement);
+			if (matchingChapterDiv != null) {
+				$(matchingChapterDiv).append(rElement);
+			}
+
+			// var chapterResults = chapterResultDiv.getElementsByTagName("*");
+
+			// for (i=0; i<chapterResults.length; i++) {
+			// 	console.log($(chapterResults[i]).data("chprefix"));
+			// 	// if ($(chapterResults[i]).data("chprefix") == $(rElement).data("chprefix")) {
+			// 	// 	console.log("IT'S A MATCH!!!!!!!");
+			// 	// 	// append to chapterResults[i]
+			// 	// }
+			// 	// search through and check ch prefixes 
+			// }
+			// var sectionChapterDiv = document.getElementBy
+		}
 		// var rElement = createChapterDiv(resultArray[i]);
-		currentResultDiv.appendChild(rElement);
+		
 	}
 
 
 	// Print Textbooks array
+
+	var textbookResultDiv = document.createElement("div");
+	textbookResultDiv.id = "textbookResultDiv";
+	$(textbookResultDiv).appendTo(currentResultDiv);
 
 	var collectionTitle = document.createElement("h1");
 	collectionTitle.id = "collectionTitle";
@@ -348,16 +380,21 @@ var printFilterData = function(filterdata_object) {
 	else {
 		collectionTitle.innerHTML = "Textbooks (" + arraylength + " Results)";
 	}
-	currentResultDiv.appendChild(collectionTitle);
+	textbookResultDiv.appendChild(collectionTitle);
 
 	for(var i=0; i<filterdata_object.textbooks.length; i++) {
-		var rElement = createTextbookDiv(filterdata_object.textbooks[i])
-		// var rElement = createChapterDiv(resultArray[i]);
-		currentResultDiv.appendChild(rElement);
+		var rElement = createTextbookDiv(filterdata_object.textbooks[i]);
+
+		textbookResultDiv.appendChild(rElement);
 	}
 
 
 	// Print Activities array
+
+	var actResultDiv = document.createElement("div");
+	actResultDiv.id = "actResultDiv";
+	$(actResultDiv).appendTo(currentResultDiv);
+
 	var collectionTitle = document.createElement("h1");
 	collectionTitle.id = "collectionTitle";
 
@@ -368,16 +405,21 @@ var printFilterData = function(filterdata_object) {
 	else {
 		collectionTitle.innerHTML = "Activites (" + arraylength + " Results)";
 	}
-	currentResultDiv.appendChild(collectionTitle);
+	actResultDiv.appendChild(collectionTitle);
 
 	for(var i=0; i<filterdata_object.activities.length; i++) {
 		var rElement = createActivityDiv(filterdata_object.activities[i])
 		// var rElement = createChapterDiv(resultArray[i]);
-		currentResultDiv.appendChild(rElement);
+		actResultDiv.appendChild(rElement);
 	}
 
 
 	// Print Dictionary array
+
+	var dictResultDiv = document.createElement("div");
+	dictResultDiv.id = "dictResultDiv";
+	$(dictResultDiv).appendTo(currentResultDiv);
+
 	var collectionTitle = document.createElement("h1");
 	collectionTitle.id = "collectionTitle";
 
@@ -388,19 +430,29 @@ var printFilterData = function(filterdata_object) {
 	else {
 		collectionTitle.innerHTML = "Dictionary (" + arraylength + " Results)";
 	}
-	currentResultDiv.appendChild(collectionTitle);
+	dictResultDiv.appendChild(collectionTitle);
 
 	for(var i=0; i<filterdata_object.dictionary.length; i++) {
 		var rElement = createDictionaryDiv(filterdata_object.dictionary[i])
 		// var rElement = createChapterDiv(resultArray[i]);
-		currentResultDiv.appendChild(rElement);
+		dictResultDiv.appendChild(rElement);
 	}
 
-
-
-	$("#outerResultsDiv").html(currentResultDiv);
 }
 
+var getElementWithPrefix = function(chapterResultDiv, rElement) {
+	if ($(chapterResultDiv).html != "") {
+		var chapterResults = chapterResultDiv.getElementsByTagName("div");
+		for (i=0; i<chapterResults.length; i++) {
+			console.log("current element we're looking at: " + $(chapterResults[i]).data("chprefix"));
+			if ($(chapterResults[i]).data("chprefix") == $(rElement).data("chprefix")) {
+				console.log("IT'S A MATCH!!!!!!!");
+				return chapterResults[i];
+			}
+		}
+		return null;
+	}
+}
 
 
 /* //////////////////////TO-DO FOR RESULTS
@@ -418,16 +470,10 @@ THUMBNAILS
 //////////////////////////END TO-DO */
 
 // Create "Chapter" collection results
-var createChapterDiv = function(item) {
+var createChapterDiv = function(item, previtem) {
 	var collection = "chapters";
 
-	// var div = $("<div/>", {class: "resultitem"});
-
-	var div = document.createElement("div");
-	div.className = "resultitem";
-	// div.value = item._id;
-
-	///////////////// EXTRACT ID ///////////////////
+	///////////////// EXTRACT ID OF ITEM ///////////////////
 
 	// Thumbnail & Extracting the ID elements
 	var str = item._id;
@@ -437,7 +483,7 @@ var createChapterDiv = function(item) {
 	// Extracts the section number
 	if (str.indexOf(".") >= 0) {
 		var currentSection = arr_split[arr_length-2].concat(arr_split[arr_length-1]);
-		console.log("current section: " + currentSection);
+		// console.log("current section: " + currentSection);
 		arr_split.splice(arr_length-1, 1);
 		arr_split.splice(arr_length-2, 1);
 		arr_split.splice(arr_length-3, 1);
@@ -446,58 +492,174 @@ var createChapterDiv = function(item) {
 
 	// Extracts the last 2 numbers as the chapter
 	var currentChapter = arr_split[arr_length-2].concat(arr_split[arr_length-1]);
-	console.log("current chapter: " + currentChapter);
+	// console.log("current chapter: " + currentChapter);
 	arr_split.splice(arr_length-1, 1);
 	arr_split.splice(arr_length-2, 1);
 	arr_length = arr_split.length;
 
 	if (arr_length == 3) {	// If the subject is EN, or SS (or something with 2 letters)
 		var currentSubject = arr_split[arr_length-2].concat(arr_split[arr_length-1]);
-		console.log("current subject: " + currentSubject);
+		// console.log("current subject: " + currentSubject);
 		arr_split.splice(arr_length-1, 1);
 		arr_split.splice(arr_length-2, 1);
 		arr_length = arr_split.length;
 	}
 	else if (arr_split.length == 2) {	// If the subject is M or S, N (or something with 1 letter)
 		var currentSubject = arr_split[arr_length-1];
-		console.log("current subject: " + currentSubject);
+		// console.log("current subject: " + currentSubject);
 		arr_split.splice(arr_length-1, 1);
 		arr_length = arr_split.length;
 	}
 
 	var currentGradeNumber = arr_split[0];
-	console.log("current grade number: " + currentGradeNumber);
+	// console.log("current grade number: " + currentGradeNumber);
 	var currentGradeFolder = "Class".concat(currentGradeNumber);
-	console.log("current grade folder: " + currentGradeFolder);
+	// console.log("current grade folder: " + currentGradeFolder);
 	if (currentSubject == "EN") {
-		var currentSubject = "English";
+		var currentSubjectFull = "English";
 	} 
 	else if (currentSubject == "M") {
-		var currentSubject = "Math";
+		var currentSubjectFull = "Math";
 	} 
 	else if (currentSubject == "N") {
-		var currentSubject = "Nepali";
+		var currentSubjectFull = "Nepali";
 	} 
 	else if (currentSubject == "S") {
-		var currentSubject = "Science";
+		var currentSubjectFull = "Science";
 	} 
 	else if (currentSubject == "SS") {
-		var currentSubject = "SocialStudies";
+		var currentSubjectFull = "SocialStudies";
 	}
+
+	var chprefix = currentGradeNumber.concat(currentSubject,currentChapter);
+
 	////////////// END EXTRACTION OF ID ////////////////
 
-	var thumbnail_prefix = currentSubject.concat("-", currentGradeNumber);
-	console.log("thumbnail: " + thumbnail_prefix);
+
+	///////////////// EXTRACT ID OF PREVIOUS ITEM ///////////////////
+
+	// Thumbnail & Extracting the ID elements
+	if (previtem != null) {
+		var str2 = previtem._id;
+		var arr_split2 = str2.split("");
+		var arr_length2 = arr_split2.length;
+
+		// Extracts the section number
+		if (str2.indexOf(".") >= 0) {
+			var currentSection2 = arr_split2[arr_length2-2].concat(arr_split2[arr_length2-1]);
+			// console.log("current section2: " + currentSection2);
+			arr_split2.splice(arr_length2-1, 1);
+			arr_split2.splice(arr_length2-2, 1);
+			arr_split2.splice(arr_length2-3, 1);
+			arr_length2 = arr_split2.length;
+		}
+
+		// Extracts the last 2 numbers as the chapter
+		var currentChapter2 = arr_split2[arr_length2-2].concat(arr_split2[arr_length2-1]);
+		// console.log("current chapter2: " + currentChapter2);
+		arr_split2.splice(arr_length2-1, 1);
+		arr_split2.splice(arr_length2-2, 1);
+		arr_length2 = arr_split2.length;
+
+		if (arr_length2 == 3) {	// If the subject is EN, or SS (or something with 2 letters)
+			var currentSubject2 = arr_split2[arr_length2-2].concat(arr_split2[arr_length2-1]);
+			// console.log("current subject2: " + currentSubject2);
+			arr_split2.splice(arr_length2-1, 1);
+			arr_split2.splice(arr_length2-2, 1);
+			arr_length2 = arr_split2.length;
+		}
+		else if (arr_split2.length == 2) {	// If the subject is M or S, N (or something with 1 letter)
+			var currentSubject2 = arr_split2[arr_length2-1];
+			// console.log("current subject2: " + currentSubject2);
+			arr_split2.splice(arr_length2-1, 1);
+			arr_length2 = arr_split2.length;
+		}
+
+		var currentGradeNumber2 = arr_split2[0];
+		// console.log("current grade number2: " + currentGradeNumber2);
+		var currentGradeFolder2 = "Class".concat(currentGradeNumber2);
+		// console.log("current grade folder2: " + currentGradeFolder2);
+		if (currentSubject2 == "EN") {
+			var currentSubjectFull2 = "English";
+		} 
+		else if (currentSubject2 == "M") {
+			var currentSubjectFull2 = "Math";
+		} 
+		else if (currentSubject2 == "N") {
+			var currentSubjectFull2 = "Nepali";
+		} 
+		else if (currentSubject2 == "S") {
+			var currentSubjectFull2 = "Science";
+		} 
+		else if (currentSubject2 == "SS") {
+			var currentSubjectFull2 = "SocialStudies";
+		}
+
+		var chprefix2 = currentGradeNumber2.concat(currentSubject2,currentChapter2);
+		////////////// END EXTRACTION OF ID ////////////////
+	}
+
+
+
+
+	if (previtem != null) {
+		if (item._id.indexOf(".") >= 0) {
+			//	If the prefix is equal to the prefix before it
+			if (chprefix == chprefix2) {
+				var sectionDiv = document.createElement("div");
+				sectionDiv.className = "result_ch";
+				$(sectionDiv).attr("data-chprefix", chprefix);
+				$(sectionDiv).attr("data-type", "section");
+				// console.log("prefix for item " + item.dn + " is " + $(sectionDiv).data('chprefix'));
+
+				$("<p/>", {
+					class : "result_dn",
+					html : "<b>Section " + currentSection + ":<br/>" + item.dn + "</b>"
+				}).appendTo(sectionDiv);
+
+				var addButton = document.createElement("button");
+				addButton.innerText = "+";
+				addButton.className = "add";
+				// addButton.onclick = createTimelineElement(item);
+				$(addButton).bind("click", function() {
+					createTimelineElement(item); 
+				});
+				sectionDiv.appendChild(addButton);
+
+				var previewButton = document.createElement("button");
+				previewButton.innerText = "P";
+				previewButton.className = "preview";
+				// previewButton.onclick = preview_result(item);
+				$(previewButton).bind("click", function() {
+					preview_result(collection, item);
+				})
+				sectionDiv.appendChild(previewButton);
+
+				return sectionDiv;
+			}
+		}
+	}
+
+	var div = document.createElement("div");
+	div.className = "resultitem";
+	// var div = $("<div/>", {class:"resultitem"});
+
+	
+	$(div).attr("data-chprefix", chprefix);
+	$(div).attr("data-type", "chapter");
+
+
+	var thumbnail_prefix = currentSubjectFull.concat("-", currentGradeNumber);
 
 	var image = document.createElement("img");
 	image.id = "resultsimg";
-	image.src = homedirectory + "content/textbooks/" + currentGradeFolder + "/" + currentSubject + "/" + thumbnail_prefix + "_thumb.jpg";
+	image.src = homedirectory + "content/textbooks/" + currentGradeFolder + "/" + currentSubjectFull + "/" + thumbnail_prefix + "_thumb.jpg";
 	div.appendChild(image);
 
 	// Display name
 	$("<p/>", {
 		id : "result_dn",
-		html : "<b>" + item.dn + "</b>"
+		html : "<b>Chapter " + currentChapter + ": " + item.dn + "</b>"
 	}).appendTo(div);
 
 	// Nepali Name
@@ -514,7 +676,7 @@ var createChapterDiv = function(item) {
 
 	// "Add" button
 	var addButton = document.createElement("button");
-	addButton.innerText = "Add";
+	addButton.innerText = "+";
 	addButton.className = "add";
 	// addButton.onclick = createTimelineElement(item);
 	$(addButton).bind("click", function() {
@@ -523,7 +685,7 @@ var createChapterDiv = function(item) {
 	div.appendChild(addButton);
 
 	var previewButton = document.createElement("button");
-	previewButton.innerText = "Preview";
+	previewButton.innerText = "P";
 	previewButton.className = "preview";
 	// previewButton.onclick = preview_result(item);
 	$(previewButton).bind("click", function() {
@@ -574,7 +736,7 @@ var createTextbookDiv = function(item) {
 
 	// "Add" button
 	var addButton = document.createElement("button");
-	addButton.innerText = "Add";
+	addButton.innerText = "+";
 	addButton.className = "add";
 	$(addButton).bind("click", function() {
 		createTimelineElement(item); 
@@ -582,7 +744,7 @@ var createTextbookDiv = function(item) {
 	div.appendChild(addButton);
 
 	var previewButton = document.createElement("button");
-	previewButton.innerText = "Preview";
+	previewButton.innerText = "P";
 	previewButton.className = "preview";
 	// previewButton.onclick = preview_result(item);
 	$(previewButton).bind("click", function() {
@@ -661,7 +823,7 @@ var createActivityDiv = function(item) {
 
 	// "Add" button
 	var addButton = document.createElement("button");
-	addButton.innerText = "Add";
+	addButton.innerText = "+";
 	addButton.className = "add";
 	$(addButton).bind("click", function() {
 		createTimelineElement(item); 
@@ -669,7 +831,7 @@ var createActivityDiv = function(item) {
 	div.appendChild(addButton);
 
 	var previewButton = document.createElement("button");
-	previewButton.innerText = "Preview";
+	previewButton.innerText = "P";
 	previewButton.className = "preview";
 	// previewButton.onclick = preview_result(item);
 	$(previewButton).bind("click", function() {
@@ -710,7 +872,7 @@ var createDictionaryDiv = function(item) {
 
 	// "Add" button
 	var addButton = document.createElement("button");
-	addButton.innerText = "Add";
+	addButton.innerText = "+";
 	addButton.className = "add";
 	$(addButton).bind("click", function() {
 		createTimelineElement(item); 
@@ -718,7 +880,7 @@ var createDictionaryDiv = function(item) {
 	div.appendChild(addButton);
 
 	var previewButton = document.createElement("button");
-	previewButton.innerText = "Preview";
+	previewButton.innerText = "P";
 	previewButton.className = "preview";
 	// previewButton.onclick = preview_result(item);
 	$(previewButton).bind("click", function() {
@@ -785,19 +947,19 @@ var preview_result = function(collection, item) {
 		var currentGradeFolder = "Class".concat(currentGradeNumber);
 		console.log("current grade folder: " + currentGradeFolder);
 		if (currentSubject == "EN") {
-			var currentSubject = "English";
+			var currentSubjectFull = "English";
 		} 
 		else if (currentSubject == "M") {
-			var currentSubject = "Math";
+			var currentSubjectFull = "Math";
 		} 
 		else if (currentSubject == "N") {
-			var currentSubject = "Nepali";
+			var currentSubjectFull = "Nepali";
 		} 
 		else if (currentSubject == "S") {
-			var currentSubject = "Science";
+			var currentSubjectFull = "Science";
 		} 
 		else if (currentSubject == "SS") {
-			var currentSubject = "SocialStudies";
+			var currentSubjectFull = "SocialStudies";
 		}
 
 
@@ -874,7 +1036,7 @@ var preview_result = function(collection, item) {
 			var currentSubject = "SocialStudies";
 		}
 */
-		document.querySelector("div#displaybox").innerHTML = '<embed src="' + homedirectory + 'content/textbooks/' + currentGradeFolder + "/" + currentSubject + "/" + currentSubject + "-" + currentGradeNumber + '.pdf#page=' + item.pn + '" width="100%" height="100%" type="application/pdf">';
+		document.querySelector("div#displaybox").innerHTML = '<embed src="' + homedirectory + 'content/textbooks/' + currentGradeFolder + "/" + currentSubjectFull + "/" + currentSubjectFull + "-" + currentGradeNumber + '.pdf#page=' + item.pn + '" width="100%" height="100%" type="application/pdf">';
 	}
 
 
@@ -950,7 +1112,7 @@ var save = function(){
 	     var timelineDivs = document.getElementsByClassName("timelinediv");
 	     var objectId = "";
 	     for (var i=0; i<timelineDivs.length; i++) {
-	     	objectId = timelineAssArray[timelineDivs[i].getAttribute("objid")]._id;
+	     	objectId = timelineAssArray[timelineDivs[i].data("objid")]._id;
 	     	itemIds.push(objectId);
 	     }
 

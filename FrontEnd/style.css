@@ -85,7 +85,10 @@ li:hover {
 	z-index: 1;
 }
 
-
+.add, .preview, .remove {
+	height:30px;
+	width:30px;
+}
 
 /************* Timeline module ***************/
 
