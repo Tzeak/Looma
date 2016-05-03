@@ -74,10 +74,12 @@
 	font-size: 20px;
 	height: 37px;
 	width: 250px;
-	margin-right: 30px;
-	background:white;
+	/*margin-right: 30px;*/
 	padding:10px;
 	border-radius:0.313em;
+
+	
+
 }
 
 #div_search {
@@ -288,6 +290,41 @@ li:hover {
 }
 
 /* ************************ OPEN! ********************/
+
+#openLogo {
+	position: relative;
+	float: left;
+	width: 175px;
+	padding-left: 10px;
+	padding-top: 10px;
+}
+
+ul {
+	padding-left: 1.5%;
+}
+
+h3{
+	font-size: 30px;
+	margin-left: 32%;
+}
+
+#openNavbar {
+	background: #D76126;
+	padding: 5px;
+	height: 75px;
+	color:white;
+	padding-right:20px;
+}
+
+h2 {
+	float: left;
+	position: relative;
+	margin: auto 0;
+	padding-left: 15%;
+	padding-top: 5px;
+	font-size: 52px;
+}
+
 #openForm {
 	text-align: center;
 }
@@ -315,24 +352,23 @@ li:hover {
 	margin: 15 auto;
 }
 #lessonDiv {
-	background-color:gray;
+	background-color:#939598;
 	color:white;
 	padding:2px;
 	margin:auto;
-	
-	width:80%;
+	width:94%;
 	border:solid;
 	border-color: white;
 	border-width:3px;
 	border-radius: 10px;
+	overflow-y:scroll;
+	height: 70%;
 }
 .btnOpenTimeline {
 	margin-right: 15px;
 	margin-left: 15px;
 }
 .lessonEntry {
-	margin-left: 50px;
-	margin-right: 50px;
 	height: 50px;
 }
 
@@ -444,8 +480,8 @@ li:hover {
 	background-color: lightgray;
 	color: black;
 	border-radius: 0.313em;
-	padding:0px;
-}
+/*	padding-top: 1.75%;
+*/}
 label {
 	padding-right: 1em;
 }

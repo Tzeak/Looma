@@ -212,7 +212,11 @@ var addToAssArray = function(object) {
 }
 
 
+//////////////////////////// SUBMIT LESSON TITLE NAME ///////////////////////
 
+var titleName = function() {
+	
+}
 
 
 
