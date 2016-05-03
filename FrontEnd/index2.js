@@ -342,7 +342,7 @@ var printFilterData = function(filterdata_object) {
 			chapterResultDiv.appendChild(rElement);
 		}
 		else if ($(rElement).data("type") == "section") {
-			var matchingChapterDiv = getElementWithPrefix(chapterResultDiv, rElement);
+			var matchingChapterDiv = getSectionChapterByPrefix(chapterResultDiv, rElement);
 			if (matchingChapterDiv != null) {
 				$(matchingChapterDiv).append(rElement);
 			}
@@ -440,7 +440,7 @@ var printFilterData = function(filterdata_object) {
 
 }
 
-var getElementWithPrefix = function(chapterResultDiv, rElement) {
+var getSectionChapterByPrefix = function(chapterResultDiv, rElement) {
 	if ($(chapterResultDiv).html != "") {
 		var chapterResults = chapterResultDiv.getElementsByTagName("div");
 		for (i=0; i<chapterResults.length; i++) {
