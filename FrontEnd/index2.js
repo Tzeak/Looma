@@ -52,8 +52,8 @@ window.onload = function loadPageElements() {
 		for (var i=0; i<8; i++) {
 			if (i == 0) {
 				$("<option/>", {
-					html : "3",
-					id : "3"
+					html : "",
+					id : ""
 				}).appendTo("#dropdown_grade");
 			} 
 			else {
@@ -319,6 +319,31 @@ var printFilterData = function(filterdata_object) {
 	$(currentResultDiv).appendTo("#outerResultsDiv");
 
 
+	// Print Textbooks array
+
+	var textbookResultDiv = document.createElement("div");
+	textbookResultDiv.id = "textbookResultDiv";
+	$(textbookResultDiv).appendTo(currentResultDiv);
+
+	var collectionTitle = document.createElement("h1");
+	collectionTitle.id = "collectionTitle";
+
+	var arraylength = filterdata_object.textbooks.length;
+	if (arraylength == 1) {
+		collectionTitle.innerHTML = "Textbooks (" + arraylength + " Result)";
+	} 
+	else {
+		collectionTitle.innerHTML = "Textbooks (" + arraylength + " Results)";
+	}
+	textbookResultDiv.appendChild(collectionTitle);
+
+	for(var i=0; i<filterdata_object.textbooks.length; i++) {
+		var rElement = createTextbookDiv(filterdata_object.textbooks[i]);
+
+		textbookResultDiv.appendChild(rElement);
+	}
+
+
 	// Print Chapter array
 	var chapterResultDiv = document.createElement("div");
 	chapterResultDiv.id = "chapterResultDiv";
@@ -361,31 +386,6 @@ var printFilterData = function(filterdata_object) {
 		}
 		// var rElement = createChapterDiv(resultArray[i]);
 		
-	}
-
-
-	// Print Textbooks array
-
-	var textbookResultDiv = document.createElement("div");
-	textbookResultDiv.id = "textbookResultDiv";
-	$(textbookResultDiv).appendTo(currentResultDiv);
-
-	var collectionTitle = document.createElement("h1");
-	collectionTitle.id = "collectionTitle";
-
-	var arraylength = filterdata_object.textbooks.length;
-	if (arraylength == 1) {
-		collectionTitle.innerHTML = "Textbooks (" + arraylength + " Result)";
-	} 
-	else {
-		collectionTitle.innerHTML = "Textbooks (" + arraylength + " Results)";
-	}
-	textbookResultDiv.appendChild(collectionTitle);
-
-	for(var i=0; i<filterdata_object.textbooks.length; i++) {
-		var rElement = createTextbookDiv(filterdata_object.textbooks[i]);
-
-		textbookResultDiv.appendChild(rElement);
 	}
 
 
@@ -445,7 +445,7 @@ var getSectionChapterByPrefix = function(chapterResultDiv, rElement) {
 		var chapterResults = chapterResultDiv.getElementsByTagName("div");
 		for (i=0; i<chapterResults.length; i++) {
 			console.log("current element we're looking at: " + $(chapterResults[i]).data("chprefix"));
-			if ($(chapterResults[i]).data("chprefix") == $(rElement).data("chprefix")) {
+			if ($(chapterResults[i]).data("type") == "chapter" && $(chapterResults[i]).data("chprefix") == $(rElement).data("chprefix")) {
 				console.log("IT'S A MATCH!!!!!!!");
 				return chapterResults[i];
 			}
@@ -614,7 +614,7 @@ var createChapterDiv = function(item, previtem) {
 
 				$("<p/>", {
 					class : "result_dn",
-					html : "<b>Section " + currentSection + ":<br/>" + item.dn + "</b>"
+					html : "<b>Section " + currentSection + ":</b><br/>" + item.dn
 				}).appendTo(sectionDiv);
 
 				var addButton = document.createElement("button");
@@ -652,7 +652,7 @@ var createChapterDiv = function(item, previtem) {
 	var thumbnail_prefix = currentSubjectFull.concat("-", currentGradeNumber);
 
 	var image = document.createElement("img");
-	image.id = "resultsimg";
+	image.className = "resultsimg";
 	image.src = homedirectory + "content/textbooks/" + currentGradeFolder + "/" + currentSubjectFull + "/" + thumbnail_prefix + "_thumb.jpg";
 	div.appendChild(image);
 
@@ -707,12 +707,12 @@ var createTextbookDiv = function(item) {
 	thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
 	$("<img/>", {
-		id : "resultsimg",
+		class : "resultsimg",
 		src : homedirectory + "content/" + item.fp + thumbnail_prefix + "_thumb.jpg"
 	}).appendTo(div);
 
 	// var image = document.createElement("img");
-	// image.id = "resultsimg";
+	// image.className = "resultsimg";
 	// image.src =  homedirectory + "content/" + item.fp + thumbnail_prefix + "_thumb.jpg";
 	// div.appendChild(image);
 
@@ -764,7 +764,7 @@ var createActivityDiv = function(item) {
 	// Thumbnail
 	var image = document.createElement("img");
 	if (item.ft == "mp3") {	 //audio
-		image.id = "resultsimg";
+		image.className = "resultsimg";
 		image.src = homedirectory + "content/audio/thumbnail.png";
 	} 
 	else if (item.ft == "mp4" || item.ft == "mp5") { //video
@@ -772,7 +772,7 @@ var createActivityDiv = function(item) {
 		thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
 		var image = document.createElement("img");
-		image.id = "resultsimg";
+		image.className = "resultsimg";
 		image.src = homedirectory + "content/videos/" + thumbnail_prefix + "_thumb.jpg";
 	} 
 	else if (item.ft == "jpg"  || item.ft == "gif" || item.ft == "png" ) { //picture
@@ -780,7 +780,7 @@ var createActivityDiv = function(item) {
 		thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
 		var image = document.createElement("img");
-		image.id = "resultsimg";
+		image.className = "resultsimg";
 		image.src = homedirectory + "content/pictures/" + thumbnail_prefix + "_thumb.jpg";
 	}
 	else if (item.ft == "pdf") { //pdf
@@ -788,17 +788,17 @@ var createActivityDiv = function(item) {
 		thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
 		var image = document.createElement("img");
-		image.id = "resultsimg";
+		image.className = "resultsimg";
 		image.src = homedirectory + "content/pdfs/" + thumbnail_prefix + "_thumb.jpg";
 	} 
 	else if (item.ft == "EP") {
 		var image = document.createElement("img");
-		image.id = "resultsimg";
+		image.className = "resultsimg";
 		image.src = homedirectory + "content/epaath/thumbnail.png";
 	} 
 	// else {
 	// 	var image = document.createElement("img");
-	// 	image.id = "resultsimg";
+	// 	image.className = "resultsimg";
 	// 	image.src = "images/kitty.jpg";
 	// }
 	div.appendChild(image);
@@ -848,7 +848,7 @@ var createDictionaryDiv = function(item) {
 	div.className = "resultitem";
 
 	var image = document.createElement("img");
-	image.id = "resultsimg";
+	image.className = "resultsimg";
 	image.src = homedirectory + "content/dictionaries/thumbnail.png";
 	div.appendChild(image);
 
