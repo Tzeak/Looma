@@ -1,5 +1,4 @@
 
-
 	var isTimelineOpen = false;
 
 	function getParameterByName(name, url) {
