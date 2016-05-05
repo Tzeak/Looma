@@ -28,7 +28,12 @@
 #btnSave {
 	float: right;
 	margin-right: 2%;
-	
+}
+#btnEdit {
+	float: right;
+	margin-right: 2%;
+	width: 7%;
+	white-space: normal;
 }
 
 /********** Query Bar (search, filter, results) ************/
