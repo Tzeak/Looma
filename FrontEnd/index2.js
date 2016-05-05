@@ -52,8 +52,8 @@ window.onload = function loadPageElements() {
 		for (var i=0; i<8; i++) {
 			if (i == 0) {
 				$("<option/>", {
-					html : "",
-					id : ""
+					html : "3",
+					id : "3"
 				}).appendTo("#dropdown_grade");
 			} 
 			else {
@@ -86,8 +86,8 @@ window.onload = function loadPageElements() {
 		}).appendTo("#div_subject");
 
 		$('<option>', { 
-	        value: "S",
-	        html : "Science" 
+	        value: "EN",
+	        html : "English" 
 	    }).appendTo("#dropdown_subject");
 
 		$.each(subjects, function (key, value) {
@@ -444,9 +444,9 @@ var getSectionChapterByPrefix = function(chapterResultDiv, rElement) {
 	if ($(chapterResultDiv).html != "") {
 		var chapterResults = chapterResultDiv.getElementsByTagName("div");
 		for (i=0; i<chapterResults.length; i++) {
-			console.log("current element we're looking at: " + $(chapterResults[i]).data("chprefix"));
+			console.log("current prefix: " + $(chapterResults[i]).data("chprefix"));
 			if ($(chapterResults[i]).data("type") == "chapter" && $(chapterResults[i]).data("chprefix") == $(rElement).data("chprefix")) {
-				console.log("IT'S A MATCH!!!!!!!");
+				// console.log("IT'S A MATCH!!!!!!!");
 				return chapterResults[i];
 			}
 		}
@@ -463,158 +463,178 @@ THUMBNAILS
 		it shouldn't try to get the substring, because it'll break the code
 	- 	If the file isn't there. We need to make a little 404 image and
 		code it in.
-- Names
-	-	If there's a decimal in the ID, make it so that it extracts
-		info correctly
 
 //////////////////////////END TO-DO */
+
+var extractItemId = function(item, collection) {
+	
+	var elementsArray = [];
+
+	if (collection == "chapters") {
+
+		var itemId = item._id;
+		console.log("current id: " + item._id);
+		var itemId_splitArray = itemId.split("");
+		var arr_length = itemId_splitArray.length;
+
+		// Extracts the section number
+		if (itemId.indexOf(".") >= 0) {
+			var currentSection = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
+			elementsArray["currentSection"] = currentSection;
+			console.log("current section: " + currentSection);
+			itemId_splitArray.splice(arr_length-1, 1);
+			itemId_splitArray.splice(arr_length-2, 1);
+			itemId_splitArray.splice(arr_length-3, 1);
+			arr_length = itemId_splitArray.length;
+		}
+
+		// Extracts the last 2 numbers as the chapter
+		var currentChapter = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
+		elementsArray["currentChapter"] = currentChapter;
+		console.log("current chapter: " + currentChapter);
+		itemId_splitArray.splice(arr_length-1, 1);
+		itemId_splitArray.splice(arr_length-2, 1);
+		arr_length = itemId_splitArray.length;
+
+		if (arr_length == 3) {	// If the subject is EN, or SS (or something with 2 letters)
+			var currentSubject = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
+			elementsArray["currentSubject"] = currentSubject;
+			console.log("current subject: " + currentSubject);
+			itemId_splitArray.splice(arr_length-1, 1);
+			itemId_splitArray.splice(arr_length-2, 1);
+			arr_length = itemId_splitArray.length;
+		}
+		else if (itemId_splitArray.length == 2) {	// If the subject is M or S, N (or something with 1 letter)
+			var currentSubject = itemId_splitArray[arr_length-1];
+			elementsArray["currentSubject"] = currentSubject;
+			console.log("current subject: " + currentSubject);
+			itemId_splitArray.splice(arr_length-1, 1);
+			arr_length = itemId_splitArray.length;
+		}
+
+		var currentGradeNumber = itemId_splitArray[0];
+		elementsArray["currentGradeNumber"] = currentGradeNumber;
+		console.log("current grade number: " + currentGradeNumber);
+
+		var currentGradeFolder = "Class".concat(currentGradeNumber);
+		elementsArray["currentGradeFolder"] = currentGradeFolder;
+		console.log("current grade folder: " + currentGradeFolder);
+
+		if (currentSubject == "EN") {
+			var currentSubjectFull = "English";
+			elementsArray["currentSubjectFull"] = currentSubjectFull;
+		} 
+		else if (currentSubject == "M") {
+			var currentSubjectFull = "Math";
+			elementsArray["currentSubjectFull"] = currentSubjectFull;
+		} 
+		else if (currentSubject == "N") {
+			var currentSubjectFull = "Nepali";
+			elementsArray["currentSubjectFull"] = currentSubjectFull;
+		} 
+		else if (currentSubject == "S") {
+			var currentSubjectFull = "Science";
+			elementsArray["currentSubjectFull"] = currentSubjectFull;
+		} 
+		else if (currentSubject == "SS") {
+			var currentSubjectFull = "SocialStudies";
+			elementsArray["currentSubjectFull"] = currentSubjectFull;
+		}
+
+		var chprefix = currentGradeNumber.concat(currentSubject,currentChapter);
+		elementsArray["chprefix"] = chprefix;
+		console.log("chapter prefix: " + chprefix);
+
+		// Contains:
+			// currentSection
+			// currentChapter
+			// currentSubject
+			// currentGradeNumber
+			// currentGradeFolder
+			// currentSubjectFull
+			// chprefix
+	}
+	else if (collection == "textbooks") {
+
+		var itemId = prefix._id;
+		console.log("current id: " + prefix._id);
+		var itemId_splitArray = itemId.split("");
+		var arr_length = itemId_splitArray.length;
+
+		if (arr_length == 3) {	// If the subject is EN, or SS (or something with 2 letters)
+			var currentSubject = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
+			elementsArray["currentSubject"] = currentSubject;
+			console.log("current subject: " + currentSubject);
+			itemId_splitArray.splice(arr_length-1, 1);
+			itemId_splitArray.splice(arr_length-2, 1);
+			arr_length = itemId_splitArray.length;
+		}
+		else if (itemId_splitArray.length == 2) {	// If the subject is M or S, N (or something with 1 letter)
+			var currentSubject = itemId_splitArray[arr_length-1];
+			elementsArray["currentSubject"] = currentSubject;
+			console.log("current subject: " + currentSubject);
+			itemId_splitArray.splice(arr_length-1, 1);
+			arr_length = itemId_splitArray.length;
+		}
+
+		var currentGradeNumber = itemId_splitArray[0];
+		elementsArray["currentGradeNumber"] = currentGradeNumber;
+		console.log("current grade number: " + currentGradeNumber);
+
+		if (currentSubject == "EN") {
+			var currentSubjectFull = "English";
+			elementsArray["currentSubjectFull"] = currentSubjectFull;
+		} 
+		else if (currentSubject == "M") {
+			var currentSubjectFull = "Math";
+			elementsArray["currentSubjectFull"] = currentSubjectFull;
+		} 
+		else if (currentSubject == "N") {
+			var currentSubjectFull = "Nepali";
+			elementsArray["currentSubjectFull"] = currentSubjectFull;
+		} 
+		else if (currentSubject == "S") {
+			var currentSubjectFull = "Science";
+			elementsArray["currentSubjectFull"] = currentSubjectFull;
+		} 
+		else if (currentSubject == "SS") {
+			var currentSubjectFull = "SocialStudies";
+			elementsArray["currentSubjectFull"] = currentSubjectFull;
+		}
+
+	}
+	else if (collection == "activities") {
+
+	}
+	else if (collection == "dictionary") {
+
+	}
+return elementsArray;
+}
 
 // Create "Chapter" collection results
 var createChapterDiv = function(item, previtem) {
 	var collection = "chapters";
 
-	///////////////// EXTRACT ID OF ITEM ///////////////////
-
-	// Thumbnail & Extracting the ID elements
-	var str = item._id;
-	var arr_split = str.split("");
-	var arr_length = arr_split.length;
-
-	// Extracts the section number
-	if (str.indexOf(".") >= 0) {
-		var currentSection = arr_split[arr_length-2].concat(arr_split[arr_length-1]);
-		// console.log("current section: " + currentSection);
-		arr_split.splice(arr_length-1, 1);
-		arr_split.splice(arr_length-2, 1);
-		arr_split.splice(arr_length-3, 1);
-		arr_length = arr_split.length;
-	}
-
-	// Extracts the last 2 numbers as the chapter
-	var currentChapter = arr_split[arr_length-2].concat(arr_split[arr_length-1]);
-	// console.log("current chapter: " + currentChapter);
-	arr_split.splice(arr_length-1, 1);
-	arr_split.splice(arr_length-2, 1);
-	arr_length = arr_split.length;
-
-	if (arr_length == 3) {	// If the subject is EN, or SS (or something with 2 letters)
-		var currentSubject = arr_split[arr_length-2].concat(arr_split[arr_length-1]);
-		// console.log("current subject: " + currentSubject);
-		arr_split.splice(arr_length-1, 1);
-		arr_split.splice(arr_length-2, 1);
-		arr_length = arr_split.length;
-	}
-	else if (arr_split.length == 2) {	// If the subject is M or S, N (or something with 1 letter)
-		var currentSubject = arr_split[arr_length-1];
-		// console.log("current subject: " + currentSubject);
-		arr_split.splice(arr_length-1, 1);
-		arr_length = arr_split.length;
-	}
-
-	var currentGradeNumber = arr_split[0];
-	// console.log("current grade number: " + currentGradeNumber);
-	var currentGradeFolder = "Class".concat(currentGradeNumber);
-	// console.log("current grade folder: " + currentGradeFolder);
-	if (currentSubject == "EN") {
-		var currentSubjectFull = "English";
-	} 
-	else if (currentSubject == "M") {
-		var currentSubjectFull = "Math";
-	} 
-	else if (currentSubject == "N") {
-		var currentSubjectFull = "Nepali";
-	} 
-	else if (currentSubject == "S") {
-		var currentSubjectFull = "Science";
-	} 
-	else if (currentSubject == "SS") {
-		var currentSubjectFull = "SocialStudies";
-	}
-
-	var chprefix = currentGradeNumber.concat(currentSubject,currentChapter);
-
-	////////////// END EXTRACTION OF ID ////////////////
-
-
-	///////////////// EXTRACT ID OF PREVIOUS ITEM ///////////////////
-
-	// Thumbnail & Extracting the ID elements
+	var idExtractArray = extractItemId(item, collection);
+	console.log("RETURNED current section " + idExtractArray["currentSection"]);
 	if (previtem != null) {
-		var str2 = previtem._id;
-		var arr_split2 = str2.split("");
-		var arr_length2 = arr_split2.length;
-
-		// Extracts the section number
-		if (str2.indexOf(".") >= 0) {
-			var currentSection2 = arr_split2[arr_length2-2].concat(arr_split2[arr_length2-1]);
-			// console.log("current section2: " + currentSection2);
-			arr_split2.splice(arr_length2-1, 1);
-			arr_split2.splice(arr_length2-2, 1);
-			arr_split2.splice(arr_length2-3, 1);
-			arr_length2 = arr_split2.length;
-		}
-
-		// Extracts the last 2 numbers as the chapter
-		var currentChapter2 = arr_split2[arr_length2-2].concat(arr_split2[arr_length2-1]);
-		// console.log("current chapter2: " + currentChapter2);
-		arr_split2.splice(arr_length2-1, 1);
-		arr_split2.splice(arr_length2-2, 1);
-		arr_length2 = arr_split2.length;
-
-		if (arr_length2 == 3) {	// If the subject is EN, or SS (or something with 2 letters)
-			var currentSubject2 = arr_split2[arr_length2-2].concat(arr_split2[arr_length2-1]);
-			// console.log("current subject2: " + currentSubject2);
-			arr_split2.splice(arr_length2-1, 1);
-			arr_split2.splice(arr_length2-2, 1);
-			arr_length2 = arr_split2.length;
-		}
-		else if (arr_split2.length == 2) {	// If the subject is M or S, N (or something with 1 letter)
-			var currentSubject2 = arr_split2[arr_length2-1];
-			// console.log("current subject2: " + currentSubject2);
-			arr_split2.splice(arr_length2-1, 1);
-			arr_length2 = arr_split2.length;
-		}
-
-		var currentGradeNumber2 = arr_split2[0];
-		// console.log("current grade number2: " + currentGradeNumber2);
-		var currentGradeFolder2 = "Class".concat(currentGradeNumber2);
-		// console.log("current grade folder2: " + currentGradeFolder2);
-		if (currentSubject2 == "EN") {
-			var currentSubjectFull2 = "English";
-		} 
-		else if (currentSubject2 == "M") {
-			var currentSubjectFull2 = "Math";
-		} 
-		else if (currentSubject2 == "N") {
-			var currentSubjectFull2 = "Nepali";
-		} 
-		else if (currentSubject2 == "S") {
-			var currentSubjectFull2 = "Science";
-		} 
-		else if (currentSubject2 == "SS") {
-			var currentSubjectFull2 = "SocialStudies";
-		}
-
-		var chprefix2 = currentGradeNumber2.concat(currentSubject2,currentChapter2);
-		////////////// END EXTRACTION OF ID ////////////////
+		var idExtractArray_prev = extractItemId(previtem, collection);
 	}
-
-
-
 
 	if (previtem != null) {
 		if (item._id.indexOf(".") >= 0) {
 			//	If the prefix is equal to the prefix before it
-			if (chprefix == chprefix2) {
+			if (idExtractArray["chprefix"] == idExtractArray_prev["chprefix"]) {
 				var sectionDiv = document.createElement("div");
 				sectionDiv.className = "result_ch";
-				$(sectionDiv).attr("data-chprefix", chprefix);
+				$(sectionDiv).attr("data-chprefix", idExtractArray["chprefix"]);
 				$(sectionDiv).attr("data-type", "section");
 				// console.log("prefix for item " + item.dn + " is " + $(sectionDiv).data('chprefix'));
 
 				$("<p/>", {
 					class : "result_dn",
-					html : "<b>Section " + currentSection + ":</b><br/>" + item.dn
+					html : "<b>Section " + idExtractArray["currentSection"] + ":</b><br/>" + item.dn
 				}).appendTo(sectionDiv);
 
 				var addButton = document.createElement("button");
@@ -645,21 +665,22 @@ var createChapterDiv = function(item, previtem) {
 	// var div = $("<div/>", {class:"resultitem"});
 
 	
-	$(div).attr("data-chprefix", chprefix);
+	$(div).attr("data-chprefix", idExtractArray["chprefix"]);
 	$(div).attr("data-type", "chapter");
 
 
-	var thumbnail_prefix = currentSubjectFull.concat("-", currentGradeNumber);
+	var thumbnail_prefix = idExtractArray["currentSubjectFull"].concat("-", idExtractArray["currentGradeNumber"]);
+	// ADD AN IF STATEMENT FOR IF THE VALUES DONT EXISTTTTT ???
 
 	var image = document.createElement("img");
 	image.className = "resultsimg";
-	image.src = homedirectory + "content/textbooks/" + currentGradeFolder + "/" + currentSubjectFull + "/" + thumbnail_prefix + "_thumb.jpg";
+	image.src = homedirectory + "content/textbooks/" + idExtractArray["currentGradeFolder"] + "/" + idExtractArray["currentSubjectFull"] + "/" + thumbnail_prefix + "_thumb.jpg";
 	div.appendChild(image);
 
 	// Display name
 	$("<p/>", {
 		id : "result_dn",
-		html : "<b>Chapter " + currentChapter + ": " + item.dn + "</b>"
+		html : "<b>Chapter " + idExtractArray["currentChapter"] + ": " + item.dn + "</b>"
 	}).appendTo(div);
 
 	// Nepali Name
@@ -908,41 +929,41 @@ var preview_result = function(collection, item) {
 	if (collection == "chapters") {
 
 		var str = item._id;
-		var arr_split = str.split("");
-		var arr_length = arr_split.length;
+		var itemId_splitArray = str.split("");
+		var arr_length = itemId_splitArray.length;
 
 		// Extracts the section number
 		if (str.indexOf(".") >= 0) {
-			var currentSection = arr_split[arr_length-2].concat(arr_split[arr_length-1]);
+			var currentSection = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
 			console.log("current section: " + currentSection);
-			arr_split.splice(arr_length-1, 1);
-			arr_split.splice(arr_length-2, 1);
-			arr_split.splice(arr_length-3, 1);
-			arr_length = arr_split.length;
+			itemId_splitArray.splice(arr_length-1, 1);
+			itemId_splitArray.splice(arr_length-2, 1);
+			itemId_splitArray.splice(arr_length-3, 1);
+			arr_length = itemId_splitArray.length;
 		}
 
 		// Extracts the last 2 numbers as the chapter
-		var currentChapter = arr_split[arr_length-2].concat(arr_split[arr_length-1]);
+		var currentChapter = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
 		console.log("current chapter: " + currentChapter);
-		arr_split.splice(arr_length-1, 1);
-		arr_split.splice(arr_length-2, 1);
-		arr_length = arr_split.length;
+		itemId_splitArray.splice(arr_length-1, 1);
+		itemId_splitArray.splice(arr_length-2, 1);
+		arr_length = itemId_splitArray.length;
 
 		if (arr_length == 3) {	// If the subject is EN, or SS (or something with 2 letters)
-			var currentSubject = arr_split[arr_length-2].concat(arr_split[arr_length-1]);
+			var currentSubject = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
 			console.log("current subject: " + currentSubject);
-			arr_split.splice(arr_length-1, 1);
-			arr_split.splice(arr_length-2, 1);
-			arr_length = arr_split.length;
+			itemId_splitArray.splice(arr_length-1, 1);
+			itemId_splitArray.splice(arr_length-2, 1);
+			arr_length = itemId_splitArray.length;
 		}
-		else if (arr_split.length == 2) {	// If the subject is M or S, N (or something with 1 letter)
-			var currentSubject = arr_split[arr_length-1];
+		else if (itemId_splitArray.length == 2) {	// If the subject is M or S, N (or something with 1 letter)
+			var currentSubject = itemId_splitArray[arr_length-1];
 			console.log("current subject: " + currentSubject);
-			arr_split.splice(arr_length-1, 1);
-			arr_length = arr_split.length;
+			itemId_splitArray.splice(arr_length-1, 1);
+			arr_length = itemId_splitArray.length;
 		}
 
-		var currentGradeNumber = arr_split[0];
+		var currentGradeNumber = itemId_splitArray[0];
 		console.log("current grade number: " + currentGradeNumber);
 		var currentGradeFolder = "Class".concat(currentGradeNumber);
 		console.log("current grade folder: " + currentGradeFolder);
