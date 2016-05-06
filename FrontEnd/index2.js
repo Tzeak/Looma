@@ -286,7 +286,7 @@ var removeTimelineElement = function() {
 // var resultArray = [];
 
 var querySearch = function() {
-	$("currentResultDiv").html("");
+	$("#currentResultDiv").html("");
 
 	var filterdata = {
 		'grade' : document.getElementById('dropdown_grade').value,
@@ -317,6 +317,30 @@ var printFilterData = function(filterdata_object) {
 	currentResultDiv.id = "currentResultDiv";
 	// currentResultDiv.appendTo("#outerResultsDiv");
 	$(currentResultDiv).appendTo("#outerResultsDiv");
+
+	// Print Activities array
+
+	var actResultDiv = document.createElement("div");
+	actResultDiv.id = "actResultDiv";
+	$(actResultDiv).appendTo(currentResultDiv);
+
+	var collectionTitle = document.createElement("h1");
+	collectionTitle.id = "collectionTitle";
+
+	var arraylength = filterdata_object.activities.length;
+	if (arraylength == 1) {
+		collectionTitle.innerHTML = "Activites (" + arraylength + " Result)";
+	} 
+	else {
+		collectionTitle.innerHTML = "Activites (" + arraylength + " Results)";
+	}
+	actResultDiv.appendChild(collectionTitle);
+
+	for(var i=0; i<filterdata_object.activities.length; i++) {
+		var rElement = createActivityDiv(filterdata_object.activities[i])
+		// var rElement = createChapterDiv(resultArray[i]);
+		actResultDiv.appendChild(rElement);
+	}
 
 
 	// Print Textbooks array
@@ -389,31 +413,6 @@ var printFilterData = function(filterdata_object) {
 	}
 
 
-	// Print Activities array
-
-	var actResultDiv = document.createElement("div");
-	actResultDiv.id = "actResultDiv";
-	$(actResultDiv).appendTo(currentResultDiv);
-
-	var collectionTitle = document.createElement("h1");
-	collectionTitle.id = "collectionTitle";
-
-	var arraylength = filterdata_object.activities.length;
-	if (arraylength == 1) {
-		collectionTitle.innerHTML = "Activites (" + arraylength + " Result)";
-	} 
-	else {
-		collectionTitle.innerHTML = "Activites (" + arraylength + " Results)";
-	}
-	actResultDiv.appendChild(collectionTitle);
-
-	for(var i=0; i<filterdata_object.activities.length; i++) {
-		var rElement = createActivityDiv(filterdata_object.activities[i])
-		// var rElement = createChapterDiv(resultArray[i]);
-		actResultDiv.appendChild(rElement);
-	}
-
-
 	// Print Dictionary array
 
 	var dictResultDiv = document.createElement("div");
@@ -471,6 +470,14 @@ var extractItemId = function(item, collection) {
 	var elementsArray = [];
 
 	if (collection == "chapters") {
+		// Array will contain:
+			// currentSection
+			// currentChapter
+			// currentSubject
+			// currentGradeNumber
+			// currentGradeFolder
+			// currentSubjectFull
+			// chprefix
 
 		var itemId = item._id;
 		console.log("current id: " + item._id);
@@ -544,20 +551,16 @@ var extractItemId = function(item, collection) {
 		var chprefix = currentGradeNumber.concat(currentSubject,currentChapter);
 		elementsArray["chprefix"] = chprefix;
 		console.log("chapter prefix: " + chprefix);
+	}
 
-		// Contains:
-			// currentSection
-			// currentChapter
+	else if (collection == "textbooks") {
+		// Array will contain:
 			// currentSubject
 			// currentGradeNumber
-			// currentGradeFolder
 			// currentSubjectFull
-			// chprefix
-	}
-	else if (collection == "textbooks") {
 
-		var itemId = prefix._id;
-		console.log("current id: " + prefix._id);
+		var itemId = item.prefix;
+		console.log("current id: " + item.prefix);
 		var itemId_splitArray = itemId.split("");
 		var arr_length = itemId_splitArray.length;
 
@@ -603,12 +606,146 @@ var extractItemId = function(item, collection) {
 		}
 
 	}
+
+	
+
 	else if (collection == "activities") {
+		// Array will contain:
+			// currentChapter
+			// currentSubject
+			// currentGradeNumber
+			// currentGradeFolder
+			// currentSubjectFull
+			// chprefix
 
+		var itemId = item.ch_id;
+		console.log("current id: " + item.ch_id);
+		var itemId_splitArray = itemId.split("");
+		var arr_length = itemId_splitArray.length;
+
+		// Extracts the last 2 numbers as the chapter
+		var currentChapter = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
+		elementsArray["currentChapter"] = currentChapter;
+		console.log("current chapter: " + currentChapter);
+		itemId_splitArray.splice(arr_length-1, 1);
+		itemId_splitArray.splice(arr_length-2, 1);
+		arr_length = itemId_splitArray.length;
+
+		if (arr_length == 3) {	// If the subject is EN, or SS (or something with 2 letters)
+			var currentSubject = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
+			elementsArray["currentSubject"] = currentSubject;
+			console.log("current subject: " + currentSubject);
+			itemId_splitArray.splice(arr_length-1, 1);
+			itemId_splitArray.splice(arr_length-2, 1);
+			arr_length = itemId_splitArray.length;
+		}
+		else if (itemId_splitArray.length == 2) {	// If the subject is M or S, N (or something with 1 letter)
+			var currentSubject = itemId_splitArray[arr_length-1];
+			elementsArray["currentSubject"] = currentSubject;
+			console.log("current subject: " + currentSubject);
+			itemId_splitArray.splice(arr_length-1, 1);
+			arr_length = itemId_splitArray.length;
+		}
+
+		var currentGradeNumber = itemId_splitArray[0];
+		elementsArray["currentGradeNumber"] = currentGradeNumber;
+		console.log("current grade number: " + currentGradeNumber);
+
+		var currentGradeFolder = "Class".concat(currentGradeNumber);
+		elementsArray["currentGradeFolder"] = currentGradeFolder;
+		console.log("current grade folder: " + currentGradeFolder);
+
+		if (currentSubject == "EN") {
+			var currentSubjectFull = "English";
+			elementsArray["currentSubjectFull"] = currentSubjectFull;
+		} 
+		else if (currentSubject == "M") {
+			var currentSubjectFull = "Math";
+			elementsArray["currentSubjectFull"] = currentSubjectFull;
+		} 
+		else if (currentSubject == "N") {
+			var currentSubjectFull = "Nepali";
+			elementsArray["currentSubjectFull"] = currentSubjectFull;
+		} 
+		else if (currentSubject == "S") {
+			var currentSubjectFull = "Science";
+			elementsArray["currentSubjectFull"] = currentSubjectFull;
+		} 
+		else if (currentSubject == "SS") {
+			var currentSubjectFull = "SocialStudies";
+			elementsArray["currentSubjectFull"] = currentSubjectFull;
+		}
 	}
+
 	else if (collection == "dictionary") {
+		// Array will contain:
+			// currentChapter
+			// currentSubject
+			// currentGradeNumber
+			// currentGradeFolder
+			// currentSubjectFull
+			// chprefix
 
+		var itemId = item.ch_id;
+		console.log("current id: " + item.ch_id);
+		var itemId_splitArray = itemId.split("");
+		var arr_length = itemId_splitArray.length;
+
+		// Extracts the last 2 numbers as the chapter
+		var currentChapter = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
+		elementsArray["currentChapter"] = currentChapter;
+		console.log("current chapter: " + currentChapter);
+		itemId_splitArray.splice(arr_length-1, 1);
+		itemId_splitArray.splice(arr_length-2, 1);
+		arr_length = itemId_splitArray.length;
+
+		if (arr_length == 3) {	// If the subject is EN, or SS (or something with 2 letters)
+			var currentSubject = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
+			elementsArray["currentSubject"] = currentSubject;
+			console.log("current subject: " + currentSubject);
+			itemId_splitArray.splice(arr_length-1, 1);
+			itemId_splitArray.splice(arr_length-2, 1);
+			arr_length = itemId_splitArray.length;
+		}
+		else if (itemId_splitArray.length == 2) {	// If the subject is M or S, N (or something with 1 letter)
+			var currentSubject = itemId_splitArray[arr_length-1];
+			elementsArray["currentSubject"] = currentSubject;
+			console.log("current subject: " + currentSubject);
+			itemId_splitArray.splice(arr_length-1, 1);
+			arr_length = itemId_splitArray.length;
+		}
+
+		var currentGradeNumber = itemId_splitArray[0];
+		elementsArray["currentGradeNumber"] = currentGradeNumber;
+		console.log("current grade number: " + currentGradeNumber);
+
+		var currentGradeFolder = "Class".concat(currentGradeNumber);
+		elementsArray["currentGradeFolder"] = currentGradeFolder;
+		console.log("current grade folder: " + currentGradeFolder);
+
+		if (currentSubject == "EN") {
+			var currentSubjectFull = "English";
+			elementsArray["currentSubjectFull"] = currentSubjectFull;
+		} 
+		else if (currentSubject == "M") {
+			var currentSubjectFull = "Math";
+			elementsArray["currentSubjectFull"] = currentSubjectFull;
+		} 
+		else if (currentSubject == "N") {
+			var currentSubjectFull = "Nepali";
+			elementsArray["currentSubjectFull"] = currentSubjectFull;
+		} 
+		else if (currentSubject == "S") {
+			var currentSubjectFull = "Science";
+			elementsArray["currentSubjectFull"] = currentSubjectFull;
+		} 
+		else if (currentSubject == "SS") {
+			var currentSubjectFull = "SocialStudies";
+			elementsArray["currentSubjectFull"] = currentSubjectFull;
+		}
 	}
+	
+
 return elementsArray;
 }
 
@@ -779,6 +916,9 @@ var createTextbookDiv = function(item) {
 // Create "Actdict" collection results
 var createActivityDiv = function(item) {
 	var collection = "activities";
+
+	var idExtractArray = extractItemId(item, collection);
+
 	var div = document.createElement("div");
 	div.className = "resultitem";
 
@@ -865,6 +1005,9 @@ var createActivityDiv = function(item) {
 
 var createDictionaryDiv = function(item) {
 	var collection = "dictionary";
+
+	var idExtractArray = extractItemId(item, collection);
+
 	var div = document.createElement("div");
 	div.className = "resultitem";
 
