@@ -5,17 +5,27 @@
 
 	<body onload="load()">
 		<div id="container">
-			<div id="header">
-				<button type="button" id="btnNewLesson" onclick="location.href='index2.html';">Create New Lesson</button>
-					
+
+			<div id="openNavbar">
+					<img id="openLogo" src="images/LoomaLogo.png">
+						<h2><b>Lesson Plan Creator</b></h2>
+					<button type="button" id="btnNewLesson" onclick="location.href='index2.html';">Create New Lesson</button>
+			</div>
+
+
+			<div id="headerText">
+				<h3> Select your saved lesson plan: </h3>
+			</div>
+
+			<!-- <div id="header">	
 				<form id = "openForm">
 					Search: <input type="text" name="search" id="string">
 					<button type="button" id="btnSearch" onclick="lesson_search()">Search</button>
-					<!--<p id="button" onclick="querySearch()"> Submit </p> -->
-					
 				</form>
+			</div>  -->
 
-			</div> <!--sidebar-->
+
+			<!--sidebar-->
 			<div id = "wrap">
 				<div class="lessonDiv" id="lessonDiv"><ul></ul></div>
 			</div><!--wrapper-->

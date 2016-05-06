@@ -25,12 +25,14 @@ window.onload = function loadPageElements() {
 			id : "div_search"
 		}).appendTo("#div_filter");
 		$("<p/>", {
-			html : "Search: "
+			id : "search_label",
+			
 		}).appendTo("#div_search");
 		$("<input/>", {
 			id : "searchString",
 			class: "textBox",
 			type : "text",
+			placeholder: "Search",
 			name : "search",
 		}).appendTo("#div_search");
 
@@ -46,7 +48,8 @@ window.onload = function loadPageElements() {
 		}).appendTo("#div_grade");
 
 		$("<select/>", {
-			id : "dropdown_grade"
+			id : "dropdown_grade",
+			placeholder: "Grade Level"
 		}).appendTo("#div_grade");
 
 		for (var i=0; i<8; i++) {
@@ -164,13 +167,14 @@ window.onload = function loadPageElements() {
 			"misc" : 	{ 	id : "ft_misc", 	display : "Misc" 	},
 		}
 
+		
 		$("<div/>", {
 			id : "div_filetypes"
 		}).appendTo("#div_filter");
 
-		$("<p/>", {
-			html : "File types: ", 
-		}).appendTo("#div_filetypes");
+		// $("<p/>", {
+		// 	html : "File types: ", 
+		// }).appendTo("#div_filetypes");
 
 		$.each(filetypes, function (key, value) {
 		    $("<input/>", { 
@@ -184,7 +188,7 @@ window.onload = function loadPageElements() {
 		    	for : value.id,
 		    	html : value.display
 	    	}).appendTo("#div_filetypes");
-	    	$("#div_filetypes").append("<br/>");
+	    	//$("#div_filetypes").append("<br/>");
 		});
 
 		// Button
@@ -192,6 +196,7 @@ window.onload = function loadPageElements() {
 	    $("#div_filetypes").append("<br/>");
 
 		$("<button/>", {
+			id : "submit_button",
 			onclick : "querySearch()",
 			type : "button",
 			html : "Search"
@@ -207,7 +212,11 @@ var addToAssArray = function(object) {
 }
 
 
+//////////////////////////// SUBMIT LESSON TITLE NAME ///////////////////////
 
+var titleName = function() {
+	
+}
 
 
 
@@ -1379,10 +1388,10 @@ var preview_result = function(collection, item) {
 var save = function(){    
     console.log("saving...");
     var itemIds = [];
-    var titleString = document.getElementById("titleString").value;
-    console.log("title:" + titleString);
+    var titleInput = document.getElementById("titleInput").value;
+    console.log("title:" + titleInput);
     
-    if(titleString == "") {
+    if(titleInput == "") {
     	alert("Lesson plan requires a title before saving.");
     }
     else {
@@ -1409,7 +1418,7 @@ var save = function(){
 	}
 
 	   	var timeline = {
-	   		lesson_title : titleString,
+	   		lesson_title : titleInput,
 	   		items_array : itemIds
 	   	}
 
@@ -1418,7 +1427,7 @@ var save = function(){
 		$.post("../BackEnd/save.php", timeline, function() {
 			console.log("Saved!");
 		});
-		alert("Your timeline, " + titleString + ", has been saved!");
+		alert("Your timeline, " + titleInput + ", has been saved!");
 
 }
 

@@ -27,29 +27,42 @@ var createOpenListElement = function(index, itemString, itemId, line) {
 
 	$('<li/>', {
 		id : "time" + index,
+		class: "lessonEntry",
 		value: itemId,
 	    title: itemString,
 	    rel: 'external',
 	    text: itemString,
 	}).appendTo('#lessonDiv ul');
+
+	$('<div/>', {
+		class: "editPresent" + index,
+	}).appendTo('#time' + index);
+
+	$('.editPresent'+index).css({ 
+    	"float": "right"
+    }); 
+
 	$('<button/>', {
 		text: "Edit",
+		class: "btnOpenTimeline", 
 		id: "editBtn" + index,
-	}).appendTo('#time' + index);
+	}).appendTo('.editPresent' + index);
 	$("#editBtn" + index).bind("click", function(){
 			window.location.href = 'index2.html?timelineId=' + encodeURI(itemId);
 	});
 	$('<button/>', {
 		text: "Present",
+		class: "btnOpenTimeline",
 		id: "presentBtn" + index,
-	}).appendTo('#time' + index);
+	}).appendTo('.editPresent' + index);
 	$("#presentBtn" + index).bind("click", function(){
 		window.location.href = 'present.html?timelineId=' + encodeURI(itemId);
 	});
 	$('<button/>', {
 		text: "Delete",
+		class: "btnOpenTimeline",
 		id: "deleteBtn" + index,
-	}).appendTo('#time' + index);
+	}).appendTo('.editPresent' + index);
 	$("#deleteBtn" + index).bind("click", function(){
 		$.post("../BackEnd/delete.php", element, function(element) {
 			console.log(element);

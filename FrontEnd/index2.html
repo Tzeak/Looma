@@ -5,25 +5,21 @@
 	</head>
 
 	<body onload="loadPageElements()">
+		<div id="navbar">
+			<img id="logo" src="images/LoomaLogo.png">
+			<div id="titleString">Title:&nbsp<input type="text" name="title" class="textBox" placeholder="e.g. Level 1 Math" id="titleInput"></div>
+			<button type="button" id="btnSave" onclick="save()">Save</button>
+			<button type="button" id="btnPresent" onclick="location.href='present.html';">Present</button>
+			<button type="button" id="btnOpen" onclick="location.href='open.html';">Open</button>
+		</div>
+		<div id="querybar">
+			<form id="div_filter">
+			</form>
+		</div>
 		<div id="container">
-			<div id="sidebar">
-				<form id="div_filter">
-				</form>
-				<div id="outerResultsDiv">
-					<!--	Do we need this anymore?????????
-					<p><b>Results</b></p>
-					<div id="resultsDiv">
-					   <ul id="resultsDivUL">
-					   </ul> 
-				   	</div>
-				   --> 
-				</div>
-			</div>
 
-	Title: <input type="text" name="title" id="titleString" class="textBox">
-	<button type="button" id="btnOpen" onclick="location.href='open.html'">Open</button>
-	<button type="button" id="btnSave" onclick="save()">Save</button>
-	<button type="button" id="btnPresent" onclick="location.href='present.html';">Present</button>
+
+		<div id="outerResultsDiv"></div>
 
 	
 	<!-- <button type="button" id="btnPresent" onclick="location.href='present.html';">Present</button>
@@ -34,16 +30,16 @@
     	</object> 
 	 </div> -->
 
-	<div id= "displaybox" style="overflow-y:auto;"></div>
+			<!-- <div id = "displayAndTimeline"> -->
+				<div id= "displaybox" style="overflow-y:auto;"></div>
 
 
-
-   <br/><br/><br/>
-
+	</br></br></br>
    <div id = "wrapper">
     	<div class="timelineEntire" id="timelineDisplay">
 		</div>
 	</div>
+
 
 	</body>
 
