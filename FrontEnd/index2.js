@@ -86,8 +86,8 @@ window.onload = function loadPageElements() {
 		}).appendTo("#div_subject");
 
 		$('<option>', { 
-	        value: "EN",
-	        html : "English" 
+	        value: "S",
+	        html : "Science" 
 	    }).appendTo("#dropdown_subject");
 
 		$.each(subjects, function (key, value) {
@@ -337,9 +337,20 @@ var printFilterData = function(filterdata_object) {
 	actResultDiv.appendChild(collectionTitle);
 
 	for(var i=0; i<filterdata_object.activities.length; i++) {
-		var rElement = createActivityDiv(filterdata_object.activities[i])
-		// var rElement = createChapterDiv(resultArray[i]);
-		actResultDiv.appendChild(rElement);
+		var rElement = createActivityDiv(filterdata_object.activities[i], filterdata_object.activities[i-1]);
+		if ($(rElement).data("type") == "chapter") {
+			actResultDiv.appendChild(rElement);
+		}
+		else if ($(rElement).data("type") == "section") {
+			var matchingDiv = getSectionChapterByPrefix(actResultDiv, rElement);
+			if (matchingDiv != null) {
+				$(matchingDiv).append(rElement);
+			}
+			else {
+				actResultDiv.appendChild(rElement);
+			}
+		}
+
 	}
 
 
@@ -391,9 +402,12 @@ var printFilterData = function(filterdata_object) {
 			chapterResultDiv.appendChild(rElement);
 		}
 		else if ($(rElement).data("type") == "section") {
-			var matchingChapterDiv = getSectionChapterByPrefix(chapterResultDiv, rElement);
-			if (matchingChapterDiv != null) {
-				$(matchingChapterDiv).append(rElement);
+			var matchingDiv = getSectionChapterByPrefix(chapterResultDiv, rElement);
+			if (matchingDiv != null) {
+				$(matchingDiv).append(rElement);
+			}
+			else {
+				chapterResultDiv.appendChild(rElement);
 			}
 
 			// var chapterResults = chapterResultDiv.getElementsByTagName("*");
@@ -439,17 +453,28 @@ var printFilterData = function(filterdata_object) {
 
 }
 
-var getSectionChapterByPrefix = function(chapterResultDiv, rElement) {
-	if ($(chapterResultDiv).html != "") {
-		var chapterResults = chapterResultDiv.getElementsByTagName("div");
-		for (i=0; i<chapterResults.length; i++) {
-			console.log("current prefix: " + $(chapterResults[i]).data("chprefix"));
-			if ($(chapterResults[i]).data("type") == "chapter" && $(chapterResults[i]).data("chprefix") == $(rElement).data("chprefix")) {
-				// console.log("IT'S A MATCH!!!!!!!");
-				return chapterResults[i];
+var getSectionChapterByPrefix = function(currentResultsDiv, rElement) {
+	if ($(currentResultsDiv).html != "") {
+		if ($(rElement).data("collection") == "chapters") {
+			var chapterResults = currentResultsDiv.getElementsByTagName("div");
+			for (i=0; i<chapterResults.length; i++) {
+				console.log("current prefix: " + $(chapterResults[i]).data("chprefix"));
+				if ($(chapterResults[i]).data("collection") == "chapters" && $(chapterResults[i]).data("type") == "chapter" && $(chapterResults[i]).data("chprefix") == $(rElement).data("chprefix")) {
+					return chapterResults[i];	// IT'S A MATCH!
+				}
 			}
+			return null;
 		}
-		return null;
+		else if ($(rElement).data("collection") == "activities") {
+			var actResults = currentResultsDiv.getElementsByTagName("div");
+			for (i=0; i<actResults.length; i++) {
+				console.log("current prefix: " + $(actResults[i]).data("chprefix"));
+				if ($(actResults[i]).data("collection") == "activities" && $(actResults[i]).data("type") == "chapter" && $(actResults[i]).data("chprefix") == $(rElement).data("chprefix")) {
+					return actResults[i];	// IT'S A MATCH!
+				}
+			}
+			return null;
+		}
 	}
 }
 
@@ -609,8 +634,9 @@ var extractItemId = function(item, collection) {
 
 	
 
-	else if (collection == "activities") {
+	else if (collection == "activities" || collection == "dictionary") {
 		// Array will contain:
+			// currentSection
 			// currentChapter
 			// currentSubject
 			// currentGradeNumber
@@ -622,6 +648,17 @@ var extractItemId = function(item, collection) {
 		console.log("current id: " + item.ch_id);
 		var itemId_splitArray = itemId.split("");
 		var arr_length = itemId_splitArray.length;
+
+		// Extracts the section number
+		if (itemId.indexOf(".") >= 0) {
+			var currentSection = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
+			elementsArray["currentSection"] = currentSection;
+			console.log("current section: " + currentSection);
+			itemId_splitArray.splice(arr_length-1, 1);
+			itemId_splitArray.splice(arr_length-2, 1);
+			itemId_splitArray.splice(arr_length-3, 1);
+			arr_length = itemId_splitArray.length;
+		}
 
 		// Extracts the last 2 numbers as the chapter
 		var currentChapter = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
@@ -675,8 +712,13 @@ var extractItemId = function(item, collection) {
 			var currentSubjectFull = "SocialStudies";
 			elementsArray["currentSubjectFull"] = currentSubjectFull;
 		}
+
+		var chprefix = currentGradeNumber.concat(currentSubject,currentChapter);
+		elementsArray["chprefix"] = chprefix;
+		console.log("chapter prefix: " + chprefix);
 	}
 
+/*
 	else if (collection == "dictionary") {
 		// Array will contain:
 			// currentChapter
@@ -744,7 +786,7 @@ var extractItemId = function(item, collection) {
 			elementsArray["currentSubjectFull"] = currentSubjectFull;
 		}
 	}
-	
+*/
 
 return elementsArray;
 }
@@ -767,6 +809,7 @@ var createChapterDiv = function(item, previtem) {
 				sectionDiv.className = "result_ch";
 				$(sectionDiv).attr("data-chprefix", idExtractArray["chprefix"]);
 				$(sectionDiv).attr("data-type", "section");
+				$(sectionDiv).attr("data-collection", collection);
 				// console.log("prefix for item " + item.dn + " is " + $(sectionDiv).data('chprefix'));
 
 				$("<p/>", {
@@ -804,6 +847,7 @@ var createChapterDiv = function(item, previtem) {
 	
 	$(div).attr("data-chprefix", idExtractArray["chprefix"]);
 	$(div).attr("data-type", "chapter");
+	$(div).attr("data-collection", collection);
 
 
 	var thumbnail_prefix = idExtractArray["currentSubjectFull"].concat("-", idExtractArray["currentGradeNumber"]);
@@ -816,19 +860,19 @@ var createChapterDiv = function(item, previtem) {
 
 	// Display name
 	$("<p/>", {
-		id : "result_dn",
+		class : "result_dn",
 		html : "<b>Chapter " + idExtractArray["currentChapter"] + ": " + item.dn + "</b>"
 	}).appendTo(div);
 
 	// Nepali Name
 	$("<p/>", {
-		id : "result_ndn",
+		class : "result_ndn",
 		html : item.ndn
 	}).appendTo(div);
 
 	// ID
 	$("<p/>", {
-		id : "result_ID",
+		class : "result_ID",
 		html : item._id
 	}).appendTo(div);
 
@@ -876,19 +920,19 @@ var createTextbookDiv = function(item) {
 
 	// Display name
 	$("<p/>", {
-		id : "result_dn",
+		class : "result_dn",
 		html : "<b>" + item.dn + "</b>"
 	}).appendTo(div);
 
 	// Nepali Name
 	$("<p/>", {
-		id : "result_ndn",
+		class : "result_ndn",
 		html : item.ndn
 	}).appendTo(div);
 
 	// ID
 	$("<p/>", {
-		id : "result_ID",
+		class : "result_ID",
 		html : item._id
 	}).appendTo(div);
 
@@ -914,13 +958,61 @@ var createTextbookDiv = function(item) {
 }
 
 // Create "Actdict" collection results
-var createActivityDiv = function(item) {
+var createActivityDiv = function(item, previtem) {
 	var collection = "activities";
 
 	var idExtractArray = extractItemId(item, collection);
+	if (previtem != null) {
+		var idExtractArray_prev = extractItemId(previtem, collection);
+	}
+
+	if (previtem != null) {
+		if (item._id.indexOf(".") >= 0) {
+			//	If the prefix is equal to the prefix before it
+			if (idExtractArray["chprefix"] == idExtractArray_prev["chprefix"]) {
+				var sectionDiv = document.createElement("div");
+				sectionDiv.className = "result_ch";
+				$(sectionDiv).attr("data-chprefix", idExtractArray["chprefix"]);
+				$(sectionDiv).attr("data-type", "section");
+				$(sectionDiv).attr("data-collection", collection);
+				// console.log("prefix for item " + item.dn + " is " + $(sectionDiv).data('chprefix'));
+
+				$("<p/>", {
+					class : "result_dn",
+					html : "<b>Section " + idExtractArray["currentSection"] + ":</b><br/>" + item.dn
+				}).appendTo(sectionDiv);
+
+				var addButton = document.createElement("button");
+				addButton.innerText = "+";
+				addButton.className = "add";
+				// addButton.onclick = createTimelineElement(item);
+				$(addButton).bind("click", function() {
+					createTimelineElement(item); 
+				});
+				sectionDiv.appendChild(addButton);
+
+				var previewButton = document.createElement("button");
+				previewButton.innerText = "P";
+				previewButton.className = "preview";
+				// previewButton.onclick = preview_result(item);
+				$(previewButton).bind("click", function() {
+					preview_result(collection, item);
+				})
+				sectionDiv.appendChild(previewButton);
+
+				return sectionDiv;
+			}
+		}
+	}
 
 	var div = document.createElement("div");
 	div.className = "resultitem";
+	// var div = $("<div/>", {class:"resultitem"});
+
+	
+	$(div).attr("data-chprefix", idExtractArray["chprefix"]);
+	$(div).attr("data-type", "chapter");
+	$(div).attr("data-collection", collection);
 
 	// Thumbnail
 	var image = document.createElement("img");
@@ -957,6 +1049,8 @@ var createActivityDiv = function(item) {
 		image.className = "resultsimg";
 		image.src = homedirectory + "content/epaath/thumbnail.png";
 	} 
+
+	$(image).css("width","140");
 	// else {
 	// 	var image = document.createElement("img");
 	// 	image.className = "resultsimg";
@@ -964,23 +1058,55 @@ var createActivityDiv = function(item) {
 	// }
 	div.appendChild(image);
 
-	// Display ID
-	var loomaID = document.createElement("p");
-	loomaID.id = "result_ID";
-	loomaID.innerHTML = "<b>ID: </b>" + item.ch_id;
-	div.appendChild(loomaID);
+	// ID
+	$("<p/>", {
+		class : "result_ID",
+		html : item.ch_id
+	}).appendTo(div);
 
-	// Display file type
-	var filetype = document.createElement("p");
-	filetype.id = "result_ft";
-	filetype.innerHTML = "<b>File type: </b>" + item.ft;
-	div.appendChild(filetype);
+	// Display Name
+	$("<p/>", {
+		class : "result_dn",
+		html : "<b>" + item.dn + "</b>"
+	}).appendTo(div);
 
-	// Display file name
-	var filename = document.createElement("p");
-	filename.id = "result_fn";
-	filename.innerHTML = "<b>File name: </b>" + item.fn;
-	div.appendChild(filename);
+	// File Type
+	if (item.ft == "gif" || item.ft == "jpg" || item.ft == "png") {
+		$("<p/>", {
+			class : "result_ft",
+			html : "Image // " + item.ft
+		}).appendTo(div);
+	}
+	else if (item.ft == "mov" || item.ft == "mp4" || item.ft == "mp5") {
+		$("<p/>", {
+			class : "result_ft",
+			html : "Video // " + item.ft
+		}).appendTo(div);
+	}
+	else if (item.ft == "mp3") {
+		$("<p/>", {
+			class : "result_ft",
+			html : "Audio // " + item.ft
+		}).appendTo(div);
+	}
+	else if (item.ft == "EP") {
+		$("<p/>", {
+			class : "result_ft",
+			html : "Game // " + item.ft
+		}).appendTo(div);
+	}
+	else if (item.ft == "html") {
+		$("<p/>", {
+			class : "result_ft",
+			html : "Webpage // " + item.ft
+		}).appendTo(div);
+	}
+	else if (item.ft == "pdf") {
+		$("<p/>", {
+			class : "result_ft",
+			html : "Page // " + item.ft
+		}).appendTo(div);
+	}
 
 	// "Add" button
 	var addButton = document.createElement("button");
@@ -1017,12 +1143,12 @@ var createDictionaryDiv = function(item) {
 	div.appendChild(image);
 
 	var loomaID = document.createElement("p");
-	loomaID.id = "result_ID";
+	loomaID.className = "result_ID";
 	loomaID.innerHTML = "<b>ID: </b>" + item.ch_id;
 	div.appendChild(loomaID);
 
 	var resulttype = document.createElement("p");
-	resulttype.id = "result_ID";
+	resulttype.className = "result_ID";
 	resulttype.innerHTML = "<b>Result type: </b> Dictionary entry";
 	div.appendChild(resulttype);
 
