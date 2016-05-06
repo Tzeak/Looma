@@ -267,7 +267,7 @@ li:hover {
   margin-top:0.313em;
   padding: 15px;
   float: left;
-  width: 99%;
+  width: 97.8%;
   top: 660px;
   height:160px;
   overflow-x:scroll;
@@ -334,7 +334,7 @@ h2 {
     border-radius: 0.313em;
     padding:0px;
 }
-#btnSerach {
+#btnSearch {
 	position: relative;
 	left:500px;
 }
@@ -376,15 +376,23 @@ h2 {
 	float: right;
 }*/
 /* ************************ PRESENT! ********************/
+#presentNavbar {
+	background: #D76126;
+	padding: 5px;
+	height: 45px;
+	color:white;
+	padding-right:20px;
+	margin-bottom: 0;
+}
+
 #presentdisplaybox {
 	width: 100%;
 	height: 640px;
 	background: gray;
-	position: relative;
 	margin: 20 auto;
-	margin-top: 3%;
 	border-radius:10px;
 	margin-bottom: 0px;
+	margin-top: 0px;
 	/*margin-top: 28px;
 	margin-right: 25px;*/
 }
@@ -409,6 +417,20 @@ figure:hover #presentwrapper {
 	display: block;
 	opacity:1;
 }
+
+#presentTitle {
+	width: 25%;
+	padding-left: 3%;
+	display: inline-block;
+	margin-top: .8%;
+
+
+}
+
+#btnEdit {
+	float: right;
+}
+
 /* ************************ INDEX && OPEN! ********************/
 #string {
 	font-family: Arial;

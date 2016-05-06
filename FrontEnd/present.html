@@ -4,9 +4,14 @@
 	</head>
 
 	<body>
+		<div id="presentNavbar">
+			<img id="logo" src="images/LoomaLogo.png">
+<!-- 			<div id="titleString">Title:&nbsp<input type="text" name="title" class="textBox" placeholder="e.g. Level 1 Math" id="titleInput"></div>
+ -->				<div id="presentTitle"> LESSON PLAN TITLE </div> <!-- GET TITLE FROM BACKEND OBJECT (lesson plan info that the backend send to front) -->
+				<button type="button" id="btnEdit" onclick="location.href='index2.html'">Edit</button>
+		</div>
+
 		<div id="container">
-			Title: <!-- GET TITLE FROM BACKEND OBJECT (lesson plan info that the backend send to front) -->
-			<button type="button" id="btnSave" onclick="location.href='index2.html'">Edit Mode</button>
 			<div id= "presentdisplaybox"></div>
 			<br/>
 			<div id = "presentwrapper">
