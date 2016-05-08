@@ -35,7 +35,7 @@
 			{
 				// $.ajaxSetup({async: false});
 				$.ajax({
-					url: "/BackEnd/openTimeline.php",
+					url: "/Looma/BackEnd/openTimeline.php",
 					dataType: 'json',
 					async: false,
 					data: timelineID,
