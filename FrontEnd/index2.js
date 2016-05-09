@@ -295,7 +295,7 @@ var removeTimelineElement = function() {
 // var resultArray = [];
 
 var querySearch = function() {
-	$("#currentResultDiv").html("");
+	$("#outerResultsDiv").html("");
 
 	var filterdata = {
 		'grade' : document.getElementById('dropdown_grade').value,
@@ -327,15 +327,14 @@ var printFilterData = function(filterdata_object) {
 	// currentResultDiv.appendTo("#outerResultsDiv");
 	$(currentResultDiv).appendTo("#outerResultsDiv");
 
-	// Print Activities array
 
+	// Print Activities array
 	var actResultDiv = document.createElement("div");
 	actResultDiv.id = "actResultDiv";
 	$(actResultDiv).appendTo(currentResultDiv);
 
 	var collectionTitle = document.createElement("h1");
 	collectionTitle.id = "collectionTitle";
-
 	var arraylength = filterdata_object.activities.length;
 	if (arraylength == 1) {
 		collectionTitle.innerHTML = "Activites (" + arraylength + " Result)";
@@ -347,7 +346,6 @@ var printFilterData = function(filterdata_object) {
 
 	for(var i=0; i<filterdata_object.activities.length; i++) {
 		var rElement = createActivityDiv(filterdata_object.activities[i], filterdata_object.activities[i-1]);
-		console.log(rElement);
 		if ($(rElement).data("type") == "chapter") {
 			actResultDiv.appendChild(rElement);
 		}
@@ -945,7 +943,29 @@ var createTextbookDiv = function(item) {
 	return div;
 }
 
-// Create "Actdict" collection results
+var createActivityDiv = function(item, previtem) {
+	var collection = "activities";
+
+	var idExtractArray = extractItemId(item, collection);
+	if (previtem != null) {
+		var idExtractArray_prev = extractItemId(previtem, collection);
+	}
+
+	var div = document.createElement("div");
+	div.className = "resultitem";
+	$(div).attr("data-chprefix", idExtractArray["chprefix"]);
+	$(div).attr("data-type", "section");
+	$(div).attr("data-collection", collection);
+
+	$("<p/>", {
+		html : item.ch_id
+	}).appendTo(div);
+
+	return div;
+}
+
+/*
+// Create "Activities" collection results
 var createActivityDiv = function(item, previtem) {
 	var collection = "activities";
 
@@ -1270,6 +1290,9 @@ var createActivityDiv = function(item, previtem) {
 	// return chapterActivityDiv(item, previtem);
 	return div;
 }	// END createActivityDiv()
+*/
+
+
 
 var createDictionaryDiv = function(item) {
 	var collection = "dictionary";
