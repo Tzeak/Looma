@@ -247,11 +247,16 @@ li:hover {
 	width:30px;
 }
 
-.result_section {
-	margin-left:110px;
+.result_activity_section {
 	overflow:auto;
 	margin-top:10px;
 	margin-bottom:10px;
+}
+
+.result_chapter_section {
+	margin-top:10px;
+	margin-bottom:10px;
+	margin-left:100px;
 }
 
 /************* Timeline module ***************/

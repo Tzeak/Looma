@@ -792,7 +792,7 @@ var createChapterDiv = function(item, previtem) {
 			//	If the prefix is equal to the prefix before it
 			if (idExtractArray["chprefix"] == idExtractArray_prev["chprefix"]) {
 				var sectionDiv = document.createElement("div");
-				sectionDiv.className = "result_section";
+				sectionDiv.className = "result_chapter_section";
 				$(sectionDiv).attr("data-chprefix", idExtractArray["chprefix"]);
 				$(sectionDiv).attr("data-type", "section");
 				$(sectionDiv).attr("data-collection", collection);
@@ -952,29 +952,13 @@ var createActivityDiv = function(item, previtem) {
 	}
 
 	var div = document.createElement("div");
-	div.className = "resultitem";
 	$(div).attr("data-chprefix", idExtractArray["chprefix"]);
 	$(div).attr("data-type", "section");
 	$(div).attr("data-collection", collection);
 
-	$("<p/>", {
-		html : item.ch_id
-	}).appendTo(div);
-
-	return div;
-}
-
-/*
-// Create "Activities" collection results
-var createActivityDiv = function(item, previtem) {
-	var collection = "activities";
-
-	var div = document.createElement("div");
-	div.className = "resultitem";
-
 	var sectionActivityDiv = function(item) {
 		var sectionDiv = document.createElement("div");
-		sectionDiv.className = "result_section";
+		sectionDiv.className = "result_activity_section";
 		$(sectionDiv).attr("data-chprefix", idExtractArray["chprefix"]);
 		$(sectionDiv).attr("data-type", "section");
 		$(sectionDiv).attr("data-collection", collection);
@@ -1088,15 +1072,10 @@ var createActivityDiv = function(item, previtem) {
 
 	var chapterActivityDiv = function(item) {
 		var chapterDiv = document.createElement("chapterDiv");
-		chapterDiv.className = "resultitem";
 		
 		$(chapterDiv).attr("data-chprefix", idExtractArray["chprefix"]);
 		$(chapterDiv).attr("data-type", "chapter");
 		$(chapterDiv).attr("data-collection", collection);
-
-		$("<h3/>", {
-			html : "Chapter " + idExtractArray["currentChapter"]
-		}).appendTo(chapterDiv);
 
 		// Thumbnail
 		var image = document.createElement("img");
@@ -1213,11 +1192,6 @@ var createActivityDiv = function(item, previtem) {
 		return chapterDiv;
 	}
 
-	var idExtractArray = extractItemId(item, collection);
-	if (previtem != null) {
-		var idExtractArray_prev = extractItemId(previtem, collection);
-	}
-
 	// If this item is the first item
 	if (previtem == null) {
 		// Create h3 Chapter element
@@ -1271,26 +1245,9 @@ var createActivityDiv = function(item, previtem) {
 	}
 
 
-	// var idExtractArray = extractItemId(item, collection);
-	// if (previtem != null) {
-	// 	var idExtractArray_prev = extractItemId(previtem, collection);
-	// }
 
-
-	// if (previtem != null) {
-	// 	if (item.ch_id.indexOf(".") >= 0) {
-	// 		if (idExtractArray["chprefix"] == idExtractArray_prev["chprefix"]) {
-	// 			return sectionActivityDiv(item, previtem);
-	// 		}	
-	// 	}	
-	// }
-	// else if (previtem == null) {
-	// 	return chapterActivityDiv(item, previtem);
-	// }
-	// return chapterActivityDiv(item, previtem);
 	return div;
-}	// END createActivityDiv()
-*/
+}
 
 
 
