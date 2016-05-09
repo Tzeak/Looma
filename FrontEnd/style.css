@@ -248,8 +248,11 @@ li:hover {
 	width:30px;
 }
 
-.result_ch {
+.result_section {
 	margin-left:110px;
+	overflow:auto;
+	margin-top:10px;
+	margin-bottom:10px;
 }
 
 /************* Timeline module ***************/
@@ -314,7 +317,6 @@ ul {
 
 h3{
 	font-size: 30px;
-	margin-left: 32%;
 }
 
 #openNavbar {
@@ -504,7 +506,7 @@ body {
 	font-size: 20px;
 }
 p {
-	font-size:1em;
+	font-size:13px;
 	margin-top:0px;
 }
 li:hover {

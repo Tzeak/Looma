@@ -347,6 +347,7 @@ var printFilterData = function(filterdata_object) {
 
 	for(var i=0; i<filterdata_object.activities.length; i++) {
 		var rElement = createActivityDiv(filterdata_object.activities[i], filterdata_object.activities[i-1]);
+		console.log(rElement);
 		if ($(rElement).data("type") == "chapter") {
 			actResultDiv.appendChild(rElement);
 		}
@@ -358,6 +359,7 @@ var printFilterData = function(filterdata_object) {
 			else {
 				actResultDiv.appendChild(rElement);
 			}
+		
 		}
 
 	}
@@ -467,7 +469,6 @@ var getSectionChapterByPrefix = function(currentResultsDiv, rElement) {
 		if ($(rElement).data("collection") == "chapters") {
 			var chapterResults = currentResultsDiv.getElementsByTagName("div");
 			for (i=0; i<chapterResults.length; i++) {
-				console.log("current prefix: " + $(chapterResults[i]).data("chprefix"));
 				if ($(chapterResults[i]).data("collection") == "chapters" && $(chapterResults[i]).data("type") == "chapter" && $(chapterResults[i]).data("chprefix") == $(rElement).data("chprefix")) {
 					return chapterResults[i];	// IT'S A MATCH!
 				}
@@ -477,7 +478,6 @@ var getSectionChapterByPrefix = function(currentResultsDiv, rElement) {
 		else if ($(rElement).data("collection") == "activities") {
 			var actResults = currentResultsDiv.getElementsByTagName("div");
 			for (i=0; i<actResults.length; i++) {
-				console.log("current prefix: " + $(actResults[i]).data("chprefix"));
 				if ($(actResults[i]).data("collection") == "activities" && $(actResults[i]).data("type") == "chapter" && $(actResults[i]).data("chprefix") == $(rElement).data("chprefix")) {
 					return actResults[i];	// IT'S A MATCH!
 				}
@@ -514,7 +514,6 @@ var extractItemId = function(item, collection) {
 			// chprefix
 
 		var itemId = item._id;
-		console.log("current id: " + item._id);
 		var itemId_splitArray = itemId.split("");
 		var arr_length = itemId_splitArray.length;
 
@@ -522,7 +521,6 @@ var extractItemId = function(item, collection) {
 		if (itemId.indexOf(".") >= 0) {
 			var currentSection = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
 			elementsArray["currentSection"] = currentSection;
-			console.log("current section: " + currentSection);
 			itemId_splitArray.splice(arr_length-1, 1);
 			itemId_splitArray.splice(arr_length-2, 1);
 			itemId_splitArray.splice(arr_length-3, 1);
@@ -532,7 +530,6 @@ var extractItemId = function(item, collection) {
 		// Extracts the last 2 numbers as the chapter
 		var currentChapter = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
 		elementsArray["currentChapter"] = currentChapter;
-		console.log("current chapter: " + currentChapter);
 		itemId_splitArray.splice(arr_length-1, 1);
 		itemId_splitArray.splice(arr_length-2, 1);
 		arr_length = itemId_splitArray.length;
@@ -540,7 +537,6 @@ var extractItemId = function(item, collection) {
 		if (arr_length == 3) {	// If the subject is EN, or SS (or something with 2 letters)
 			var currentSubject = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
 			elementsArray["currentSubject"] = currentSubject;
-			console.log("current subject: " + currentSubject);
 			itemId_splitArray.splice(arr_length-1, 1);
 			itemId_splitArray.splice(arr_length-2, 1);
 			arr_length = itemId_splitArray.length;
@@ -548,18 +544,15 @@ var extractItemId = function(item, collection) {
 		else if (itemId_splitArray.length == 2) {	// If the subject is M or S, N (or something with 1 letter)
 			var currentSubject = itemId_splitArray[arr_length-1];
 			elementsArray["currentSubject"] = currentSubject;
-			console.log("current subject: " + currentSubject);
 			itemId_splitArray.splice(arr_length-1, 1);
 			arr_length = itemId_splitArray.length;
 		}
 
 		var currentGradeNumber = itemId_splitArray[0];
 		elementsArray["currentGradeNumber"] = currentGradeNumber;
-		console.log("current grade number: " + currentGradeNumber);
 
 		var currentGradeFolder = "Class".concat(currentGradeNumber);
 		elementsArray["currentGradeFolder"] = currentGradeFolder;
-		console.log("current grade folder: " + currentGradeFolder);
 
 		if (currentSubject == "EN") {
 			var currentSubjectFull = "English";
@@ -584,7 +577,6 @@ var extractItemId = function(item, collection) {
 
 		var chprefix = currentGradeNumber.concat(currentSubject,currentChapter);
 		elementsArray["chprefix"] = chprefix;
-		console.log("chapter prefix: " + chprefix);
 	}
 
 	else if (collection == "textbooks") {
@@ -594,14 +586,12 @@ var extractItemId = function(item, collection) {
 			// currentSubjectFull
 
 		var itemId = item.prefix;
-		console.log("current id: " + item.prefix);
 		var itemId_splitArray = itemId.split("");
 		var arr_length = itemId_splitArray.length;
 
 		if (arr_length == 3) {	// If the subject is EN, or SS (or something with 2 letters)
 			var currentSubject = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
 			elementsArray["currentSubject"] = currentSubject;
-			console.log("current subject: " + currentSubject);
 			itemId_splitArray.splice(arr_length-1, 1);
 			itemId_splitArray.splice(arr_length-2, 1);
 			arr_length = itemId_splitArray.length;
@@ -609,14 +599,12 @@ var extractItemId = function(item, collection) {
 		else if (itemId_splitArray.length == 2) {	// If the subject is M or S, N (or something with 1 letter)
 			var currentSubject = itemId_splitArray[arr_length-1];
 			elementsArray["currentSubject"] = currentSubject;
-			console.log("current subject: " + currentSubject);
 			itemId_splitArray.splice(arr_length-1, 1);
 			arr_length = itemId_splitArray.length;
 		}
 
 		var currentGradeNumber = itemId_splitArray[0];
 		elementsArray["currentGradeNumber"] = currentGradeNumber;
-		console.log("current grade number: " + currentGradeNumber);
 
 		if (currentSubject == "EN") {
 			var currentSubjectFull = "English";
@@ -654,7 +642,6 @@ var extractItemId = function(item, collection) {
 			// chprefix
 
 		var itemId = item.ch_id;
-		console.log("current id: " + item.ch_id);
 		var itemId_splitArray = itemId.split("");
 		var arr_length = itemId_splitArray.length;
 
@@ -662,7 +649,6 @@ var extractItemId = function(item, collection) {
 		if (itemId.indexOf(".") >= 0) {
 			var currentSection = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
 			elementsArray["currentSection"] = currentSection;
-			console.log("current section: " + currentSection);
 			itemId_splitArray.splice(arr_length-1, 1);
 			itemId_splitArray.splice(arr_length-2, 1);
 			itemId_splitArray.splice(arr_length-3, 1);
@@ -672,7 +658,6 @@ var extractItemId = function(item, collection) {
 		// Extracts the last 2 numbers as the chapter
 		var currentChapter = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
 		elementsArray["currentChapter"] = currentChapter;
-		console.log("current chapter: " + currentChapter);
 		itemId_splitArray.splice(arr_length-1, 1);
 		itemId_splitArray.splice(arr_length-2, 1);
 		arr_length = itemId_splitArray.length;
@@ -680,7 +665,6 @@ var extractItemId = function(item, collection) {
 		if (arr_length == 3) {	// If the subject is EN, or SS (or something with 2 letters)
 			var currentSubject = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
 			elementsArray["currentSubject"] = currentSubject;
-			console.log("current subject: " + currentSubject);
 			itemId_splitArray.splice(arr_length-1, 1);
 			itemId_splitArray.splice(arr_length-2, 1);
 			arr_length = itemId_splitArray.length;
@@ -688,18 +672,15 @@ var extractItemId = function(item, collection) {
 		else if (itemId_splitArray.length == 2) {	// If the subject is M or S, N (or something with 1 letter)
 			var currentSubject = itemId_splitArray[arr_length-1];
 			elementsArray["currentSubject"] = currentSubject;
-			console.log("current subject: " + currentSubject);
 			itemId_splitArray.splice(arr_length-1, 1);
 			arr_length = itemId_splitArray.length;
 		}
 
 		var currentGradeNumber = itemId_splitArray[0];
 		elementsArray["currentGradeNumber"] = currentGradeNumber;
-		console.log("current grade number: " + currentGradeNumber);
 
 		var currentGradeFolder = "Class".concat(currentGradeNumber);
 		elementsArray["currentGradeFolder"] = currentGradeFolder;
-		console.log("current grade folder: " + currentGradeFolder);
 
 		if (currentSubject == "EN") {
 			var currentSubjectFull = "English";
@@ -724,7 +705,6 @@ var extractItemId = function(item, collection) {
 
 		var chprefix = currentGradeNumber.concat(currentSubject,currentChapter);
 		elementsArray["chprefix"] = chprefix;
-		console.log("chapter prefix: " + chprefix);
 	}
 
 /*
@@ -805,7 +785,6 @@ var createChapterDiv = function(item, previtem) {
 	var collection = "chapters";
 
 	var idExtractArray = extractItemId(item, collection);
-	console.log("RETURNED current section " + idExtractArray["currentSection"]);
 	if (previtem != null) {
 		var idExtractArray_prev = extractItemId(previtem, collection);
 	}
@@ -815,7 +794,7 @@ var createChapterDiv = function(item, previtem) {
 			//	If the prefix is equal to the prefix before it
 			if (idExtractArray["chprefix"] == idExtractArray_prev["chprefix"]) {
 				var sectionDiv = document.createElement("div");
-				sectionDiv.className = "result_ch";
+				sectionDiv.className = "result_section";
 				$(sectionDiv).attr("data-chprefix", idExtractArray["chprefix"]);
 				$(sectionDiv).attr("data-type", "section");
 				$(sectionDiv).attr("data-collection", collection);
@@ -970,173 +949,327 @@ var createTextbookDiv = function(item) {
 var createActivityDiv = function(item, previtem) {
 	var collection = "activities";
 
+	var div = document.createElement("div");
+	div.className = "resultitem";
+
+	var sectionActivityDiv = function(item) {
+		var sectionDiv = document.createElement("div");
+		sectionDiv.className = "result_section";
+		$(sectionDiv).attr("data-chprefix", idExtractArray["chprefix"]);
+		$(sectionDiv).attr("data-type", "section");
+		$(sectionDiv).attr("data-collection", collection);
+		// console.log("prefix for item " + item.dn + " is " + $(sectionDiv).data('chprefix'));
+
+		// Thumbnail
+		var image = document.createElement("img");
+		if (item.ft == "mp3") {	 //audio
+			image.className = "resultsimg";
+			image.src = homedirectory + "content/audio/thumbnail.png";
+		} 
+		else if (item.ft == "mp4" || item.ft == "mp5") { //video
+			var thumbnail_prefix = item.fn;
+			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+
+			var image = document.createElement("img");
+			image.className = "resultsimg";
+			image.src = homedirectory + "content/videos/" + thumbnail_prefix + "_thumb.jpg";
+		} 
+		else if (item.ft == "jpg"  || item.ft == "gif" || item.ft == "png" ) { //picture
+			var thumbnail_prefix = item.fn;
+			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+
+			var image = document.createElement("img");
+			image.className = "resultsimg";
+			image.src = homedirectory + "content/pictures/" + thumbnail_prefix + "_thumb.jpg";
+		}
+		else if (item.ft == "pdf") { //pdf
+			var thumbnail_prefix = item.fn;
+			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+
+			var image = document.createElement("img");
+			image.className = "resultsimg";
+			image.src = homedirectory + "content/pdfs/" + thumbnail_prefix + "_thumb.jpg";
+		} 
+		else if (item.ft == "EP") {
+			var image = document.createElement("img");
+			image.className = "resultsimg";
+			image.src = homedirectory + "content/epaath/thumbnail.png";
+		} 
+		$(image).css("width","140");
+		sectionDiv.appendChild(image);
+
+		$("<p/>", {
+			html : item.ch_id
+		}).appendTo(sectionDiv);
+
+		$("<p/>", {
+			class : "result_dn",
+			html : "<b>" + item.dn + "</b><br/>Chapter " + idExtractArray["currentChapter"] + ", Section " + idExtractArray["currentSection"]
+		}).appendTo(sectionDiv);
+
+		// File Type
+		if (item.ft == "gif" || item.ft == "jpg" || item.ft == "png") {
+			$("<p/>", {
+				class : "result_ft",
+				html : "Image // " + item.ft
+			}).appendTo(sectionDiv);
+		}
+		else if (item.ft == "mov" || item.ft == "mp4" || item.ft == "mp5") {
+			$("<p/>", {
+				class : "result_ft",
+				html : "Video // " + item.ft
+			}).appendTo(sectionDiv);
+		}
+		else if (item.ft == "mp3") {
+			$("<p/>", {
+				class : "result_ft",
+				html : "Audio // " + item.ft
+			}).appendTo(sectionDiv);
+		}
+		else if (item.ft == "EP") {
+			$("<p/>", {
+				class : "result_ft",
+				html : "Game // " + item.ft
+			}).appendTo(sectionDiv);
+		}
+		else if (item.ft == "html") {
+			$("<p/>", {
+				class : "result_ft",
+				html : "Webpage // " + item.ft
+			}).appendTo(sectionDiv);
+		}
+		else if (item.ft == "pdf") {
+			$("<p/>", {
+				class : "result_ft",
+				html : "Page // " + item.ft
+			}).appendTo(sectionDiv);
+		}
+
+		var addButton = document.createElement("button");
+		addButton.innerText = "+";
+		addButton.className = "add";
+		// addButton.onclick = createTimelineElement(item);
+		$(addButton).bind("click", function() {
+			createTimelineElement(item); 
+		});
+		sectionDiv.appendChild(addButton);
+
+		var previewButton = document.createElement("button");
+		previewButton.innerText = "P";
+		previewButton.className = "preview";
+		// previewButton.onclick = preview_result(item);
+		$(previewButton).bind("click", function() {
+			preview_result(collection, item);
+		})
+		sectionDiv.appendChild(previewButton);
+
+		return sectionDiv;
+	}
+
+	var chapterActivityDiv = function(item) {
+		var chapterDiv = document.createElement("chapterDiv");
+		chapterDiv.className = "resultitem";
+		
+		$(chapterDiv).attr("data-chprefix", idExtractArray["chprefix"]);
+		$(chapterDiv).attr("data-type", "chapter");
+		$(chapterDiv).attr("data-collection", collection);
+
+		$("<h3/>", {
+			html : "Chapter " + idExtractArray["currentChapter"]
+		}).appendTo(chapterDiv);
+
+		// Thumbnail
+		var image = document.createElement("img");
+		if (item.ft == "mp3") {	 //audio
+			image.className = "resultsimg";
+			image.src = homedirectory + "content/audio/thumbnail.png";
+		} 
+		else if (item.ft == "mp4" || item.ft == "mp5") { //video
+			var thumbnail_prefix = item.fn;
+			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+
+			var image = document.createElement("img");
+			image.className = "resultsimg";
+			image.src = homedirectory + "content/videos/" + thumbnail_prefix + "_thumb.jpg";
+		} 
+		else if (item.ft == "jpg"  || item.ft == "gif" || item.ft == "png" ) { //picture
+			var thumbnail_prefix = item.fn;
+			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+
+			var image = document.createElement("img");
+			image.className = "resultsimg";
+			image.src = homedirectory + "content/pictures/" + thumbnail_prefix + "_thumb.jpg";
+		}
+		else if (item.ft == "pdf") { //pdf
+			var thumbnail_prefix = item.fn;
+			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+
+			var image = document.createElement("img");
+			image.className = "resultsimg";
+			image.src = homedirectory + "content/pdfs/" + thumbnail_prefix + "_thumb.jpg";
+		} 
+		else if (item.ft == "EP") {
+			var image = document.createElement("img");
+			image.className = "resultsimg";
+			image.src = homedirectory + "content/epaath/thumbnail.png";
+		} 
+
+		$(image).css("width","140");
+		// else {
+		// 	var image = document.createElement("img");
+		// 	image.className = "resultsimg";
+		// 	image.src = "images/kitty.jpg";
+		// }
+		chapterDiv.appendChild(image);
+
+		// ID
+		$("<p/>", {
+			class : "result_ID",
+			html : item.ch_id
+		}).appendTo(chapterDiv);
+
+		// Display Name
+		$("<p/>", {
+			class : "result_dn",
+			html : "<b>" + item.dn + "</b>"
+		}).appendTo(chapterDiv);
+
+		// File Type
+		if (item.ft == "gif" || item.ft == "jpg" || item.ft == "png") {
+			$("<p/>", {
+				class : "result_ft",
+				html : "Image // " + item.ft
+			}).appendTo(chapterDiv);
+		}
+		else if (item.ft == "mov" || item.ft == "mp4" || item.ft == "mp5") {
+			$("<p/>", {
+				class : "result_ft",
+				html : "Video // " + item.ft
+			}).appendTo(chapterDiv);
+		}
+		else if (item.ft == "mp3") {
+			$("<p/>", {
+				class : "result_ft",
+				html : "Audio // " + item.ft
+			}).appendTo(chapterDiv);
+		}
+		else if (item.ft == "EP") {
+			$("<p/>", {
+				class : "result_ft",
+				html : "Game // " + item.ft
+			}).appendTo(chapterDiv);
+		}
+		else if (item.ft == "html") {
+			$("<p/>", {
+				class : "result_ft",
+				html : "Webpage // " + item.ft
+			}).appendTo(chapterDiv);
+		}
+		else if (item.ft == "pdf") {
+			$("<p/>", {
+				class : "result_ft",
+				html : "Page // " + item.ft
+			}).appendTo(chapterDiv);
+		}
+
+		// "Add" button
+		var addButton = document.createElement("button");
+		addButton.innerText = "+";
+		addButton.className = "add";
+		$(addButton).bind("click", function() {
+			createTimelineElement(item); 
+		});
+		chapterDiv.appendChild(addButton);
+
+		var previewButton = document.createElement("button");
+		previewButton.innerText = "P";
+		previewButton.className = "preview";
+		// previewButton.onclick = preview_result(item);
+		$(previewButton).bind("click", function() {
+			preview_result(collection, item);
+		})
+		chapterDiv.appendChild(previewButton);
+
+		return chapterDiv;
+	}
+
 	var idExtractArray = extractItemId(item, collection);
 	if (previtem != null) {
 		var idExtractArray_prev = extractItemId(previtem, collection);
 	}
 
-	if (previtem != null) {
-		if (item._id.indexOf(".") >= 0) {
-			//	If the prefix is equal to the prefix before it
+	// If this item is the first item
+	if (previtem == null) {
+		// Create h3 Chapter element
+		$("<h3/>", { 
+			html : "Chapter " + idExtractArray["currentChapter"] 
+		}).appendTo(div);
+
+		// If the item ID has a decimal
+		if (item.ch_id.indexOf(".") >= 0) {
+			// Create a section div & append to main div
+			var sectionDiv = sectionActivityDiv(item);
+			$(sectionDiv).appendTo(div);
+		}
+		// Else if the item ID doesn't have a decimal
+		else {
+			// Create a chapter div & append to main div
+			var chapterDiv = chapterActivityDiv(item);
+			$(chapterDiv).appendTo(div);
+		}
+	}
+	// If this item isn't the first item
+	else if (previtem != null) {
+		// If the item  ID has a decimal
+		if (item.ch_id.indexOf(".") >= 0) {
+			// If the ID prefix matches the prefix of the last one
 			if (idExtractArray["chprefix"] == idExtractArray_prev["chprefix"]) {
-				var sectionDiv = document.createElement("div");
-				sectionDiv.className = "result_ch";
-				$(sectionDiv).attr("data-chprefix", idExtractArray["chprefix"]);
-				$(sectionDiv).attr("data-type", "section");
-				$(sectionDiv).attr("data-collection", collection);
-				// console.log("prefix for item " + item.dn + " is " + $(sectionDiv).data('chprefix'));
-
-				$("<p/>", {
-					class : "result_dn",
-					html : "<b>Section " + idExtractArray["currentSection"] + ":</b><br/>" + item.dn
-				}).appendTo(sectionDiv);
-
-				var addButton = document.createElement("button");
-				addButton.innerText = "+";
-				addButton.className = "add";
-				// addButton.onclick = createTimelineElement(item);
-				$(addButton).bind("click", function() {
-					createTimelineElement(item); 
-				});
-				sectionDiv.appendChild(addButton);
-
-				var previewButton = document.createElement("button");
-				previewButton.innerText = "P";
-				previewButton.className = "preview";
-				// previewButton.onclick = preview_result(item);
-				$(previewButton).bind("click", function() {
-					preview_result(collection, item);
-				})
-				sectionDiv.appendChild(previewButton);
-
-				return sectionDiv;
+				//	Make a raw section div
+				var sectionDiv = sectionActivityDiv(item);
+				$(sectionDiv).appendTo(div);
 			}
+			// Else if the ID prefix doesn't match the last one
+			else if (idExtractArray["chprefix"] != idExtractArray_prev["chprefix"]) {
+				// Create h3 Chapter element
+				$("<h3/>", { 
+					html : "Chapter " + idExtractArray["currentChapter"] 
+				}).appendTo(div);
+				var sectionDiv = sectionActivityDiv(item);
+				$(sectionDiv).appendTo(div);
+			}
+		}
+		// Else if the item ID doesn't have a decimal
+		else {
+			// Create h3 Chapter element
+			$("<h3/>", { 
+				html : "Chapter " + idExtractArray["currentChapter"] 
+			}).appendTo(div);
+			var chapterDiv = chapterActivityDiv(item);
+			$(chapterDiv).appendTo(div);
+
 		}
 	}
 
-	var div = document.createElement("div");
-	div.className = "resultitem";
-	// var div = $("<div/>", {class:"resultitem"});
 
-	
-	$(div).attr("data-chprefix", idExtractArray["chprefix"]);
-	$(div).attr("data-type", "chapter");
-	$(div).attr("data-collection", collection);
-
-	// Thumbnail
-	var image = document.createElement("img");
-	if (item.ft == "mp3") {	 //audio
-		image.className = "resultsimg";
-		image.src = homedirectory + "content/audio/thumbnail.png";
-	} 
-	else if (item.ft == "mp4" || item.ft == "mp5") { //video
-		var thumbnail_prefix = item.fn;
-		thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
-
-		var image = document.createElement("img");
-		image.className = "resultsimg";
-		image.src = homedirectory + "content/videos/" + thumbnail_prefix + "_thumb.jpg";
-	} 
-	else if (item.ft == "jpg"  || item.ft == "gif" || item.ft == "png" ) { //picture
-		var thumbnail_prefix = item.fn;
-		thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
-
-		var image = document.createElement("img");
-		image.className = "resultsimg";
-		image.src = homedirectory + "content/pictures/" + thumbnail_prefix + "_thumb.jpg";
-	}
-	else if (item.ft == "pdf") { //pdf
-		var thumbnail_prefix = item.fn;
-		thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
-
-		var image = document.createElement("img");
-		image.className = "resultsimg";
-		image.src = homedirectory + "content/pdfs/" + thumbnail_prefix + "_thumb.jpg";
-	} 
-	else if (item.ft == "EP") {
-		var image = document.createElement("img");
-		image.className = "resultsimg";
-		image.src = homedirectory + "content/epaath/thumbnail.png";
-	} 
-
-	$(image).css("width","140");
-	// else {
-	// 	var image = document.createElement("img");
-	// 	image.className = "resultsimg";
-	// 	image.src = "images/kitty.jpg";
+	// var idExtractArray = extractItemId(item, collection);
+	// if (previtem != null) {
+	// 	var idExtractArray_prev = extractItemId(previtem, collection);
 	// }
-	div.appendChild(image);
 
-	// ID
-	$("<p/>", {
-		class : "result_ID",
-		html : item.ch_id
-	}).appendTo(div);
 
-	// Display Name
-	$("<p/>", {
-		class : "result_dn",
-		html : "<b>" + item.dn + "</b>"
-	}).appendTo(div);
-
-	// File Type
-	if (item.ft == "gif" || item.ft == "jpg" || item.ft == "png") {
-		$("<p/>", {
-			class : "result_ft",
-			html : "Image // " + item.ft
-		}).appendTo(div);
-	}
-	else if (item.ft == "mov" || item.ft == "mp4" || item.ft == "mp5") {
-		$("<p/>", {
-			class : "result_ft",
-			html : "Video // " + item.ft
-		}).appendTo(div);
-	}
-	else if (item.ft == "mp3") {
-		$("<p/>", {
-			class : "result_ft",
-			html : "Audio // " + item.ft
-		}).appendTo(div);
-	}
-	else if (item.ft == "EP") {
-		$("<p/>", {
-			class : "result_ft",
-			html : "Game // " + item.ft
-		}).appendTo(div);
-	}
-	else if (item.ft == "html") {
-		$("<p/>", {
-			class : "result_ft",
-			html : "Webpage // " + item.ft
-		}).appendTo(div);
-	}
-	else if (item.ft == "pdf") {
-		$("<p/>", {
-			class : "result_ft",
-			html : "Page // " + item.ft
-		}).appendTo(div);
-	}
-
-	// "Add" button
-	var addButton = document.createElement("button");
-	addButton.innerText = "+";
-	addButton.className = "add";
-	$(addButton).bind("click", function() {
-		createTimelineElement(item); 
-	});
-	div.appendChild(addButton);
-
-	var previewButton = document.createElement("button");
-	previewButton.innerText = "P";
-	previewButton.className = "preview";
-	// previewButton.onclick = preview_result(item);
-	$(previewButton).bind("click", function() {
-		preview_result(collection, item);
-	})
-	div.appendChild(previewButton);
-
+	// if (previtem != null) {
+	// 	if (item.ch_id.indexOf(".") >= 0) {
+	// 		if (idExtractArray["chprefix"] == idExtractArray_prev["chprefix"]) {
+	// 			return sectionActivityDiv(item, previtem);
+	// 		}	
+	// 	}	
+	// }
+	// else if (previtem == null) {
+	// 	return chapterActivityDiv(item, previtem);
+	// }
+	// return chapterActivityDiv(item, previtem);
 	return div;
-}
+}	// END createActivityDiv()
 
 var createDictionaryDiv = function(item) {
 	var collection = "dictionary";
@@ -1188,6 +1321,7 @@ var createDictionaryDiv = function(item) {
 	div.appendChild(previewButton);
 
 	return div;
+	
 }
 
 
