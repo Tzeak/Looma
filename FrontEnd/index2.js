@@ -865,7 +865,9 @@ var createChapterDiv = function(item, previtem) {
 	var image = document.createElement("img");
 	image.className = "resultsimg";
 	image.src = homedirectory + "content/textbooks/" + idExtractArray["currentGradeFolder"] + "/" + idExtractArray["currentSubjectFull"] + "/" + thumbnail_prefix + "_thumb.jpg";
+	image.onError = replaceThumbnail(image, collection);
 	div.appendChild(image);
+
 
 	// Display name
 	$("<p/>", {
@@ -919,8 +921,10 @@ var createTextbookDiv = function(item) {
 
 	$("<img/>", {
 		class : "resultsimg",
-		src : homedirectory + "content/" + item.fp + thumbnail_prefix + "_thumb.jpg"
+		src : homedirectory + "content/" + item.fp + thumbnail_prefix + "_thumb.jpg",
+		onError : "src = 'images/textbook_icon.png'"
 	}).appendTo(div);
+
 
 	// var image = document.createElement("img");
 	// image.className = "resultsimg";
@@ -1028,6 +1032,8 @@ var createActivityDiv = function(item, previtem) {
 	if (item.ft == "mp3") {	 //audio
 		image.className = "resultsimg";
 		image.src = homedirectory + "content/audio/thumbnail.png";
+		image.onError = replaceThumbnail(image, collection);
+
 	} 
 	else if (item.ft == "mp4" || item.ft == "mp5") { //video
 		var thumbnail_prefix = item.fn;
@@ -1036,6 +1042,7 @@ var createActivityDiv = function(item, previtem) {
 		var image = document.createElement("img");
 		image.className = "resultsimg";
 		image.src = homedirectory + "content/videos/" + thumbnail_prefix + "_thumb.jpg";
+		image.onError = replaceThumbnail(image, collection);
 	} 
 	else if (item.ft == "jpg"  || item.ft == "gif" || item.ft == "png" ) { //picture
 		var thumbnail_prefix = item.fn;
@@ -1044,6 +1051,9 @@ var createActivityDiv = function(item, previtem) {
 		var image = document.createElement("img");
 		image.className = "resultsimg";
 		image.src = homedirectory + "content/pictures/" + thumbnail_prefix + "_thumb.jpg";
+		// image.onError = console.log("ERROR FOR ACTIVITY IMAGE");
+		image.onError = replaceThumbnail(image, collection);
+
 	}
 	else if (item.ft == "pdf") { //pdf
 		var thumbnail_prefix = item.fn;
@@ -1052,11 +1062,15 @@ var createActivityDiv = function(item, previtem) {
 		var image = document.createElement("img");
 		image.className = "resultsimg";
 		image.src = homedirectory + "content/pdfs/" + thumbnail_prefix + "_thumb.jpg";
+		image.onError = replaceThumbnail(image, collection);
+
 	} 
 	else if (item.ft == "EP") {
 		var image = document.createElement("img");
 		image.className = "resultsimg";
 		image.src = homedirectory + "content/epaath/thumbnail.png";
+		image.onError = replaceThumbnail(image, collection);
+
 	} 
 
 	$(image).css("width","140");
@@ -1066,6 +1080,7 @@ var createActivityDiv = function(item, previtem) {
 	// 	image.src = "images/kitty.jpg";
 	// }
 	div.appendChild(image);
+
 
 	// ID
 	$("<p/>", {
@@ -1148,7 +1163,8 @@ var createDictionaryDiv = function(item) {
 
 	var image = document.createElement("img");
 	image.className = "resultsimg";
-	image.src = homedirectory + "content/dictionaries/thumbnail.png";
+	// image.src = homedirectory + "content/dictionaries/thumbnail.png";
+	image.src = "images/dictionary_icon.jpg";
 	div.appendChild(image);
 
 	var loomaID = document.createElement("p");
@@ -1191,7 +1207,28 @@ var createDictionaryDiv = function(item) {
 }
 
 
+var replaceThumbnail = function(image, collection) {
+	console.log("replacing image...");
+	
 
+	if(collection == "activities") {
+		image.src = 'images/activity_icon.png';
+	}
+
+	if(collection == "chapters") {
+		image.src = 'images/chapter_icon.png';
+	}
+
+	if(collection == "textbooks"){
+		image.src = 'images/textbook_icon.png';
+
+	}
+
+	if(collection == "dictionary") {
+		image.src = 'images/dictionary_icon.png';
+	} 
+
+}
 
 
 

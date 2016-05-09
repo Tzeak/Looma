@@ -232,6 +232,25 @@ li:hover {
 	padding-right: 10px;
 }
 
+.resultsimg:after {
+/* 	background-image: url(images/chapter_icon.png);*/	
+
+	content: url('images/chapter_icon.png');
+	width:100px;
+	padding-right: 10px;
+
+	/*
+	float:left;
+	display: block;
+	position: absolute;
+	z-index: 2;
+	top: 0;
+	left: 0;
+	background-color: #fff;*/
+
+
+}
+
 #collectionTitle {
 /*	line-height:10px;
 */}
@@ -500,7 +519,7 @@ li {
 	list-style-type:none;
 }
 body {
-	font-family: Helvetica;;
+	font-family: Helvetica;
 	font-size: 20px;
 }
 p {
