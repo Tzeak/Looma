@@ -202,6 +202,13 @@ window.onload = function loadPageElements() {
 			html : "Search"
 		}).appendTo("#div_filter");
 
+		$("<button/>", {
+			id : "clear_button",
+			onclick : "clearFilter()",
+			type : "button",
+			html : "Start Over"
+		}).appendTo("#div_filter");
+
 
 		openTimeline();
 }
@@ -294,8 +301,12 @@ var removeTimelineElement = function() {
 
 // var resultArray = [];
 
+var clearFilter = function() {
+	 // $("#div_filter").each(function() { this.selectedIndex = 0 });
+}
+
 var querySearch = function() {
-	$("#outerResultsDiv").html("");
+	$("#innerResultsDiv").html("");
 
 	var filterdata = {
 		'grade' : document.getElementById('dropdown_grade').value,
@@ -324,43 +335,8 @@ var storeFilterData = function(filterdata) {
 var printFilterData = function(filterdata_object) {
 	var currentResultDiv = document.createElement("div");
 	currentResultDiv.id = "currentResultDiv";
-	// currentResultDiv.appendTo("#outerResultsDiv");
-	$(currentResultDiv).appendTo("#outerResultsDiv");
-
-
-	// Print Activities array
-	var actResultDiv = document.createElement("div");
-	actResultDiv.id = "actResultDiv";
-	$(actResultDiv).appendTo(currentResultDiv);
-
-	var collectionTitle = document.createElement("h1");
-	collectionTitle.id = "collectionTitle";
-	var arraylength = filterdata_object.activities.length;
-	if (arraylength == 1) {
-		collectionTitle.innerHTML = "Activites (" + arraylength + " Result)";
-	} 
-	else {
-		collectionTitle.innerHTML = "Activites (" + arraylength + " Results)";
-	}
-	actResultDiv.appendChild(collectionTitle);
-
-	for(var i=0; i<filterdata_object.activities.length; i++) {
-		var rElement = createActivityDiv(filterdata_object.activities[i], filterdata_object.activities[i-1]);
-		if ($(rElement).data("type") == "chapter") {
-			actResultDiv.appendChild(rElement);
-		}
-		else if ($(rElement).data("type") == "section") {
-			var matchingDiv = getSectionChapterByPrefix(actResultDiv, rElement);
-			if (matchingDiv != null) {
-				$(matchingDiv).append(rElement);
-			}
-			else {
-				actResultDiv.appendChild(rElement);
-			}
-		
-		}
-
-	}
+	// currentResultDiv.appendTo("#innerResultsDiv");
+	$(currentResultDiv).appendTo("#innerResultsDiv");
 
 
 	// Print Textbooks array
@@ -374,10 +350,10 @@ var printFilterData = function(filterdata_object) {
 
 	var arraylength = filterdata_object.textbooks.length;
 	if (arraylength == 1) {
-		collectionTitle.innerHTML = "Textbooks (" + arraylength + " Result)";
+		collectionTitle.innerHTML = "<a name='textbooks'>Textbooks (" + arraylength + " Result)</a>";
 	} 
 	else {
-		collectionTitle.innerHTML = "Textbooks (" + arraylength + " Results)";
+		collectionTitle.innerHTML = "<a name='textbooks'>Textbooks (" + arraylength + " Results)</a>";
 	}
 	textbookResultDiv.appendChild(collectionTitle);
 
@@ -397,10 +373,10 @@ var printFilterData = function(filterdata_object) {
 	collectionTitle.id = "collectionTitle";
 	var arraylength = filterdata_object.chapters.length;		// WE NEED TO FIX THIS. This is counting sections as well!!!
 	if (arraylength == 1) {
-		collectionTitle.innerHTML = "Chapters (" + arraylength + " Result)";
+		collectionTitle.innerHTML = "<a name='chapters'>Chapters (" + arraylength + " Result)</a>";
 	} 
 	else {
-		collectionTitle.innerHTML = "Chapters (" + arraylength + " Results)";
+		collectionTitle.innerHTML = "<a name='chapters'>Chapters (" + arraylength + " Results)</a>";
 	}
 	chapterResultDiv.appendChild(collectionTitle);
 
@@ -436,6 +412,42 @@ var printFilterData = function(filterdata_object) {
 	}
 
 
+
+	// Print Activities array
+	var actResultDiv = document.createElement("div");
+	actResultDiv.id = "actResultDiv";
+	$(actResultDiv).appendTo(currentResultDiv);
+
+	var collectionTitle = document.createElement("h1");
+	collectionTitle.id = "collectionTitle";
+	var arraylength = filterdata_object.activities.length;
+	if (arraylength == 1) {
+		collectionTitle.innerHTML = "<a name='activities'>Activities (" + arraylength + " Result)</a>";
+	} 
+	else {
+		collectionTitle.innerHTML = "<a name='activities'>Activities (" + arraylength + " Results)</a>";
+	}
+	actResultDiv.appendChild(collectionTitle);
+
+	for(var i=0; i<filterdata_object.activities.length; i++) {
+		var rElement = createActivityDiv(filterdata_object.activities[i], filterdata_object.activities[i-1]);
+		if ($(rElement).data("type") == "chapter") {
+			actResultDiv.appendChild(rElement);
+		}
+		else if ($(rElement).data("type") == "section") {
+			var matchingDiv = getSectionChapterByPrefix(actResultDiv, rElement);
+			if (matchingDiv != null) {
+				$(matchingDiv).append(rElement);
+			}
+			else {
+				actResultDiv.appendChild(rElement);
+			}
+		
+		}
+
+	}
+
+
 	// Print Dictionary array
 
 	var dictResultDiv = document.createElement("div");
@@ -447,10 +459,10 @@ var printFilterData = function(filterdata_object) {
 
 	var arraylength = filterdata_object.dictionary.length;
 	if (arraylength == 1) {
-		collectionTitle.innerHTML = "Dictionary (" + arraylength + " Result)";
+		collectionTitle.innerHTML = "<a name='dictionary'>Dictionary (" + arraylength + " Result)</a>";
 	} 
 	else {
-		collectionTitle.innerHTML = "Dictionary (" + arraylength + " Results)";
+		collectionTitle.innerHTML = "<a name='dictionary'>Dictionary (" + arraylength + " Results)</a>";
 	}
 	dictResultDiv.appendChild(collectionTitle);
 
@@ -459,6 +471,24 @@ var printFilterData = function(filterdata_object) {
 		// var rElement = createChapterDiv(resultArray[i]);
 		dictResultDiv.appendChild(rElement);
 	}
+
+	// Create inner results menu
+	$("<a/>", {
+		href : "#chapters",
+		html : "Chapters "
+	}).appendTo("#innerResultsMenu");
+	$("<a/>", {
+		href : "#textbooks",
+		html : "Textbooks "
+	}).appendTo("#innerResultsMenu");
+	$("<a/>", {
+		href : "#activities",
+		html : "Activities "
+	}).appendTo("#innerResultsMenu");
+	$("<a/>", {
+		href : "#dictionary",
+		html : "Dictionary "
+	}).appendTo("#innerResultsMenu");
 
 }
 
