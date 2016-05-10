@@ -1555,21 +1555,25 @@ var save = function(){
 	     var timelineDivs = document.getElementsByClassName("timelinediv");
 	     var objectId = "";
 	     for (var i=0; i<timelineDivs.length; i++) {
-	     	objectId = timelineAssArray[timelineDivs[i].data("objid")]._id;
+	     	objectId = timelineAssArray[$(timelineDivs[i]).data("objid")]._id;
 	     	itemIds.push(objectId);
 	     }
 
 	}
 
 	   	var timeline = {
+			timeline_id: getParameterByName("timelineId"),
 	   		lesson_title : titleInput,
 	   		items_array : itemIds
 	   	}
 
 	 	console.log(timeline);
 
-		$.post("../BackEnd/save.php", timeline, function() {
+		$.post("../BackEnd/save.php", timeline, function(data) {
+			console.log(data);
 			console.log("Saved!");
+		}).fail(function(data){
+			console.log(data);
 		});
 		alert("Your timeline, " + titleInput + ", has been saved!");
 
