@@ -1573,7 +1573,6 @@ var save = function(){
 	     }
 
 	}
-
 	   	var timeline = {
 			timeline_id: getParameterByName("timelineId"),
 	   		lesson_title : titleInput,

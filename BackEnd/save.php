@@ -13,19 +13,59 @@
  *				which will act as a repository for the open.html module. 
  */
 
-/*Connect to MongoDB*/
+//Connect to MongoDB//
 require_once 'mongoSetup.php';
-/*Set variables */
-$filename = 'timelines.json';
+//Set variables //
 
-/*Create and Insert Timeline into Database*/
+$filename = 'timelines.json';
+//Open Timeline Repository
+$file = file_get_contents($filename);
+$timelineArray = json_decode($file);
+
+if(!empty($_POST["timeline_id"]))
+	edit();
+else
+	addNew();
+
+//CASE 1: Editing Existing Timeline//
+function edit()
+{
+	$timelineId = $_POST["timeline_id"];
+
+	//Find the mongo document for the relevant timeline
+	
+	try
+	{
+		$info = timelines->findAndModify(
+			array("_id" => new MongoId($timelineId)),
+			array("$set" => array("name" => $_POST["lesson_title"], "line" => $_POST["items_array"])),
+		);
+	} catch (MongoResultException $e) {
+		echo "couldn't find and modify"
+	}
+	$info = fixDocId($info);
+
+	//Edit timeline in timeline.json
+	foreach($timelineArray as $key => $value) {
+		if (in_array($info["_id"], $value)) {
+			$timelineArray[$key] = $info;	// Removes from JSON
+			$timelineArray = array_values(array_filter($timelineArray));	// Resets indices once the item is removed
+			echo "Edited" . $info["name"];
+		}
+	}
+	
+}
+
+//CASE 2: Create and Insert new Timeline into Database//
+function addNew()
+{
+	echo "new timeline create";
 	$info = array("name" => $_POST["lesson_title"], "line" => $_POST["items_array"]);
 	$timelines->insert($info);
 	$info = fixDocId($info);
-
-/*Open and Edit Timeline Repository*/
-	$file = file_get_contents($filename);
-	$timelineArray = json_decode($file);
+	
+	//Add new timeline information into $file//
 	$timelineArray[] = $info;
 	file_put_contents($filename, json_encode($timelineArray), LOCK_EX);
+}
 ?>
