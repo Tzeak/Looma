@@ -206,7 +206,7 @@ window.onload = function loadPageElements() {
 			id : "clear_button",
 			onclick : "clearFilter()",
 			type : "button",
-			html : "Start Over"
+			html : "Clear"
 		}).appendTo("#div_filter");
 
 

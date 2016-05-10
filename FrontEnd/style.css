@@ -12,9 +12,9 @@
 	body #div_grade, #div_subject, #div_chapter, #div_section {
 		margin-top: -.5%;
 	}
-	body #div_filetypes {
-		width: 250px;
-	}
+/*	body #div_filetypes {
+		width: 245px;
+	}*/
 	
 
 }
@@ -123,11 +123,26 @@
 	padding-top: 15px;
 }
 
-#div_subject{
-	
+#div_grade p {
+	font-size: 20px;
+}
+
+#div_section p {
+	font-size: 20px;
+}
+
+#div_subject p {
+	font-size: 20px;
+}
+
+#div_chapter p {
+	font-size: 20px;
+}
+
+#div_subject {
 	float: left;
 	position: relative;
-	width: 10%;
+	width: 9%;
 	margin-right: 30px;
 	line-height: 2px;
 	padding-top: 15px;
@@ -146,10 +161,10 @@
 
 #div_filetypes {
 	/*margin-top: 20px;*/
-	width: 20%;
+	width: 19%;
 	float: left;
 	line-height: 5px;
-	margin-left: 30px;
+	/*margin-left: 30px;*/
 	margin-top: -1%;
 }
 
@@ -171,6 +186,8 @@
 	float: right;
 	position: relative;
 	margin-top:-10px;
+	margin-right: 5px;
+	width: 80px;
 }
 
 
