@@ -48,6 +48,7 @@ window.onload = function loadPageElements() {
 		}).appendTo("#div_grade");
 
 		$("<select/>", {
+			class : "filter_dropdown",
 			id : "dropdown_grade",
 			placeholder: "Grade Level"
 		}).appendTo("#div_grade");
@@ -85,6 +86,7 @@ window.onload = function loadPageElements() {
 		}).appendTo("#div_subject");
 
 		$("<select/>", {
+			class : "filter_dropdown",
 			id : "dropdown_subject"
 		}).appendTo("#div_subject");
 
@@ -111,6 +113,7 @@ window.onload = function loadPageElements() {
 		}).appendTo("#div_chapter");
 
 		$("<select/>", {
+			class : "filter_dropdown",
 			id : "dropdown_chapter"
 		}).appendTo("#div_chapter");
 
@@ -140,6 +143,7 @@ window.onload = function loadPageElements() {
 		}).appendTo("#div_section");
 
 		$("<select/>", {
+			class : "filter_dropdown",
 			id : "dropdown_section"
 		}).appendTo("#div_section");
 
@@ -178,6 +182,7 @@ window.onload = function loadPageElements() {
 
 		$.each(filetypes, function (key, value) {
 		    $("<input/>", { 
+		 		class : "filter_checkbox",
 		    	type : "checkbox",
 		    	style : "zoom:2",
 		    	id : value.id,
@@ -303,6 +308,12 @@ var removeTimelineElement = function() {
 
 var clearFilter = function() {
 	 // $("#div_filter").each(function() { this.selectedIndex = 0 });
+	 $(".filter_dropdown").each(function() {
+	 	this.selectedIndex = 0
+	 });
+	 $(".filter_checkbox").each(function() {
+	 	$(this).prop("checked", false);
+	 })
 }
 
 var querySearch = function() {
