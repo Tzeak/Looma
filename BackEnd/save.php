@@ -30,13 +30,14 @@ else
 //CASE 1: Editing Existing Timeline//
 function edit()
 {
+	global $timelines;
 	$timelineId = $_POST["timeline_id"];
 
 	//Find the mongo document for the relevant timeline
 	
 	try
 	{
-		$info = timelines->findAndModify(
+		$info = $timelines->findAndModify(
 			array("_id" => new MongoId($timelineId)),
 			array("$set" => array("name" => $_POST["lesson_title"], "line" => $_POST["items_array"])),
 		);
