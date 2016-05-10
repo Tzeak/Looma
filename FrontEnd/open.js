@@ -62,12 +62,21 @@ var createOpenListElement = function(index, itemString, itemId, line) {
 		text: "Delete",
 		class: "btnOpenTimeline",
 		id: "deleteBtn" + index,
+		// onclick : "deleteFromPage()"
 	}).appendTo('.editPresent' + index);
 	$("#deleteBtn" + index).bind("click", function(){
+		var li = this.parentNode;
+		li.parentNode.remove();
 		$.post("../BackEnd/delete.php", element, function(element) {
 			console.log(element);
 		});
 	});
 	
+}
+
+
+var deleteFromPage = function() {
+	var li = this.parentNode;
+	li.parentNode.remove();
 }
 
