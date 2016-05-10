@@ -18,22 +18,31 @@ require_once 'mongoSetup.php';
 //Set variables //
 
 $filename = 'timelines.json';
-echo isset($_POST["timeline_id"]);
 //Open Timeline Repository
 $file = file_get_contents($filename);
 $timelineArray = json_decode($file);
 
+if(!empty($_POST["timeline_id"]))
+	edit();
+else
+	addNew();
+
 //CASE 1: Editing Existing Timeline//
-//if(isset($_POST["timeline_id"]))
+function edit()
 {
-/*
 	$timelineId = $_POST["timeline_id"];
 
 	//Find the mongo document for the relevant timeline
-	$info = timelines->findAndModify(
-		array("_id" => new MongoId($timelineId)),
-		array("$set" => array("name" => $_POST["lesson_title"], "line" => $_POST["items_array"])),
-	);
+	
+	try
+	{
+		$info = timelines->findAndModify(
+			array("_id" => new MongoId($timelineId)),
+			array("$set" => array("name" => $_POST["lesson_title"], "line" => $_POST["items_array"])),
+		);
+	} catch (MongoResultException $e) {
+		echo "couldn't find and modify"
+	}
 	$info = fixDocId($info);
 
 	//Edit timeline in timeline.json
@@ -44,14 +53,13 @@ $timelineArray = json_decode($file);
 			echo "Edited" . $info["name"];
 		}
 	}
-
-*/
-
+	
 }
-/*
-else
+
 //CASE 2: Create and Insert new Timeline into Database//
+function addNew()
 {
+	echo "new timeline create";
 	$info = array("name" => $_POST["lesson_title"], "line" => $_POST["items_array"]);
 	$timelines->insert($info);
 	$info = fixDocId($info);
@@ -59,5 +67,5 @@ else
 	//Add new timeline information into $file//
 	$timelineArray[] = $info;
 	file_put_contents($filename, json_encode($timelineArray), LOCK_EX);
-}*/
+}
 ?>
