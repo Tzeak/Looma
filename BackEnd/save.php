@@ -26,7 +26,6 @@ $filename = 'timelines.json';
 /*Open and Edit Timeline Repository*/
 	$file = file_get_contents($filename);
 	$timelineArray = json_decode($file);
-	//echo $file; //Debug
 	$timelineArray[] = $info;
 	file_put_contents($filename, json_encode($timelineArray), LOCK_EX);
 ?>
