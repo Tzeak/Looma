@@ -41,7 +41,7 @@ function edit()
 			array("$set" => array("name" => $_POST["lesson_title"], "line" => $_POST["items_array"])),
 		);
 	} catch (MongoResultException $e) {
-		echo "couldn't find and modify"
+		echo "Find and Modify in save.php did not work";
 	}
 	$info = fixDocId($info);
 
