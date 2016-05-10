@@ -318,6 +318,7 @@ var clearFilter = function() {
 
 var querySearch = function() {
 	$("#innerResultsDiv").html("");
+	$("#innerResultsMenu").html("");
 
 	var filterdata = {
 		'grade' : document.getElementById('dropdown_grade').value,
@@ -500,6 +501,7 @@ var printFilterData = function(filterdata_object) {
 		href : "#dictionary",
 		html : "Dictionary "
 	}).appendTo("#innerResultsMenu");
+	$("#innerResultsMenu").css("border-bottom","1px solid #000");
 
 }
 

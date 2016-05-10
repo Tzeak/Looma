@@ -209,14 +209,23 @@
 }
 
 #innerResultsMenu {
-	height:50px;
 	top:10px;
 /*	position:absolute;
 */	z-index:1;
 	display:block;
+	padding:10px;
 }
 #innerResultsMenu a {
-	vertical-align:middle;
+	color:#000;
+	text-decoration:none;
+	text-align:center;
+	margin-left:10px;
+	margin-right:10px;
+}
+
+#innerResultsMenu a:hover {
+	color:#2E3192;
+	font-weight:bold;
 }
 
 #innerResultsDiv {

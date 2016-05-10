@@ -73,10 +73,3 @@ var createOpenListElement = function(index, itemString, itemId, line) {
 	});
 	
 }
-
-
-var deleteFromPage = function() {
-	var li = this.parentNode;
-	li.parentNode.remove();
-}
-
