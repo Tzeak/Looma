@@ -480,11 +480,6 @@ h2 {
 	  background: darkgray;
 	  /*border-radius:0.313em;*/
 	  position:relative;
-	  opacity:0;
-}
-figure:hover #presentwrapper {
-	display: block;
-	opacity:1;
 }
 
 #presentTitle {
@@ -539,9 +534,7 @@ figure:hover #presentwrapper {
 	
 	
 }
-#timelineWhole {
-	clear:all;
-}
+
 /* ************************ ALL! ********************/
 #container {
 	width: 100%;

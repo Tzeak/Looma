@@ -1,6 +1,8 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="stylesheet" type="text/css" href="present.css">
+		
 	</head>
 
 	<body>
@@ -12,21 +14,25 @@
 		</div>
 
 		<div id="container">
-			<div id= "presentdisplaybox"></div>
+			Title: <!-- GET TITLE FROM BACKEND OBJECT (lesson plan info that the backend send to front) -->
+			<button type="button" id="btnEdit" onclick="location.href='index2.html'">Edit Mode</button>
+			<div id= "displaybox"></div>
 			<br/>
-			<div id = "presentwrapper">
-				<div class="timeline" id="timelineWhole">
-					<div class="timelinediv"></div>
+			<div id = "wrapper">
+				<div class="timeline" id="timelineDisplay">
+					
 				</div>
 			</div>
-			<br/><br/><br/>
+			</br>
 		</div>
 	</body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="jquery-1.12.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-	<script type="text/javascript" src="index2.js"></script>
-	<script type="text/javascript" src="/Controller/load.js"></script>
+    <script type="text/javascript" src="/Controller/load.js"></script>
+	<script type="text/javascript" src="present.js"></script>
+	
+
 
 	
 </html>

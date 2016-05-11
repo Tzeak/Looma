@@ -27,7 +27,6 @@ window.onload = function loadPageElements() {
 		$("<p/>", {
 			class : "filter_label",
 			id : "search_label",
-			
 		}).appendTo("#div_search");
 		$("<input/>", {
 			id : "searchString",
@@ -36,7 +35,6 @@ window.onload = function loadPageElements() {
 			placeholder: "Search",
 			name : "search",
 		}).appendTo("#div_search");
-
 
 		// Sidebar: Grade
 
@@ -254,7 +252,8 @@ var addToAssArray = function(object) {
 
 
 
-/////////////////////////// TIMELINE MANIPULATION ///////////////////////////
+/////////////////////////// TIMELINE MANIPULATION //////////////////////////
+//***********************************************************************things we need for present**********************************************************************************************
 
 var openTimeline = function() {
 	var timelineElements = opentime();	// gets the ID from the URL and retrieves the whole timeline array
@@ -262,7 +261,6 @@ var openTimeline = function() {
 		createTimelineElement(timelineObj);
 	});
 }
-
 
 var createTimelineElement = function(object){
 
@@ -318,6 +316,7 @@ var removeTimelineElement = function() {
   timelineItem.parentNode.remove();
 }	
 
+//***********************************************************************end of things we need for present**********************************************************************************************
 
 
 
@@ -565,6 +564,7 @@ THUMBNAILS
 		code it in.
 
 //////////////////////////END TO-DO */
+//*************************************************************************************start of things we need for presentation **********************************************
 
 var extractItemId = function(item, collection) {
 	
@@ -1567,6 +1567,7 @@ var preview_result = function(collection, item) {
 	// Game
 	
 }
+//*********************************************************************** end of things we need for present **********************************************************************************************
 
 
 
