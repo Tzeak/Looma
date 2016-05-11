@@ -96,7 +96,7 @@ function getTimelineElements ($timelineID) {
 			// error_log("You messed up!", 3, "/var/tmp/my-errors.log");
 			break;
 		}
-		$timelineElementsArray[$i] = $document;		// find the document! yay!
+		$timelineElementsArray[$i] = $document;		// find the document! yay! key = 
 	}
 	return $timelineElementsArray;
 }

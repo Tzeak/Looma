@@ -25,6 +25,7 @@ window.onload = function loadPageElements() {
 			id : "div_search"
 		}).appendTo("#div_filter");
 		$("<p/>", {
+			class : "filter_label",
 			id : "search_label",
 			
 		}).appendTo("#div_search");
@@ -44,7 +45,8 @@ window.onload = function loadPageElements() {
 		}).appendTo("#div_filter");
 
 		$("<p/>", {
-			html : "Grade Level: ", 
+			class : "filter_label",
+			html : "Grade Level:<br/>", 
 		}).appendTo("#div_grade");
 
 		$("<select/>", {
@@ -82,6 +84,7 @@ window.onload = function loadPageElements() {
 		}).appendTo("#div_filter");
 
 		$("<p/>", {
+			class : "filter_label",
 			html : "Subject: ", 
 		}).appendTo("#div_subject");
 
@@ -109,6 +112,7 @@ window.onload = function loadPageElements() {
 		}).appendTo("#div_filter");
 
 		$("<p/>", {
+			class : "filter_label",
 			html : "Chapter: ", 
 		}).appendTo("#div_chapter");
 
@@ -139,6 +143,7 @@ window.onload = function loadPageElements() {
 		}).appendTo("#div_filter");
 
 		$("<p/>", {
+			class : "filter_label",
 			html : "Section: ", 
 		}).appendTo("#div_section");
 
@@ -190,6 +195,7 @@ window.onload = function loadPageElements() {
 		        // html : value.display
 	    	}).appendTo("#div_filetypes");
 	    	$("<label/>", { 
+	    		class : "filter_label",
 		    	for : value.id,
 		    	html : value.display
 	    	}).appendTo("#div_filetypes");
@@ -214,6 +220,18 @@ window.onload = function loadPageElements() {
 			html : "Clear"
 		}).appendTo("#div_filter");
 
+		// Title string
+		$("<p/>", {
+			html : "Lesson Plan Title:&nbsp;&nbsp;"
+		}).appendTo("#titleDiv");
+
+		$("<input/>", {
+			id : "titleInput",
+			class: "textBox",
+			type : "text",
+			placeholder: "e.g. Level 1 Math",
+			name : "title",
+		}).appendTo("#titleDiv");
 
 		openTimeline();
 }
@@ -226,9 +244,12 @@ var addToAssArray = function(object) {
 
 //////////////////////////// SUBMIT LESSON TITLE NAME ///////////////////////
 
-var titleName = function() {
-	
-}
+// var findTitleName = function() {
+// 	var timelength = timelines.length;
+// 	for (var i=0; i<timelength; i++) {
+// 		if (timelines[i])
+// 	}
+// }
 
 
 
@@ -247,7 +268,7 @@ var createTimelineElement = function(object){
 
 	var innerdiv = null;
 
- 	if(object.ft !=null)
+ 	if(object.ft !=null) 
  		innerdiv = createActivityDiv(object);
 
  	//textbook
@@ -268,16 +289,21 @@ var createTimelineElement = function(object){
 	addToAssArray(object);
 	console.log(timelineAssArray);
 
+	if($(innerdiv).has("h3")){
+		$("h3").remove();
+	}
+
 	// Remove "resultitem" class from div
 	$(innerdiv).removeClass("resultitem");
 	$(innerdiv).addClass("innerdiv");
+	// $(innerdiv).removeElement
 
 	var timelinediv = $("<div/>", {class:"timelinediv"}).appendTo("#timelineDisplay");
 	$(innerdiv).appendTo(timelinediv);
  	$(timelinediv).attr("data-objid", object._id);
  	// console.log(timelinediv.className);
  	$(".timelinediv button.add").remove();
-	var removebutton = $("<button/>", {class: "remove", html:"-"}).bind("click", removeTimelineElement);
+	var removebutton = $("<button/>", {class: "remove", html:"Remove"}).bind("click", removeTimelineElement);
 	$(innerdiv).append(removebutton);
 
 	sortableFunction();
@@ -317,8 +343,8 @@ var clearFilter = function() {
 }
 
 var querySearch = function() {
-	$("#innerResultsDiv").html("");
-	$("#innerResultsMenu").html("");
+	$("#innerResultsDiv").empty();
+	$("#innerResultsMenu").empty();
 
 	var filterdata = {
 		'grade' : document.getElementById('dropdown_grade').value,
@@ -486,12 +512,12 @@ var printFilterData = function(filterdata_object) {
 
 	// Create inner results menu
 	$("<a/>", {
-		href : "#chapters",
-		html : "Chapters "
-	}).appendTo("#innerResultsMenu");
-	$("<a/>", {
 		href : "#textbooks",
 		html : "Textbooks "
+	}).appendTo("#innerResultsMenu");
+	$("<a/>", {
+		href : "#chapters",
+		html : "Chapters "
 	}).appendTo("#innerResultsMenu");
 	$("<a/>", {
 		href : "#activities",
@@ -843,11 +869,15 @@ var createChapterDiv = function(item, previtem) {
 
 				$("<p/>", {
 					class : "result_dn",
-					html : "<b>Section " + idExtractArray["currentSection"] + ":</b><br/>" + item.dn
+					html : "<b>Section " + idExtractArray["currentSection"]
+				}).appendTo(sectionDiv);
+				$("<p/>", {
+					class : "result_dn",
+					html : item.dn
 				}).appendTo(sectionDiv);
 
 				var addButton = document.createElement("button");
-				addButton.innerText = "+";
+				addButton.innerText = "Add";
 				addButton.className = "add";
 				// addButton.onclick = createTimelineElement(item);
 				$(addButton).bind("click", function() {
@@ -856,7 +886,7 @@ var createChapterDiv = function(item, previtem) {
 				sectionDiv.appendChild(addButton);
 
 				var previewButton = document.createElement("button");
-				previewButton.innerText = "P";
+				previewButton.innerText = "Preview";
 				previewButton.className = "preview";
 				// previewButton.onclick = preview_result(item);
 				$(previewButton).bind("click", function() {
@@ -907,7 +937,7 @@ var createChapterDiv = function(item, previtem) {
 
 	// "Add" button
 	var addButton = document.createElement("button");
-	addButton.innerText = "+";
+	addButton.innerText = "Add";
 	addButton.className = "add";
 	// addButton.onclick = createTimelineElement(item);
 	$(addButton).bind("click", function() {
@@ -916,7 +946,7 @@ var createChapterDiv = function(item, previtem) {
 	div.appendChild(addButton);
 
 	var previewButton = document.createElement("button");
-	previewButton.innerText = "P";
+	previewButton.innerText = "Preview";
 	previewButton.className = "preview";
 	// previewButton.onclick = preview_result(item);
 	$(previewButton).bind("click", function() {
@@ -967,7 +997,7 @@ var createTextbookDiv = function(item) {
 
 	// "Add" button
 	var addButton = document.createElement("button");
-	addButton.innerText = "+";
+	addButton.innerText = "Add";
 	addButton.className = "add";
 	$(addButton).bind("click", function() {
 		createTimelineElement(item); 
@@ -975,7 +1005,7 @@ var createTextbookDiv = function(item) {
 	div.appendChild(addButton);
 
 	var previewButton = document.createElement("button");
-	previewButton.innerText = "P";
+	previewButton.innerText = "Preview";
 	previewButton.className = "preview";
 	// previewButton.onclick = preview_result(item);
 	$(previewButton).bind("click", function() {
@@ -1093,7 +1123,7 @@ var createActivityDiv = function(item, previtem) {
 		}
 
 		var addButton = document.createElement("button");
-		addButton.innerText = "+";
+		addButton.innerText = "Add";
 		addButton.className = "add";
 		// addButton.onclick = createTimelineElement(item);
 		$(addButton).bind("click", function() {
@@ -1102,7 +1132,7 @@ var createActivityDiv = function(item, previtem) {
 		sectionDiv.appendChild(addButton);
 
 		var previewButton = document.createElement("button");
-		previewButton.innerText = "P";
+		previewButton.innerText = "Preview";
 		previewButton.className = "preview";
 		// previewButton.onclick = preview_result(item);
 		$(previewButton).bind("click", function() {
@@ -1216,7 +1246,7 @@ var createActivityDiv = function(item, previtem) {
 
 		// "Add" button
 		var addButton = document.createElement("button");
-		addButton.innerText = "+";
+		addButton.innerText = "Add";
 		addButton.className = "add";
 		$(addButton).bind("click", function() {
 			createTimelineElement(item); 
@@ -1224,7 +1254,7 @@ var createActivityDiv = function(item, previtem) {
 		chapterDiv.appendChild(addButton);
 
 		var previewButton = document.createElement("button");
-		previewButton.innerText = "P";
+		previewButton.innerText = "Preview";
 		previewButton.className = "preview";
 		// previewButton.onclick = preview_result(item);
 		$(previewButton).bind("click", function() {
@@ -1327,7 +1357,7 @@ var createDictionaryDiv = function(item) {
 
 	// "Add" button
 	var addButton = document.createElement("button");
-	addButton.innerText = "+";
+	addButton.innerText = "Add";
 	addButton.className = "add";
 	$(addButton).bind("click", function() {
 		createTimelineElement(item); 
@@ -1335,7 +1365,7 @@ var createDictionaryDiv = function(item) {
 	div.appendChild(addButton);
 
 	var previewButton = document.createElement("button");
-	previewButton.innerText = "P";
+	previewButton.innerText = "Preview";
 	previewButton.className = "preview";
 	// previewButton.onclick = preview_result(item);
 	$(previewButton).bind("click", function() {

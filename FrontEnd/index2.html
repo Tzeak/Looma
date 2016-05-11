@@ -5,19 +5,25 @@
 	</head>
 
 	<body onload="loadPageElements()">
-		<div id="navbar">
-			<img id="logo" src="images/LoomaLogo.png">
-			<div id="titleString">Title:&nbsp<input type="text" name="title" class="textBox" placeholder="e.g. Level 1 Math" id="titleInput"></div>
-			<button type="button" id="btnSave" onclick="save()">Save</button>
-			<button type="button" id="btnPresent" onclick="location.href='present.html';">Present</button>
-			<button type="button" id="btnOpen" onclick="location.href='open.html';">Open</button>
-		</div>
-		<div id="querybar">
-			<form id="div_filter">
-			</form>
+		<div id="headerDiv">
+			<div id="navbar">
+				<img id="logo" src="images/LoomaLogo.png">
+				<div id="titleString">
+	<!-- 				Title:&nbsp;<input type="text" name="title" class="textBox" placeholder="e.g. Level 1 Math" id="titleInput">
+	 -->			</div>
+				<button type="button" id="btnSave" onclick="save()">Save</button>
+				<button type="button" id="btnPresent" onclick="location.href='present.html';">Present</button>
+				<button type="button" id="btnOpen" onclick="location.href='open.html';">Open</button>
+				<button type="button" id="btnOpen" onclick="location.href='index2.html';">New</button>
+			</div>
+			<div id="querybar">
+				<form id="div_filter">
+				</form>
+			</div>
 		</div>
 		<div id="container">
-
+			<div id="titleDiv">
+			</div>
 			<div id="outerResultsDiv">
 				<div id="innerResultsMenu">
 				</div>
