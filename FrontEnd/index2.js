@@ -187,7 +187,7 @@ window.onload = function loadPageElements() {
 		    $("<input/>", { 
 		 		class : "filter_checkbox",
 		    	type : "checkbox",
-		    	style : "zoom:2",
+		    	style : "zoom:1.5",
 		    	id : value.id,
 		        name : key,
 		        // html : value.display
@@ -205,17 +205,17 @@ window.onload = function loadPageElements() {
 	    $("#div_filetypes").append("<br/>");
 
 		$("<button/>", {
-			id : "submit_button",
-			onclick : "querySearch()",
-			type : "button",
-			html : "Search"
-		}).appendTo("#div_filter");
-
-		$("<button/>", {
 			id : "clear_button",
 			onclick : "clearFilter()",
 			type : "button",
 			html : "Clear"
+		}).appendTo("#div_filter");
+
+		$("<button/>", {
+			id : "submit_button",
+			onclick : "querySearch()",
+			type : "button",
+			html : "Search"
 		}).appendTo("#div_filter");
 
 		// Title string
