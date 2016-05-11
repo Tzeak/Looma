@@ -18,6 +18,7 @@ function opentime(){
 	console.log("opentime() called");
 	var timelineID = getParameterByName("timelineId");
 	timelineID = {"$id" : timelineID}; //Set up in format for querying mongo database
+	open_timelineID = {"id" : timelineID}; //Set up in format for querying mongo database
 
 
 	// var createNewTimeElement = function(index, itemString) {
@@ -34,7 +35,13 @@ function opentime(){
 			console.log("returning empty array");
 		else 
 		{
-			// $.ajaxSetup({async: false});
+			$.post("/BackEnd/open.php", open_timelineID, function(data){
+				console.log(data);
+			}).fail(function(jqXHR){
+				console.log("open.php " + jqXHR.status);
+			});
+
+			
 			$.ajax({
 				url: "/BackEnd/openTimeline.php",
 				dataType: 'json',
@@ -47,7 +54,7 @@ function opentime(){
 						timelineArray.push(val);
 						console.log(timelineData);
 					});
-					$("#titleInput").attr("value", getTimelineTitle(timelineData));
+					// $("#titleInput").attr("value", getTimelineTitle(timelineData));
 					// $("<p/>", {
 					// 	html : "hello"
 					// }).appendTo("#titleDiv");
