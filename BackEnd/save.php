@@ -20,7 +20,7 @@ require_once 'mongoSetup.php';
 $filename = 'timelines.json';
 //Open Timeline Repository
 $file = file_get_contents($filename);
-$timelineArray = json_decode($file);
+$timelineArray = json_decode($file, true); //the true parameter allows the functions to treat the object like an associated array
 
 if(!empty($_POST["timeline_id"]))
 	edit();
@@ -31,15 +31,19 @@ else
 function edit()
 {
 	global $timelines;
+	global $timelineArray;
 	$timelineId = $_POST["timeline_id"];
 
 	//Find the mongo document for the relevant timeline
 	
 	try
 	{
+		echo $_POST["lesson_title"];
 		$info = $timelines->findAndModify(
 			array("_id" => new MongoId($timelineId)),
-			array("$set" => array("name" => $_POST["lesson_title"], "line" => $_POST["items_array"])),
+			array('$set' => array("name" => $_POST["lesson_title"], "line" => $_POST["items_array"])),
+			null,
+			array("new" => true)
 		);
 	} catch (MongoResultException $e) {
 		echo "Find and Modify in save.php did not work";
@@ -49,9 +53,9 @@ function edit()
 	//Edit timeline in timeline.json
 	foreach($timelineArray as $key => $value) {
 		if (in_array($info["_id"], $value)) {
-			$timelineArray[$key] = $info;	// Removes from JSON
-			$timelineArray = array_values(array_filter($timelineArray));	// Resets indices once the item is removed
-			echo "Edited" . $info["name"];
+			$timelineArray[$key] = $info;	// Edits JSON
+			//$timelineArray = array_values(array_filter($timelineArray));	// Resets indices once the item is removed
+			echo "Edited " . $info["name"];
 		}
 	}
 	
@@ -60,6 +64,9 @@ function edit()
 //CASE 2: Create and Insert new Timeline into Database//
 function addNew()
 {
+	global $filename;
+	global $timelines;
+	global $timelineArray;
 	echo "new timeline create";
 	$info = array("name" => $_POST["lesson_title"], "line" => $_POST["items_array"]);
 	$timelines->insert($info);
@@ -67,6 +74,8 @@ function addNew()
 	
 	//Add new timeline information into $file//
 	$timelineArray[] = $info;
-	file_put_contents($filename, json_encode($timelineArray), LOCK_EX);
 }
+
+file_put_contents($filename, json_encode($timelineArray), LOCK_EX);
+
 ?>
