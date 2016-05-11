@@ -16,7 +16,7 @@ function opentime(){
 	console.log("opentime() called");
 	var timelineID = getParameterByName("timelineId");
 	timelineID = {"$id" : timelineID}; //Set up in format for querying mongo database
-	open_timelineID = {"id" : timelineID}; //Set up in format for querying mongo database
+	//open_timelineID = {"id" : timelineID}; //Set up in format for querying mongo database
 
 
 	// var createNewTimeElement = function(index, itemString) {
@@ -33,7 +33,7 @@ function opentime(){
 			console.log("returning empty array");
 		else 
 		{
-			$.post("/BackEnd/open.php", open_timelineID, function(data){
+			$.post("/Looma/BackEnd/open.php", timelineID, function(data){
 				console.log(data);
 			}).fail(function(jqXHR){
 				console.log("open.php " + jqXHR.status);
@@ -41,7 +41,7 @@ function opentime(){
 
 			
 			$.ajax({
-				url: "/BackEnd/openTimeline.php",
+				url: "/Looma/BackEnd/openTimeline.php",
 				dataType: 'json',
 				async: false,
 				data: timelineID,
@@ -59,7 +59,7 @@ function opentime(){
 				}
 			}).fail(function(jqXHR){
 				console.log(jqXHR.status)
-				$.get("/BackEnd/openTimeline.php", timelineID, function(timelineData){
+				$.get("/Looma/BackEnd/openTimeline.php", timelineID, function(timelineData){
 					console.log(timelineData);
 				});
 			});
