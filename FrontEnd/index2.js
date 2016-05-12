@@ -853,6 +853,84 @@ var extractItemId = function(item, collection) {
 return elementsArray;
 }
 
+
+
+
+
+
+
+// Create "Textbook" collection results
+var createTextbookDiv = function(item) {
+	var collection = "textbooks";
+	var resultdiv = document.createElement("div");
+	resultdiv.className = "resultitem";
+
+	// Thumbnail
+	var thumbnaildiv = document.createElement("div");
+	thumbnaildiv.className = "thumbnaildiv";
+	$(thumbnaildiv).appendTo(resultdiv);
+	var thumbnail_prefix = item.fn;
+	thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+	$("<img/>", {
+		class : "resultsimg",
+		src : homedirectory + "content/" + item.fp + thumbnail_prefix + "_thumb.jpg"
+	}).appendTo(thumbnaildiv);
+
+	// Result Text
+	var textdiv = document.createElement("div");
+	textdiv.className = "textdiv";
+	$(textdiv).appendTo(resultdiv);
+
+	$("<p/>", {	// Display name
+		class : "result_dn",
+		html : "<b>" + item.dn + "</b>"
+	}).appendTo(textdiv);
+
+	$("<p/>", {	// Nepali display name
+		class : "result_ndn",
+		html : item.ndn
+	}).appendTo(textdiv);
+
+	$("<p/>", {	// Mongo ID
+		class : "result_ID",
+		html : item._id
+	}).appendTo(textdiv);
+
+
+	// Buttons
+	var buttondiv = document.createElement("div");
+	buttondiv.className = "buttondiv";
+	$(buttondiv).appendTo(resultdiv);
+
+	// "Add" button
+	var addButton = document.createElement("button");
+	addButton.innerText = "Add";
+	addButton.className = "add";
+	$(addButton).bind("click", function() {
+		createTimelineElement(item); 
+	});
+	$(addButton).appendTo(buttondiv);
+
+	var previewButton = document.createElement("button");
+	previewButton.innerText = "Preview";
+	previewButton.className = "preview";
+	// previewButton.onclick = preview_result(item);
+	$(previewButton).bind("click", function() {
+		preview_result(collection, item);
+	})
+	$(previewButton).appendTo(buttondiv);
+
+	return resultdiv;
+}
+
+
+
+
+
+
+
+
+
 // Create "Chapter" collection results
 var createChapterDiv = function(item, previtem) {
 	var collection = "chapters";
@@ -963,64 +1041,13 @@ var createChapterDiv = function(item, previtem) {
 	return div;
 }
 
-// Create "Textbook" collection results
-var createTextbookDiv = function(item) {
-	var collection = "textbooks";
-	var div = document.createElement("div");
-	div.className = "resultitem";
 
-	// Thumbnail
-	var thumbnail_prefix = item.fn;
-	thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
-	$("<img/>", {
-		class : "resultsimg",
-		src : homedirectory + "content/" + item.fp + thumbnail_prefix + "_thumb.jpg"
-	}).appendTo(div);
 
-	// var image = document.createElement("img");
-	// image.className = "resultsimg";
-	// image.src =  homedirectory + "content/" + item.fp + thumbnail_prefix + "_thumb.jpg";
-	// div.appendChild(image);
 
-	// Display name
-	$("<p/>", {
-		class : "result_dn",
-		html : "<b>" + item.dn + "</b>"
-	}).appendTo(div);
 
-	// Nepali Name
-	$("<p/>", {
-		class : "result_ndn",
-		html : item.ndn
-	}).appendTo(div);
 
-	// ID
-	$("<p/>", {
-		class : "result_ID",
-		html : item._id
-	}).appendTo(div);
 
-	// "Add" button
-	var addButton = document.createElement("button");
-	addButton.innerText = "Add";
-	addButton.className = "add";
-	$(addButton).bind("click", function() {
-		createTimelineElement(item); 
-	});
-	div.appendChild(addButton);
-
-	var previewButton = document.createElement("button");
-	previewButton.innerText = "Preview";
-	previewButton.className = "preview";
-	// previewButton.onclick = preview_result(item);
-	$(previewButton).bind("click", function() {
-		preview_result(collection, item);
-	})
-	div.appendChild(previewButton);
-
-	return div;
-}
 
 var createActivityDiv = function(item, previtem) {
 	var collection = "activities";
@@ -1327,6 +1354,10 @@ var createActivityDiv = function(item, previtem) {
 
 	return div;
 }
+
+
+
+
 
 
 

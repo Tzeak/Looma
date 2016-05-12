@@ -150,11 +150,6 @@
 	/*margin-left: 30px;*/
 }
 
-#div_filter {
-
-
-}
-
 #submit_button {
 	height: 55px;
 	float: right;
@@ -175,6 +170,11 @@
 .filter_label p, .filter_label {
 	font-size:18px;
 	/*line-height:6px;*/
+}
+
+.textdiv {
+	min-width:250px;
+	float:left;
 }
 
 
@@ -372,7 +372,6 @@ ul {
 
 h3{
 	font-size: 30px;
-	text-align: center;
 }
 
 #openNavbar {
