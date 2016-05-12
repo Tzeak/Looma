@@ -19,6 +19,12 @@ var homedirectory = "../";
 // This loads all the preliminary elements in the page.
 window.onload = function loadPageElements() {
 
+		// Navbar 
+
+		$("<p/>", {
+			html : "Lesson Plan Creator: Edit"
+		}).appendTo("#navbar");
+
 		// Sidebar: Search
 
 		$("<div/>", {
@@ -56,8 +62,8 @@ window.onload = function loadPageElements() {
 		for (var i=0; i<8; i++) {
 			if (i == 0) {
 				$("<option/>", {
-					html : "",
-					id : ""
+					html : "3",
+					id : "3"
 				}).appendTo("#dropdown_grade");
 			} 
 			else {
@@ -92,8 +98,8 @@ window.onload = function loadPageElements() {
 		}).appendTo("#div_subject");
 
 		$('<option>', { 
-	        value: "",
-	        html : "" 
+	        value: "S",
+	        html : "Science" 
 	    }).appendTo("#dropdown_subject");
 
 		$.each(subjects, function (key, value) {

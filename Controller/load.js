@@ -33,15 +33,17 @@ function opentime(){
 			console.log("returning empty array");
 		else 
 		{
-			$.post("/Looma/BackEnd/open.php", timelineID, function(data){
-				console.log(data);
+			$.post("/BackEnd/open.php", timelineID, function(data){
+				// console.log(data.name);
+				data = JSON.parse(data);
+				$("#titleInput").attr("value", data.name);
 			}).fail(function(jqXHR){
 				console.log("open.php " + jqXHR.status);
 			});
 
 			
 			$.ajax({
-				url: "/Looma/BackEnd/openTimeline.php",
+				url: "/BackEnd/openTimeline.php",
 				dataType: 'json',
 				async: false,
 				data: timelineID,
@@ -59,7 +61,7 @@ function opentime(){
 				}
 			}).fail(function(jqXHR){
 				console.log(jqXHR.status)
-				$.get("/Looma/BackEnd/openTimeline.php", timelineID, function(timelineData){
+				$.get("/BackEnd/openTimeline.php", timelineID, function(timelineData){
 					console.log(timelineData);
 				});
 			});
