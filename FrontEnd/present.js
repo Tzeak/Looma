@@ -96,7 +96,7 @@ var createChapterDiv = function(item) {
 	var thumbnail_prefix = currentSubject.concat("-", currentGradeNumber);
 
 	var image = document.createElement("img");
-	image.id = "resultsimg";
+	image.className = "resultsimg";
 	image.src = homedirectory + "content/textbooks/" + currentGrade + "/" + currentSubject + "/" + thumbnail_prefix + "_thumb.jpg";
 	div.appendChild(image);
 
@@ -141,7 +141,7 @@ var createTextbookDiv = function(item) {
 	thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
 	$("<img/>", {
-		id : "resultsimg",
+		class : "resultsimg",
 		src : homedirectory + "content/" + item.fp + thumbnail_prefix + "_thumb.jpg"
 	}).appendTo(div);
 
@@ -189,7 +189,7 @@ var createActivityDiv = function(item) {
 	// Thumbnail
 	var image = document.createElement("img");
 	if (item.ft == "mp3") {	 //audio
-		image.id = "resultsimg";
+		image.className = "resultsimg";
 		image.src = homedirectory + "content/audio/thumbnail.png";
 	} 
 	else if (item.ft == "mp4" || item.ft == "mp5") { //video
@@ -197,7 +197,7 @@ var createActivityDiv = function(item) {
 		thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
 		var image = document.createElement("img");
-		image.id = "resultsimg";
+		image.className = "resultsimg";
 		image.src = homedirectory + "content/videos/" + thumbnail_prefix + "_thumb.jpg";
 	} 
 	else if (item.ft == "jpg"  || item.ft == "gif" || item.ft == "png" ) { //picture
@@ -205,7 +205,7 @@ var createActivityDiv = function(item) {
 		thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
 		var image = document.createElement("img");
-		image.id = "resultsimg";
+		image.className = "resultsimg";
 		image.src = homedirectory + "content/pictures/" + thumbnail_prefix + "_thumb.jpg";
 	}
 	else if (item.ft == "pdf") { //pdf
@@ -213,12 +213,12 @@ var createActivityDiv = function(item) {
 		thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
 		var image = document.createElement("img");
-		image.id = "resultsimg";
+		image.className = "resultsimg";
 		image.src = homedirectory + "content/pdfs/" + thumbnail_prefix + "_thumb.jpg";
 	} 
 	else if (item.ft == "EP") {
 		var image = document.createElement("img");
-		image.id = "resultsimg";
+		image.className = "resultsimg";
 		image.src = homedirectory + "content/epaath/thumbnail.png";
 	} 
 	// else {
@@ -264,7 +264,7 @@ var createDictionaryDiv = function(item) {
 	div.className = "resultitem";
 
 	var image = document.createElement("img");
-	image.id = "resultsimg";
+	image.className = "resultsimg";
 	image.src = homedirectory + "content/dictionaries/thumbnail.png";
 	div.appendChild(image);
 
