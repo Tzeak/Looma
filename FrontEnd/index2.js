@@ -1660,6 +1660,31 @@ var save = function(){
 }
 
 
+////////////////////////// Present button from index  /////////////////////////////
+
+//var indexToPresent = function(){    
+//	console.log("opening timeline in present...");
+//	var itemIdArray = [];
+//
+//	var timelineDivs = document.getElementsByClassName("timelinediv");
+//
+//	var objectId = "";
+//	var form = $("<form/>", {
+//		method: "post",
+//		action: homedirectory + "present.php",
+//	});
+//
+//	for (var i=0; i<timelineDivs.length; i++) {
+//		var formInput = $("<input/>", {
+//			type : "text",
+//			name : "objid",
+//			value: $(timelineDivs[i]).data("objid"),
+//		});
+//
+//		form.append(formInput);
+//	}
+//	form.submit();
+//}
 
 
 
