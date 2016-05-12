@@ -497,6 +497,13 @@ h3{
 #btnEdit {
 	float: right;
 	margin-right: 1%;
+	margin-top: -35px;
+}
+
+#btnOpen {
+	float: right;
+	margin-right: 1%;
+	margin-top: -35px;
 }
 
 /* ************************ INDEX && OPEN! ********************/

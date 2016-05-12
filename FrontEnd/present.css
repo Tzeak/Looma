@@ -11,6 +11,7 @@
 	margin-right: 25px;*/
 	border-radius: 0.313em;
 	box-shadow: 0px 0px 25px #C4C4C4;
+	overflow-y:scroll;
 }
 #presentwrapper {
 	  padding: 15px;

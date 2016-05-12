@@ -62,8 +62,8 @@ window.onload = function loadPageElements() {
 		for (var i=0; i<8; i++) {
 			if (i == 0) {
 				$("<option/>", {
-					html : "3",
-					id : "3"
+					html : "",
+					id : ""
 				}).appendTo("#dropdown_grade");
 			} 
 			else {
@@ -98,8 +98,8 @@ window.onload = function loadPageElements() {
 		}).appendTo("#div_subject");
 
 		$('<option>', { 
-	        value: "S",
-	        html : "Science" 
+	        value: "",
+	        html : "" 
 	    }).appendTo("#dropdown_subject");
 
 		$.each(subjects, function (key, value) {
