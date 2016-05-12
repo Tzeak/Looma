@@ -392,6 +392,8 @@ h3{
 	font-weight:bold;
 	vertical-align:center;
 	margin-top:4px;
+	width: 600px;
+	margin-right: 0;
 }
 
 #openForm {
@@ -409,10 +411,10 @@ h3{
 }
 #btnNewLesson {
 	float:right;
-	width: 150px;
-	height: 70px;
-	margin-right: 53px;
-	margin-top: 10px;
+	width: 180px;
+	height: 40px;
+	margin-right: 2%;
+	margin-top: -35px;
 	white-space: normal;
 }
 #header {
@@ -427,7 +429,7 @@ h3{
 	color:black;
 	padding:2px;
 	margin:auto;
-	width:94%;
+	/*width:94%;*/
 	border:solid;
 	border-color: white;
 	border-width:3px;
