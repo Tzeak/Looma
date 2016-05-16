@@ -34,6 +34,7 @@
 	height: 45px;
 	color:white;
 	padding-right:20px;
+	box-shadow: 0px 0px 25px #C4C4C4;
 }
 #titleString {
 	position:relative;
@@ -435,6 +436,7 @@ h3{
 	/*border-radius: 10px;*/
 	overflow-y:scroll;
 	height: 70%;
+	box-shadow: 0px 0px 25px #C4C4C4;
 }
 .btnOpenTimeline {
 	margin-right: 15px;

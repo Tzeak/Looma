@@ -62,8 +62,8 @@ window.onload = function loadPageElements() {
 		for (var i=0; i<8; i++) {
 			if (i == 0) {
 				$("<option/>", {
-					html : "",
-					id : ""
+					html : "3",
+					id : "3"
 				}).appendTo("#dropdown_grade");
 			} 
 			else {
@@ -98,8 +98,8 @@ window.onload = function loadPageElements() {
 		}).appendTo("#div_subject");
 
 		$('<option>', { 
-	        value: "",
-	        html : "" 
+	        value: "EN",
+	        html : "English" 
 	    }).appendTo("#dropdown_subject");
 
 		$.each(subjects, function (key, value) {
@@ -404,6 +404,7 @@ var printFilterData = function(filterdata_object) {
 		var rElement = createTextbookDiv(filterdata_object.textbooks[i]);
 
 		textbookResultDiv.appendChild(rElement);
+		console.log(filterdata_object.textbooks[i]._id);
 	}
 
 
@@ -422,7 +423,6 @@ var printFilterData = function(filterdata_object) {
 		collectionTitle.innerHTML = "<a name='chapters'>Chapters (" + arraylength + " Results)</a>";
 	}
 	chapterResultDiv.appendChild(collectionTitle);
-
 
 	for(var i=0; i<filterdata_object.chapters.length; i++) {
 		var rElement = createChapterDiv(filterdata_object.chapters[i], filterdata_object.chapters[i-1]);
@@ -1103,7 +1103,7 @@ var createActivityDiv = function(item, previtem) {
 		else if (item.ft == "EP") {
 			var image = document.createElement("img");
 			image.className = "resultsimg";
-			image.src = homedirectory + "content/epaath/thumbnail.png";
+			image.src = homedirectory + "content/epaath/activities/" + item.fn + "/thumbnail.jpg";
 		} 
 		$(image).css("width","140");
 		sectionDiv.appendChild(image);
@@ -1216,7 +1216,7 @@ var createActivityDiv = function(item, previtem) {
 		else if (item.ft == "EP") {
 			var image = document.createElement("img");
 			image.className = "resultsimg";
-			image.src = homedirectory + "content/epaath/thumbnail.png";
+			image.src = homedirectory + "content/epaath/activities/" + item.fn + "/thumbnail.jpg";
 		} 
 
 		$(image).css("width","140");
@@ -1426,140 +1426,12 @@ var createDictionaryDiv = function(item) {
 
 // When you click the preview button
 var preview_result = function(collection, item) {
-	console.log("PREVIEWING THINGS");
+
+	var idExtractArray = extractItemId(item, collection);
 
 	if (collection == "chapters") {
 
-		var str = item._id;
-		var itemId_splitArray = str.split("");
-		var arr_length = itemId_splitArray.length;
-
-		// Extracts the section number
-		if (str.indexOf(".") >= 0) {
-			var currentSection = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
-			console.log("current section: " + currentSection);
-			itemId_splitArray.splice(arr_length-1, 1);
-			itemId_splitArray.splice(arr_length-2, 1);
-			itemId_splitArray.splice(arr_length-3, 1);
-			arr_length = itemId_splitArray.length;
-		}
-
-		// Extracts the last 2 numbers as the chapter
-		var currentChapter = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
-		console.log("current chapter: " + currentChapter);
-		itemId_splitArray.splice(arr_length-1, 1);
-		itemId_splitArray.splice(arr_length-2, 1);
-		arr_length = itemId_splitArray.length;
-
-		if (arr_length == 3) {	// If the subject is EN, or SS (or something with 2 letters)
-			var currentSubject = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
-			console.log("current subject: " + currentSubject);
-			itemId_splitArray.splice(arr_length-1, 1);
-			itemId_splitArray.splice(arr_length-2, 1);
-			arr_length = itemId_splitArray.length;
-		}
-		else if (itemId_splitArray.length == 2) {	// If the subject is M or S, N (or something with 1 letter)
-			var currentSubject = itemId_splitArray[arr_length-1];
-			console.log("current subject: " + currentSubject);
-			itemId_splitArray.splice(arr_length-1, 1);
-			arr_length = itemId_splitArray.length;
-		}
-
-		var currentGradeNumber = itemId_splitArray[0];
-		console.log("current grade number: " + currentGradeNumber);
-		var currentGradeFolder = "Class".concat(currentGradeNumber);
-		console.log("current grade folder: " + currentGradeFolder);
-		if (currentSubject == "EN") {
-			var currentSubjectFull = "English";
-		} 
-		else if (currentSubject == "M") {
-			var currentSubjectFull = "Math";
-		} 
-		else if (currentSubject == "N") {
-			var currentSubjectFull = "Nepali";
-		} 
-		else if (currentSubject == "S") {
-			var currentSubjectFull = "Science";
-		} 
-		else if (currentSubject == "SS") {
-			var currentSubjectFull = "SocialStudies";
-		}
-
-
-
-
-
-
-
-
-
-/*
-		console.log("chapters");
-		// Chapter (pn of textbook)
-		var str = item._id;
-		var arr_split = str.split("");
-
-		// For loop extracts the last 2 numbers as the chapter.
-
-/////////////// THIS ACCOMMODATES FOR LACK OF 0'S BEFORE SOME OF THEM. LOL UGH.
-		// If there is a decimal
-			// If there are 2 numbers between the last letter & the decimal
-				// Extract the 2 numbers between the last letter & the decimal
-				// If the first number is 0
-					// current chapter = the 2nd number
-				// Else if the first number is not 0
-					// concatenate the 2 numbers
-					// current chapter = the 2 numbers
-			// Else if there is 1 number between the last letter & the decimal
-				// Extract the number between the last letter & decimal
-				// current chapter = that number
-		// Else if there is no decimal
-			// If there are 2 numbers after the last letter
-					// Extract the 2 numbers after the last letter
-					// If the first number is 0
-						// current chapter = the 2nd number
-					// Else if the first number is not 0
-						// concatenate the 2 numbers
-						// current chapter = the 2 numbers
-				// Else if there is 1 number after the last letter
-					// Extract the number after the last letter
-					// current chapter = that number
-/////////////////////////////
-
-			for (var i = arr_split.length-1; i>=0; i--) {
-				var currentChapter = arr_split[i-1].concat(arr_split[i]);
-				arr_split.splice(i, 1);
-				arr_split.splice(i-1, 1);
-				break;
-			}
-
-		if (arr_split.length == 3) {	// If the subject is EN, or SS (or something with 2 letters)
-			arr_split[1] = arr_split[1].concat(arr_split[2]);
-			arr_split.splice(2, 1);
-		}
-		else if (arr_split.length < 3) {	// If the subject is M or S, N (or something with 1 letter)
-			// MAKE THIS WORK
-		}
-
-		var currentGradeNumber = arr_split[0];
-		var currentGrade = "Class".concat(arr_split[0]);
-		if (arr_split[1] == "EN") {
-			var currentSubject = "English";
-		} 
-		else if (arr_split[1] == "M") {
-			var currentSubject = "Math";
-		} 
-		else if (arr_split[1] == "N") {
-			var currentSubject = "Nepali";
-		} 
-		else if (arr_split[1] == "S") {
-			var currentSubject = "Science";
-		} 
-		else if (arr_split[1] == "SS") {
-			var currentSubject = "SocialStudies";
-		}
-*/
-		document.querySelector("div#displaybox").innerHTML = '<embed src="' + homedirectory + 'content/textbooks/' + currentGradeFolder + "/" + currentSubjectFull + "/" + currentSubjectFull + "-" + currentGradeNumber + '.pdf#page=' + item.pn + '" width="100%" height="100%" type="application/pdf">';
+		document.querySelector("div#displaybox").innerHTML = '<embed src="' + homedirectory + 'content/textbooks/' + idExtractArray["currentGradeFolder"] + "/" + idExtractArray["currentSubjectFull"] + "/" + idExtractArray["currentSubjectFull"] + "-" + idExtractArray["currentGradeNumber"] + '.pdf#page=' + item.pn + '" width="100%" height="100%" type="application/pdf">';
 	}
 
 
@@ -1584,7 +1456,7 @@ var preview_result = function(collection, item) {
 			document.querySelector("div#displaybox").innerHTML = '<img src="' + homedirectory + 'content/pictures/' + item.fn + '"id="displayImage">';
 		}
 		else if (item.ft=="EP") {
-		document.querySelector("div#displaybox").innerHTML = '<object type="text/html" data="' + homedirectory + 'content/epaath/activites/' + item.fn  + 'style="width:100%; height:100%; margin:1%;"> </object>;'
+		document.querySelector("div#displaybox").innerHTML = '<object type="text/html" data="' + homedirectory + 'content/epaath/activities/' + item.fn  + '/index.html" style="width:100%; height:100%; margin:1%;"> </object>';
 		}
 	}
 
