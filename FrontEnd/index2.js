@@ -62,8 +62,8 @@ window.onload = function loadPageElements() {
 		for (var i=0; i<8; i++) {
 			if (i == 0) {
 				$("<option/>", {
-					html : "3",
-					id : "3"
+					html : "",
+					id : ""
 				}).appendTo("#dropdown_grade");
 			} 
 			else {
@@ -98,8 +98,8 @@ window.onload = function loadPageElements() {
 		}).appendTo("#div_subject");
 
 		$('<option>', { 
-	        value: "EN",
-	        html : "English" 
+	        value: "",
+	        html : "" 
 	    }).appendTo("#dropdown_subject");
 
 		$.each(subjects, function (key, value) {
@@ -348,8 +348,42 @@ var clearFilter = function() {
 }
 
 var querySearch = function() {
+	
+	//check if filter/search items are empty upon submitting query, and give an alert if they are
+	var count=0;
+
+	if($("#searchString").val().length > 0) {
+		count ++;
+	}
+
+	$(".filter_dropdown").each(function() {
+		if(this.selectedIndex != 0){
+			count++;
+		}
+	 });
+	 $(".filter_checkbox").each(function() {
+		if ($(this).prop('checked')==true){ 
+	 		count++;
+	 	}
+	 });
+
+	 if (count == 0) {
+	 	alert("Please enter a search or filter query before submitting.");
+	 }
+	 else {
+	 	console.log("count = " + count);
+	 }
+
+	 //check if chapter is selected, and display section dropdown if it is
+	// if($("#dropdown_chapter").prop('checked') == true){
+	// 	$("#dropdown_section").show();
+	// 	console.log("need to show dropdown");
+	// }
+
 	$("#innerResultsDiv").empty();
 	$("#innerResultsMenu").empty();
+
+
 
 	var filterdata = {
 		'grade' : document.getElementById('dropdown_grade').value,
