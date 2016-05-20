@@ -298,27 +298,117 @@ var createTimelineElement = function(item, collection, issection){
 			src : homedirectory + "content/" + item.fp + thumbnail_prefix + "_thumb.jpg"
 		}).appendTo(innerdiv);
  		$("<p/>", { html : "<b>Textbook:<br/>" + item.dn + "</b>" }).appendTo(innerdiv);
- 		
+ 		var previewbutton = $("<button/>", {class: "preview", html:"Preview"}).bind("click", function() {
+ 			preview_result(collection, item);
+ 		});
+		$(innerdiv).append(previewbutton);
+ 		var removebutton = $("<button/>", {class: "remove", html:"Remove"}).bind("click", removeTimelineElement);
+		$(innerdiv).append(removebutton);
  	}
+
 
  	 //chapter
  	if(collection == "chapters" || item.pn != null) {
+ 		$("<img/>", {
+			class : "resultsimg",
+			src : homedirectory + "content/textbooks/" + idExtractArray["currentGradeFolder"] + "/" + idExtractArray["currentSubjectFull"] + "/" + idExtractArray["currentSubjectFull"] + "-" + idExtractArray["currentGradeNumber"] + "_thumb.jpg"
+		}).appendTo(innerdiv);
+
  		if (issection == 1) {
  			$("<p/>", { html : "<b>Class " + idExtractArray["currentGradeNumber"] + " " + idExtractArray["currentSubjectFull"] + ",<br/>Chapter " + idExtractArray["currentChapter"] + ", Section " + idExtractArray["currentSection"] + "</b>" }).appendTo(innerdiv);
  		}
  		else {
  			$("<p/>", { html : "<b>Class " + idExtractArray["currentGradeNumber"] + " " + idExtractArray["currentSubjectFull"] + ",<br/>Chapter " + idExtractArray["currentChapter"] + "</b>" }).appendTo(innerdiv);
  		}
+
+ 		var previewbutton = $("<button/>", {class: "preview", html:"Preview"}).bind("click", function() {
+ 			preview_result(collection, item);
+ 		});
+		$(innerdiv).append(previewbutton);
+ 		var removebutton = $("<button/>", {class: "remove", html:"Remove"}).bind("click", removeTimelineElement);
+		$(innerdiv).append(removebutton);
  	}
+
+
 
 	// activities
  	if(collection == "activity" || item.ft != null) {
- 		innerdiv = createActivityDiv(item);
+ 		// Thumbnail
+		var image = document.createElement("img");
+		if (item.ft == "mp3") {	 //audio
+			image.className = "resultsimg";
+			image.src = homedirectory + "content/audio/thumbnail.png";
+		} 
+		else if (item.ft == "mp4" || item.ft == "mp5") { //video
+			var thumbnail_prefix = item.fn;
+			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+
+			var image = document.createElement("img");
+			image.className = "resultsimg";
+			image.src = homedirectory + "content/videos/" + thumbnail_prefix + "_thumb.jpg";
+		} 
+		else if (item.ft == "jpg"  || item.ft == "gif" || item.ft == "png" ) { //picture
+			var thumbnail_prefix = item.fn;
+			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+
+			var image = document.createElement("img");
+			image.className = "resultsimg";
+			image.src = homedirectory + "content/pictures/" + thumbnail_prefix + "_thumb.jpg";
+		}
+		else if (item.ft == "pdf") { //pdf
+			var thumbnail_prefix = item.fn;
+			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+
+			var image = document.createElement("img");
+			image.className = "resultsimg";
+			image.src = homedirectory + "content/pdfs/" + thumbnail_prefix + "_thumb.jpg";
+		} 
+		else if (item.ft == "EP") {
+			var image = document.createElement("img");
+			image.className = "resultsimg";
+			image.src = homedirectory + "content/epaath/activities/" + item.fn + "/thumbnail.jpg";
+		} 
+
+		$(image).css("width","80");
+		// else {
+		// 	var image = document.createElement("img");
+		// 	image.className = "resultsimg";
+		// 	image.src = "images/kitty.jpg";
+		// }
+		innerdiv.appendChild(image);
+
+		$("<p/>", { html : "<b>" + item.ft + "</b>" }).appendTo(innerdiv);
+
+ 		if (issection == 1) {
+ 			$("<p/>", { html : "<b>Class " + idExtractArray["currentGradeNumber"] + " " + idExtractArray["currentSubjectFull"] + ",<br/>Chapter " + idExtractArray["currentChapter"] + ", Section " + idExtractArray["currentSection"] + "</b>" }).appendTo(innerdiv);
+ 		}
+ 		else {
+ 			$("<p/>", { html : "<b>Class " + idExtractArray["currentGradeNumber"] + " " + idExtractArray["currentSubjectFull"] + ",<br/>Chapter " + idExtractArray["currentChapter"] + "</b>" }).appendTo(innerdiv);
+ 		}
+
+ 		var previewbutton = $("<button/>", {class: "preview", html:"Preview"}).bind("click", function() {
+ 			preview_result(collection, item);
+ 		});
+		$(innerdiv).append(previewbutton);
+ 		var removebutton = $("<button/>", {class: "remove", html:"Remove"}).bind("click", removeTimelineElement);
+		$(innerdiv).append(removebutton);
+ 		
  	}
+
+
 
  	//dictionary
  	if(collection == "dictionary" || item.part != null) {
- 		innerdiv = createDictionaryDiv(item);
+ 		$("<p/>", { html : "<b>Dictionary Entry</b>" }).appendTo(innerdiv);
+
+ 		$("<p/>", { html : "<b>Class " + idExtractArray["currentGradeNumber"] + " " + idExtractArray["currentSubjectFull"] + ",<br/>Chapter " + idExtractArray["currentChapter"] + "</b>" }).appendTo(innerdiv);
+
+ 		var previewbutton = $("<button/>", {class: "preview", html:"Preview"}).bind("click", function() {
+ 			preview_result(collection, item);
+ 		});
+		$(innerdiv).append(previewbutton);
+ 		var removebutton = $("<button/>", {class: "remove", html:"Remove"}).bind("click", removeTimelineElement);
+		$(innerdiv).append(removebutton);
  	}
 
 	$(innerdiv).appendTo(timelinediv);
@@ -953,8 +1043,9 @@ var createTextbookDiv = function(item) {
 	previewButton.className = "preview";
 	// previewButton.onclick = preview_result(item);
 	$(previewButton).bind("click", function() {
-		preview_result(collection, item);
-	})
+		preview_result(collection,
+		 item);
+	});
 	$(previewButton).appendTo(buttondiv);
 
 	return resultdiv;
