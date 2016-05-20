@@ -174,8 +174,13 @@
 }
 
 .textdiv {
-	min-width:250px;
-	float:left;
+/*	min-width:250px;
+*/	float:left;
+}
+
+.buttondiv {
+	float:right;
+	max-width:120px;
 }
 
 
@@ -308,6 +313,20 @@ li:hover {
 	background-color:green;
 }*/
 
+
+
+
+
+/************* Preview module ***************/
+
+
+#displaybox p {
+	margin-top:10px;
+	margin-left:10px;
+}
+
+
+
 /************* Timeline module ***************/
 
 .timelineEntire{
@@ -373,6 +392,7 @@ ul {
 
 h3{
 	font-size: 30px;
+	margin-top:5px;
 }
 
 #openNavbar {

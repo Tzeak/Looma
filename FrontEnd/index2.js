@@ -25,7 +25,9 @@ window.onload = function loadPageElements() {
 			html : "Lesson Plan Creator: Edit"
 		}).appendTo("#navbar");
 
-		// Sidebar: Search
+
+
+		// Filter: Search
 
 		$("<div/>", {
 			id : "div_search"
@@ -42,7 +44,9 @@ window.onload = function loadPageElements() {
 			name : "search",
 		}).appendTo("#div_search");
 
-		// Sidebar: Grade
+
+
+		// Filter: Grade
 
 		$("<div/>", {
 			id : "div_grade"
@@ -74,7 +78,7 @@ window.onload = function loadPageElements() {
 			}
 		}
 
-		// Sidebar: Subject
+		// Filter: Subject
 
 		var subjects = {
 			"English" : "EN",
@@ -98,8 +102,8 @@ window.onload = function loadPageElements() {
 		}).appendTo("#div_subject");
 
 		$('<option>', { 
-	        value: "EN",
-	        html : "English" 
+	        value: "S",
+	        html : "Science" 
 	    }).appendTo("#dropdown_subject");
 
 		$.each(subjects, function (key, value) {
@@ -109,7 +113,7 @@ window.onload = function loadPageElements() {
 	    	}).appendTo("#dropdown_subject");
 		});
 
-		// Sidebar: Chapter
+		// Filter: Chapter
 
 		$("<div/>", {
 			id : "div_chapter"
@@ -140,7 +144,7 @@ window.onload = function loadPageElements() {
 			}
 		}
 
-		// Sidebar: Section
+		// Filter: Section
 
 		$("<div/>", {
 			id : "div_section"
@@ -171,7 +175,7 @@ window.onload = function loadPageElements() {
 			}
 		}
 
-		// Sidebar: File Type
+		// Filter: File Type
 
 		var filetypes = {
 			"image" : 	{ 	id : "ft_image", 	display : "Image" 	},
@@ -268,47 +272,79 @@ var openTimeline = function() {
 	});
 }
 
-var createTimelineElement = function(object){
+var createTimelineElement = function(item, collection, issection){
 
-	var innerdiv = null;
+	var idExtractArray = extractItemId(item, collection);
+	// currentSection
+	// currentChapter
+	// currentSubject
+	// currentGradeNumber
+	// currentGradeFolder
+	// currentSubjectFull
+	// chprefix
 
- 	if(object.ft !=null) 
- 		innerdiv = createActivityDiv(object);
+	var timelinediv = $("<div/>", {class : "timelinediv"}).appendTo("#timelineDisplay");
 
- 	//textbook
- 	//if (collection=="textbooks")
- 	if(object.subject!=null)
- 		innerdiv = createTextbookDiv(object);
+	var innerdiv = document.createElement("div");
+	innerdiv.className = "innerdiv";
+
+	 //textbook
+ 	if(collection == "textbooks" || item.subject != null) {
+
+		var thumbnail_prefix = item.fn;
+		thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+		$("<img/>", {
+			class : "resultsimg",
+			src : homedirectory + "content/" + item.fp + thumbnail_prefix + "_thumb.jpg"
+		}).appendTo(innerdiv);
+ 		$("<p/>", { html : "<b>Textbook:<br/>" + item.dn + "</b>" }).appendTo(innerdiv);
+ 		
+ 	}
+
+ 	 //chapter
+ 	if(collection == "chapters" || item.pn != null) {
+ 		if (issection == 1) {
+ 			$("<p/>", { html : "<b>Class " + idExtractArray["currentGradeNumber"] + " " + idExtractArray["currentSubjectFull"] + ",<br/>Chapter " + idExtractArray["currentChapter"] + ", Section " + idExtractArray["currentSection"] + "</b>" }).appendTo(innerdiv);
+ 		}
+ 		else {
+ 			$("<p/>", { html : "<b>Class " + idExtractArray["currentGradeNumber"] + " " + idExtractArray["currentSubjectFull"] + ",<br/>Chapter " + idExtractArray["currentChapter"] + "</b>" }).appendTo(innerdiv);
+ 		}
+ 	}
+
+	// activities
+ 	if(collection == "activity" || item.ft != null) {
+ 		innerdiv = createActivityDiv(item);
+ 	}
 
  	//dictionary
- 	//if (collection=="dictionary")
- 	if(object.part!=null)
- 		innerdiv = createDictionaryDiv(object);
+ 	if(collection == "dictionary" || item.part != null) {
+ 		innerdiv = createDictionaryDiv(item);
+ 	}
 
- 	//chapter
- 	//if (collection = "chapters")
- 	if(object.pn!=null)
- 		innerdiv = createChapterDiv(object);	
-
-	addToAssArray(object);
+	$(innerdiv).appendTo(timelinediv);
+	addToAssArray(item);
 	console.log(timelineAssArray);
 
 	// if($(innerdiv).has("h3")){
 	// 	$("h3").remove();
 	// }
 
-	// Remove "resultitem" class from div
-	$(innerdiv).removeClass("resultitem");
-	$(innerdiv).addClass("innerdiv");
-	// $(innerdiv).removeElement
 
-	var timelinediv = $("<div/>", {class:"timelinediv"}).appendTo("#timelineDisplay");
-	$(innerdiv).appendTo(timelinediv);
- 	$(timelinediv).attr("data-objid", object._id);
- 	// console.log(timelinediv.className);
- 	$(".timelinediv button.add").remove();
-	var removebutton = $("<button/>", {class: "remove", html:"Remove"}).bind("click", removeTimelineElement);
-	$(innerdiv).append(removebutton);
+
+
+
+	// // Remove "resultitem" class from div
+	// $(innerdiv).removeClass("resultitem");
+	// $(innerdiv).addClass("innerdiv");
+	// // $(innerdiv).removeElement
+
+	// var timelinediv = $("<div/>", {class:"timelinediv"}).appendTo("#timelineDisplay");
+	// $(innerdiv).appendTo(timelinediv);
+ // 	$(timelinediv).attr("data-objid", object._id);
+ // 	// console.log(timelinediv.className);
+ // 	$(".timelinediv button.add").remove();
+	// var removebutton = $("<button/>", {class: "remove", html:"Remove"}).bind("click", removeTimelineElement);
+	// $(innerdiv).append(removebutton);
 
 	sortableFunction();
 }
@@ -510,7 +546,7 @@ var printFilterData = function(filterdata_object) {
 	dictResultDiv.appendChild(collectionTitle);
 
 	for(var i=0; i<filterdata_object.dictionary.length; i++) {
-		var rElement = createDictionaryDiv(filterdata_object.dictionary[i])
+		var rElement = createDictionaryDiv(filterdata_object.dictionary[i], filterdata_object.dictionary[i-1]);
 		// var rElement = createChapterDiv(resultArray[i]);
 		dictResultDiv.appendChild(rElement);
 	}
@@ -861,6 +897,7 @@ return elementsArray;
 
 // Create "Textbook" collection results
 var createTextbookDiv = function(item) {
+	var issection = 0;
 	var collection = "textbooks";
 	var resultdiv = document.createElement("div");
 	resultdiv.className = "resultitem";
@@ -907,7 +944,7 @@ var createTextbookDiv = function(item) {
 	addButton.innerText = "Add";
 	addButton.className = "add";
 	$(addButton).bind("click", function() {
-		createTimelineElement(item); 
+		createTimelineElement(item, collection, issection); 
 	});
 	$(addButton).appendTo(buttondiv);
 
@@ -934,6 +971,7 @@ var createTextbookDiv = function(item) {
 // Create "Chapter" collection results
 var createChapterDiv = function(item, previtem) {
 	var collection = "chapters";
+	var issection = 0;
 
 	var idExtractArray = extractItemId(item, collection);
 	if (previtem != null) {
@@ -944,6 +982,7 @@ var createChapterDiv = function(item, previtem) {
 		if (item._id.indexOf(".") >= 0) {
 			//	If the prefix is equal to the prefix before it
 			if (idExtractArray["chprefix"] == idExtractArray_prev["chprefix"]) {
+				issection = 1;
 				var sectionDiv = document.createElement("div");
 				sectionDiv.className = "result_chapter_section";
 				$(sectionDiv).attr("data-chprefix", idExtractArray["chprefix"]);
@@ -965,7 +1004,7 @@ var createChapterDiv = function(item, previtem) {
 				addButton.className = "add";
 				// addButton.onclick = createTimelineElement(item);
 				$(addButton).bind("click", function() {
-					createTimelineElement(item); 
+					createTimelineElement(item, collection, issection); 
 				});
 				sectionDiv.appendChild(addButton);
 
@@ -1025,7 +1064,7 @@ var createChapterDiv = function(item, previtem) {
 	addButton.className = "add";
 	// addButton.onclick = createTimelineElement(item);
 	$(addButton).bind("click", function() {
-		createTimelineElement(item); 
+		createTimelineElement(item, collection, issection); 
 	});
 	div.appendChild(addButton);
 
@@ -1051,6 +1090,7 @@ var createChapterDiv = function(item, previtem) {
 
 var createActivityDiv = function(item, previtem) {
 	var collection = "activities";
+	var issection = 0;
 
 	var idExtractArray = extractItemId(item, collection);
 	if (previtem != null) {
@@ -1063,6 +1103,7 @@ var createActivityDiv = function(item, previtem) {
 	$(div).attr("data-collection", collection);
 
 	var sectionActivityDiv = function(item) {
+		issection = 1;
 		var sectionDiv = document.createElement("div");
 		sectionDiv.className = "result_activity_section";
 		$(sectionDiv).attr("data-chprefix", idExtractArray["chprefix"]);
@@ -1160,7 +1201,7 @@ var createActivityDiv = function(item, previtem) {
 		addButton.className = "add";
 		// addButton.onclick = createTimelineElement(item);
 		$(addButton).bind("click", function() {
-			createTimelineElement(item); 
+			createTimelineElement(item, collection, issection); 
 		});
 		sectionDiv.appendChild(addButton);
 
@@ -1282,7 +1323,7 @@ var createActivityDiv = function(item, previtem) {
 		addButton.innerText = "Add";
 		addButton.className = "add";
 		$(addButton).bind("click", function() {
-			createTimelineElement(item); 
+			createTimelineElement(item, collection, issection); 
 		});
 		chapterDiv.appendChild(addButton);
 
@@ -1361,45 +1402,66 @@ var createActivityDiv = function(item, previtem) {
 
 
 
-var createDictionaryDiv = function(item) {
+var createDictionaryDiv = function(item, previtem) {
 	var collection = "dictionary";
+	var issection = 0;
 
 	var idExtractArray = extractItemId(item, collection);
+	if (previtem != null) {
+		var idExtractArray_prev = extractItemId(previtem, collection);
+	}
 
 	var div = document.createElement("div");
 	div.className = "resultitem";
 
-	var image = document.createElement("img");
-	image.className = "resultsimg";
-	image.src = homedirectory + "content/dictionaries/thumbnail.png";
-	div.appendChild(image);
+	// var image = document.createElement("img");
+	// image.className = "resultsimg";
+	// image.src = homedirectory + "content/dictionaries/thumbnail.png";
+	// div.appendChild(image);
 
-	var loomaID = document.createElement("p");
-	loomaID.className = "result_ID";
-	loomaID.innerHTML = "<b>ID: </b>" + item.ch_id;
-	div.appendChild(loomaID);
+	if (previtem == null) {
+		if (idExtractArray["currentChapter"] == "01") {
+			var headerdiv = document.createElement("div");
+			div.appendChild(headerdiv);
+			$("<h3/>", { 
+				html : "Chapter 01"
+			}).appendTo(headerdiv);
+		}
+	}
+	else if (previtem != null) {
+		if (idExtractArray["chprefix"] != idExtractArray_prev["chprefix"]) {
+			var headerdiv = document.createElement("div");
+			div.appendChild(headerdiv);
+			$("<h3/>", { 
+				html : "Chapter " + idExtractArray["currentChapter"] 
+			}).appendTo(headerdiv);
+		}
+	}
 
-	var resulttype = document.createElement("p");
-	resulttype.className = "result_ID";
-	resulttype.innerHTML = "<b>Result type: </b> Dictionary entry";
-	div.appendChild(resulttype);
+	var textdiv = document.createElement("div");
+	textdiv.className = "textdiv";
+	div.appendChild(textdiv);
 
-	var word = document.createElement("p");
-	word.innerHTML = "<b>Word: </b>" + item.en;
-	div.appendChild(word);
+	var buttondiv = document.createElement("div");
+	buttondiv.className = "buttondiv";
+	div.appendChild(buttondiv);
 
-	var part = document.createElement("p");
-	part.innerHTML = "<b>Part of speech: </b>" + item.part;
-	div.appendChild(part);
+	$("<p/>", {
+		html : "<b>" + item.en + "</b> (" + item.part + ")"
+	}).appendTo(textdiv);
+
+	$("<p/>", {
+		html : item.ch_id
+	}).appendTo(textdiv);
 
 	// "Add" button
 	var addButton = document.createElement("button");
 	addButton.innerText = "Add";
 	addButton.className = "add";
 	$(addButton).bind("click", function() {
-		createTimelineElement(item); 
+		createTimelineElement(item, collection, issection); 
 	});
-	div.appendChild(addButton);
+	buttondiv.appendChild(addButton);
 
 	var previewButton = document.createElement("button");
 	previewButton.innerText = "Preview";
@@ -1408,7 +1470,7 @@ var createDictionaryDiv = function(item) {
 	$(previewButton).bind("click", function() {
 		preview_result(collection, item);
 	})
-	div.appendChild(previewButton);
+	buttondiv.appendChild(previewButton);
 
 	return div;
 	
@@ -1461,7 +1523,10 @@ var preview_result = function(collection, item) {
 	}
 
 	else if (collection == "dictionary") {
-		document.querySelector("div#displaybox").innerHTML = item.def;
+		$("<p/>", {
+			html : item.def
+		}).appendTo("#displaybox");
+		// document.querySelector("div#displaybox").innerHTML = item.def;
 	}
 
 
