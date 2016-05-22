@@ -1,5 +1,21 @@
+/*
+ * File:		load.js
+ * 
+ * Description:	This file is a simple js library designed to allow for the front-end of the
+ *				application to securely access the timelines.
+ *				It also defines a few auxillary functions that didn't fit in a narrative sense
+ *				in the front-end application.
+ */
+
+//This global is to make sure multiple timelines aren't opened per session.
 var isTimelineOpen = false;
 
+
+/* Function:		getParameterByName(name, url)
+ * Description:		Input	- name of a parameter in a given URL
+ *							If no URL, the URL is assumed to be the window.location
+ *	 				Return	- data associated with var name or null
+ */
 function getParameterByName(name, url) {
 	if (!url) url = window.location.href;
 	name = name.replace(/[\[\]]/g, "\\$&");
@@ -10,23 +26,17 @@ function getParameterByName(name, url) {
 	return decodeURIComponent(results[2].replace(/\+/g, " ")); //Returns the value given a particular parameter name
 }
 
+
+/* Function:		opentime()
+ * Description:		Input	- 
+ *	 				Return	- Array of Timeline Data pulled from openTimeline.php
+ */
 function opentime(){
 	var timelineArray = new Array();
 
 	console.log("opentime() called");
 	var timelineID = getParameterByName("timelineId");
 	timelineID = {"$id" : timelineID}; //Set up in format for querying mongo database
-	//open_timelineID = {"id" : timelineID}; //Set up in format for querying mongo database
-
-
-	// var createNewTimeElement = function(index, itemString) {
-	// 	$('<div/>', {class: "timelinediv", id: "timediv" + index}).appendTo('#timelineWhole');
-	// 	$('<li/>', {
-	// 		id : "item" + index,
-	// 		title: itemString,
-	// 		text: itemString,
-	// 	}).appendTo('#timediv' + index);
-	// }
 
 	if(!isTimelineOpen) {
 		if(timelineID["$id"] == null)
@@ -34,7 +44,6 @@ function opentime(){
 		else 
 		{
 			$.post("/BackEnd/open.php", timelineID, function(data){
-				// console.log(data.name);
 				data = JSON.parse(data);
 				$("#titleInput").attr("value", data.name);
 			}).fail(function(jqXHR){
@@ -50,14 +59,9 @@ function opentime(){
 				success: function(timelineData){
 					console.log("getting timeline");
 					$.each(timelineData, function(index, val){
-						// createTimelineElement(val);
 						timelineArray.push(val);
 						console.log(timelineData);
 					});
-					// $("#titleInput").attr("value", getTimelineTitle(timelineData));
-					// $("<p/>", {
-					// 	html : "hello"
-					// }).appendTo("#titleDiv");
 				}
 			}).fail(function(jqXHR){
 				console.log(jqXHR.status)
@@ -74,6 +78,7 @@ function opentime(){
 		return timelineArray;
 }
 
+//I'm not sure who wrote these, but I don't think they do anything....
 function deletetime(itemId) {
 	console.log("deletetime() called");
 	// timelineID = {"$id" : timelineID}; //Set up in format for querying mongo database
