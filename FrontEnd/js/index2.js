@@ -268,11 +268,13 @@ var addToAssArray = function(object) {
 var openTimeline = function() {
 	var timelineElements = opentime();	// gets the ID from the URL and retrieves the whole timeline array
 	$.each(timelineElements, function(index, timelineObj) {
-		createTimelineElement(timelineObj);
+		createTimelineElement(timelineObj, null, null);
 	});
 }
 
 var createTimelineElement = function(item, collection, issection){
+	console.log("item: ");
+	console.log(item);
 
 	var idExtractArray = extractItemId(item, collection);
 	// currentSection
@@ -698,7 +700,7 @@ var extractItemId = function(item, collection) {
 	
 	var elementsArray = [];
 
-	if (collection == "chapters") {
+	if (collection == "chapters" || item.pn != null) {
 		// Array will contain:
 			// currentSection
 			// currentChapter
@@ -774,7 +776,7 @@ var extractItemId = function(item, collection) {
 		elementsArray["chprefix"] = chprefix;
 	}
 
-	else if (collection == "textbooks") {
+	else if (collection == "textbooks" || item.subject != null) {
 		// Array will contain:
 			// currentSubject
 			// currentGradeNumber
@@ -826,7 +828,7 @@ var extractItemId = function(item, collection) {
 
 	
 
-	else if (collection == "activities" || collection == "dictionary") {
+	else if (collection == "activity" || item.ft != null || collection == "dictionary" || item.part != null) {
 		// Array will contain:
 			// currentSection
 			// currentChapter
