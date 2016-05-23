@@ -1,12 +1,16 @@
 <?php
-/*THIS IS NOT SANITIZED -- fix pls
- * http://aseriesoftubes.com/articles/tutorial-web-interface-for-grep-and-cat-in-php/
- * */
-	if(isset($_GET['search']) && $_GET['search'] != '')
+
+	$dir_iterator = new RecursiveDirectoryIterator("../content/");
+	//$iterator = new RecursiveIteratorIterator($dir_iterator, RecursiveIteratorIterator::SELF_FIRST);
+	$iterator = new RecursiveIteratorIterator($dir_iterator); //This seems to remove duplicates - probably should figure out how it works
+	// could use CHILD_FIRST if you so wish
+
+	foreach ($iterator as $file) 
 	{
-			echo escapeshellarg($_GET['search']) . "<br/>";
-			$results = shell_exec("find ". escapeshellarg($_GET['search'])."*");
-			echo $results;
+		foreach(glob($file.'/' . $_GET['search'].'*') as $filename)
+		{
+			echo $filename;
+		}
 	}
 
 	//From results, search mongo for the respective file names
