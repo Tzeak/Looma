@@ -16,9 +16,11 @@ var homedirectory = "../";
 
 /////////////////////////// ONLOAD FUNCTION ///////////////////////////
 
+
 // This loads all the preliminary elements in the page.
 window.onload = function loadPageElements() {
 
+	
 		// Navbar 
 
 		$("<p/>", {
@@ -30,7 +32,8 @@ window.onload = function loadPageElements() {
 		// Filter: Search
 
 		$("<div/>", {
-			id : "div_search"
+			id : "div_search",
+			class : "hidden"	// CHANGE THIS LATER. IT'S JUST NOT WORKING NOW.
 		}).appendTo("#div_filter");
 		$("<p/>", {
 			class : "filter_label",
@@ -99,7 +102,7 @@ window.onload = function loadPageElements() {
 		$("<select/>", {
 			class : "filter_dropdown",
 			id : "dropdown_subject"
-		}).appendTo("#div_subject");
+		}).attr("onchange","unhideElement('#div_chapter')").appendTo("#div_subject");
 
 		$('<option>', { 
 	        value: "S",
@@ -116,18 +119,19 @@ window.onload = function loadPageElements() {
 		// Filter: Chapter
 
 		$("<div/>", {
-			id : "div_chapter"
+			id : "div_chapter",
+			class : "hidden"
 		}).appendTo("#div_filter");
 
 		$("<p/>", {
 			class : "filter_label",
-			html : "Chapter: ", 
+			html : "Chapter: "
 		}).appendTo("#div_chapter");
 
 		$("<select/>", {
 			class : "filter_dropdown",
 			id : "dropdown_chapter"
-		}).appendTo("#div_chapter");
+		}).attr("onchange","unhideElement('#div_section')").appendTo("#div_chapter");
 
 		for (var i=0; i<8; i++) {
 			if (i == 0) {
@@ -147,7 +151,8 @@ window.onload = function loadPageElements() {
 		// Filter: Section
 
 		$("<div/>", {
-			id : "div_section"
+			id : "div_section",
+			class : "hidden"
 		}).appendTo("#div_filter");
 
 		$("<p/>", {
@@ -249,6 +254,10 @@ var addToAssArray = function(object) {
 	timelineAssArray[object._id] = object;
 }
 
+var unhideElement = function(element) {
+	$(element).removeClass("hidden");
+}
+
 
 //////////////////////////// SUBMIT LESSON TITLE NAME ///////////////////////
 
@@ -268,7 +277,7 @@ var addToAssArray = function(object) {
 var openTimeline = function() {
 	var timelineElements = opentime();	// gets the ID from the URL and retrieves the whole timeline array
 	$.each(timelineElements, function(index, timelineObj) {
-		createTimelineElement(timelineObj, null, null);
+		createTimelineElement(timelineObj);
 	});
 }
 
@@ -302,10 +311,10 @@ var createTimelineElement = function(item, collection, issection){
 		thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 		$("<img/>", {
 			class : "timelineimg",
-			src : homedirectory + "content/" + item.fp + thumbnail_prefix + "_thumb.jpg"
+			src : getImgFilepath(item, collection)
 		}).appendTo(textdiv);
  		$("<p/>", { html : "<b>Textbook:</b>" }).appendTo(textdiv);
- 		$("<p/>", {html : "<b>" + item.dn + "</b>"}).appendTo(textdiv);
+ 		$("<p/>", { html : "<b>" + item.dn + "</b>" }).appendTo(textdiv);
  		
  	}
 
@@ -314,7 +323,7 @@ var createTimelineElement = function(item, collection, issection){
  	if(collection == "chapters" || item.pn != null) {
  		$("<img/>", {
 			class : "timelineimg",
-			src : homedirectory + "content/textbooks/" + idExtractArray["currentGradeFolder"] + "/" + idExtractArray["currentSubjectFull"] + "/" + idExtractArray["currentSubjectFull"] + "-" + idExtractArray["currentGradeNumber"] + "_thumb.jpg"
+			src : getImgFilepath(item, collection)
 		}).appendTo(textdiv);
 
  		if (issection == 1) {
@@ -333,48 +342,12 @@ var createTimelineElement = function(item, collection, issection){
 
 	// activities
  	if(collection == "activity" || item.ft != null) {
+
  		// Thumbnail
-		var image = document.createElement("img");
-		if (item.ft == "mp3") {	 //audio
-			image.className = "timelineimg";
-			image.src = homedirectory + "content/audio/thumbnail.png";
-		} 
-		else if (item.ft == "mp4" || item.ft == "mp5") { //video
-			var thumbnail_prefix = item.fn;
-			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
-
-			var image = document.createElement("img");
-			image.className = "timelineimg";
-			image.src = homedirectory + "content/videos/" + thumbnail_prefix + "_thumb.jpg";
-		} 
-		else if (item.ft == "jpg"  || item.ft == "gif" || item.ft == "png" ) { //picture
-			var thumbnail_prefix = item.fn;
-			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
-
-			var image = document.createElement("img");
-			image.className = "timelineimg";
-			image.src = homedirectory + "content/pictures/" + thumbnail_prefix + "_thumb.jpg";
-		}
-		else if (item.ft == "pdf") { //pdf
-			var thumbnail_prefix = item.fn;
-			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
-
-			var image = document.createElement("img");
-			image.className = "timelineimg";
-			image.src = homedirectory + "content/pdfs/" + thumbnail_prefix + "_thumb.jpg";
-		} 
-		else if (item.ft == "EP") {
-			var image = document.createElement("img");
-			image.className = "timelineimg";
-			image.src = homedirectory + "content/epaath/activities/" + item.fn + "/thumbnail.jpg";
-		} 
-
-		// else {
-		// 	var image = document.createElement("img");
-		// 	image.className = "timelineimg";
-		// 	image.src = "images/kitty.jpg";
-		// }
-		$(image).appendTo(textdiv);
+ 		$("<img/>", {
+			class : "timelineimg",
+			src : getImgFilepath(item, collection)
+		}).appendTo(textdiv);
 
 		$("<p/>", { html : "<b>" + getFileType(item.ft) + ":</b>" }).appendTo(textdiv);
 		$("<p/>", { html : "<b>" + item.dn + "</b>" }).appendTo(textdiv);
@@ -696,6 +669,58 @@ var getFileType = function(ft) {
 }
 
 
+
+var getImgFilepath = function(item, collection) {
+
+	var idExtractArray = extractItemId(item, collection);
+
+	var imgsrc = "";
+
+	if (collection == "chapters" || item.pn != null) {
+		var thumbnail_prefix = idExtractArray["currentSubjectFull"].concat("-", idExtractArray["currentGradeNumber"]);
+		imgsrc = homedirectory + "content/textbooks/" + idExtractArray["currentGradeFolder"] + "/" + idExtractArray["currentSubjectFull"] + "/" + thumbnail_prefix + "_thumb.jpg";
+
+	}
+
+	else if (collection == "textbooks" || item.subject != null) {
+		var thumbnail_prefix = item.fn;
+		thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+		imgsrc = homedirectory + "content/" + item.fp + thumbnail_prefix + "_thumb.jpg";
+	}
+
+	else if (collection == "activity" || item.ft != null) {
+		var thumbnail_prefix = item.fn;
+		if (item.ft == "mp3") {	 //audio
+			imgsrc = homedirectory + "content/audio/thumbnail.png";
+		} 
+		else if (item.ft == "mp4" || item.ft == "mp5") { //video
+			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+			imgsrc = homedirectory + "content/videos/" + thumbnail_prefix + "_thumb.jpg";
+		} 
+		else if (item.ft == "jpg"  || item.ft == "gif" || item.ft == "png" ) { //picture
+			var thumbnail_prefix = item.fn;
+			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+			imgsrc = homedirectory + "content/pictures/" + thumbnail_prefix + "_thumb.jpg";
+		}
+		else if (item.ft == "pdf") { //pdf
+			var thumbnail_prefix = item.fn;
+			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+			imgsrc = homedirectory + "content/pdfs/" + thumbnail_prefix + "_thumb.jpg";
+		} 
+		else if (item.ft == "EP") {
+			imgsrc = homedirectory + "content/epaath/activities/" + item.fn + "/thumbnail.jpg";
+		} 
+		
+	}
+
+	// Note: We don't use thumbnails for dictionary.
+
+	return imgsrc;
+}
+
+
+
+
 var extractItemId = function(item, collection) {
 	
 	var elementsArray = [];
@@ -904,78 +929,12 @@ var extractItemId = function(item, collection) {
 		elementsArray["chprefix"] = chprefix;
 	}
 
-/*
-	else if (collection == "dictionary") {
-		// Array will contain:
-			// currentChapter
-			// currentSubject
-			// currentGradeNumber
-			// currentGradeFolder
-			// currentSubjectFull
-			// chprefix
-
-		var itemId = item.ch_id;
-		console.log("current id: " + item.ch_id);
-		var itemId_splitArray = itemId.split("");
-		var arr_length = itemId_splitArray.length;
-
-		// Extracts the last 2 numbers as the chapter
-		var currentChapter = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
-		elementsArray["currentChapter"] = currentChapter;
-		console.log("current chapter: " + currentChapter);
-		itemId_splitArray.splice(arr_length-1, 1);
-		itemId_splitArray.splice(arr_length-2, 1);
-		arr_length = itemId_splitArray.length;
-
-		if (arr_length == 3) {	// If the subject is EN, or SS (or something with 2 letters)
-			var currentSubject = itemId_splitArray[arr_length-2].concat(itemId_splitArray[arr_length-1]);
-			elementsArray["currentSubject"] = currentSubject;
-			console.log("current subject: " + currentSubject);
-			itemId_splitArray.splice(arr_length-1, 1);
-			itemId_splitArray.splice(arr_length-2, 1);
-			arr_length = itemId_splitArray.length;
-		}
-		else if (itemId_splitArray.length == 2) {	// If the subject is M or S, N (or something with 1 letter)
-			var currentSubject = itemId_splitArray[arr_length-1];
-			elementsArray["currentSubject"] = currentSubject;
-			console.log("current subject: " + currentSubject);
-			itemId_splitArray.splice(arr_length-1, 1);
-			arr_length = itemId_splitArray.length;
-		}
-
-		var currentGradeNumber = itemId_splitArray[0];
-		elementsArray["currentGradeNumber"] = currentGradeNumber;
-		console.log("current grade number: " + currentGradeNumber);
-
-		var currentGradeFolder = "Class".concat(currentGradeNumber);
-		elementsArray["currentGradeFolder"] = currentGradeFolder;
-		console.log("current grade folder: " + currentGradeFolder);
-
-		if (currentSubject == "EN") {
-			var currentSubjectFull = "English";
-			elementsArray["currentSubjectFull"] = currentSubjectFull;
-		} 
-		else if (currentSubject == "M") {
-			var currentSubjectFull = "Math";
-			elementsArray["currentSubjectFull"] = currentSubjectFull;
-		} 
-		else if (currentSubject == "N") {
-			var currentSubjectFull = "Nepali";
-			elementsArray["currentSubjectFull"] = currentSubjectFull;
-		} 
-		else if (currentSubject == "S") {
-			var currentSubjectFull = "Science";
-			elementsArray["currentSubjectFull"] = currentSubjectFull;
-		} 
-		else if (currentSubject == "SS") {
-			var currentSubjectFull = "SocialStudies";
-			elementsArray["currentSubjectFull"] = currentSubjectFull;
-		}
-	}
-*/
-
 return elementsArray;
 }
+
+
+
+
 
 
 
@@ -994,11 +953,10 @@ var createTextbookDiv = function(item) {
 	var thumbnaildiv = document.createElement("div");
 	thumbnaildiv.className = "thumbnaildiv";
 	$(thumbnaildiv).appendTo(resultdiv);
-	var thumbnail_prefix = item.fn;
-	thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+
 	$("<img/>", {
 		class : "resultsimg",
-		src : homedirectory + "content/" + item.fp + thumbnail_prefix + "_thumb.jpg"
+		src : getImgFilepath(item, collection)
 	}).appendTo(thumbnaildiv);
 
 	// Result Text
@@ -1120,14 +1078,10 @@ var createChapterDiv = function(item, previtem) {
 	$(div).attr("data-type", "chapter");
 	$(div).attr("data-collection", collection);
 
-
-	var thumbnail_prefix = idExtractArray["currentSubjectFull"].concat("-", idExtractArray["currentGradeNumber"]);
-	// ADD AN IF STATEMENT FOR IF THE VALUES DONT EXISTTTTT ???
-
-	var image = document.createElement("img");
-	image.className = "resultsimg";
-	image.src = homedirectory + "content/textbooks/" + idExtractArray["currentGradeFolder"] + "/" + idExtractArray["currentSubjectFull"] + "/" + thumbnail_prefix + "_thumb.jpg";
-	div.appendChild(image);
+	$("<img/>", {
+		class : "resultsimg",
+		src : getImgFilepath(item, collection)
+	}).appendTo(div);
 
 	// Display name
 	$("<p/>", {
@@ -1187,194 +1141,62 @@ var createActivityDiv = function(item, previtem) {
 	}
 
 	var div = document.createElement("div");
+	div.className = "resultitem";
 	$(div).attr("data-chprefix", idExtractArray["chprefix"]);
 	$(div).attr("data-type", "section");
 	$(div).attr("data-collection", collection);
 
-	var sectionActivityDiv = function(item) {
-		issection = 1;
-		var sectionDiv = document.createElement("div");
-		sectionDiv.className = "result_activity_section";
-		$(sectionDiv).attr("data-chprefix", idExtractArray["chprefix"]);
-		$(sectionDiv).attr("data-type", "section");
-		$(sectionDiv).attr("data-collection", collection);
-		// console.log("prefix for item " + item.dn + " is " + $(sectionDiv).data('chprefix'));
 
-		// Thumbnail
-		var image = document.createElement("img");
-		if (item.ft == "mp3") {	 //audio
-			image.className = "resultsimg";
-			image.src = homedirectory + "content/audio/thumbnail.png";
-		} 
-		else if (item.ft == "mp4" || item.ft == "mp5") { //video
-			var thumbnail_prefix = item.fn;
-			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
-			var image = document.createElement("img");
-			image.className = "resultsimg";
-			image.src = homedirectory + "content/videos/" + thumbnail_prefix + "_thumb.jpg";
-		} 
-		else if (item.ft == "jpg"  || item.ft == "gif" || item.ft == "png" ) { //picture
-			var thumbnail_prefix = item.fn;
-			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
-			var image = document.createElement("img");
-			image.className = "resultsimg";
-			image.src = homedirectory + "content/pictures/" + thumbnail_prefix + "_thumb.jpg";
-		}
-		else if (item.ft == "pdf") { //pdf
-			var thumbnail_prefix = item.fn;
-			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
-			var image = document.createElement("img");
-			image.className = "resultsimg";
-			image.src = homedirectory + "content/pdfs/" + thumbnail_prefix + "_thumb.jpg";
-		} 
-		else if (item.ft == "EP") {
-			var image = document.createElement("img");
-			image.className = "resultsimg";
-			image.src = homedirectory + "content/epaath/activities/" + item.fn + "/thumbnail.jpg";
-		} 
-		$(image).css("width","140");
-		sectionDiv.appendChild(image);
+	var innerActivityDiv = function(item) {
 
-		$("<p/>", {
-			html : item.ch_id
-		}).appendTo(sectionDiv);
-
-		$("<p/>", {
-			class : "result_dn",
-			html : "<b>" + item.dn + "</b><br/>Chapter " + idExtractArray["currentChapter"] + ", Section " + idExtractArray["currentSection"]
-		}).appendTo(sectionDiv);
-
-		// File type
-		var filetype = getFileType(item.ft);
-		$("<p/>", {
-			class : "result_ft",
-			html : filetype + " // " + item.ft
-		}).appendTo(sectionDiv);
-
-		var addButton = document.createElement("button");
-		addButton.innerText = "Add";
-		addButton.className = "add";
-		// addButton.onclick = createTimelineElement(item);
-		$(addButton).bind("click", function() {
-			createTimelineElement(item, collection, issection); 
-		});
-		sectionDiv.appendChild(addButton);
-
-		var previewButton = document.createElement("button");
-		previewButton.innerText = "Preview";
-		previewButton.className = "preview";
-		// previewButton.onclick = preview_result(item);
-		$(previewButton).bind("click", function() {
-			preview_result(collection, item);
-		})
-		sectionDiv.appendChild(previewButton);
-
-		return sectionDiv;
-	}
-
-	var chapterActivityDiv = function(item) {
-		var chapterDiv = document.createElement("chapterDiv");
+		var activityDiv = document.createElement("div");
+		activityDiv.className = "activityDiv";
 		
-		$(chapterDiv).attr("data-chprefix", idExtractArray["chprefix"]);
-		$(chapterDiv).attr("data-type", "chapter");
-		$(chapterDiv).attr("data-collection", collection);
+		$(activityDiv).attr("data-chprefix", idExtractArray["chprefix"]);
+		$(activityDiv).attr("data-collection", collection);
 
 		// Thumbnail
-		var image = document.createElement("img");
-		if (item.ft == "mp3") {	 //audio
-			image.className = "resultsimg";
-			image.src = homedirectory + "content/audio/thumbnail.png";
-		} 
-		else if (item.ft == "mp4" || item.ft == "mp5") { //video
-			var thumbnail_prefix = item.fn;
-			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+		var thumbnaildiv = document.createElement("div");
+		thumbnaildiv.className = "thumbnaildiv";
+		$(thumbnaildiv).appendTo(activityDiv);
 
-			var image = document.createElement("img");
-			image.className = "resultsimg";
-			image.src = homedirectory + "content/videos/" + thumbnail_prefix + "_thumb.jpg";
-		} 
-		else if (item.ft == "jpg"  || item.ft == "gif" || item.ft == "png" ) { //picture
-			var thumbnail_prefix = item.fn;
-			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
+		$("<img/>", {
+			class : "resultsimg",
+			src : getImgFilepath(item, collection)
+		}).css("width","140").appendTo(thumbnaildiv);
 
-			var image = document.createElement("img");
-			image.className = "resultsimg";
-			image.src = homedirectory + "content/pictures/" + thumbnail_prefix + "_thumb.jpg";
-		}
-		else if (item.ft == "pdf") { //pdf
-			var thumbnail_prefix = item.fn;
-			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
-			var image = document.createElement("img");
-			image.className = "resultsimg";
-			image.src = homedirectory + "content/pdfs/" + thumbnail_prefix + "_thumb.jpg";
-		} 
-		else if (item.ft == "EP") {
-			var image = document.createElement("img");
-			image.className = "resultsimg";
-			image.src = homedirectory + "content/epaath/activities/" + item.fn + "/thumbnail.jpg";
-		} 
-
-		$(image).css("width","140");
-		// else {
-		// 	var image = document.createElement("img");
-		// 	image.className = "resultsimg";
-		// 	image.src = "images/kitty.jpg";
-		// }
-		chapterDiv.appendChild(image);
+		// Result Text
+		var textdiv = document.createElement("div");
+		textdiv.className = "textdiv";
+		$(textdiv).appendTo(activityDiv);
 
 		// ID
 		$("<p/>", {
 			class : "result_ID",
 			html : item.ch_id
-		}).appendTo(chapterDiv);
+		}).appendTo(textdiv);
 
 		// Display Name
 		$("<p/>", {
 			class : "result_dn",
 			html : "<b>" + item.dn + "</b>"
-		}).appendTo(chapterDiv);
+		}).appendTo(textdiv);
 
 		// File Type
-		if (item.ft == "gif" || item.ft == "jpg" || item.ft == "png") {
-			$("<p/>", {
-				class : "result_ft",
-				html : "Image // " + item.ft
-			}).appendTo(chapterDiv);
-		}
-		else if (item.ft == "mov" || item.ft == "mp4" || item.ft == "mp5") {
-			$("<p/>", {
-				class : "result_ft",
-				html : "Video // " + item.ft
-			}).appendTo(chapterDiv);
-		}
-		else if (item.ft == "mp3") {
-			$("<p/>", {
-				class : "result_ft",
-				html : "Audio // " + item.ft
-			}).appendTo(chapterDiv);
-		}
-		else if (item.ft == "EP") {
-			$("<p/>", {
-				class : "result_ft",
-				html : "Game // " + item.ft
-			}).appendTo(chapterDiv);
-		}
-		else if (item.ft == "html") {
-			$("<p/>", {
-				class : "result_ft",
-				html : "Webpage // " + item.ft
-			}).appendTo(chapterDiv);
-		}
-		else if (item.ft == "pdf") {
-			$("<p/>", {
-				class : "result_ft",
-				html : "Page // " + item.ft
-			}).appendTo(chapterDiv);
-		}
+		$("<p/>", {
+			class : "result_ft",
+			html : getFileType(item.ft) + " // " + item.ft
+		}).appendTo(textdiv);
+
+
+		// Buttons
+		var buttondiv = document.createElement("div");
+		buttondiv.className = "buttondiv";
+		$(buttondiv).appendTo(activityDiv);
 
 		// "Add" button
 		var addButton = document.createElement("button");
@@ -1383,7 +1205,7 @@ var createActivityDiv = function(item, previtem) {
 		$(addButton).bind("click", function() {
 			createTimelineElement(item, collection, issection); 
 		});
-		chapterDiv.appendChild(addButton);
+		buttondiv.appendChild(addButton);
 
 		var previewButton = document.createElement("button");
 		previewButton.innerText = "Preview";
@@ -1392,10 +1214,17 @@ var createActivityDiv = function(item, previtem) {
 		$(previewButton).bind("click", function() {
 			preview_result(collection, item);
 		})
-		chapterDiv.appendChild(previewButton);
+		buttondiv.appendChild(previewButton);
 
-		return chapterDiv;
+		return activityDiv;
 	}
+
+
+
+
+
+
+
 
 	// If this item is the first item
 	if (previtem == null) {
@@ -1407,34 +1236,37 @@ var createActivityDiv = function(item, previtem) {
 		// If the item ID has a decimal
 		if (item.ch_id.indexOf(".") >= 0) {
 			// Create a section div & append to main div
-			var sectionDiv = sectionActivityDiv(item);
-			$(sectionDiv).appendTo(div);
+			issection = 1;
+			var sectionDiv = innerActivityDiv(item);
+			$(sectionDiv).attr("data-type", "section").appendTo(div);
 		}
 		// Else if the item ID doesn't have a decimal
 		else {
 			// Create a chapter div & append to main div
-			var chapterDiv = chapterActivityDiv(item);
-			$(chapterDiv).appendTo(div);
+			var chapterDiv = innerActivityDiv(item);
+			$(chapterDiv).attr("data-type", "chapter").appendTo(div);
 		}
 	}
 	// If this item isn't the first item
 	else if (previtem != null) {
 		// If the item  ID has a decimal
 		if (item.ch_id.indexOf(".") >= 0) {
+			issection = 1;
 			// If the ID prefix matches the prefix of the last one
 			if (idExtractArray["chprefix"] == idExtractArray_prev["chprefix"]) {
-				//	Make a raw section div
-				var sectionDiv = sectionActivityDiv(item);
-				$(sectionDiv).appendTo(div);
+				//	Make a section div
+				var sectionDiv = innerActivityDiv(item);
+				$(sectionDiv).attr("data-type", "section").appendTo(div);
 			}
 			// Else if the ID prefix doesn't match the last one
 			else if (idExtractArray["chprefix"] != idExtractArray_prev["chprefix"]) {
-				// Create h3 Chapter element
+				// Create a new Chapter section
 				$("<h3/>", { 
 					html : "Chapter " + idExtractArray["currentChapter"] 
 				}).appendTo(div);
-				var sectionDiv = sectionActivityDiv(item);
-				$(sectionDiv).appendTo(div);
+				issection = 1;
+				var sectionDiv = innerActivityDiv(item);
+				$(sectionDiv).attr("data-type", "section").appendTo(div);
 			}
 		}
 		// Else if the item ID doesn't have a decimal
@@ -1443,8 +1275,8 @@ var createActivityDiv = function(item, previtem) {
 			$("<h3/>", { 
 				html : "Chapter " + idExtractArray["currentChapter"] 
 			}).appendTo(div);
-			var chapterDiv = chapterActivityDiv(item);
-			$(chapterDiv).appendTo(div);
+			var chapterDiv = innerActivityDiv(item);
+			$(chapterDiv).attr("data-type", "chapter").appendTo(div);
 
 		}
 	}
@@ -1471,11 +1303,6 @@ var createDictionaryDiv = function(item, previtem) {
 
 	var div = document.createElement("div");
 	div.className = "resultitem";
-
-	// var image = document.createElement("img");
-	// image.className = "resultsimg";
-	// image.src = homedirectory + "content/dictionaries/thumbnail.png";
-	// div.appendChild(image);
 
 	if (previtem == null) {
 		if (idExtractArray["currentChapter"] == "01") {
