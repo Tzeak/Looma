@@ -180,7 +180,7 @@
 
 .buttondiv {
 	float:right;
-	max-width:120px;
+	max-width:100px;
 }
 
 
@@ -376,6 +376,23 @@ li:hover {
 	box-shadow: 0px 0px 25px #C4C4C4;
 }
 
+.timelineTextDiv {
+	display:block;
+	overflow:auto;
+	margin-bottom:10px;
+}
+
+.timelineButtonDiv {
+}
+
+.timelineimg {
+	width:40px;
+	/*max-height:45px;*/
+	float:left;
+	box-shadow: 0px 0px 10px #888888;
+	margin-right:10px;
+}
+
 /* ************************ OPEN! ********************/
 
 #openLogo {
@@ -542,7 +559,7 @@ h3{
 /* ************************ INDEX && PRESENT! ********************/
 .timelinediv {
   min-height:120px;
-  width:200px;
+  width:190px;
   display:inline-block; 
   margin: auto;
   margin-right: 10px;
@@ -601,10 +618,10 @@ button {
 	color:white;
 	background:#2E3192;
 	border-radius:0.313em;
-	width: 120px;
+	width: 90px;
 	height: 40px;
 	white-space: nowrap;
-	font-size: 24px;
+	font-size: 20px;
 	margin-top: 3px;
 }
 li {
