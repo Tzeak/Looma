@@ -1698,5 +1698,20 @@ var sortableFunction = function() {
 }
 
 
+function scrollDivLeft(){
+	console.log("SCROLLING LEFT");
+	document.getElementById("wrapper").scrollLeft-=200;
+};
+
+
+
+function scrollDivRight(){
+	console.log("SCROLLING RIGHT");
+    document.getElementById("wrapper").scrollLeft+=200;
+};
+
+
+
+
 
 
