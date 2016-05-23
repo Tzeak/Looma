@@ -284,9 +284,14 @@ var createTimelineElement = function(item, collection, issection){
 	// chprefix
 
 	var timelinediv = $("<div/>", {class : "timelinediv"}).appendTo("#timelineDisplay");
+	$(timelinediv).attr("data-objid", item._id);
 
 	var innerdiv = document.createElement("div");
 	innerdiv.className = "innerdiv";
+	var textdiv = document.createElement("div");
+	textdiv.className = "timelineTextDiv";
+	var buttondiv = document.createElement("div");
+	buttondiv.className = "timelineButtonDiv";
 
 	 //textbook
  	if(collection == "textbooks" || item.subject != null) {
@@ -294,39 +299,32 @@ var createTimelineElement = function(item, collection, issection){
 		var thumbnail_prefix = item.fn;
 		thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 		$("<img/>", {
-			class : "resultsimg",
+			class : "timelineimg",
 			src : homedirectory + "content/" + item.fp + thumbnail_prefix + "_thumb.jpg"
-		}).appendTo(innerdiv);
- 		$("<p/>", { html : "<b>Textbook:<br/>" + item.dn + "</b>" }).appendTo(innerdiv);
- 		var previewbutton = $("<button/>", {class: "preview", html:"Preview"}).bind("click", function() {
- 			preview_result(collection, item);
- 		});
-		$(innerdiv).append(previewbutton);
- 		var removebutton = $("<button/>", {class: "remove", html:"Remove"}).bind("click", removeTimelineElement);
-		$(innerdiv).append(removebutton);
+		}).appendTo(textdiv);
+ 		$("<p/>", { html : "<b>Textbook:</b>" }).appendTo(textdiv);
+ 		$("<p/>", {html : "<b>" + item.dn + "</b>"}).appendTo(textdiv);
+ 		
  	}
 
 
  	 //chapter
  	if(collection == "chapters" || item.pn != null) {
  		$("<img/>", {
-			class : "resultsimg",
+			class : "timelineimg",
 			src : homedirectory + "content/textbooks/" + idExtractArray["currentGradeFolder"] + "/" + idExtractArray["currentSubjectFull"] + "/" + idExtractArray["currentSubjectFull"] + "-" + idExtractArray["currentGradeNumber"] + "_thumb.jpg"
-		}).appendTo(innerdiv);
+		}).appendTo(textdiv);
 
  		if (issection == 1) {
- 			$("<p/>", { html : "<b>Class " + idExtractArray["currentGradeNumber"] + " " + idExtractArray["currentSubjectFull"] + ",<br/>Chapter " + idExtractArray["currentChapter"] + ", Section " + idExtractArray["currentSection"] + "</b>" }).appendTo(innerdiv);
+ 			$("<p/>", { html : "<b>Chapter Section:</b>" }).appendTo(textdiv);
+ 			$("<p/>", { html : "<b>" + item.dn + "</b>" }).appendTo(textdiv);
+ 			$("<p/>", { html : "Class " + idExtractArray["currentGradeNumber"] + " " + idExtractArray["currentSubjectFull"] + ",<br/>Chapter " + idExtractArray["currentChapter"] + ", Section " + idExtractArray["currentSection"]}).appendTo(textdiv);
  		}
  		else {
- 			$("<p/>", { html : "<b>Class " + idExtractArray["currentGradeNumber"] + " " + idExtractArray["currentSubjectFull"] + ",<br/>Chapter " + idExtractArray["currentChapter"] + "</b>" }).appendTo(innerdiv);
+ 			$("<p/>", { html : "<b>Chapter:</b>" }).appendTo(textdiv);
+ 			$("<p/>", { html : "<b>" + item.dn + "</b>" }).appendTo(textdiv);
+ 			$("<p/>", { html : "Class " + idExtractArray["currentGradeNumber"] + " " + idExtractArray["currentSubjectFull"] + ",<br/>Chapter " + idExtractArray["currentChapter"]}).appendTo(textdiv);
  		}
-
- 		var previewbutton = $("<button/>", {class: "preview", html:"Preview"}).bind("click", function() {
- 			preview_result(collection, item);
- 		});
-		$(innerdiv).append(previewbutton);
- 		var removebutton = $("<button/>", {class: "remove", html:"Remove"}).bind("click", removeTimelineElement);
-		$(innerdiv).append(removebutton);
  	}
 
 
@@ -336,7 +334,7 @@ var createTimelineElement = function(item, collection, issection){
  		// Thumbnail
 		var image = document.createElement("img");
 		if (item.ft == "mp3") {	 //audio
-			image.className = "resultsimg";
+			image.className = "timelineimg";
 			image.src = homedirectory + "content/audio/thumbnail.png";
 		} 
 		else if (item.ft == "mp4" || item.ft == "mp5") { //video
@@ -344,7 +342,7 @@ var createTimelineElement = function(item, collection, issection){
 			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
 			var image = document.createElement("img");
-			image.className = "resultsimg";
+			image.className = "timelineimg";
 			image.src = homedirectory + "content/videos/" + thumbnail_prefix + "_thumb.jpg";
 		} 
 		else if (item.ft == "jpg"  || item.ft == "gif" || item.ft == "png" ) { //picture
@@ -352,7 +350,7 @@ var createTimelineElement = function(item, collection, issection){
 			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
 			var image = document.createElement("img");
-			image.className = "resultsimg";
+			image.className = "timelineimg";
 			image.src = homedirectory + "content/pictures/" + thumbnail_prefix + "_thumb.jpg";
 		}
 		else if (item.ft == "pdf") { //pdf
@@ -360,81 +358,56 @@ var createTimelineElement = function(item, collection, issection){
 			thumbnail_prefix = thumbnail_prefix.substr(0, thumbnail_prefix.indexOf('.'));
 
 			var image = document.createElement("img");
-			image.className = "resultsimg";
+			image.className = "timelineimg";
 			image.src = homedirectory + "content/pdfs/" + thumbnail_prefix + "_thumb.jpg";
 		} 
 		else if (item.ft == "EP") {
 			var image = document.createElement("img");
-			image.className = "resultsimg";
+			image.className = "timelineimg";
 			image.src = homedirectory + "content/epaath/activities/" + item.fn + "/thumbnail.jpg";
 		} 
 
-		$(image).css("width","80");
 		// else {
 		// 	var image = document.createElement("img");
-		// 	image.className = "resultsimg";
+		// 	image.className = "timelineimg";
 		// 	image.src = "images/kitty.jpg";
 		// }
-		innerdiv.appendChild(image);
+		$(image).appendTo(textdiv);
 
-		$("<p/>", { html : "<b>" + item.ft + "</b>" }).appendTo(innerdiv);
+		$("<p/>", { html : "<b>" + getFileType(item.ft) + ":</b>" }).appendTo(textdiv);
+		$("<p/>", { html : "<b>" + item.dn + "</b>" }).appendTo(textdiv);
 
  		if (issection == 1) {
- 			$("<p/>", { html : "<b>Class " + idExtractArray["currentGradeNumber"] + " " + idExtractArray["currentSubjectFull"] + ",<br/>Chapter " + idExtractArray["currentChapter"] + ", Section " + idExtractArray["currentSection"] + "</b>" }).appendTo(innerdiv);
+ 			$("<p/>", { html : "<Class " + idExtractArray["currentGradeNumber"] + " " + idExtractArray["currentSubjectFull"] + ",<br/>Chapter " + idExtractArray["currentChapter"] + ", Section " + idExtractArray["currentSection"]}).appendTo(textdiv);
  		}
  		else {
- 			$("<p/>", { html : "<b>Class " + idExtractArray["currentGradeNumber"] + " " + idExtractArray["currentSubjectFull"] + ",<br/>Chapter " + idExtractArray["currentChapter"] + "</b>" }).appendTo(innerdiv);
+ 			$("<p/>", { html : "Class " + idExtractArray["currentGradeNumber"] + " " + idExtractArray["currentSubjectFull"] + ",<br/>Chapter " + idExtractArray["currentChapter"]}).appendTo(textdiv);
  		}
-
- 		var previewbutton = $("<button/>", {class: "preview", html:"Preview"}).bind("click", function() {
- 			preview_result(collection, item);
- 		});
-		$(innerdiv).append(previewbutton);
- 		var removebutton = $("<button/>", {class: "remove", html:"Remove"}).bind("click", removeTimelineElement);
-		$(innerdiv).append(removebutton);
- 		
  	}
 
 
 
  	//dictionary
  	if(collection == "dictionary" || item.part != null) {
- 		$("<p/>", { html : "<b>Dictionary Entry</b>" }).appendTo(innerdiv);
+ 		$("<p/>", { html : "<b>Dictionary Entry:</b>" }).appendTo(textdiv);
 
- 		$("<p/>", { html : "<b>Class " + idExtractArray["currentGradeNumber"] + " " + idExtractArray["currentSubjectFull"] + ",<br/>Chapter " + idExtractArray["currentChapter"] + "</b>" }).appendTo(innerdiv);
-
- 		var previewbutton = $("<button/>", {class: "preview", html:"Preview"}).bind("click", function() {
- 			preview_result(collection, item);
- 		});
-		$(innerdiv).append(previewbutton);
- 		var removebutton = $("<button/>", {class: "remove", html:"Remove"}).bind("click", removeTimelineElement);
-		$(innerdiv).append(removebutton);
+ 		$("<p/>", { html : "Class " + idExtractArray["currentGradeNumber"] + " " + idExtractArray["currentSubjectFull"] + ",<br/>Chapter " + idExtractArray["currentChapter"]}).appendTo(textdiv);
  	}
+
+ 	var previewbutton = $("<button/>", {class: "preview", html:"Preview"}).bind("click", function() {
+		preview_result(collection, item);
+	});
+	$(buttondiv).append(previewbutton);
+		var removebutton = $("<button/>", {class: "remove", html:"Remove"}).bind("click", removeTimelineElement);
+	$(buttondiv).append(removebutton);
+
+	$(textdiv).appendTo(innerdiv);
+	$(buttondiv).appendTo(innerdiv);
 
 	$(innerdiv).appendTo(timelinediv);
 	addToAssArray(item);
+	console.log("timeline ass array: ");
 	console.log(timelineAssArray);
-
-	// if($(innerdiv).has("h3")){
-	// 	$("h3").remove();
-	// }
-
-
-
-
-
-	// // Remove "resultitem" class from div
-	// $(innerdiv).removeClass("resultitem");
-	// $(innerdiv).addClass("innerdiv");
-	// // $(innerdiv).removeElement
-
-	// var timelinediv = $("<div/>", {class:"timelinediv"}).appendTo("#timelineDisplay");
-	// $(innerdiv).appendTo(timelinediv);
- // 	$(timelinediv).attr("data-objid", object._id);
- // 	// console.log(timelinediv.className);
- // 	$(".timelinediv button.add").remove();
-	// var removebutton = $("<button/>", {class: "remove", html:"Remove"}).bind("click", removeTimelineElement);
-	// $(innerdiv).append(removebutton);
 
 	sortableFunction();
 }
@@ -444,8 +417,8 @@ var createTimelineElement = function(item, collection, issection){
 
 var removeTimelineElement = function() {
   // Removing list item from timelineHolder
-  var timelineItem = this.parentNode;
-  timelineItem.parentNode.remove();
+  var outerDiv = this.parentNode.parentNode.parentNode;
+  outerDiv.remove();	// "Remove" button is within 3 divs
 }	
 
 //***********************************************************************end of things we need for present**********************************************************************************************
@@ -697,6 +670,29 @@ THUMBNAILS
 
 //////////////////////////END TO-DO */
 //*************************************************************************************start of things we need for presentation **********************************************
+
+
+var getFileType = function(ft) {
+	if (ft == "gif" || ft == "jpg" || ft == "png") {
+		return "Image";
+	}
+	else if (ft == "mov" || ft == "mp4" || ft == "mp5") {
+		return "Video";
+	}
+	else if (ft == "mp3") {
+		return "Audio";
+	}
+	else if (ft == "EP") {
+		return "Game";
+	}
+	else if (ft == "html") {
+		return "Webpage";
+	}
+	else if (ft == "pdf") {
+		return "Document";
+	}
+}
+
 
 var extractItemId = function(item, collection) {
 	
@@ -1249,43 +1245,12 @@ var createActivityDiv = function(item, previtem) {
 			html : "<b>" + item.dn + "</b><br/>Chapter " + idExtractArray["currentChapter"] + ", Section " + idExtractArray["currentSection"]
 		}).appendTo(sectionDiv);
 
-		// File Type
-		if (item.ft == "gif" || item.ft == "jpg" || item.ft == "png") {
-			$("<p/>", {
-				class : "result_ft",
-				html : "Image // " + item.ft
-			}).appendTo(sectionDiv);
-		}
-		else if (item.ft == "mov" || item.ft == "mp4" || item.ft == "mp5") {
-			$("<p/>", {
-				class : "result_ft",
-				html : "Video // " + item.ft
-			}).appendTo(sectionDiv);
-		}
-		else if (item.ft == "mp3") {
-			$("<p/>", {
-				class : "result_ft",
-				html : "Audio // " + item.ft
-			}).appendTo(sectionDiv);
-		}
-		else if (item.ft == "EP") {
-			$("<p/>", {
-				class : "result_ft",
-				html : "Game // " + item.ft
-			}).appendTo(sectionDiv);
-		}
-		else if (item.ft == "html") {
-			$("<p/>", {
-				class : "result_ft",
-				html : "Webpage // " + item.ft
-			}).appendTo(sectionDiv);
-		}
-		else if (item.ft == "pdf") {
-			$("<p/>", {
-				class : "result_ft",
-				html : "Page // " + item.ft
-			}).appendTo(sectionDiv);
-		}
+		// File type
+		var filetype = getFileType(item.ft);
+		$("<p/>", {
+			class : "result_ft",
+			html : filetype + " // " + item.ft
+		}).appendTo(sectionDiv);
 
 		var addButton = document.createElement("button");
 		addButton.innerText = "Add";
@@ -1611,6 +1576,12 @@ var preview_result = function(collection, item) {
 		else if (item.ft=="EP") {
 		document.querySelector("div#displaybox").innerHTML = '<object type="text/html" data="' + homedirectory + 'content/epaath/activities/' + item.fn  + '/index.html" style="width:100%; height:100%; margin:1%;"> </object>';
 		}
+		else if (item.ft=="pdf") {
+			document.querySelector("div#displaybox").innerHTML = '<embed src="' + homedirectory + 'content/pdfs/' + item.fn + '" width="100%" height="100%" type="application/pdf">';
+		}
+		else if (item.ft=="html") {
+			// MAKE THIS WORK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		}
 	}
 
 	else if (collection == "dictionary") {
@@ -1648,28 +1619,15 @@ var save = function(){
     	alert("Lesson plan requires a title before saving.");
     }
     else {
-	    // var timelineDivs = document.getElementsByClassName("timelinediv");
-	    // for (var i = 0; i < timelineDivs.length; i++) {
+    	console.log("TITLE INPUT IS RUNNING");
+	    var timelineDivs = document.getElementsByClassName("timelinediv");
+	    var objectId = "";
+	    for (var i=0; i<timelineDivs.length; i++) {
+	    	objectId = timelineAssArray[$(timelineDivs[i]).data("objid")]._id;
+	    	itemIds.push(objectId);
+	    }
 
-	    // 	if((document.getElementsByClassName("timelinediv")[i].lastElementChild)!=null) {
-		   //  	var x = document.getElementsByClassName("timelinediv")[i].lastElementChild;
-		   //  	var index = x.getAttribute("index");
-		   //  	console.log("index : " + index);
-		   //  	objectId=resultArray[index]._id;
-		   //  	//var y = timelineDivs[i].document.getElementById("name").outerText;
-		   //  	console.log("item: " + objectId);
-		   //  	itemIds.push(objectId);
-	    // 	}
-
-	     var timelineDivs = document.getElementsByClassName("timelinediv");
-	     var objectId = "";
-	     for (var i=0; i<timelineDivs.length; i++) {
-	     	objectId = timelineAssArray[$(timelineDivs[i]).data("objid")]._id;
-	     	itemIds.push(objectId);
-	     }
-
-	}
-	   	var timeline = {
+	    var timeline = {
 			timeline_id: getParameterByName("timelineId"),
 	   		lesson_title : titleInput,
 	   		items_array : itemIds
@@ -1684,7 +1642,7 @@ var save = function(){
 			console.log(data);
 		});
 		alert("Your timeline, " + titleInput + ", has been saved!");
-
+	}
 }
 
 
