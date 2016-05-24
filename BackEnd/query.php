@@ -87,35 +87,76 @@ echo json_encode($final_array);
 			//Match any grade, 1-8
 			$filterword .= "[1-8]";
 		}
+
+
 		if(isset($_GET["subject"]) && $_GET["subject"] != '')
 		{
 			// $filterword .= "^[^%]*" . $_GET['subject'] . "[^%]*$";
 			$filterword .= $_GET["subject"]; 
+
 		}
 		else
 		{
 			//Match any Subject of One or More Letters
 			$filterword .= "[A-Za-z]+";
 		}
+
+
 		if(isset($_GET["chapter"]) && $_GET["chapter"] != '')
 		{
 			$filterword .= "([^\.1-9]" . $_GET["chapter"] . ")|([^\.]0" . $_GET["chapter"] . ")"; 
+
+			/*
+			if($_GET["subject"] == "S") {
+				//If searching for Science, don't match Social Studies
+				$filterword = "($|)";
+			}
+			else {
+				$filterword = "";
+			}
+			*/
 		}
 		else
-		{
+		{	
+			// $filterword.= "([0-9][0-9]?)?";
+
 			//Match Any chapter from 0-99
 			//Assuming double digit chapter numbers
-			$filterword.= "([0-9][0-9]?)?";
+
+			
+			// echo $filterword;
+			if($_GET["subject"] == "S") {
+				//If searching for Science, don't match Social Studies
+				$filterword.= "($|([0-9][0-9]?))";
+			}
+			else {
+				$filterword.= "([0-9][0-9]?)?";
+			}
+			
 		}
+
+
 		if(isset($_GET['section']) && $_GET["section"] != '')
 		{
 			$filterword .= "\." . $_GET['section'];
+
+
+			/*
+			if($_GET["subject"] == "S") {
+				//If searching for Science, don't match Social Studies
+				$filterword = "($|)";
+			}
+			else {
+				$filterword = "";
+			}
+			*/
 		}
 		else
 		{
 			//Auto match section with lack of section -- this code doesn't matter!
 		}
-
+		
+		// echo " regex: " . $filterword;
 		
 		//Construct a query by placing regex into relevant array
 		//NOTE: using regex to do a case insensitive search for the filterword 
