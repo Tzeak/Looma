@@ -14,9 +14,9 @@
 	<script>
 		function search() {
 			var data = {
-				'search' : 'math'
+				'search' : 'butt'
 			};
-			$.get("search.php", data, function(data) {
+			$.get("../search.php", data, function(data) {
 				$("#searchdiv").html(data);
 			}); //Send data to server via post request
 			// document.getElementById("opendiv").innerText = data;
