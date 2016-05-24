@@ -21,12 +21,36 @@
 		</select>
 	Subject		
 		<select id="dropdown_subject">
-			<option value="EN">EN</option>
+			<option value="S">Science</option>
 			<option value="EN">English</option>
 			<option value="M">Math</option>
 			<option value="S">Science</option>
 			<option value="SS">Social Studies</option>
 			<!--Add nepali?-->
+		</select>
+	Chapter		
+		<select id="dropdown_chapter">
+			<option value="3">3</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+		</select>
+	Section		
+		<select id="dropdown_section">
+			<option value="3">3</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
 		</select>
 
 	<br/><br/>
@@ -46,6 +70,10 @@
 			var filterdata = {
 				'grade' : document.getElementById('dropdown_grade').value,
 				'subject' : document.getElementById('dropdown_subject').value,
+				// 'chapter' : document.getElementById('dropdown_chapter').value,
+				// 'chapter' : "25";
+				// 'subject' : document.getElementById('dropdown_subject').value,
+				// 'subject' : "3"
 				'image' : null,
 				'video' : null,
 				'audio' : null,
@@ -54,7 +82,7 @@
 
 			// var filterdata = new Object();
 			// filterdata.module = 'filter';
-			// filterdata.grade = document.getElementById('dropdown_grade').value;
+			// filterdata.grade = documen	t.getElementById('dropdown_grade').value;
 			// filterdata.subject = document.getElementById('dropdown_subject').value;
 
 
@@ -68,7 +96,7 @@
 			// 	'audio' : false,
 			// 	'misc' : false
 			// };
-			$.get("query.php", filterdata, function(filterdata) {
+			$.get("../query.php", filterdata, function(filterdata) {
 				$("#filterdiv").html(filterdata);
 				console.log(JSON.parse(filterdata));
 			}); //Send filter data to server via GET request

@@ -33,7 +33,7 @@ window.onload = function loadPageElements() {
 
 		$("<div/>", {
 			id : "div_search",
-			class : "hidden"	// CHANGE THIS LATER. IT'S JUST NOT WORKING NOW.
+			// class : "hidden"	// CHANGE THIS LATER. IT'S JUST NOT WORKING NOW.
 		}).appendTo("#div_filter");
 		$("<p/>", {
 			class : "filter_label",
@@ -69,8 +69,8 @@ window.onload = function loadPageElements() {
 		for (var i=0; i<8; i++) {
 			if (i == 0) {
 				$("<option/>", {
-					html : "3",
-					id : "3"
+					html : "",
+					id : ""
 				}).appendTo("#dropdown_grade");
 			} 
 			else {
@@ -86,6 +86,7 @@ window.onload = function loadPageElements() {
 		var subjects = {
 			"English" : "EN",
 			"Math" : "M",
+			"Nepali" : "N",
 			"Science" : "S",
 			"Social Studies" : "SS"
 		}
@@ -105,8 +106,8 @@ window.onload = function loadPageElements() {
 		}).attr("onchange","unhideElement('#div_chapter')").appendTo("#div_subject");
 
 		$('<option>', { 
-	        value: "S",
-	        html : "Science" 
+	        value: "",
+	        html : "" 
 	    }).appendTo("#dropdown_subject");
 
 		$.each(subjects, function (key, value) {
@@ -116,6 +117,7 @@ window.onload = function loadPageElements() {
 	    	}).appendTo("#dropdown_subject");
 		});
 
+	/*	// We're removing Chapter and Section from filter.
 		// Filter: Chapter
 
 		$("<div/>", {
@@ -179,6 +181,8 @@ window.onload = function loadPageElements() {
 				}).appendTo("#dropdown_section");
 			}
 		}
+	*/
+
 
 		// Filter: File Type
 
@@ -428,18 +432,27 @@ var querySearch = function() {
 	var filterdata = {
 		'grade' : document.getElementById('dropdown_grade').value,
 		'subject' : document.getElementById('dropdown_subject').value,
-		'chapter' : document.getElementById('dropdown_chapter').value,
-		'section': document.getElementById('dropdown_section').value,
+		// 'chapter' : document.getElementById('dropdown_chapter').value,
+		// 'section': document.getElementById('dropdown_section').value,
 		'image' : document.getElementById('ft_image').checked,
 		'video' : document.getElementById('ft_video').checked,
 		'audio' : document.getElementById('ft_audio').checked,
 		'misc' : document.getElementById('ft_misc').checked
 	};
-	$.get("../BackEnd/query.php", filterdata, function(filterdata) {
-		console.log(JSON.parse(filterdata));
-		var filterdata_object = storeFilterData(filterdata);
-		printFilterData(filterdata_object);
-	}); //Send filter data to server via GET request
+	console.log(filterdata['image']);
+
+	if (filterdata['grade'] == "" && filterdata['subject'] == "" && filterdata['image'] == false && filterdata['video'] == false && filterdata['audio'] == false && filterdata['misc'] == false) {
+		$("#innerResultsDiv").html("Please select at least 1 filter option before searching.");
+	}
+	else {
+		var loadingmessage = $("<p/>", {html : "Loading results..."}).appendTo("#innerResultsDiv");
+		$.get("../BackEnd/query.php", filterdata, function(filterdata) {
+			$(loadingmessage).remove();
+			console.log(JSON.parse(filterdata));
+			var filterdata_object = storeFilterData(filterdata);
+			printFilterData(filterdata_object);
+		}); //Send filter data to server via GET request
+	}
 }
 
 
@@ -1374,6 +1387,8 @@ var createDictionaryDiv = function(item, previtem) {
 // When you click the preview button
 var preview_result = function(collection, item) {
 
+	$("<p/>", {html : "Loading preview..."}).appendTo("#displaybox");
+
 	var idExtractArray = extractItemId(item, collection);
 
 	if (collection == "chapters") {
@@ -1383,7 +1398,6 @@ var preview_result = function(collection, item) {
 
 
 	else if (collection == "textbooks") {
-		console.log("textbooks");
 		document.querySelector("div#displaybox").innerHTML = '<embed src="' + homedirectory + 'content/' + item.fp + item.fn + '" width="100%" height="100%" type="application/pdf">';
 	}
 
