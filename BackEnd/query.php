@@ -1,29 +1,33 @@
 <?php
 
 /*
- 	File:			query.php
- 	Description:	This file runs upon clicking the "Search" button
- 					in the "Query" module in the main web application.
-
- 					FILTER
- 					The "filter" function has 5 options:
-						1. Grade
-						2. Subject
-						3. Chapter
-						4. Section 
-						5. Type of media 
-					The filter returns a JSON string for the Front-End Application to then parse
-
-					SEARCH
-					The "search" function will take the search query and do a simple text search through 
-					the mongo document returned by the filter
+ * 	File:			query.php
+ *
+ * 	Description:	This file runs upon clicking the "Search" button
+ * 					in the "Query" module in the main web application.
+ *
+ * 					FILTER
+ * 					The "filter" function has 5 options:
+ *						1. Grade
+ *						2. Subject
+ *						3. Chapter
+ *						4. Section 
+ *						5. Type of media 
+ *					The filter returns a JSON of all the relevant media for the Front-End to then
+ *					manipulate.
+ *
+ *					SEARCH | TODO
+ *					NOTE - Ideally the search functionality would be a part of this script.
+ *					However, for the time being, we have split it out into its own module, 
+ *					search.php
+ *
+ *					The "search" function will take the search query and do a simple text search 
+ *					through	the mongo document returned by the filter
  */
 
 require_once('mongoSetup.php');
 
-///////
-// Test out mongoquery with extra shit
-//////
+
 $gscs_array = gscsQuery();
 $cnt_gscs = count($gscs_array);
 
@@ -33,7 +37,6 @@ $cnt_ft = count($ft_array);
 $final_array = array();
 
 // Create foor loop to merge the query arrays and search mongo
-
 for ($i=0; $i<$cnt_gscs; $i++) {
 	for ($j=0; $j<$cnt_ft; $j++) {
 		if(empty($ft_array[$j]))
@@ -70,12 +73,18 @@ for ($i=0; $i<$cnt_gscs; $i++) {
 }
 echo json_encode($final_array);
 
-//Function: gscsQuery
-//	Input: n/a (it receives info from GET requests)
-// 	Return: Array of documents matching 
-//	NOTE: "gscs" stands for Grade,Subject,Chapter,Section, the only filter inputs we deal with in this function
-	function gscsQuery()
-	{
+/* Function: gscsQuery()
+ *	Input:		n/a
+ *	Return:		Array of documents matching preferences found in $_GET
+ *
+ *	Desc:		This function constructs a regular expression out of the Grade, Subject, Chapter,
+ *				and Section choices that the user inputs. The script will then use this regex to 
+ *				query the MongoDB. 
+ *	NOTE:		"gscs" stands for Grade, Subject, Chapter, Section, the only filter inputs we
+ *				deal with in this function
+ */
+function gscsQuery()
+{
 		global $filterword;
 	    $filterword	= "";
 		if(isset($_GET["grade"]) && $_GET["grade"] != '')
@@ -168,7 +177,7 @@ echo json_encode($final_array);
 		$final_array = array();
 		array_push($final_array, $chapter_query, $text_query, $act_query, $dict_query);
 		return $final_array;
-	}
+}
 
 
 //Function: fileTypeQuery

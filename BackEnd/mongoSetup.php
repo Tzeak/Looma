@@ -1,10 +1,12 @@
 <?php
 /*
  * File:		mongoSetup.php
- * Description:	This removes the necessity of re-writing the mongo setup for 
- *				each php file where we need to access MongoDB.
+ * Description:	This is a utility file that builds a Mongo Connection so that we can 
+ *				reuse certain mongo utility functions.
  */
 
+/*Script:		Builds the MongoDB Connection
+ */
 try
 {
 	$m			= new MongoClient(); 
@@ -49,28 +51,6 @@ function searchMongo($id)
 	return null;
 }
 
-// function searchActivities($id) 
-// {
-// 	global $activities;
-// 	$document = $activities->findOne(array('_id' => new MongoId($id)));
-// 	if ($document != null) 
-// 	{
-// 		return $document; // it's in this collection!
-// 	} 
-// 	return null;
-// }
-
-// function searchDictionary($id) 
-// {
-// 	global $dictionary;
-// 	$document = $dictionary->findOne(array('_id' => new MongoId($id)));
-// 	if ($document != null) 
-// 	{
-// 		return $document; // it's in this collection!
-// 	} 
-// 	return null;
-// }
-
 /* Function:		getTimelineElements
  * Description:		Input	- Mongo ID of a Timeline Object
  *					Return	- Array of MongoDB Documents from the associated timeline
@@ -102,8 +82,10 @@ function getTimelineElements ($timelineID) {
 }
 
 /* Function:		fixDocArray
- * Description:		Takes array of Mongo Documents and "cleans" the id object for json_encode()
- *					Runs O(n)
+ * Description:		Input	- Array of MongoDB Documents of format [{"_id":{"$id": ObjectId}}]
+ *					Return	- Array of MongoDB Documents of format [{"_id": ObjectId}];
+ *
+ *					Takes array of Mongo Documents and "cleans" the id object for json_encode()
  */
 function fixDocArray($docArray)
 {
@@ -116,8 +98,10 @@ function fixDocArray($docArray)
 }
 
 /* Function:		fixDocId
- * Description:		Takes Mongo Document and "cleans" the id object for json_encode()
- *					Runs O(1)
+ * Description:		Input	- A MongoDB Document of format {"_id" : {$id": ObjectId}}
+ *					Return	- A MongoDB Document of format {"_id" : ObjectId}
+ *
+ *					Takes Mongo Document and "cleans" the id object for json_encode()
  */
 function fixDocId($doc)
 {
