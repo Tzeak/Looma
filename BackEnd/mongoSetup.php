@@ -49,16 +49,25 @@ function searchMongo($id)
 	return null;
 }
 
-// function searchActivities($id) 
-// {
-// 	global $activities;
-// 	$document = $activities->findOne(array('_id' => new MongoId($id)));
-// 	if ($document != null) 
-// 	{
-// 		return $document; // it's in this collection!
-// 	} 
-// 	return null;
-// }
+/* Function:		searchMongoByFilename($fn)
+ * Description:		Input	- Filename associated with a Mongo Document
+ *					Return	- Document or null if not found
+ */
+function searchMongoByFilename($fn) 
+{
+	global $activities, $textbooks;
+	$collectionarray = array($activities, $textbooks);
+	for($i = 0; $i < $collectionarray; $i++)
+	{
+		$document = $collectionarray[$i]->findOne(array('fn' => $fn));
+		if ($document != null) 
+		{
+			return $document; // it's in this collection!
+		} 
+	}
+
+	return null;
+}
 
 // function searchDictionary($id) 
 // {
