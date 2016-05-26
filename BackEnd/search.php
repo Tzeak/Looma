@@ -4,8 +4,14 @@ require_once 'mongoSetup.php';
 //Glob attempt. It technically works, in the worst way.
 $filename = globber();
 //echo $filename;
-$mongodoc = fixDocId(searchMongoByFilename($filename));
-echo json_encode($mongodoc);
+if($filename)
+{
+	$mongodoc = searchMongoByFilename($filename);
+	$mongodoc = fixDocId($mongodoc);
+	echo json_encode($mongodoc);
+}
+else
+	echo "No file found";
 
 function globber() //Currently finds only the first match
 {
@@ -13,9 +19,10 @@ function globber() //Currently finds only the first match
 	$iterator = new RecursiveIteratorIterator($dir_iterator);
 	if(isset($_GET['search']) && $_GET['search'] != '')
 	{
-		foreach ($iterator as $file) 
+		foreach ($iterator as $filepath) 
 		{
-			$filename = $file . '/*' . $_GET['search'];
+			$filename = $filepath . '/*' . $_GET['search'];
+			//   ../content/*Classroom*
 			foreach (ciGlob($filename . '*') as $found)
 			{
 				if($found)
@@ -48,6 +55,16 @@ function ciGlob($pat, $base = '', $suffix = '')
 	$p .= $suffix;
 	return glob($p);
 }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //This would be a better Mechanism for finding files IF IT WORKED x.x :(((
 /*
 $folder = "../content/";
