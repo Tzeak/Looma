@@ -145,7 +145,7 @@
 
 #div_filetypes {
 	/*margin-top: 20px;*/
-	width: 200px;
+	width: 300px;
 	float: left;
 	line-height: 5px;
 	/*margin-left: 30px;*/
@@ -227,6 +227,16 @@
 #innerResultsDiv {
 	overflow-y:scroll;
 	height:90%;
+}
+
+#innerResultsMenu {
+	border-bottom:1px solid #000;
+}
+
+#innerResultsSubMenu a {
+	display:inline;
+	text-decoration:none;
+	margin-right:20px;
 }
 
 /*#outerResultsDiv {

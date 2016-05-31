@@ -20,6 +20,7 @@ function globber() //Currently finds only the first match
 			{
 				if($found)
 				{
+					echo basename($found);
 					return basename($found);
 				}
 			}

@@ -200,7 +200,7 @@ echo json_encode($final_array);
 		$combo = false;
 		if($_GET["image"] === 'true')
 		{
-			$mediatype .= "(gif|jpg|png|pdf)"; 
+			$mediatype .= "(gif|jpg|png)"; 
 			$combo = true;
 		}
 		if($_GET["video"] === 'true')
@@ -223,13 +223,40 @@ echo json_encode($final_array);
 			$mediatype .= "(mp3)";
 			$combo = true;
 		}
-		if($_GET["misc"] === 'true')
+		// if($_GET["misc"] === 'true')
+		// {
+		// 	if($combo)
+		// 	{
+		// 		$mediatype .="|";
+		// 	}
+		// 	$mediatype .= "(EP|html)";
+		// 	$combo = true;
+		// }
+		if ($_GET["game"] === 'true') 
 		{
-			if($combo)
+			if ($combo)
 			{
-				$mediatype .="|";
+				$mediatype .= "|";
 			}
-			$mediatype .= "(EP|html)";
+			$mediatype .= "(EP)";
+			$combo = true;
+		}
+		if ($_GET["pdf"] === 'true')
+		{
+			if ($combo)
+			{
+				$mediatype .= "|";
+			}
+			$mediatype .= "(pdf)";
+			$combo = true;
+		}
+		if ($_GET["webpage"] === 'true')
+		{
+			if ($combo)
+			{
+				$mediatype .= "|";
+			}
+			$mediatype .= "(html)";
 			$combo = true;
 		}
 		if ($mediatype == "")
