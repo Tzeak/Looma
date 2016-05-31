@@ -59,7 +59,7 @@ function searchMongoByFilename($fn)
 	$collectionarray = array($activities, $textbooks);
 	for($i = 0; $i < $collectionarray; $i++)
 	{
-		$document = $collectionarray[$i]->findOne(array('fn' => $fn));
+		$document = $collectionarray[$i]->findOne(array('fn' => "$fn"));
 		if ($document != null) 
 		{
 			return $document; // it's in this collection!
