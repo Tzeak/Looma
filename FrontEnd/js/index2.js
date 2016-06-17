@@ -14,13 +14,16 @@ var homedirectory = "../";
 
 
 
-////////////////////////////////////////////// ONLOAD FUNCTION //////////////////////////////////////////////
+////////////////////////////////////////////// INITIALIZATION //////////////////////////////////////////////
 
+/* 
+	Function:		loadPageElements()
+	Description:	Creates & appends HTML DOM elements using JS/jquery on window load.
+*/
 
-// This loads all the preliminary elements in the page.
 window.onload = function loadPageElements() {
 	
-		// Navbar 
+		// Navigation Bar 
 
 		$("<p/>", {
 			html : "Lesson Plan Creator: Edit"
@@ -30,28 +33,20 @@ window.onload = function loadPageElements() {
 
 		// Filter: Search
 
-		$("<div/>", {
-			id : "div_search",
-			// class : "hidden"	// CHANGE THIS LATER. IT'S JUST NOT WORKING NOW.
-		}).appendTo("#div_filter");
+		$("<div/>", { 
+			id : "div_search" 
+		}).appendTo("#div_filter");	// Appends a div to "#div_filter"
 		$("<p/>", {
 			class : "filter_label",
 			id : "search_label",
-		}).appendTo("#div_search");
+		}).appendTo("#div_search");	// Appends a p element to #div_search div
 		$("<input/>", {
 			id : "searchString",
 			class: "textBox",
 			type : "text",
 			placeholder: "Search",
 			name : "search",
-		}).appendTo("#div_search");
-
-		// $("<button/>", {
-		// 	id : "search_button",
-		// 	onclick : "searchButton()",
-		// 	type : "button",
-		// 	html : "searchy"
-		// }).appendTo("#div_filter");
+		}).appendTo("#div_search");	// Appends a text box to #div_search div, etc.
 
 
 
@@ -59,7 +54,7 @@ window.onload = function loadPageElements() {
 
 		$("<div/>", {
 			id : "div_grade"
-		}).appendTo("#div_filter");
+		}).appendTo("#div_filter");	
 
 		$("<p/>", {
 			class : "filter_label",
@@ -75,8 +70,8 @@ window.onload = function loadPageElements() {
 		for (var i=0; i<8; i++) {
 			if (i == 0) {
 				$("<option/>", {
-					html : "3",
-					id : "3"
+					html : "",
+					id : ""
 				}).appendTo("#dropdown_grade");
 			} 
 			else {
@@ -112,8 +107,8 @@ window.onload = function loadPageElements() {
 		}).appendTo("#div_subject");
 
 		$('<option>', { 
-	        value: "S",
-	        html : "Science" 
+	        value: "",
+	        html : "" 
 	    }).appendTo("#dropdown_subject");
 
 		$.each(subjects, function (key, value) {
@@ -133,7 +128,6 @@ window.onload = function loadPageElements() {
 			"game" : 		{ 	id : "ft_game", 	display : "Game" 	},
 			"pdf" : 		{ 	id : "ft_pdf", 		display : "PDF" 	},
 			"webpage" : 	{ 	id : "ft_webpage", 	display : "Webpage" },
-			// "misc" : 		{ 	id : "ft_misc", 	display : "Misc" 	},
 		}
 
 		
@@ -141,27 +135,21 @@ window.onload = function loadPageElements() {
 			id : "div_filetypes"
 		}).appendTo("#div_filter");
 
-		// $("<p/>", {
-		// 	html : "File types: ", 
-		// }).appendTo("#div_filetypes");
-
 		$.each(filetypes, function (key, value) {
 		    $("<input/>", { 
 		 		class : "filter_checkbox",
 		    	type : "checkbox",
-		    	// checked : true,
 		    	style : "zoom:1.5",
 		    	id : value.id,
-		        name : key,
-		        // html : value.display
+		        name : key
 	    	}).appendTo("#div_filetypes");
 	    	$("<label/>", { 
 	    		class : "filter_label",
 		    	for : value.id,
 		    	html : value.display
 	    	}).appendTo("#div_filetypes");
-	    	//$("#div_filetypes").append("<br/>");
 		});
+
 
 		// Button
 
@@ -181,7 +169,9 @@ window.onload = function loadPageElements() {
 			html : "Search"
 		}).appendTo("#div_filter");
 
+
 		// Title string
+
 		$("<p/>", {
 			html : "Lesson Plan Title:&nbsp;&nbsp;"
 		}).appendTo("#titleDiv");
@@ -194,10 +184,17 @@ window.onload = function loadPageElements() {
 			name : "title",
 		}).appendTo("#titleDiv");
 
-		openTimeline();
+		openTimeline();	// This can be called only after the DOM elements are loaded.
 }
 
 
+/* 
+	Function:		addToAssArray(object)
+	Description:	Loads the object into timelineAssArray[], 
+					which holds the order of the elements in 
+					the timeline.
+					Input: 	- object 
+*/
 var addToAssArray = function(object) {
 	timelineAssArray[object._id] = object;
 }
@@ -207,6 +204,16 @@ var addToAssArray = function(object) {
 
 
 ////////////////////////////////////////////// TIMELINE MANIPULATION //////////////////////////////////////////////
+
+/* 
+	Function:		openTimeline()
+	Description:	After the DOM elements are loaded, this
+					checks to see if there is a timeline ID
+					in the URL, which means that the page
+					means to be opening a pre-existing timeline.
+					If there is, the object is sent to 
+					createTimelineElement.
+*/
 
 var openTimeline = function() {
 	var timelineElements = opentime();	// gets the ID from the URL and retrieves the whole timeline array
