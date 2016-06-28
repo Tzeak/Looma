@@ -43,7 +43,7 @@ function opentime(){
 			console.log("returning empty array");
 		else 
 		{
-			$.post("/BackEnd/open.php", timelineID, function(data){
+			$.post("../BackEnd/open.php", timelineID, function(data){
 				data = JSON.parse(data);
 				$("#titleInput").attr("value", data.name);
 			}).fail(function(jqXHR){
@@ -52,7 +52,7 @@ function opentime(){
 
 			
 			$.ajax({
-				url: "/BackEnd/openTimeline.php",
+				url: "../BackEnd/openTimeline.php",
 				dataType: 'json',
 				async: false,
 				data: timelineID,
@@ -65,7 +65,7 @@ function opentime(){
 				}
 			}).fail(function(jqXHR){
 				console.log(jqXHR.status)
-				$.get("/BackEnd/openTimeline.php", timelineID, function(timelineData){
+				$.get("../BackEnd/openTimeline.php", timelineID, function(timelineData){
 					console.log(timelineData);
 				});
 			});

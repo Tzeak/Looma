@@ -6,7 +6,7 @@
 
 var timelineAssArray = new Object();
 
-var homedirectory = "../";
+var homedirectory = "../../";
 
 
 
@@ -1434,10 +1434,11 @@ var save = function(){
 		$.post("../BackEnd/save.php", timeline, function(data) {
 			console.log(data);
 			console.log("Saved!");
+			alert("Your timeline, " + titleInput + ", has been saved!");
 		}).fail(function(data){
 			console.log(data);
+			alert("Your timeline, " + titleInput + ", did NOT save");
 		});
-		alert("Your timeline, " + titleInput + ", has been saved!");
 	}
 }
 
