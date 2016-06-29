@@ -1,4 +1,4 @@
-var homedirectory = "../";
+var homedirectory = "../../";
 
 /////////////////////////// TIMELINE MANIPULATION //////////////////////////
 
