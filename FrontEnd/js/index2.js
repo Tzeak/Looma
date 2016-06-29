@@ -1465,6 +1465,23 @@ var sortableFunction = function() {
 
 
 ////////////////////////////////////////////// Present button from index  //////////////////////////////////////////////
+var indexToPresent = function(){
+	timelineId = getParameterByName("timelineId");
+	save();
+	if(timelineId){
+		location.href = "present.html?timelineId=" + timelineId;
+	}
+	else{
+		name = $('#titleInput').val();
+		$.getJSON("../BackEnd/timelines.json", function(timelinesJSON) {
+			var keys = Object.keys(timelinesJSON);
+			var last = keys[keys.length-1];
+			console.log("last: " + last);
+			console.log(timelinesJSON(last));
+			
+		});
+	}
+}
 
 //var indexToPresent = function(){    
 //	console.log("opening timeline in present...");

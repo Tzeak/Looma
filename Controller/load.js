@@ -17,6 +17,7 @@ var isTimelineOpen = false;
  *	 				Return	- data associated with var name or null
  */
 function getParameterByName(name, url) {
+	console.log("getParameterByName");
 	if (!url) url = window.location.href;
 	name = name.replace(/[\[\]]/g, "\\$&");
 	var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)", "i"),
