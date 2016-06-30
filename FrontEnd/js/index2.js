@@ -1405,7 +1405,7 @@ var preview_result = function(collection, item) {
 
 ////////////////////////////////////////////// SAVE //////////////////////////////////////////////
 
-var save = function(){    
+var genericSave = function(){
     console.log("saving...");
     var itemIds = [];
     var titleInput = document.getElementById("titleInput").value;
@@ -1430,19 +1430,44 @@ var save = function(){
 	   	}
 
 	 	console.log(timeline);
-
-		$.post("../BackEnd/save.php", timeline, function(data) {
-			console.log(data);
-			console.log("Saved!");
-			alert("Your timeline, " + titleInput + ", has been saved!");
-		}).fail(function(data){
-			console.log(data);
-			alert("Your timeline, " + titleInput + ", did NOT save");
-		});
 	}
+
+	var info = new Array();
+	info.push(timeline);
+	info.push(titleInput);
+	return info;
 }
+var save = function(){
+	var info = genericSave();
+	timeline = info[0];
+	titleInput = info[1];
+	$.post("../BackEnd/save.php", timeline, function(data) {
+		console.log(data);
+		console.log("Saved!");
+		alert("Your timeline, " + titleInput + ", has been saved!");
+	}).fail(function(data){
+		console.log(data);
+		alert("Your timeline, " + titleInput + ", did NOT save");
+	});
+}
+	
+var saveAsTemplate = function(){
+	var info = genericSave();
+	timeline = info[0];
+	titleInput = info[1];
+	alert("This feature is coming soon!");
+	
 
+	$.post("../BackEnd/saveas.php", timeline, function(data) {
+		console.log(data);
+		console.log("Saved!");
+		alert("Your timeline, " + titleInput + ", is being saved as a template!");
+	}).fail(function(data){
+		console.log(data);
+		alert("Your timeline, " + titleInput + ", did NOT save");
+	});
 
+}
 
 
 

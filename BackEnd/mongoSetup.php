@@ -14,6 +14,7 @@ try
 	$dictionary = $db->dictionary;
 	$chapters	= $db->chapters;
 	$timelines	= $db->timelines; 
+	$templates	= $db->templates;
 }
 catch(MongoConnectionException $e)
 {
