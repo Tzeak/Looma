@@ -55,6 +55,7 @@
 .navbutton {
 	float:right;
 	margin-right:1%;
+	min-width: 90px;
 	width: auto;
 	z-index:100;
 }
