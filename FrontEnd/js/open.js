@@ -15,7 +15,6 @@ var load = function() {
 	//create OpenListElement called in a separate $.each function fails to 
 	//properly create accurate list elements -- needs more significant work
 
-	/*
 	$.getJSON("../BackEnd/templates.json", function(timelinesJSON) {
 		var template = true;
 		//For each object in timeline directory, populate list 
@@ -25,7 +24,6 @@ var load = function() {
 		});
 
 	 }).fail(function(jqXHR){console.log(jqXHR.status)});
-	 */
 }
 
 var createOpenListElement = function(index, itemString, itemId, line, template) {
@@ -36,6 +34,8 @@ var createOpenListElement = function(index, itemString, itemId, line, template) 
 		"itemId" : itemId,
 		"line" : line
 	}
+	if(template)
+		index = "_template" + index;
 
 	$('<li/>', {
 		id : "time" + index,
