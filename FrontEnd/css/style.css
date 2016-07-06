@@ -1,23 +1,15 @@
 
 /* ************************ MEDIA QUERY ********************/
 
-
+/*
 @media screen and (min-width: 1281px) {
 	body #div_search {
 		margin-top: .6%;
 	}
-	/*#btnSave {
-		background:black;
-	}*/
 	body #div_grade, #div_subject, #div_chapter, #div_section {
 		margin-top: -.5%;
 	}
-/*	body #div_filetypes {
-		width: 245px;
-	}*/
-	
-
-}
+}*/
 
 
 
@@ -63,6 +55,7 @@
 .navbutton {
 	float:right;
 	margin-right:1%;
+	width: auto;
 	z-index:100;
 }
 
