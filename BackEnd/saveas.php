@@ -17,7 +17,7 @@
 require_once 'mongoSetup.php';
 
 $filename = 'templates.json';
-$templatesArray = json_decode($file, true); //the true parameter allows the functions to treat the object like an associated array
+$templatesArray = json_decode($filename, true); //the true parameter allows the functions to treat the object like an associated array
 addNew();
 function addNew() //synergy between save and saveas. Could be refactored.
 

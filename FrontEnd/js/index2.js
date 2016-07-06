@@ -1520,7 +1520,7 @@ var indexToPresent = function(){
 			var keys = Object.keys(timelinesJSON);
 			var last = keys[keys.length-1];
 			console.log("last: " + last);
-			console.log(timelinesJSON(last));
+			location.href = "present.html?timelineId=" + timelinesJSON[last]._id;
 			
 		});
 	}
