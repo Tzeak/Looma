@@ -1413,6 +1413,7 @@ var genericSave = function(){
     
     if(titleInput == "") {
     	alert("Lesson plan requires a title before saving.");
+		return null;
     }
     else {
     	console.log("TITLE INPUT IS RUNNING");
@@ -1439,6 +1440,12 @@ var genericSave = function(){
 }
 var save = function(){
 	var info = genericSave();
+
+	if(info == null){
+		alert("Your timeline did NOT save");
+		return;
+	}
+
 	timeline = info[0];
 	titleInput = info[1];
 	$.post("../BackEnd/save.php", timeline, function(data) {
@@ -1453,6 +1460,12 @@ var save = function(){
 	
 var saveAsTemplate = function(){
 	var info = genericSave();
+
+	if(info == null){
+		alert("Your timeline did NOT save");
+		return;
+	}
+
 	timeline = info[0];
 	titleInput = info[1];
 	alert("This feature is coming soon!");
@@ -1492,7 +1505,12 @@ var sortableFunction = function() {
 ////////////////////////////////////////////// Present button from index  //////////////////////////////////////////////
 var indexToPresent = function(){
 	timelineId = getParameterByName("timelineId");
-	save();
+	var conf = confirm("Clicking this button will save the current timeline - do you wish to proceed?");
+	if(conf)
+		save();
+	else
+		alert("Presentation canceled");
+
 	if(timelineId){
 		location.href = "present.html?timelineId=" + timelineId;
 	}
