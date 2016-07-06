@@ -32,6 +32,8 @@ function getParameterByName(name, url) {
  * Description:		Input	- 
  *	 				Return	- Array of Timeline Data pulled from openTimeline.php
  */
+
+/* TODO: Add templating feature to opentime()*/
 function opentime(){
 	var timelineArray = new Array();
 
