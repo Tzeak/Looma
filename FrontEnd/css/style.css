@@ -1,23 +1,15 @@
 
 /* ************************ MEDIA QUERY ********************/
 
-
+/*
 @media screen and (min-width: 1281px) {
 	body #div_search {
 		margin-top: .6%;
 	}
-	/*#btnSave {
-		background:black;
-	}*/
 	body #div_grade, #div_subject, #div_chapter, #div_section {
 		margin-top: -.5%;
 	}
-/*	body #div_filetypes {
-		width: 245px;
-	}*/
-	
-
-}
+}*/
 
 
 
@@ -36,6 +28,16 @@
 	padding-right:20px;
 	box-shadow: 0px 0px 25px #C4C4C4;
 }
+#navbar {
+	background: #D76126;
+	padding: 0.5%;
+	height: 45px;
+	min-height: 30px;
+	color: white;
+	padding-right: 20px;
+	box-shadow: 0px 0px 25px #C4C4C4;
+}
+
 #titleString {
 	position:relative;
 	float: left;
@@ -53,6 +55,8 @@
 .navbutton {
 	float:right;
 	margin-right:1%;
+	min-width: 90px;
+	width: auto;
 	z-index:100;
 }
 
@@ -86,6 +90,7 @@
 	/*media query*/
 	width: 20%;
 	margin-top: -1%;
+	padding-top: 2%;
 	float: left;
 	display:inline;
 
@@ -145,7 +150,7 @@
 
 #div_filetypes {
 	/*margin-top: 20px;*/
-	width: 200px;
+	width: 300px;
 	float: left;
 	line-height: 5px;
 	/*margin-left: 30px;*/
@@ -227,6 +232,16 @@
 #innerResultsDiv {
 	overflow-y:scroll;
 	height:90%;
+}
+
+#innerResultsMenu {
+	border-bottom:1px solid #000;
+}
+
+#innerResultsSubMenu a {
+	display:inline;
+	text-decoration:none;
+	margin-right:20px;
 }
 
 /*#outerResultsDiv {
@@ -429,7 +444,7 @@ h3{
 	margin: auto;
 /*	padding-left: 15%;
 	padding-top: 5px;*/
-	font-size: 30px;
+	font-size: 2.5vw;
 	margin-left:200px;
 	font-weight:bold;
 	vertical-align:center;

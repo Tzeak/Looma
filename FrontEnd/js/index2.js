@@ -1,12 +1,12 @@
 
 
 
-/////////////////////////// INITIALIZING THINGS ///////////////////////////
+////////////////////////////////////////////// INITIALIZING THINGS //////////////////////////////////////////////
 
 
 var timelineAssArray = new Object();
 
-var homedirectory = "../";
+var homedirectory = "../../";
 
 
 
@@ -14,14 +14,16 @@ var homedirectory = "../";
 
 
 
-/////////////////////////// ONLOAD FUNCTION ///////////////////////////
+////////////////////////////////////////////// INITIALIZATION //////////////////////////////////////////////
 
+/* 
+	Function:		loadPageElements()
+	Description:	Creates & appends HTML DOM elements using JS/jquery on window load.
+*/
 
-// This loads all the preliminary elements in the page.
 window.onload = function loadPageElements() {
-
 	
-		// Navbar 
+		// Navigation Bar 
 
 		$("<p/>", {
 			html : "Lesson Plan Creator: Edit"
@@ -31,21 +33,20 @@ window.onload = function loadPageElements() {
 
 		// Filter: Search
 
-		$("<div/>", {
-			id : "div_search",
-			// class : "hidden"	// CHANGE THIS LATER. IT'S JUST NOT WORKING NOW.
-		}).appendTo("#div_filter");
+		$("<div/>", { 
+			id : "div_search" 
+		}).appendTo("#div_filter");	// Appends a div to "#div_filter"
 		$("<p/>", {
 			class : "filter_label",
 			id : "search_label",
-		}).appendTo("#div_search");
+		}).appendTo("#div_search");	// Appends a p element to #div_search div
 		$("<input/>", {
 			id : "searchString",
 			class: "textBox",
 			type : "text",
 			placeholder: "Search",
 			name : "search",
-		}).appendTo("#div_search");
+		}).appendTo("#div_search");	// Appends a text box to #div_search div, etc.
 
 
 
@@ -53,7 +54,7 @@ window.onload = function loadPageElements() {
 
 		$("<div/>", {
 			id : "div_grade"
-		}).appendTo("#div_filter");
+		}).appendTo("#div_filter");	
 
 		$("<p/>", {
 			class : "filter_label",
@@ -103,7 +104,7 @@ window.onload = function loadPageElements() {
 		$("<select/>", {
 			class : "filter_dropdown",
 			id : "dropdown_subject"
-		}).attr("onchange","unhideElement('#div_chapter')").appendTo("#div_subject");
+		}).appendTo("#div_subject");
 
 		$('<option>', { 
 	        value: "",
@@ -117,80 +118,16 @@ window.onload = function loadPageElements() {
 	    	}).appendTo("#dropdown_subject");
 		});
 
-	/*	// We're removing Chapter and Section from filter.
-		// Filter: Chapter
-
-		$("<div/>", {
-			id : "div_chapter",
-			class : "hidden"
-		}).appendTo("#div_filter");
-
-		$("<p/>", {
-			class : "filter_label",
-			html : "Chapter: "
-		}).appendTo("#div_chapter");
-
-		$("<select/>", {
-			class : "filter_dropdown",
-			id : "dropdown_chapter"
-		}).attr("onchange","unhideElement('#div_section')").appendTo("#div_chapter");
-
-		for (var i=0; i<8; i++) {
-			if (i == 0) {
-				$("<option/>", {
-					html : "",
-					id : ""
-				}).appendTo("#dropdown_chapter");
-			} 
-			else {
-				$("<option/>", {
-					html : i,
-					id : i
-				}).appendTo("#dropdown_chapter");
-			}
-		}
-
-		// Filter: Section
-
-		$("<div/>", {
-			id : "div_section",
-			class : "hidden"
-		}).appendTo("#div_filter");
-
-		$("<p/>", {
-			class : "filter_label",
-			html : "Section: ", 
-		}).appendTo("#div_section");
-
-		$("<select/>", {
-			class : "filter_dropdown",
-			id : "dropdown_section"
-		}).appendTo("#div_section");
-
-		for (var i=0; i<8; i++) {
-			if (i == 0) {
-				$("<option/>", {
-					html : "",
-					id : ""
-				}).appendTo("#dropdown_section");
-			} 
-			else {
-				$("<option/>", {
-					html : i,
-					id : i
-				}).appendTo("#dropdown_section");
-			}
-		}
-	*/
-
 
 		// Filter: File Type
 
 		var filetypes = {
-			"image" : 	{ 	id : "ft_image", 	display : "Image" 	},
-			"video" : 	{ 	id : "ft_video", 	display : "Video" 	},
-			"audio" : 	{ 	id : "ft_audio", 	display : "Audio" 	},
-			"misc" : 	{ 	id : "ft_misc", 	display : "Misc" 	},
+			"image" : 		{ 	id : "ft_image", 	display : "Image" 	},
+			"video" : 		{ 	id : "ft_video", 	display : "Video" 	},
+			"audio" : 		{ 	id : "ft_audio", 	display : "Audio" 	},
+			"game" : 		{ 	id : "ft_game", 	display : "Game" 	},
+			"pdf" : 		{ 	id : "ft_pdf", 		display : "PDF" 	},
+			"webpage" : 	{ 	id : "ft_webpage", 	display : "Webpage" },
 		}
 
 		
@@ -198,26 +135,21 @@ window.onload = function loadPageElements() {
 			id : "div_filetypes"
 		}).appendTo("#div_filter");
 
-		// $("<p/>", {
-		// 	html : "File types: ", 
-		// }).appendTo("#div_filetypes");
-
 		$.each(filetypes, function (key, value) {
 		    $("<input/>", { 
 		 		class : "filter_checkbox",
 		    	type : "checkbox",
 		    	style : "zoom:1.5",
 		    	id : value.id,
-		        name : key,
-		        // html : value.display
+		        name : key
 	    	}).appendTo("#div_filetypes");
 	    	$("<label/>", { 
 	    		class : "filter_label",
 		    	for : value.id,
 		    	html : value.display
 	    	}).appendTo("#div_filetypes");
-	    	//$("#div_filetypes").append("<br/>");
 		});
+
 
 		// Button
 
@@ -232,12 +164,14 @@ window.onload = function loadPageElements() {
 
 		$("<button/>", {
 			id : "submit_button",
-			onclick : "querySearch()",
+			onclick : "queryData()",
 			type : "button",
 			html : "Search"
 		}).appendTo("#div_filter");
 
+
 		// Title string
+
 		$("<p/>", {
 			html : "Lesson Plan Title:&nbsp;&nbsp;"
 		}).appendTo("#titleDiv");
@@ -250,33 +184,36 @@ window.onload = function loadPageElements() {
 			name : "title",
 		}).appendTo("#titleDiv");
 
-		openTimeline();
+		openTimeline();	// This can be called only after the DOM elements are loaded.
 }
 
 
+/* 
+	Function:		addToAssArray(object)
+	Description:	Loads the object into timelineAssArray[], 
+					which holds the order of the elements in 
+					the timeline.
+					Input: 	- object 
+*/
 var addToAssArray = function(object) {
 	timelineAssArray[object._id] = object;
 }
 
-var unhideElement = function(element) {
-	$(element).removeClass("hidden");
-}
-
-
-//////////////////////////// SUBMIT LESSON TITLE NAME ///////////////////////
-
-// var findTitleName = function() {
-// 	var timelength = timelines.length;
-// 	for (var i=0; i<timelength; i++) {
-// 		if (timelines[i])
-// 	}
-// }
 
 
 
 
-/////////////////////////// TIMELINE MANIPULATION //////////////////////////
-//***********************************************************************things we need for present**********************************************************************************************
+////////////////////////////////////////////// TIMELINE MANIPULATION //////////////////////////////////////////////
+
+/* 
+	Function:		openTimeline()
+	Description:	After the DOM elements are loaded, this
+					checks to see if there is a timeline ID
+					in the URL, which means that the page
+					means to be opening a pre-existing timeline.
+					If there is, the object is sent to 
+					createTimelineElement.
+*/
 
 var openTimeline = function() {
 	var timelineElements = opentime();	// gets the ID from the URL and retrieves the whole timeline array
@@ -284,6 +221,7 @@ var openTimeline = function() {
 		createTimelineElement(timelineObj);
 	});
 }
+
 
 var createTimelineElement = function(item, collection, issection){
 	console.log("item: ");
@@ -392,28 +330,20 @@ var createTimelineElement = function(item, collection, issection){
 }
 
 
- 
-
 var removeTimelineElement = function() {
   // Removing list item from timelineHolder
   var outerDiv = this.parentNode.parentNode.parentNode;
   outerDiv.remove();	// "Remove" button is within 3 divs
 }	
 
-//***********************************************************************end of things we need for present**********************************************************************************************
 
 
 
 
 
+////////////////////////////////////////////// QUERY / RESULTS //////////////////////////////////////////////
 
 
-
-
-
-/////////////////////////// QUERY / RESULTS ///////////////////////////
-
-// var resultArray = [];
 
 var clearFilter = function() {
 	 // $("#div_filter").each(function() { this.selectedIndex = 0 });
@@ -425,41 +355,56 @@ var clearFilter = function() {
 	 })
 }
 
-var querySearch = function() {
+
+
+
+var queryData = function() {
 	$("#innerResultsDiv").empty();
 	$("#innerResultsMenu").empty();
+	$("#innerResultsSubMenu").empty();
+	$("#innerResultsSubMenu").addClass("hidden");
 
 	var filterdata = {
 		'grade' : document.getElementById('dropdown_grade').value,
 		'subject' : document.getElementById('dropdown_subject').value,
-		// 'chapter' : document.getElementById('dropdown_chapter').value,
-		// 'section': document.getElementById('dropdown_section').value,
 		'image' : document.getElementById('ft_image').checked,
 		'video' : document.getElementById('ft_video').checked,
 		'audio' : document.getElementById('ft_audio').checked,
-		'misc' : document.getElementById('ft_misc').checked
+		'game' : document.getElementById('ft_game').checked,
+		'pdf' : document.getElementById('ft_pdf').checked,
+		'webpage' : document.getElementById('ft_webpage').checked,
 	};
-	console.log(filterdata['image']);
 
-	if (filterdata['grade'] == "" && filterdata['subject'] == "" && filterdata['image'] == false && filterdata['video'] == false && filterdata['audio'] == false && filterdata['misc'] == false) {
+	if (filterdata['grade'] == "" && filterdata['subject'] == "" && filterdata['image'] == false && filterdata['video'] == false && filterdata['audio'] == false && filterdata['game'] == false && filterdata['pdf'] == false && filterdata['webpage'] == false) {
 		$("#innerResultsDiv").html("Please select at least 1 filter option before searching.");
 	}
 	else {
 		var loadingmessage = $("<p/>", {html : "Loading results..."}).appendTo("#innerResultsDiv");
 		$.get("../BackEnd/query.php", filterdata, function(filterdata) {
 			$(loadingmessage).remove();
-			console.log(JSON.parse(filterdata));
-			var filterdata_object = storeFilterData(filterdata);
+			var filterdata_object = JSON.parse(filterdata);
+			console.log(filterdata_object);
 			printFilterData(filterdata_object);
 		}); //Send filter data to server via GET request
 	}
 }
 
+/*		
+//////// SEARCH BUTTON: NOT COMPLETED
 
-var storeFilterData = function(filterdata) {
-	var filterdata_object = JSON.parse(filterdata);
-	return filterdata_object;
+var data = {
+	'search' : "Classroom"
+};
+
+var searchButton = function() {
+	console.log("search butt pressed");
+	$.getJSON("../BackEnd/search.php", data, function(data) {
+		console.log(data);
+	});
 }
+
+*/
+
 
 
 var printFilterData = function(filterdata_object) {
@@ -495,7 +440,10 @@ var printFilterData = function(filterdata_object) {
 	}
 
 
+
+
 	// Print Chapter array
+
 	var chapterResultDiv = document.createElement("div");
 	chapterResultDiv.id = "chapterResultDiv";
 	$(chapterResultDiv).appendTo(currentResultDiv);
@@ -524,26 +472,13 @@ var printFilterData = function(filterdata_object) {
 			else {
 				chapterResultDiv.appendChild(rElement);
 			}
-
-			// var chapterResults = chapterResultDiv.getElementsByTagName("*");
-
-			// for (i=0; i<chapterResults.length; i++) {
-			// 	console.log($(chapterResults[i]).data("chprefix"));
-			// 	// if ($(chapterResults[i]).data("chprefix") == $(rElement).data("chprefix")) {
-			// 	// 	console.log("IT'S A MATCH!!!!!!!");
-			// 	// 	// append to chapterResults[i]
-			// 	// }
-			// 	// search through and check ch prefixes 
-			// }
-			// var sectionChapterDiv = document.getElementBy
-		}
-		// var rElement = createChapterDiv(resultArray[i]);
-		
+		}		
 	}
 
 
 
 	// Print Activities array
+
 	var actResultDiv = document.createElement("div");
 	actResultDiv.id = "actResultDiv";
 	$(actResultDiv).appendTo(currentResultDiv);
@@ -605,23 +540,488 @@ var printFilterData = function(filterdata_object) {
 	// Create inner results menu
 	$("<a/>", {
 		href : "#textbooks",
-		html : "Textbooks "
+		html : "Textbooks"
 	}).appendTo("#innerResultsMenu");
 	$("<a/>", {
 		href : "#chapters",
-		html : "Chapters "
+		html : "Chapters",
+	}).hover(function() {
+		// $("#innerResultsSubMenu").removeClass("hidden");
+		// loadInnerResultsSubMenu(filterdata_object.chapters, "chapters");
 	}).appendTo("#innerResultsMenu");
 	$("<a/>", {
 		href : "#activities",
-		html : "Activities "
-	}).appendTo("#innerResultsMenu");
+		html : "Activities",
+	}).hover(function() {
+		// $("#innerResultsSubMenu").removeClass("hidden");
+		// loadInnerResultsSubMenu(filterdata_object.activities, "activities");
+	} ).appendTo("#innerResultsMenu");
 	$("<a/>", {
 		href : "#dictionary",
-		html : "Dictionary "
+		html : "Dictionary"
 	}).appendTo("#innerResultsMenu");
-	$("#innerResultsMenu").css("border-bottom","1px solid #000");
 
+
+	$("#innerResultsMenu").removeClass("hidden");
 }
+
+
+// ON HOVER MENU FOR INNERRESULTSMENU: NOT COMPLETED
+/*
+var loadInnerResultsSubMenu = function(itemObject, collection) {
+	console.log("loading inner results menu");
+	console.log(itemObject.length);
+
+	for (var i=0; i<itemObject.length; i++) {
+		var idExtractArray = extractItemId(itemObject[i], collection);
+		if (collection="chapters") {
+			$("<a/>", { 
+				html : idExtractArray["currentChapter"],
+				href : "#chapter_chapter" + idExtractArray["currentChapter"]
+			}).appendTo("#innerResultsSubMenu");
+		}
+		else if (collection="activities") {
+			$("<a/>", { 
+				html : idExtractArray["currentChapter"],
+				href : "#activities_chapter" + idExtractArray["currentChapter"]
+			}).appendTo("#innerResultsSubMenu");
+		}
+	}
+}
+*/
+
+
+
+
+
+// Create "Textbook" collection results
+var createTextbookDiv = function(item) {
+	var issection = 0;
+	var collection = "textbooks";
+	var resultdiv = document.createElement("div");
+	resultdiv.className = "resultitem";
+
+	// Thumbnail
+	var thumbnaildiv = document.createElement("div");
+	thumbnaildiv.className = "thumbnaildiv";
+	$(thumbnaildiv).appendTo(resultdiv);
+
+	$("<img/>", {
+		class : "resultsimg",
+		src : getImgFilepath(item, collection)
+	}).appendTo(thumbnaildiv);
+
+	// Result Text
+	var textdiv = document.createElement("div");
+	textdiv.className = "textdiv";
+	$(textdiv).appendTo(resultdiv);
+
+	$("<p/>", {	// Display name
+		class : "result_dn",
+		html : "<b>" + item.dn + "</b>"
+	}).appendTo(textdiv);
+
+	$("<p/>", {	// Nepali display name
+		class : "result_ndn",
+		html : item.ndn
+	}).appendTo(textdiv);
+
+	$("<p/>", {	// Mongo ID
+		class : "result_ID",
+		html : item._id
+	}).appendTo(textdiv);
+
+
+	// Buttons
+	var buttondiv = document.createElement("div");
+	buttondiv.className = "buttondiv";
+	$(buttondiv).appendTo(resultdiv);
+
+	// "Add" button
+	var addButton = document.createElement("button");
+	addButton.innerText = "Add";
+	addButton.className = "add";
+	$(addButton).bind("click", function() {
+		createTimelineElement(item, collection, issection); 
+	});
+	$(addButton).appendTo(buttondiv);
+
+	var previewButton = document.createElement("button");
+	previewButton.innerText = "Preview";
+	previewButton.className = "preview";
+	// previewButton.onclick = preview_result(item);
+	$(previewButton).bind("click", function() {
+		preview_result(collection,
+		 item);
+	});
+	$(previewButton).appendTo(buttondiv);
+
+	return resultdiv;
+}
+
+
+
+
+
+
+// Create "Chapter" collection results
+var createChapterDiv = function(item, previtem) {
+	var collection = "chapters";
+	var issection = 0;
+
+	var idExtractArray = extractItemId(item, collection);
+	if (previtem != null) {
+		var idExtractArray_prev = extractItemId(previtem, collection);
+	}
+
+	if (previtem != null) {
+		if (item._id.indexOf(".") >= 0) {
+			//	If the prefix is equal to the prefix before it
+			if (idExtractArray["chprefix"] == idExtractArray_prev["chprefix"]) {
+				issection = 1;
+				var sectionDiv = document.createElement("div");
+				sectionDiv.className = "result_chapter_section";
+				$(sectionDiv).attr("data-chprefix", idExtractArray["chprefix"]);
+				$(sectionDiv).attr("data-type", "section");
+				$(sectionDiv).attr("data-collection", collection);
+				// console.log("prefix for item " + item.dn + " is " + $(sectionDiv).data('chprefix'));
+
+				$("<p/>", {
+					class : "result_dn",
+					html : "<b>Section " + idExtractArray["currentSection"]
+				}).appendTo(sectionDiv);
+				$("<p/>", {
+					class : "result_dn",
+					html : item.dn
+				}).appendTo(sectionDiv);
+
+				var addButton = document.createElement("button");
+				addButton.innerText = "Add";
+				addButton.className = "add";
+				// addButton.onclick = createTimelineElement(item);
+				$(addButton).bind("click", function() {
+					createTimelineElement(item, collection, issection); 
+				});
+				sectionDiv.appendChild(addButton);
+
+				var previewButton = document.createElement("button");
+				previewButton.innerText = "Preview";
+				previewButton.className = "preview";
+				// previewButton.onclick = preview_result(item);
+				$(previewButton).bind("click", function() {
+					preview_result(collection, item);
+				})
+				sectionDiv.appendChild(previewButton);
+
+				return sectionDiv;
+			}
+		}
+	}
+
+	// $("<a/>", { 
+	// 	html : idExtractArray["currentChapter"],
+	// 	href : "#chapter_chapter" + idExtractArray["currentChapter"]
+	// }).appendTo("#innerResultsSubMenu");
+
+	var div = document.createElement("div");
+	div.className = "resultitem";
+	// var div = $("<div/>", {class:"resultitem"});
+
+	
+	$(div).attr("data-chprefix", idExtractArray["chprefix"]);
+	$(div).attr("data-type", "chapter");
+	$(div).attr("data-collection", collection);
+
+	$("<img/>", {
+		class : "resultsimg",
+		src : getImgFilepath(item, collection)
+	}).appendTo(div);
+
+	// Display name
+	$("<a/>", {
+		class : "result_dn",
+		name : "chapter_chapter" + idExtractArray["currentChapter"],
+		html : "<b>Chapter " + idExtractArray["currentChapter"] + ": " + item.dn + "</b>"
+	}).appendTo(div);
+
+	// Nepali Name
+	$("<p/>", {
+		class : "result_ndn",
+		html : item.ndn
+	}).appendTo(div);
+
+	// ID
+	$("<p/>", {
+		class : "result_ID",
+		html : item._id
+	}).appendTo(div);
+
+	// "Add" button
+	var addButton = document.createElement("button");
+	addButton.innerText = "Add";
+	addButton.className = "add";
+	// addButton.onclick = createTimelineElement(item);
+	$(addButton).bind("click", function() {
+		createTimelineElement(item, collection, issection); 
+	});
+	div.appendChild(addButton);
+
+	var previewButton = document.createElement("button");
+	previewButton.innerText = "Preview";
+	previewButton.className = "preview";
+	// previewButton.onclick = preview_result(item);
+	$(previewButton).bind("click", function() {
+		preview_result(collection, item);
+	})
+	div.appendChild(previewButton);
+
+	return div;
+}
+
+
+
+
+
+
+var createActivityDiv = function(item, previtem) {
+	var collection = "activities";
+	var issection = 0;
+
+	var idExtractArray = extractItemId(item, collection);
+	if (previtem != null) {
+		var idExtractArray_prev = extractItemId(previtem, collection);
+	}
+
+	var div = document.createElement("div");
+	div.className = "resultitem";
+	$(div).attr("data-chprefix", idExtractArray["chprefix"]);
+	$(div).attr("data-type", "section");
+	$(div).attr("data-collection", collection);
+
+
+
+
+
+	var innerActivityDiv = function(item) {
+
+		var activityDiv = document.createElement("div");
+		activityDiv.className = "activityDiv";
+		
+		$(activityDiv).attr("data-chprefix", idExtractArray["chprefix"]);
+		$(activityDiv).attr("data-collection", collection);
+
+		// Thumbnail
+		var thumbnaildiv = document.createElement("div");
+		thumbnaildiv.className = "thumbnaildiv";
+		$(thumbnaildiv).appendTo(activityDiv);
+
+		$("<img/>", {
+			class : "resultsimg",
+			src : getImgFilepath(item, collection)
+		}).css("width","140").appendTo(thumbnaildiv);
+
+
+		// Result Text
+		var textdiv = document.createElement("div");
+		textdiv.className = "textdiv";
+		$(textdiv).appendTo(activityDiv);
+
+		// ID
+		$("<p/>", {
+			class : "result_ID",
+			html : item.ch_id
+		}).appendTo(textdiv);
+
+		// Display Name
+		$("<p/>", {
+			class : "result_dn",
+			html : "<b>" + item.dn + "</b>"
+		}).appendTo(textdiv);
+
+		// File Type
+		$("<p/>", {
+			class : "result_ft",
+			html : getFileType(item.ft) + " // " + item.ft
+		}).appendTo(textdiv);
+
+
+		// Buttons
+		var buttondiv = document.createElement("div");
+		buttondiv.className = "buttondiv";
+		$(buttondiv).appendTo(activityDiv);
+
+		// "Add" button
+		var addButton = document.createElement("button");
+		addButton.innerText = "Add";
+		addButton.className = "add";
+		$(addButton).bind("click", function() {
+			createTimelineElement(item, collection, issection); 
+		});
+		buttondiv.appendChild(addButton);
+
+		var previewButton = document.createElement("button");
+		previewButton.innerText = "Preview";
+		previewButton.className = "preview";
+		// previewButton.onclick = preview_result(item);
+		$(previewButton).bind("click", function() {
+			preview_result(collection, item);
+		})
+		buttondiv.appendChild(previewButton);
+
+		return activityDiv;
+	}
+
+
+
+
+
+
+
+
+	// If this item is the first item
+	if (previtem == null) {
+		// Create h3 Chapter element
+
+		$("<a/>", { 
+			name : "activities_chapter" + idExtractArray["currentChapter"],
+			html : "<b>Chapter " + idExtractArray["currentChapter"] + "</b>"
+		}).appendTo(div);
+
+		// If the item ID has a decimal
+		if (item.ch_id.indexOf(".") >= 0) {
+			// Create a section div & append to main div
+			issection = 1;
+			var sectionDiv = innerActivityDiv(item);
+			$(sectionDiv).attr("data-type", "section").appendTo(div);
+		}
+		// Else if the item ID doesn't have a decimal
+		else {
+			// Create a chapter div & append to main div
+			var chapterDiv = innerActivityDiv(item);
+			$(chapterDiv).attr("data-type", "chapter").appendTo(div);
+		}
+	}
+	// If this item isn't the first item
+	else if (previtem != null) {
+		// If the item  ID has a decimal
+		if (item.ch_id.indexOf(".") >= 0) {
+			issection = 1;
+			// If the ID prefix matches the prefix of the last one
+			if (idExtractArray["chprefix"] == idExtractArray_prev["chprefix"]) {
+				//	Make a section div
+				var sectionDiv = innerActivityDiv(item);
+				$(sectionDiv).attr("data-type", "section").appendTo(div);
+			}
+			// Else if the ID prefix doesn't match the last one
+			else if (idExtractArray["chprefix"] != idExtractArray_prev["chprefix"]) {
+				// Create a new Chapter section
+				// $("<a/>", { 
+				// 	html : idExtractArray["currentChapter"],
+				// 	href : "#activities_chapter" + idExtractArray["currentChapter"]
+				// }).appendTo("#innerResultsSubMenu");
+
+				$("<a/>", { 
+					name : "activities_chapter" + idExtractArray["currentChapter"],
+					html : "<b>Chapter " + idExtractArray["currentChapter"] + "</b>"
+				}).appendTo(div);
+				issection = 1;
+				var sectionDiv = innerActivityDiv(item);
+				$(sectionDiv).attr("data-type", "section").appendTo(div);
+			}
+		}
+		// Else if the item ID doesn't have a decimal
+		else {
+			// Create h3 Chapter element
+			$("<h3/>", { 
+				html : "Chapter " + idExtractArray["currentChapter"] 
+			}).appendTo(div);
+			var chapterDiv = innerActivityDiv(item);
+			$(chapterDiv).attr("data-type", "chapter").appendTo(div);
+
+		}
+	}
+
+
+
+	return div;
+}
+
+
+
+
+
+
+var createDictionaryDiv = function(item, previtem) {
+	var collection = "dictionary";
+	var issection = 0;
+
+	var idExtractArray = extractItemId(item, collection);
+	if (previtem != null) {
+		var idExtractArray_prev = extractItemId(previtem, collection);
+	}
+
+	var div = document.createElement("div");
+	div.className = "resultitem";
+
+	if (previtem == null) {
+		if (idExtractArray["currentChapter"] == "01") {
+			var headerdiv = document.createElement("div");
+			div.appendChild(headerdiv);
+			$("<h3/>", { 
+				html : "Chapter 01"
+			}).appendTo(headerdiv);
+		}
+	}
+	else if (previtem != null) {
+		if (idExtractArray["chprefix"] != idExtractArray_prev["chprefix"]) {
+			var headerdiv = document.createElement("div");
+			div.appendChild(headerdiv);
+			$("<h3/>", { 
+				html : "Chapter " + idExtractArray["currentChapter"] 
+			}).appendTo(headerdiv);
+		}
+	}
+
+	var textdiv = document.createElement("div");
+	textdiv.className = "textdiv";
+	div.appendChild(textdiv);
+
+	var buttondiv = document.createElement("div");
+	buttondiv.className = "buttondiv";
+	div.appendChild(buttondiv);
+
+	$("<p/>", {
+		html : "<b>" + item.en + "</b> (" + item.part + ")"
+	}).appendTo(textdiv);
+
+	$("<p/>", {
+		html : item.ch_id
+	}).appendTo(textdiv);
+
+	// "Add" button
+	var addButton = document.createElement("button");
+	addButton.innerText = "Add";
+	addButton.className = "add";
+	$(addButton).bind("click", function() {
+		createTimelineElement(item, collection, issection); 
+	});
+	buttondiv.appendChild(addButton);
+
+	var previewButton = document.createElement("button");
+	previewButton.innerText = "Preview";
+	previewButton.className = "preview";
+	// previewButton.onclick = preview_result(item);
+	$(previewButton).bind("click", function() {
+		preview_result(collection, item);
+	})
+	buttondiv.appendChild(previewButton);
+
+	return div;	
+}
+
+
+
+
 
 var getSectionChapterByPrefix = function(currentResultsDiv, rElement) {
 	if ($(currentResultsDiv).html != "") {
@@ -647,17 +1047,6 @@ var getSectionChapterByPrefix = function(currentResultsDiv, rElement) {
 }
 
 
-/* //////////////////////TO-DO FOR RESULTS
-
-THUMBNAILS
-- Take care of if the image source is null
-	- 	All the "thumbnail_prefix" variables: If the image source is null, 
-		it shouldn't try to get the substring, because it'll break the code
-	- 	If the file isn't there. We need to make a little 404 image and
-		code it in.
-
-//////////////////////////END TO-DO */
-//*************************************************************************************start of things we need for presentation **********************************************
 
 
 var getFileType = function(ft) {
@@ -677,7 +1066,7 @@ var getFileType = function(ft) {
 		return "Webpage";
 	}
 	else if (ft == "pdf") {
-		return "Document";
+		return "PDF";
 	}
 }
 
@@ -948,441 +1337,7 @@ return elementsArray;
 
 
 
-
-
-
-
-
-
-
-// Create "Textbook" collection results
-var createTextbookDiv = function(item) {
-	var issection = 0;
-	var collection = "textbooks";
-	var resultdiv = document.createElement("div");
-	resultdiv.className = "resultitem";
-
-	// Thumbnail
-	var thumbnaildiv = document.createElement("div");
-	thumbnaildiv.className = "thumbnaildiv";
-	$(thumbnaildiv).appendTo(resultdiv);
-
-	$("<img/>", {
-		class : "resultsimg",
-		src : getImgFilepath(item, collection)
-	}).appendTo(thumbnaildiv);
-
-	// Result Text
-	var textdiv = document.createElement("div");
-	textdiv.className = "textdiv";
-	$(textdiv).appendTo(resultdiv);
-
-	$("<p/>", {	// Display name
-		class : "result_dn",
-		html : "<b>" + item.dn + "</b>"
-	}).appendTo(textdiv);
-
-	$("<p/>", {	// Nepali display name
-		class : "result_ndn",
-		html : item.ndn
-	}).appendTo(textdiv);
-
-	$("<p/>", {	// Mongo ID
-		class : "result_ID",
-		html : item._id
-	}).appendTo(textdiv);
-
-
-	// Buttons
-	var buttondiv = document.createElement("div");
-	buttondiv.className = "buttondiv";
-	$(buttondiv).appendTo(resultdiv);
-
-	// "Add" button
-	var addButton = document.createElement("button");
-	addButton.innerText = "Add";
-	addButton.className = "add";
-	$(addButton).bind("click", function() {
-		createTimelineElement(item, collection, issection); 
-	});
-	$(addButton).appendTo(buttondiv);
-
-	var previewButton = document.createElement("button");
-	previewButton.innerText = "Preview";
-	previewButton.className = "preview";
-	// previewButton.onclick = preview_result(item);
-	$(previewButton).bind("click", function() {
-		preview_result(collection,
-		 item);
-	});
-	$(previewButton).appendTo(buttondiv);
-
-	return resultdiv;
-}
-
-
-
-
-
-
-
-
-
-// Create "Chapter" collection results
-var createChapterDiv = function(item, previtem) {
-	var collection = "chapters";
-	var issection = 0;
-
-	var idExtractArray = extractItemId(item, collection);
-	if (previtem != null) {
-		var idExtractArray_prev = extractItemId(previtem, collection);
-	}
-
-	if (previtem != null) {
-		if (item._id.indexOf(".") >= 0) {
-			//	If the prefix is equal to the prefix before it
-			if (idExtractArray["chprefix"] == idExtractArray_prev["chprefix"]) {
-				issection = 1;
-				var sectionDiv = document.createElement("div");
-				sectionDiv.className = "result_chapter_section";
-				$(sectionDiv).attr("data-chprefix", idExtractArray["chprefix"]);
-				$(sectionDiv).attr("data-type", "section");
-				$(sectionDiv).attr("data-collection", collection);
-				// console.log("prefix for item " + item.dn + " is " + $(sectionDiv).data('chprefix'));
-
-				$("<p/>", {
-					class : "result_dn",
-					html : "<b>Section " + idExtractArray["currentSection"]
-				}).appendTo(sectionDiv);
-				$("<p/>", {
-					class : "result_dn",
-					html : item.dn
-				}).appendTo(sectionDiv);
-
-				var addButton = document.createElement("button");
-				addButton.innerText = "Add";
-				addButton.className = "add";
-				// addButton.onclick = createTimelineElement(item);
-				$(addButton).bind("click", function() {
-					createTimelineElement(item, collection, issection); 
-				});
-				sectionDiv.appendChild(addButton);
-
-				var previewButton = document.createElement("button");
-				previewButton.innerText = "Preview";
-				previewButton.className = "preview";
-				// previewButton.onclick = preview_result(item);
-				$(previewButton).bind("click", function() {
-					preview_result(collection, item);
-				})
-				sectionDiv.appendChild(previewButton);
-
-				return sectionDiv;
-			}
-		}
-	}
-
-	var div = document.createElement("div");
-	div.className = "resultitem";
-	// var div = $("<div/>", {class:"resultitem"});
-
-	
-	$(div).attr("data-chprefix", idExtractArray["chprefix"]);
-	$(div).attr("data-type", "chapter");
-	$(div).attr("data-collection", collection);
-
-	$("<img/>", {
-		class : "resultsimg",
-		src : getImgFilepath(item, collection)
-	}).appendTo(div);
-
-	// Display name
-	$("<p/>", {
-		class : "result_dn",
-		html : "<b>Chapter " + idExtractArray["currentChapter"] + ": " + item.dn + "</b>"
-	}).appendTo(div);
-
-	// Nepali Name
-	$("<p/>", {
-		class : "result_ndn",
-		html : item.ndn
-	}).appendTo(div);
-
-	// ID
-	$("<p/>", {
-		class : "result_ID",
-		html : item._id
-	}).appendTo(div);
-
-	// "Add" button
-	var addButton = document.createElement("button");
-	addButton.innerText = "Add";
-	addButton.className = "add";
-	// addButton.onclick = createTimelineElement(item);
-	$(addButton).bind("click", function() {
-		createTimelineElement(item, collection, issection); 
-	});
-	div.appendChild(addButton);
-
-	var previewButton = document.createElement("button");
-	previewButton.innerText = "Preview";
-	previewButton.className = "preview";
-	// previewButton.onclick = preview_result(item);
-	$(previewButton).bind("click", function() {
-		preview_result(collection, item);
-	})
-	div.appendChild(previewButton);
-
-	return div;
-}
-
-
-
-
-
-
-
-
-
-var createActivityDiv = function(item, previtem) {
-	var collection = "activities";
-	var issection = 0;
-
-	var idExtractArray = extractItemId(item, collection);
-	if (previtem != null) {
-		var idExtractArray_prev = extractItemId(previtem, collection);
-	}
-
-	var div = document.createElement("div");
-	div.className = "resultitem";
-	$(div).attr("data-chprefix", idExtractArray["chprefix"]);
-	$(div).attr("data-type", "section");
-	$(div).attr("data-collection", collection);
-
-
-
-
-
-	var innerActivityDiv = function(item) {
-
-		var activityDiv = document.createElement("div");
-		activityDiv.className = "activityDiv";
-		
-		$(activityDiv).attr("data-chprefix", idExtractArray["chprefix"]);
-		$(activityDiv).attr("data-collection", collection);
-
-		// Thumbnail
-		var thumbnaildiv = document.createElement("div");
-		thumbnaildiv.className = "thumbnaildiv";
-		$(thumbnaildiv).appendTo(activityDiv);
-
-		$("<img/>", {
-			class : "resultsimg",
-			src : getImgFilepath(item, collection)
-		}).css("width","140").appendTo(thumbnaildiv);
-
-
-		// Result Text
-		var textdiv = document.createElement("div");
-		textdiv.className = "textdiv";
-		$(textdiv).appendTo(activityDiv);
-
-		// ID
-		$("<p/>", {
-			class : "result_ID",
-			html : item.ch_id
-		}).appendTo(textdiv);
-
-		// Display Name
-		$("<p/>", {
-			class : "result_dn",
-			html : "<b>" + item.dn + "</b>"
-		}).appendTo(textdiv);
-
-		// File Type
-		$("<p/>", {
-			class : "result_ft",
-			html : getFileType(item.ft) + " // " + item.ft
-		}).appendTo(textdiv);
-
-
-		// Buttons
-		var buttondiv = document.createElement("div");
-		buttondiv.className = "buttondiv";
-		$(buttondiv).appendTo(activityDiv);
-
-		// "Add" button
-		var addButton = document.createElement("button");
-		addButton.innerText = "Add";
-		addButton.className = "add";
-		$(addButton).bind("click", function() {
-			createTimelineElement(item, collection, issection); 
-		});
-		buttondiv.appendChild(addButton);
-
-		var previewButton = document.createElement("button");
-		previewButton.innerText = "Preview";
-		previewButton.className = "preview";
-		// previewButton.onclick = preview_result(item);
-		$(previewButton).bind("click", function() {
-			preview_result(collection, item);
-		})
-		buttondiv.appendChild(previewButton);
-
-		return activityDiv;
-	}
-
-
-
-
-
-
-
-
-	// If this item is the first item
-	if (previtem == null) {
-		// Create h3 Chapter element
-		$("<h3/>", { 
-			html : "Chapter " + idExtractArray["currentChapter"] 
-		}).appendTo(div);
-
-		// If the item ID has a decimal
-		if (item.ch_id.indexOf(".") >= 0) {
-			// Create a section div & append to main div
-			issection = 1;
-			var sectionDiv = innerActivityDiv(item);
-			$(sectionDiv).attr("data-type", "section").appendTo(div);
-		}
-		// Else if the item ID doesn't have a decimal
-		else {
-			// Create a chapter div & append to main div
-			var chapterDiv = innerActivityDiv(item);
-			$(chapterDiv).attr("data-type", "chapter").appendTo(div);
-		}
-	}
-	// If this item isn't the first item
-	else if (previtem != null) {
-		// If the item  ID has a decimal
-		if (item.ch_id.indexOf(".") >= 0) {
-			issection = 1;
-			// If the ID prefix matches the prefix of the last one
-			if (idExtractArray["chprefix"] == idExtractArray_prev["chprefix"]) {
-				//	Make a section div
-				var sectionDiv = innerActivityDiv(item);
-				$(sectionDiv).attr("data-type", "section").appendTo(div);
-			}
-			// Else if the ID prefix doesn't match the last one
-			else if (idExtractArray["chprefix"] != idExtractArray_prev["chprefix"]) {
-				// Create a new Chapter section
-				$("<h3/>", { 
-					html : "Chapter " + idExtractArray["currentChapter"] 
-				}).appendTo(div);
-				issection = 1;
-				var sectionDiv = innerActivityDiv(item);
-				$(sectionDiv).attr("data-type", "section").appendTo(div);
-			}
-		}
-		// Else if the item ID doesn't have a decimal
-		else {
-			// Create h3 Chapter element
-			$("<h3/>", { 
-				html : "Chapter " + idExtractArray["currentChapter"] 
-			}).appendTo(div);
-			var chapterDiv = innerActivityDiv(item);
-			$(chapterDiv).attr("data-type", "chapter").appendTo(div);
-
-		}
-	}
-
-
-
-	return div;
-}
-
-
-
-
-
-
-
-var createDictionaryDiv = function(item, previtem) {
-	var collection = "dictionary";
-	var issection = 0;
-
-	var idExtractArray = extractItemId(item, collection);
-	if (previtem != null) {
-		var idExtractArray_prev = extractItemId(previtem, collection);
-	}
-
-	var div = document.createElement("div");
-	div.className = "resultitem";
-
-	if (previtem == null) {
-		if (idExtractArray["currentChapter"] == "01") {
-			var headerdiv = document.createElement("div");
-			div.appendChild(headerdiv);
-			$("<h3/>", { 
-				html : "Chapter 01"
-			}).appendTo(headerdiv);
-		}
-	}
-	else if (previtem != null) {
-		if (idExtractArray["chprefix"] != idExtractArray_prev["chprefix"]) {
-			var headerdiv = document.createElement("div");
-			div.appendChild(headerdiv);
-			$("<h3/>", { 
-				html : "Chapter " + idExtractArray["currentChapter"] 
-			}).appendTo(headerdiv);
-		}
-	}
-
-	var textdiv = document.createElement("div");
-	textdiv.className = "textdiv";
-	div.appendChild(textdiv);
-
-	var buttondiv = document.createElement("div");
-	buttondiv.className = "buttondiv";
-	div.appendChild(buttondiv);
-
-	$("<p/>", {
-		html : "<b>" + item.en + "</b> (" + item.part + ")"
-	}).appendTo(textdiv);
-
-	$("<p/>", {
-		html : item.ch_id
-	}).appendTo(textdiv);
-
-	// "Add" button
-	var addButton = document.createElement("button");
-	addButton.innerText = "Add";
-	addButton.className = "add";
-	$(addButton).bind("click", function() {
-		createTimelineElement(item, collection, issection); 
-	});
-	buttondiv.appendChild(addButton);
-
-	var previewButton = document.createElement("button");
-	previewButton.innerText = "Preview";
-	previewButton.className = "preview";
-	// previewButton.onclick = preview_result(item);
-	$(previewButton).bind("click", function() {
-		preview_result(collection, item);
-	})
-	buttondiv.appendChild(previewButton);
-
-	return div;
-	
-}
-
-
-
-
-
-
-
-
-
-/////////////////////////// PREVIEW ///////////////////////////
+////////////////////////////////////////////// PREVIEW //////////////////////////////////////////////
 
 // When you click the preview button
 var preview_result = function(collection, item) {
@@ -1444,15 +1399,13 @@ var preview_result = function(collection, item) {
 	// Definiton 
 	
 	// Game
-	
 }
-//*********************************************************************** end of things we need for present **********************************************************************************************
 
 
 
-/////////////////////////// SAVE ///////////////////////////
+////////////////////////////////////////////// SAVE //////////////////////////////////////////////
 
-var save = function(){    
+var genericSave = function(){
     console.log("saving...");
     var itemIds = [];
     var titleInput = document.getElementById("titleInput").value;
@@ -1460,6 +1413,7 @@ var save = function(){
     
     if(titleInput == "") {
     	alert("Lesson plan requires a title before saving.");
+		return null;
     }
     else {
     	console.log("TITLE INPUT IS RUNNING");
@@ -1477,19 +1431,100 @@ var save = function(){
 	   	}
 
 	 	console.log(timeline);
-
-		$.post("../BackEnd/save.php", timeline, function(data) {
-			console.log(data);
-			console.log("Saved!");
-		}).fail(function(data){
-			console.log(data);
-		});
-		alert("Your timeline, " + titleInput + ", has been saved!");
 	}
+
+	var info = new Array();
+	info.push(timeline);
+	info.push(titleInput);
+	return info;
+}
+var save = function(){
+	var info = genericSave();
+
+	if(info == null){
+		alert("Your timeline did NOT save");
+		return;
+	}
+
+	timeline = info[0];
+	titleInput = info[1];
+	$.post("../BackEnd/save.php", timeline, function(data) {
+		console.log(data);
+		console.log("Saved!");
+		alert("Your timeline, " + titleInput + ", has been saved!");
+	}).fail(function(data){
+		console.log(data);
+		alert("Your timeline, " + titleInput + ", did NOT save");
+	});
+}
+	
+var saveAsTemplate = function(){
+	var info = genericSave();
+
+	if(info == null){
+		alert("Your timeline did NOT save");
+		return;
+	}
+
+	timeline = info[0];
+	titleInput = info[1];
+	alert("This feature is coming soon!");
+	
+
+	$.post("../BackEnd/saveas.php", timeline, function(data) {
+		console.log(data);
+		console.log("Saved!");
+		alert("Your timeline, " + titleInput + ", is being saved as a template!");
+	}).fail(function(data){
+		console.log(data);
+		alert("Your timeline, " + titleInput + ", did NOT save");
+	});
+
 }
 
 
-////////////////////////// Present button from index  /////////////////////////////
+
+////////////////////////////////////////////// SORTABLE UI //////////////////////////////////////////////
+
+var sortableFunction = function() {
+    $("#timelineDisplay").sortable({
+    //$('#btnSave').hide();
+        opacity: 0.7,
+        revert: true,   //Animates
+        scroll: true,   //Allows page to scroll when dragging. Good for tall pages.
+        handle: $(".timelinediv"),
+        update: function () {  
+        	$('#btnSave').show() 
+    	}
+    });
+}
+
+
+
+
+////////////////////////////////////////////// Present button from index  //////////////////////////////////////////////
+var indexToPresent = function(){
+	timelineId = getParameterByName("timelineId");
+	var conf = confirm("Clicking this button will save the current timeline - do you wish to proceed?");
+	if(conf)
+		save();
+	else
+		alert("Presentation canceled");
+
+	if(timelineId){
+		location.href = "present.html?timelineId=" + timelineId;
+	}
+	else{
+		name = $('#titleInput').val();
+		$.getJSON("../BackEnd/timelines.json", function(timelinesJSON) {
+			var keys = Object.keys(timelinesJSON);
+			var last = keys[keys.length-1];
+			console.log("last: " + last);
+			console.log(timelinesJSON(last));
+			
+		});
+	}
+}
 
 //var indexToPresent = function(){    
 //	console.log("opening timeline in present...");
@@ -1517,26 +1552,6 @@ var save = function(){
 
 
 
-
-
-
-
-
-
-/////////////////////////// SORTABLE UI ///////////////////////////
-
-var sortableFunction = function() {
-    $("#timelineDisplay").sortable({
-    //$('#btnSave').hide();
-        opacity: 0.7,
-        revert: true,   //Animates
-        scroll: true,   //Allows page to scroll when dragging. Good for tall pages.
-        handle: $(".timelinediv"),
-        update: function () {  
-        	$('#btnSave').show() 
-    	}
-    });
-}
 
 
 

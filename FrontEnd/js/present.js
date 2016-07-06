@@ -1,4 +1,4 @@
-var homedirectory = "../";
+var homedirectory = "../../";
 
 /////////////////////////// TIMELINE MANIPULATION //////////////////////////
 
@@ -9,6 +9,13 @@ window.onload = function openTimeline() {
 	$.each(timelineElements, function(index, timelineObj) {
 		createTimelineElement(timelineObj);
 	});
+	$("#btnOpen").click(function(){
+		console.log("#btnOpen clicked");
+		location.href = 'open.html';
+		});
+	$("#btnEdit").click(function(){
+		location.href = 'index2.html?timelineId=' + getParameterByName("timelineId");
+		});
 }
 
 //gets the object from the array, determines which type of media it is, then gets the info and puts it into a div (inside a div inside the timeline display div)
